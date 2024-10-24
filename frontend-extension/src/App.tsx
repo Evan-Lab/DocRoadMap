@@ -5,9 +5,9 @@ import {
   BrowserRouter as Router,
   Routes,
 } from "react-router-dom";
-import Connected from "./connected";
-import Home from "./home";
-import Login from "./login";
+import Menu from "./(site)/home/home";
+import Login from "./(site)/login/login";
+import Home from "./Home";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -33,7 +33,7 @@ function App() {
           />
           <Route
             path="/connected"
-            element={isLoggedIn ? <Connected /> : <Navigate to="/" />}
+            element={isLoggedIn ? <Menu /> : <Navigate to="/" />}
           />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
