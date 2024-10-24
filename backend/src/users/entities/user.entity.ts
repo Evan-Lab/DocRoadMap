@@ -25,7 +25,7 @@ export class User {
     @CreateDateColumn()
     createdAt: Date;
 
-    @Column('timestamp')
+    @Column('timestamp', {nullable: true})
     latestLogin: Date;
 
     @OneToMany(() => Process, process => process.user)
