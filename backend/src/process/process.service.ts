@@ -1,26 +1,46 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProcessDto } from './dto/create-process.dto';
 import { UpdateProcessDto } from './dto/update-process.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Process } from './entities/process.entity';
+import { Not, Repository } from 'typeorm';
 
 @Injectable()
 export class ProcessService {
-  create(createProcessDto: CreateProcessDto) {
-    return 'This action adds a new process';
+  constructor(
+    @InjectRepository(Process)
+    private processRepository: Repository<Process>,
+  ) {}
+
+  async create(createProcessDto: CreateProcessDto) {
+    return await this.processRepository.save(createProcessDto);
   }
 
-  findAll() {
-    return `This action returns all process`;
+  async findAll() {
+    return await this.processRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} process`;
+  async findOne(id: number) {
+    const findProcess = await this.processRepository.findOne({where: {id : id}});
+    if(!findProcess) {
+      throw new NotFoundException(`Process #${id} not found`);
+    }
+    return findProcess;
   }
 
-  update(id: number, updateProcessDto: UpdateProcessDto) {
-    return `This action updates a #${id} process`;
+  async update(id: number, updateProcessDto: UpdateProcessDto) {
+    const findProcess = await this.processRepository.findOne({where: {id : id}});
+    if(!findProcess) {
+      throw new NotFoundException(`Process #${id} not found`);
+    }
+    return await this.processRepository.update(id, updateProcessDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} process`;
+  async remove(id: number) {
+    const findProcess = await this.processRepository.findOne({where: {id : id}});
+    if(!findProcess) {
+      throw new NotFoundException(`Process #${id} not found`);
+    }
+    return await this.processRepository.delete(id);
   }
 }

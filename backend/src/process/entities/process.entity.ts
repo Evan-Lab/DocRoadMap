@@ -30,9 +30,9 @@ export class Process {
     @CreateDateColumn()
     createdAt: Date;
 
-    @Column('timestamp')
+    @CreateDateColumn()
     updatedAt: Date;
 
-    @Column('timestamp')
+    @Column('timestamp', { nullable: true })
     endedAt: Date;
 }
