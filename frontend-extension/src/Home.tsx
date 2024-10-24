@@ -8,6 +8,7 @@ function Home() {
       <h1>Bienvenue sur DocRoadMap</h1>
       <p>Vous êtes sur la page d'accueil.</p>
       <button onClick={() => navigate("/login")}>Se connecter</button>
+      <button onClick={() => navigate("/register")}>S'inscrire</button>
     </div>
   );
 }

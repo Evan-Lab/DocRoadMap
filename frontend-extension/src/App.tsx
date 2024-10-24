@@ -1,3 +1,6 @@
+import Login from "./(site)/login/login";
+import Home from "./Home";
+
 import { useState } from "react";
 import {
   Navigate,
@@ -6,8 +9,7 @@ import {
   Routes,
 } from "react-router-dom";
 import Menu from "./(site)/home/home";
-import Login from "./(site)/login/login";
-import Home from "./Home";
+import Register from "./(site)/register/register";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -30,6 +32,10 @@ function App() {
                 <Navigate to="/connected" />
               )
             }
+          />
+          <Route
+            path="/register"
+            element={!isLoggedIn ? <Register /> : <Navigate to="/connected" />}
           />
           <Route
             path="/connected"

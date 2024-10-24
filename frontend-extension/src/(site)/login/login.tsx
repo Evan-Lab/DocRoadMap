@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import "./login.css";
 
 interface LoginProps {
   onLogin: () => void;
