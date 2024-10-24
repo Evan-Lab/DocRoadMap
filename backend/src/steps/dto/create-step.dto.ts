@@ -22,34 +22,9 @@ export class CreateStepDto {
     public description: string;
 
     @ApiProperty({
-        description: 'Status of the step',
-        type: 'enum',
-        enum: Status,
-        required: true
-    })
-    @IsEnum(Status)
-    public status: Status;
-
-    @ApiProperty({
         description: 'Process of the step',
-        type: CreateProcessDto,
+        type: Process,
         required: true
     })
     public process: Process;
-
-    @ApiProperty({
-        description: 'Last updated date of the step',
-        type: 'date',
-        required: true
-    })
-    @IsDate()
-    public updatedAt: Date;
-
-    @ApiProperty({
-        description: 'Ended date of the step',
-        type: 'date',
-        required: true
-    })
-    @IsDate()
-    public endedAt: Date;
 }
