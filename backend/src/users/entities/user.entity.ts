@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Process } from '../../process/entities/process.entity';
 
 @Entity()
 export class User {
@@ -26,4 +27,7 @@ export class User {
 
     @Column('timestamp')
     latestLogin: Date;
+
+    @OneToMany(() => Process, process => process.user)
+    processes: Process[];
 }
