@@ -39,19 +39,19 @@ export class UpdateProcessDto extends PartialType(CreateProcessDto) {
 
     @ApiProperty({
         description: 'User have created the process',
-        type: CreateUserDto,
+        type: 'number',
         required: false
     })
     @IsOptional()
-    public user?: User;
+    public userId?: number;
 
     @ApiProperty({
         description: 'The steps of the process',
-        type: CreateStepDto,
+        type: '[number]',
         required: false
     })
     @IsOptional()
-    public steps?: Step[];
+    public stepsId?: number[];
 
     @ApiProperty({
         description: 'The date when the process was updated',

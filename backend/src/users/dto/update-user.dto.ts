@@ -45,9 +45,9 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
 
     @ApiProperty({
         description: 'The processes of the user',
-        type: CreateProcessDto,
+        type: '[number]',
         required: false
     })
     @IsOptional()
-    public processes?: Process[];
+    public processIds?: number[];
 }

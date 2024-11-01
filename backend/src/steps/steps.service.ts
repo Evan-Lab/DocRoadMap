@@ -4,27 +4,47 @@ import { UpdateStepDto } from './dto/update-step.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Step } from './entities/step.entity';
 import { Repository } from 'typeorm';
+import { Process } from 'src/process/entities/process.entity';
 
 @Injectable()
 export class StepsService {
   constructor(
+    @InjectRepository(Process)
+    private processRepository: Repository<Process>,
+  
     @InjectRepository(Step)
     private stepRepository: Repository<Step>
   ) {}
 
   async create(createStepDto: CreateStepDto) {
-    return await this.stepRepository.save(createStepDto);
+    const {processId, ...stepData} = createStepDto;
+    const process = await this.processRepository.findOne({ where: { id: processId } });
+
+    if (!process) {
+      throw new NotFoundException('Process Not Found');
+    }
+
+    const step = this.stepRepository.create({
+      ...stepData,
+      process
+    });
+    return await this.stepRepository.save(step);
   }
 
   async findAll() {
-    return await this.stepRepository.find();
+    return await this.stepRepository.find({ relations: ['process'] });
   }
 
   async findOne(id: number) {
-    const findStep = await this.stepRepository.findOne({ where: { id: id } });
+    const findStep = await this.stepRepository.findOne({ 
+      where: { id: id },
+      relations: ['process']
+    });
+
     if (!findStep) {
       throw new NotFoundException('Step Not Found');
     }
+  
     return findStep;
   }
 

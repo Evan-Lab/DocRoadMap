@@ -37,11 +37,11 @@ export class UpdateStepDto extends PartialType(CreateStepDto) {
 
     @ApiProperty({
         description: 'The process linked to the step',
-        type: CreateProcessDto,
+        type: 'number',
         required: false
     })
     @IsOptional()
-    public process?: Process;
+    public processId?: number;
 
     @ApiProperty({
         description: 'The date when the step was updated',

@@ -36,18 +36,18 @@ export class CreateProcessDto {
 
     @ApiProperty({
         description: 'The user of the process',
-        type: CreateUserDto,
+        type: 'number',
         required: true
     })
-    public user: User;
+    public userId: number;
 
     @ApiProperty({
         description: 'The steps of the process',
-        type: CreateStepDto,
+        type: '[number]',
         required: false
     })
     @IsOptional()
-    public steps: Step[];
+    public stepsId: number[];
 
     @ApiProperty({
         description: 'The endedAt of the process',

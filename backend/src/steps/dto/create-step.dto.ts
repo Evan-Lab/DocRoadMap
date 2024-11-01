@@ -23,8 +23,8 @@ export class CreateStepDto {
 
     @ApiProperty({
         description: 'Process of the step',
-        type: Process,
+        type: 'number',
         required: true
     })
-    public process: Process;
+    public processId: number;
 }
