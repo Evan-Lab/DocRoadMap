@@ -18,14 +18,6 @@ function Register() {
       return;
     }
 
-    console.log("Data to be sent to backend:", {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      processIds: [],
-    });
-
     axios
       .post("http://localhost:3000/users/create", {
         firstName: firstName,
@@ -35,7 +27,6 @@ function Register() {
         processIds: [],
       })
       .then((response) => {
-        console.log("User registered successfully");
         navigate("/login");
       })
       .catch((error) => {
