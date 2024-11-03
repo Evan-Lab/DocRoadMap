@@ -3,13 +3,14 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBadRequestResponse, ApiConflictResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { LoginUserDto } from './dto/login-user.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post('create')
-  @ApiTags('Users')
+  @Post('register')
+  @ApiTags('Users Authentication')
   @ApiCreatedResponse({
     description: 'The user has been successfully created',
     type: CreateUserDto,
@@ -19,6 +20,15 @@ export class UsersController {
   @ApiConflictResponse({description: 'User already exists'})
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
+  }
+
+  @Post('login')
+  @ApiTags('Users Authentication')
+  @ApiBadRequestResponse({description: 'Bad Request'})
+  @ApiNotFoundResponse({description: 'Invalid Credentials'})
+  @ApiNotFoundResponse({description: 'User Not Found'})
+  login(@Body() loginUserDto: LoginUserDto) {
+    return this.usersService.login(loginUserDto);
   }
 
   @Get()
