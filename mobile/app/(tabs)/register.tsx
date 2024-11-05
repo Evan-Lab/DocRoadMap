@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import request from '@/constants/Request';
+
 
 export default function Register() {
     const [firstname, setFirstname] = useState("");
@@ -14,6 +17,38 @@ export default function Register() {
             alert(error);
         }
     }, [error]);
+
+    const handleSignUp = useCallback(async () => {
+        setError(null);
+        const requestBody = {
+            firstName: firstname,
+            lastName: lastname,
+            email: email,
+            password: password,
+            processIds: "",
+        };
+        console.log('Request Body:', requestBody);
+    
+        try {
+            const registrationResponse = await request.register(requestBody);
+            console.log('Registration Response:', registrationResponse);
+    
+            if (registrationResponse.error) {
+                setError(registrationResponse.error);
+                return;
+            }
+    
+            setEmail("");
+            setPassword("");
+            setFirstname("");
+            setLastname("");
+    
+        } catch (error) {
+            setError('There is an error, please check your information');
+        }
+    }, [firstname, lastname, email, password]);
+    
+
 
     return (
         <KeyboardAvoidingView
@@ -64,7 +99,7 @@ export default function Register() {
                     />
                 </View>
                 <View>
-                    <TouchableOpacity style={styles.customButton} onPress={() => { }}>
+                    <TouchableOpacity style={styles.customButton} onPress={() => handleSignUp()}>
                         <Text style={styles.buttonText}>Create Account</Text>
                     </TouchableOpacity>
                 </View>
