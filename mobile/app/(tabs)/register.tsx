@@ -25,7 +25,6 @@ export default function Register() {
             lastName: lastname,
             email: email,
             password: password,
-            processIds: "",
         };
         console.log('Request Body:', requestBody);
     

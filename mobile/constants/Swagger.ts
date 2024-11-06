@@ -3,5 +3,9 @@ export type SwaggerRegister = {
     lastName: string;
     email: string;
     password: string;
-    processIds: string;
+};
+
+export type SwaggerLogin = {
+    email: string;
+    password: string;
 };
