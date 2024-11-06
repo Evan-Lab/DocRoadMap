@@ -1,70 +1,95 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import CardDemarche from '../../components/CardDemarche';
+import ChatInterface from '../../components/ChatInterface';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 
-export default function HomeScreen() {
+
+export default function HomePage() {
+
+  const handleMenuPress = () => {
+    console.log('Menu/profile button pressed');
+  };
+
+  const handleGenerateRoadmap = () => {
+    console.log('Generate new roadmap pressed');
+  };
+
+  const handleReminders = () => {
+    console.log('My reminders pressed');
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+            <TouchableOpacity onPress={handleMenuPress} style={styles.menuButton}>
+                <Text style={styles.menuButtonText}>☰</Text>
+            </TouchableOpacity>
+            <Text style={styles.headerTitle}>My App</Text>
+        </View>
+
+        <ScrollView style={styles.content}>
+          <View style={styles.buttonsArea}>
+            <TouchableOpacity style={styles.button} onPress={handleGenerateRoadmap}>
+                <Text style={styles.buttonText}>Générer une nouvelle roadmap</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.button} onPress={handleReminders}>
+                <Text style={styles.buttonText}>Mes rappels</Text>
+            </TouchableOpacity>
+          </View>
+
+            <ScrollView horizontal={true}>
+                <CardDemarche />
+                <CardDemarche />
+            </ScrollView>
+        </ScrollView>
+        <ChatInterface /> 
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
+  header: {
+    backgroundColor: '#3498db',
+    padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  menuButton: {
+    marginRight: 16,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  menuButtonText: {
+    fontSize: 24,
+    color: '#ffffff',
   },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#ffffff',
+  },
+  content: {
+    flex: 1,
+    padding: 16,
+  },
+  buttonsArea: {
+    marginVertical: 40,
+
+  },
+  button: {
+    backgroundColor: '#3498db',
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 16,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  }
 });
