@@ -19,7 +19,7 @@ function Register() {
     }
 
     axios
-      .post("http://localhost:3000/users/create", {
+      .post("http://localhost:3000/users/register", {
         firstName: firstName,
         lastName: lastName,
         email: email,
