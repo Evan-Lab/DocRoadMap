@@ -1,10 +1,8 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateStepDto } from './create-step.dto';
-import { Status } from 'src/enum/status.enum';
-import { Process } from 'src/process/entities/process.entity';
+import { Status } from '../../enum/status.enum';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDate, IsEnum, IsOptional, IsString } from 'class-validator';
-import { CreateProcessDto } from 'src/process/dto/create-process.dto';
 
 export class UpdateStepDto extends PartialType(CreateStepDto) {
     @ApiProperty({

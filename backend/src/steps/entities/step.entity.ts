@@ -1,5 +1,5 @@
-import { Status } from "src/enum/status.enum";
-import { Process } from "src/process/entities/process.entity";
+import { Status } from "../../enum/status.enum";
+import { Process } from "../../process/entities/process.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()

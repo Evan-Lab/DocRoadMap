@@ -1,10 +1,12 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
+import { LoginUserDto } from './dto/login-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import { Process } from 'src/process/entities/process.entity';
+import { Process } from '../process/entities/process.entity';
 
 @Injectable()
 export class UsersService {
@@ -24,7 +26,6 @@ export class UsersService {
     }
 
     let processes = [];
-
     if (processIds && Array.isArray(processIds)) {
       processes = await this.processRepository.findByIds(processIds);
       if (!processes || processes.length !== processIds.length) {
@@ -32,12 +33,30 @@ export class UsersService {
       }
     }
 
+    const salt = await bcrypt.genSalt();
+    const hashPassword = await bcrypt.hash(userData.password, salt);
+    userData.password = hashPassword;
+
     const user = this.userRepository.create({
       ...userData,
       processes
     });
 
     return await this.userRepository.save(userData);
+  }
+
+  async login(loginUserDto: LoginUserDto) {
+    const { email, password } = loginUserDto;
+    const user = await this.userRepository.findOne({ where: { email: email } });
+    if (!user) {
+      throw new NotFoundException('User Not Found');
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      throw new NotFoundException('Invalid Credentials');
+    }
+    return 'Logged In';
   }
 
   async findAll() {

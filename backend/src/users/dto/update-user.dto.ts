@@ -2,8 +2,6 @@ import { PartialType } from '@nestjs/mapped-types';
 import { CreateUserDto } from './create-user.dto';
 import { IsEmail, IsOptional, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { Process } from 'src/process/entities/process.entity';
-import { CreateProcessDto } from 'src/process/dto/create-process.dto';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
 
