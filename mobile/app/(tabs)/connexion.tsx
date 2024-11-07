@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import CustomCheckbox from '../../components/CustomCheckbox';
+import CustomCheckbox from '../../components/reusable/CustomCheckbox';
 import request from '@/constants/Request';
 
 export default function ConnectionPage() {

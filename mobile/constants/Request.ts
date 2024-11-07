@@ -1,6 +1,12 @@
 import {
+    SwaggerCreateCardProcess,
+    SwaggerCreateDescriptionStep,
     SwaggerLogin,
-    SwaggerRegister
+    SwaggerProcessList,
+    SwaggerProfileInfo,
+    SwaggerRegister,
+    SwaggerStepList,
+    TokenLogin
 } from './Swagger'
 import axios, { AxiosError } from "axios"
 import { ExpoRoot } from 'expo-router';
@@ -16,6 +22,7 @@ export type SwaggerRequest<T> =
     }
 
 const url = process.env.EXPO_PUBLIC_API_URL
+
 const request = {
     register: async (data: SwaggerRegister): Promise<SwaggerRequest<SwaggerRegister>> => {
         try {
@@ -81,7 +88,7 @@ const request = {
               },
             }
           );
-          if (response.status === 200) {
+          if (response.status === 200 || response.status === 201 ) {
             const result = response.data;
             console.log('Login successful:', result);
             Alert.alert('Login successful', 'Logged In!');
@@ -123,7 +130,140 @@ const request = {
             };
           }
         }
+    },
+    /*create: async (data: SwaggerCreateCardProcess): Promise<SwaggerRequest<SwaggerCreateCardProcess>> => {
+      try {
+        const response = await axios.post(
+          `${url}/process/create`,
+          {
+            name: data.name,
+            description: data.description
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+          }
+        );
+        return {
+          data: response.data,
+          error: null,
+        };
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+            const status = error.response?.status;
+            if (status === 400) {
+                return { error: 'Required fields are missing. Please check your inputs and try again.' };
+            } else if (status === 409) {
+                return { error: 'A card with this name already exists. Please choose a different name.' };
+            } else if (status === 500) {
+                return { error: 'Server error. Please try again later.' };
+            } else if (status === 401) {
+                return { error: 'You are not authorized to create a card. Please log in and try again.' };
+            } else {
+                return { error: `Unexpected error: ${status}. Please try again later.` };
+            }
+        } else {
+            return {error: 'Something went wrong. Please try again.',};
+        }
     }
-      
+  },
+  createStep: async (data: SwaggerCreateDescriptionStep): Promise<SwaggerRequest<SwaggerCreateDescriptionStep>> => {
+    try {
+      const response = await axios.post(
+        `${url}/process/create`,
+        {
+          name: data.name,
+          description: data.description
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        }
+      );
+      return {
+        data: response.data,
+        error: null,
+      };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const status = error.response?.status;
+        if (status === 400) {
+          return { error: 'Invalid data. Please check your inputs and try again.' };
+        } else if (status === 404) {
+          return { error: 'Process not found. Please check the process ID and try again.' };
+        } else if (status === 403) {
+          return { error: 'Unauthorized access. You do not have permission to add steps.' };
+        } else if (status === 500) {
+          return { error: 'Server error. Please try again later.' };
+        } else {
+          return { error: `Unexpected error: ${status}. Please try again later.` };
+        }
+      } else {
+        return {error: 'Something went wrong. Please try again.',};
+      }
+    }
+  },
+  infoProfile: async (token: string): Promise<SwaggerRequest<SwaggerProfileInfo>> => {
+    try {
+        const headers = {
+            Authorization: `Bearer ${token}`,
+        }
+        const response = await axios.get(``, {
+            headers,
+        });
+        console.log(response.data)
+        return {
+            data: response.data,
+            error: null,
+        }
+    } catch (error) {
+        return {
+            error: 'QUnauthorized access. You do not have permission.',
+        }
+    }
+  },
+  stepList:  async (): Promise<SwaggerRequest<SwaggerStepList[]>> => {
+    try {
+        const headers = {
+            Authorization: `Bearer ${token}`,
+        }
+        const response = await axios.get(`${url}/processAll`, {
+            headers,
+        });
+        console.log(response.data)
+        return {
+            data: response.data,
+            error: null,
+        }
+    } catch (error) {
+        return {
+            error: 'Unauthorized access. You do not have permission.',
+        }
+    }
+  },
+  processList:  async (): Promise<SwaggerRequest<SwaggerProcessList[]>> => {
+    try {
+        const headers = {
+            Authorization: `Bearer ${token}`,
+        }
+        const response = await axios.get(`${url}/step/all`, {
+            headers,
+        });
+        console.log(response.data)
+        return {
+            data: response.data,
+            error: null,
+        }
+    } catch (error) {
+        return {
+            error: 'Unauthorized access. You do not have permission.',
+        }
+    }
+  },*/
+
 }
 export default request;

@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
-import CardDemarche from '../../components/CardDemarche';
-import ChatInterface from '../../components/ChatInterface';
-
-
+import CardDemarche from '../../components/card/CardDemarche';
+import ChatInterface from '../../components/chat/ChatInterface';
 
 export default function HomePage() {
 

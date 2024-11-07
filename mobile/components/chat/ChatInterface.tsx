@@ -24,7 +24,7 @@ export default function ChatInterface() {
   return (
     <View>
       <TouchableOpacity style={styles.floatingButton} onPress={handleFloatingButton}>
-        <Image source={require('../assets/images/chatbot.png')} style={{width: 45, height: 45}} />
+        <Image source={require('../../assets/images/chatbot.png')} style={{width: 45, height: 45}} />
       </TouchableOpacity>
       
         <Modal animationType="slide" transparent={false} visible={modalVisible}
@@ -34,7 +34,7 @@ export default function ChatInterface() {
           <View style={styles.header}>
             <View style={styles.avatarContainer}>
               <View style={styles.avatar}>
-              <Image source={require('../assets/images/chatbot.png')} style={{width: 45, height: 45}} />
+              <Image source={require('../../assets/images/chatbot.png')} style={{width: 45, height: 45}} />
               </View>
               <Text style={styles.headerTitle}>Donna</Text>
             </View>
