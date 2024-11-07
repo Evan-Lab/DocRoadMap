@@ -1,7 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { CreateProcessDto } from 'src/process/dto/create-process.dto';
-import { Process } from 'src/process/entities/process.entity';
 
 export class CreateUserDto {
     @ApiProperty({
