@@ -1,10 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsDate, IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
-import { Status } from "src/enum/status.enum";
-import { CreateStepDto } from "src/steps/dto/create-step.dto";
-import { Step } from "src/steps/entities/step.entity";
-import { CreateUserDto } from "src/users/dto/create-user.dto";
-import { User } from "src/users/entities/user.entity";
+import { Status } from "../../enum/status.enum";
 
 export class CreateProcessDto {
     @ApiProperty({

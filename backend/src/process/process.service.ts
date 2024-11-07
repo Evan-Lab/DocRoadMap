@@ -4,8 +4,8 @@ import { UpdateProcessDto } from './dto/update-process.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Process } from './entities/process.entity';
 import { Not, Repository } from 'typeorm';
-import { Step } from 'src/steps/entities/step.entity';
-import { User } from 'src/users/entities/user.entity';
+import { Step } from '../steps/entities/step.entity';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class ProcessService {

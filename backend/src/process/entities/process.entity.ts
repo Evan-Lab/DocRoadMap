@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, OneToMany } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
-import { Status } from 'src/enum/status.enum';
-import { Step } from 'src/steps/entities/step.entity';
+import { Status } from '../../enum/status.enum';
+import { Step } from '../../steps/entities/step.entity';
 
 @Entity()
 export class Process {
