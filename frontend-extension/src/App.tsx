@@ -43,7 +43,7 @@ function App() {
           />
           <Route
             path="/account-confirmation"
-            element={<AccountConfirmation />} // La page de confirmation
+            element={<AccountConfirmation />}
           />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

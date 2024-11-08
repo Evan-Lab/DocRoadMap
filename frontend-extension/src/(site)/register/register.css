@@ -3,9 +3,8 @@
   padding: 20px;
   background-color: white;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top: 10px;
 }
 
 .register-container h1 {
@@ -16,10 +15,11 @@
 
 .input-group {
   margin-bottom: 15px;
+  text-align: left;
 }
 
 .input-group label {
-  display: block;
+  font-size: 14px;
   margin-bottom: 5px;
 }
 
@@ -29,6 +29,7 @@
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 14px;
 }
 
 button {
@@ -39,6 +40,7 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 14px;
 }
 
 button:hover {
