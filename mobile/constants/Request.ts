@@ -131,13 +131,17 @@ const request = {
           }
         }
     },
-    /*create: async (data: SwaggerCreateCardProcess): Promise<SwaggerRequest<SwaggerCreateCardProcess>> => {
+    create: async (data: SwaggerCreateCardProcess): Promise<SwaggerRequest<SwaggerCreateCardProcess>> => {
       try {
         const response = await axios.post(
           `${url}/process/create`,
           {
-            name: data.name,
-            description: data.description
+            name: "id card",
+            description:"ID card process",
+            status: "PENDING",
+            userId: 2,
+            stepsId: 15,
+            endedAt: "2024-12-12, 12:00:00",
           },
           {
             headers: {
@@ -168,7 +172,7 @@ const request = {
             return {error: 'Something went wrong. Please try again.',};
         }
     }
-  },*/
+  },
   createStep: async (data: SwaggerCreateStep): Promise<SwaggerRequest<SwaggerCreateStep>> => {
     try {
       const response = await axios.post(
@@ -240,25 +244,22 @@ const request = {
         };
     }
 },
- /* processList:  async (): Promise<SwaggerRequest<SwaggerProcessList[]>> => {
-    try {
-        const headers = {
-            Authorization: `Bearer ${token}`,
-        }
-        const response = await axios.get(`${url}/step/all`, {
-            headers,
-        });
-        console.log(response.data)
-        return {
-            data: response.data,
-            error: null,
-        }
-    } catch (error) {
-        return {
-            error: 'Unauthorized access. You do not have permission.',
-        }
-    }
-  },*/
-
+processList:  async (): Promise<SwaggerRequest<SwaggerProcessList[]>> => {//
+  try {
+      // const headers = {
+      //   Authorization: `Bearer ${token}`,
+      // }
+      const response = await axios.get(`${url}/process/all`, {/*headers*/});
+      console.log(response.data)
+      return {
+          data: response.data,
+          error: null,
+      }
+  } catch (error) {
+      return {
+          error: 'Unauthorized access. You do not have permission.',
+      }
+  }
+},
 }
 export default request;
