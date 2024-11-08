@@ -19,7 +19,7 @@ function Register() {
     }
 
     axios
-      .post("http://localhost:3000/users/create", {
+      .post("http://localhost:3000/users/register", {
         firstName: firstName,
         lastName: lastName,
         email: email,
@@ -27,10 +27,10 @@ function Register() {
         processIds: [],
       })
       .then((response) => {
-        navigate("/login");
+        navigate("/account-confirmation");
       })
       .catch((error) => {
-        console.error("Error registering user:", error);
+        console.error("Erreur lors de l'inscription :", error);
         setError("Une erreur s'est produite lors de l'inscription");
       });
   };
