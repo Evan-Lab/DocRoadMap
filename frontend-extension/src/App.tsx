@@ -1,6 +1,3 @@
-import Login from "./(site)/login/login";
-import Home from "./Home";
-
 import { useState } from "react";
 import {
   Navigate,
@@ -8,8 +5,11 @@ import {
   BrowserRouter as Router,
   Routes,
 } from "react-router-dom";
+import AccountConfirmation from "./(site)/accountConfirmation/accountConfirmation";
 import Menu from "./(site)/home/home";
+import Login from "./(site)/login/login";
 import Register from "./(site)/register/register";
+import Home from "./Home";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -40,6 +40,10 @@ function App() {
           <Route
             path="/connected"
             element={isLoggedIn ? <Menu /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/account-confirmation"
+            element={<AccountConfirmation />} // La page de confirmation
           />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
