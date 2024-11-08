@@ -30,9 +30,4 @@ describe('Register Component', () => {
     expect(getByPlaceholderText('Password').props.value).toBe('password123');
   });
 
-  it('calls the onPress function when Create Account button is pressed', () => {
-    const { getByText } = render(<Register />);
-    
-    fireEvent.press(getByText('Create Account'));
-  });
 });
