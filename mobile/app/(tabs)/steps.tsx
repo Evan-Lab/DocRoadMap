@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import request from '@/constants/Request';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Step = {
   id: string;
@@ -95,71 +96,75 @@ export default function StepForProcess() {
   );
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.OS === "ios" ? -220 : 20}>
-      <View style={styles.container}>
-        
-        <View style={styles.inputContainer}>
-          <Ionicons name="document-text" size={24} color={COLORS.white} style={{ paddingRight: 10 }} />
-          <TextInput 
-            style={styles.input} 
-            placeholder="Step Name" 
-            placeholderTextColor={COLORS.black} 
-            value={name} 
-            onChangeText={setName} 
-            maxLength={50}
+    
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? -220 : 20}>
+        <SafeAreaView>
+          <View style={styles.container}>
+          
+          <View style={styles.inputContainer}>
+            <Ionicons name="document-text" size={24} color={COLORS.white} style={{ paddingRight: 10 }} />
+            <TextInput 
+              style={styles.input} 
+              placeholder="Step Name" 
+              placeholderTextColor={COLORS.black} 
+              value={name} 
+              onChangeText={setName} 
+              maxLength={50}
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Ionicons name="clipboard" size={24} color={COLORS.white} style={{ paddingRight: 10 }} />
+            <TextInput 
+              style={[styles.input, styles.descriptionInput]} 
+              placeholder="Step Description" 
+              placeholderTextColor={COLORS.black} 
+              value={description} 
+              onChangeText={setDescription} 
+              multiline
+              numberOfLines={3}
+              maxLength={200}
+            />
+          </View>
+          
+          <TouchableOpacity 
+            style={[
+              styles.customButton, 
+              (!name.trim() || !description.trim()) && styles.buttonDisabled
+            ]}
+            onPress={handleCreateStep}
+            disabled={isLoading || !name.trim() || !description.trim()}
+          >
+            {isLoading ? (
+              <ActivityIndicator color={COLORS.white} />
+            ) : (
+              <Text style={styles.buttonText}>Add Step</Text>
+            )}
+          </TouchableOpacity>
+
+          <FlatList
+            data={steps}
+            keyExtractor={(item) => item.id}
+            renderItem={stepList}
+            refreshing={refreshing}
+            onRefresh={() => {
+              setRefreshing(true);
+              fetchSteps();
+            }}
+            ListEmptyComponent={
+              <View style={styles.emptyContainer}>
+                <Ionicons name="list" size={48} color={COLORS.grey} />
+                <Text style={styles.emptyText}>No steps added yet</Text>
+              </View>
+            }
           />
         </View>
+        </SafeAreaView>
+      </KeyboardAvoidingView>
 
-        <View style={styles.inputContainer}>
-          <Ionicons name="clipboard" size={24} color={COLORS.white} style={{ paddingRight: 10 }} />
-          <TextInput 
-            style={[styles.input, styles.descriptionInput]} 
-            placeholder="Step Description" 
-            placeholderTextColor={COLORS.black} 
-            value={description} 
-            onChangeText={setDescription} 
-            multiline
-            numberOfLines={3}
-            maxLength={200}
-          />
-        </View>
-
-        <TouchableOpacity 
-          style={[
-            styles.customButton, 
-            (!name.trim() || !description.trim()) && styles.buttonDisabled
-          ]}
-          onPress={handleCreateStep}
-          disabled={isLoading || !name.trim() || !description.trim()}
-        >
-          {isLoading ? (
-            <ActivityIndicator color={COLORS.white} />
-          ) : (
-            <Text style={styles.buttonText}>Add Step</Text>
-          )}
-        </TouchableOpacity>
-
-        <FlatList
-          data={steps}
-          keyExtractor={(item) => item.id}
-          renderItem={stepList}
-          refreshing={refreshing}
-          onRefresh={() => {
-            setRefreshing(true);
-            fetchSteps();
-          }}
-          ListEmptyComponent={
-            <View style={styles.emptyContainer}>
-              <Ionicons name="list" size={48} color={COLORS.grey} />
-              <Text style={styles.emptyText}>No steps added yet</Text>
-            </View>
-          }
-        />
-      </View>
-    </KeyboardAvoidingView>
   );
 }
 
