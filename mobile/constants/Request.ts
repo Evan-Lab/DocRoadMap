@@ -1,6 +1,6 @@
 import {
     SwaggerCreateCardProcess,
-    SwaggerCreateDescriptionStep,
+    SwaggerCreateStep,
     SwaggerLogin,
     SwaggerProcessList,
     SwaggerProfileInfo,
@@ -14,11 +14,11 @@ import { Alert } from 'react-native';
 
 export type SwaggerRequest<T> =
   | {
-      data: T
+      data?: T
       error: null
     }
   | {
-      error: string
+      error?: string
     }
 
 const url = process.env.EXPO_PUBLIC_API_URL
@@ -168,11 +168,11 @@ const request = {
             return {error: 'Something went wrong. Please try again.',};
         }
     }
-  },
-  createStep: async (data: SwaggerCreateDescriptionStep): Promise<SwaggerRequest<SwaggerCreateDescriptionStep>> => {
+  },*/
+  createStep: async (data: SwaggerCreateStep): Promise<SwaggerRequest<SwaggerCreateStep>> => {
     try {
       const response = await axios.post(
-        `${url}/process/create`,
+        `${url}/steps/create`,
         {
           name: data.name,
           description: data.description
@@ -207,7 +207,7 @@ const request = {
       }
     }
   },
-  infoProfile: async (token: string): Promise<SwaggerRequest<SwaggerProfileInfo>> => {
+  /*infoProfile: async (token: string): Promise<SwaggerRequest<SwaggerProfileInfo>> => {
     try {
         const headers = {
             Authorization: `Bearer ${token}`,
@@ -222,30 +222,25 @@ const request = {
         }
     } catch (error) {
         return {
-            error: 'QUnauthorized access. You do not have permission.',
-        }
-    }
-  },
-  stepList:  async (): Promise<SwaggerRequest<SwaggerStepList[]>> => {
-    try {
-        const headers = {
-            Authorization: `Bearer ${token}`,
-        }
-        const response = await axios.get(`${url}/processAll`, {
-            headers,
-        });
-        console.log(response.data)
-        return {
-            data: response.data,
-            error: null,
-        }
-    } catch (error) {
-        return {
             error: 'Unauthorized access. You do not have permission.',
         }
     }
-  },
-  processList:  async (): Promise<SwaggerRequest<SwaggerProcessList[]>> => {
+  },*/
+  stepList: async (): Promise<SwaggerRequest<SwaggerStepList[]>> => {
+    try {
+        const response = await axios.get(`${url}/steps/all`);
+        console.log(response.data);
+        return {
+            data: response.data,
+            error: null,
+        };
+    } catch (error) {
+        return {
+            error: 'Unauthorized access. You do not have permission.',
+        };
+    }
+},
+ /* processList:  async (): Promise<SwaggerRequest<SwaggerProcessList[]>> => {
     try {
         const headers = {
             Authorization: `Bearer ${token}`,

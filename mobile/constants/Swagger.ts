@@ -15,7 +15,7 @@ export type SwaggerCreateCardProcess = {
     description: string;
 };
 
-export type SwaggerCreateDescriptionStep = {
+export type SwaggerCreateStep = {
     name: string;
     description: string;
 };

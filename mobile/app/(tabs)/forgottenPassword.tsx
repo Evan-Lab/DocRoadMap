@@ -43,14 +43,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
-    backgroundColor: '#000',
+    backgroundColor:"#f2f2f2"
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
-    color: COLORS.white,
+    color: COLORS.black,
   },
   input: {
     height: 50,
