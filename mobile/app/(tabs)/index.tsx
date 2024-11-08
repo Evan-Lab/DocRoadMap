@@ -1,15 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import CardDemarche from '../../components/card/CardDemarche';
 import ChatInterface from '../../components/chat/ChatInterface';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Alert } from 'react-native';
+import { SwaggerProcessList } from '@/constants/Swagger';
+import request from '@/constants/Request';
 
 export default function HomePage() {
+  const [cards, setCards] = useState<SwaggerProcessList[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    const fetchCards = async () => {
+      const response = await request.processList();
+      
+      if ('data' in response && response.data) {
+        setCards(response.data);
+      } else {
+        Alert.alert("Error", response.error || "Failed to fetch cards");
+      }
+    };
+    fetchCards();
+  }, []);
+
+  const createCard = useCallback(async () => {
+
+    const requestBody = {
+      name: "Test",
+            description: "Test description",
+            status: "Test status",
+            userId: 1,
+            stepsId: 1,
+            endedAt: "2022-12-31",
+    };
+    console.log('Request Body:', requestBody);
+
+    try {
+        const registrationResponse = await request.create(requestBody);
+        console.log('Registration Response:', registrationResponse);
+
+        if (registrationResponse.error) {
+            setError(registrationResponse.error);
+            return;
+        }
+    } catch (error) {
+        setError('There is an error, please check your information');
+    }
+}, []);
+
+  
   const handleMenuPress = () => {
     console.log('Menu/profile button pressed');
   };
 
   const handleGenerateRoadmap = () => {
+    createCard();
     console.log('Generate new roadmap pressed');
   };
 
@@ -38,8 +84,14 @@ export default function HomePage() {
           </View>
 
             <ScrollView horizontal={true}>
-                <CardDemarche />
-                <CardDemarche />
+              {cards.map((card, index) => (
+              <CardDemarche
+                key={index}
+                name={card.name}
+                description={card.description}
+                progress={Math.floor(Math.random() * 100)} // Placeholder progress
+              />
+            ))}
             </ScrollView>
         </ScrollView>
         <ChatInterface /> 
