@@ -1,7 +1,6 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
-import { LoginUserDto } from './dto/login-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
@@ -11,26 +10,15 @@ import { Process } from '../process/entities/process.entity';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(Process)
-    private processRepository: Repository<Process>,
-  
     @InjectRepository(User)
     private userRepository: Repository<User>
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const { processIds, ...userData } = createUserDto;
+    const { ...userData } = createUserDto;
     const existUser = await this.userRepository.findOne({ where: { email: userData.email } });
     if (existUser) {
       throw new ConflictException('User already exists');
-    }
-
-    let processes = [];
-    if (processIds && Array.isArray(processIds)) {
-      processes = await this.processRepository.findByIds(processIds);
-      if (!processes || processes.length !== processIds.length) {
-        throw new NotFoundException('Some processes were not found');
-      }
     }
 
     const salt = await bcrypt.genSalt();
@@ -39,33 +27,32 @@ export class UsersService {
 
     const user = this.userRepository.create({
       ...userData,
-      processes
     });
 
-    return await this.userRepository.save(userData);
+    const savedUser = await this.userRepository.save(user);
+    return savedUser;
   }
 
-  async login(loginUserDto: LoginUserDto) {
-    const { email, password } = loginUserDto;
-    const user = await this.userRepository.findOne({ where: { email: email } });
-    if (!user) {
-      throw new NotFoundException('User Not Found');
-    }
+  async findMe(userId: number): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['processes'],
+    });
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      throw new NotFoundException('Invalid Credentials');
+    if (!user) {
+      throw new NotFoundException('User not found');
     }
-    return 'Logged In';
+    return user;
   }
 
   async findAll() {
-    return await this.userRepository.find({ relations: ['processes'] });
+    const users = await this.userRepository.find({ relations: ['processes'] });
+    return users
   }
 
-  async findOne(id: number) {
+  async findOne(email: string) {
     const findUser = await this.userRepository.findOne({
-      where: { id: id },
+      where: { email: email },
       relations: ['processes']
     });
     if (!findUser) {
@@ -87,6 +74,7 @@ export class UsersService {
     if (!findUser) {
       throw new NotFoundException('User Not Found');
     }
-    return await this.userRepository.delete(id);
+    const user = await this.userRepository.delete(id);
+    return user;
   }
 }
