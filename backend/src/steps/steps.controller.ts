@@ -2,13 +2,14 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { StepsService } from './steps.service';
 import { CreateStepDto } from './dto/create-step.dto';
 import { UpdateStepDto } from './dto/update-step.dto';
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('steps')
 export class StepsController {
   constructor(private readonly stepsService: StepsService) {}
 
   @Post('create')
+  @ApiBearerAuth()
   @ApiTags('Steps')
   @ApiCreatedResponse({ 
     description: 'The Step has been successfully created.',
@@ -21,6 +22,7 @@ export class StepsController {
   }
 
   @Get('all')
+  @ApiBearerAuth()
   @ApiTags('Steps')
   @ApiOkResponse({
     description: 'The Steps has been successfully retrieved.',
@@ -33,6 +35,7 @@ export class StepsController {
   }
 
   @Get(':id')
+  @ApiBearerAuth()
   @ApiTags('Steps')
   @ApiOkResponse({
     description: 'The Step has been successfully retrieved.',
@@ -46,6 +49,7 @@ export class StepsController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
   @ApiTags('Steps')
   @ApiOkResponse({
     description: 'The Step has been successfully updated.',
@@ -59,6 +63,7 @@ export class StepsController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @ApiTags('Steps')
   @ApiOkResponse({
     description: 'The Step has been successfully deleted.',
