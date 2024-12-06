@@ -3,12 +3,14 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import Icon from 'react-native-vector-icons/FontAwesome';
 import CustomCheckbox from '../../components/reusable/CustomCheckbox';
 import request from '@/constants/Request';
+import { useRouter } from 'expo-router';
 
 export default function ConnectionPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [stayConnected, setStayConnected] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleLogin = useCallback(async () => {
     setError(null);
@@ -42,7 +44,7 @@ export default function ConnectionPage() {
     
             setEmail("");
             setPassword("");
-    
+            router.replace('/home');
         } catch (error) {
             setError('Request Error: Network error. Please try again later.');
         }
@@ -94,9 +96,14 @@ export default function ConnectionPage() {
                 <Text style={styles.loginButtonText}>Log In</Text>
             </TouchableOpacity>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => router.push('/forgottenPassword')}>
             <Text>Mot de passe oublié ?</Text>
         </TouchableOpacity>
+        <View>
+            <TouchableOpacity onPress={() => router.push('/register')}>
+                <Text >Create Account</Text>
+            </TouchableOpacity>
+         </View>
     </View>
   );
 }

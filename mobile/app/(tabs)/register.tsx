@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingVi
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import request from '@/constants/Request';
+import { useRouter } from 'expo-router';
 
 
 export default function Register() {
@@ -11,6 +12,7 @@ export default function Register() {
     const [email, setEmail] = useState("");
     const [lastname, setLastname] = useState("");
     const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
     useEffect(() => {
         if (error) {
@@ -101,6 +103,11 @@ export default function Register() {
                     <TouchableOpacity style={styles.customButton} onPress={() => handleSignUp()}>
                         <Text style={styles.buttonText}>Create Account</Text>
                     </TouchableOpacity>
+                </View>
+                <View>
+                <TouchableOpacity onPress={() => router.push('/connexion')}>
+                    <Text >Go back</Text>
+                </TouchableOpacity>
                 </View>
             </View>
         </KeyboardAvoidingView>

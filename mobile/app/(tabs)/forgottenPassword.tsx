@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
+  const router = useRouter();
 
   const handleSend = () => {
     console.log('Email:', email);
@@ -18,6 +20,11 @@ const ForgotPassword = () => {
         onChangeText={setEmail}
         keyboardType="email-address"
       />
+      <View>
+          <TouchableOpacity onPress={() => router.push('/connexion')}>
+              <Text >Go back</Text>
+          </TouchableOpacity>
+        </View>
        <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.customButton} onPress={handleSend}>
           <Text style={styles.buttonText}>Send</Text>

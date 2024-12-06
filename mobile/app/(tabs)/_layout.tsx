@@ -15,19 +15,65 @@ export default function TabLayout() {
         headerShown: false,
       }}>
 
-<Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
-        }}
-      />
       <Tabs.Screen
         name="register"
         options={{
-          title: 'Register',
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          href: null,
+          headerShown: false,
+          tabBarStyle: {
+            display: "none"
+          }
+        }}
+      />
+      <Tabs.Screen
+        name="connexion"
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          href: null,
+          headerShown: false,
+          tabBarStyle: {
+            display: "none"
+          }
+        }}
+      />
+      <Tabs.Screen
+        name="emailConfirmation"
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          href: null,
+          headerShown: false,
+          tabBarStyle: {
+            display: "none"
+          }
+        }}
+      />
+      <Tabs.Screen
+        name="forgottenPassword"
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          href: null,
+          headerShown: false,
+          tabBarStyle: {
+            display: "none"
+          }
+        }}
+      />
+       <Tabs.Screen
+        name="index"
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          href: null,
+          headerShown: false,
+          tabBarStyle: {
+            display: "none"
+          }
+        }}
+      />
+      <Tabs.Screen
+        name="home"
+        options={{
+          title: 'Home',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
           ),

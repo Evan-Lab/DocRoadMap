@@ -22,12 +22,13 @@ export type SwaggerRequest<T> =
     }
 
 const url = process.env.EXPO_PUBLIC_API_URL
+let accessToken: string | null = null;
 
 const request = {
     register: async (data: SwaggerRegister): Promise<SwaggerRequest<SwaggerRegister>> => {
         try {
           const response = await axios.post(
-            `${url}/users/register`,
+            `${url}/auth/register`,
             {
               firstName: data.firstName,
               lastName: data.lastName,
@@ -76,7 +77,7 @@ const request = {
     login: async (data: SwaggerLogin): Promise<SwaggerRequest<SwaggerLogin>> => {
         try {
           const response = await axios.post(
-            `${url}/users/login`,
+            `${url}/auth/login`,
             {
               email: data.email,
               password: data.password,
@@ -90,6 +91,7 @@ const request = {
           );
           if (response.status === 200 || response.status === 201 ) {
             const result = response.data;
+            accessToken = result.accessToken;
             console.log('Login successful:', result);
             Alert.alert('Login successful', 'Logged In!');
             return {
@@ -147,6 +149,7 @@ const request = {
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json',
+              Authorization: `Bearer ${accessToken}`,
             },
           }
         );
@@ -185,6 +188,7 @@ const request = {
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       );
@@ -211,12 +215,12 @@ const request = {
       }
     }
   },
-  /*infoProfile: async (token: string): Promise<SwaggerRequest<SwaggerProfileInfo>> => {
+  infoProfile: async (): Promise<SwaggerRequest<SwaggerProfileInfo>> => {
     try {
         const headers = {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${accessToken}`,
         }
-        const response = await axios.get(``, {
+        const response = await axios.get(`${url}/users/me`, {
             headers,
         });
         console.log(response.data)
@@ -229,9 +233,12 @@ const request = {
             error: 'Unauthorized access. You do not have permission.',
         }
     }
-  },*/
+  },
   stepList: async (): Promise<SwaggerRequest<SwaggerStepList[]>> => {
     try {
+        const headers = {
+          Authorization: `Bearer ${accessToken}`,
+        }
         const response = await axios.get(`${url}/steps/all`);
         console.log(response.data);
         return {
@@ -246,10 +253,10 @@ const request = {
 },
 processList:  async (): Promise<SwaggerRequest<SwaggerProcessList[]>> => {//
   try {
-      // const headers = {
-      //   Authorization: `Bearer ${token}`,
-      // }
-      const response = await axios.get(`${url}/process/all`, {/*headers*/});
+      const headers = {
+          Authorization: `Bearer ${accessToken}`,
+      }
+      const response = await axios.get(`${url}/process/all`);
       console.log(response.data)
       return {
           data: response.data,
