@@ -18,10 +18,16 @@ function Profile() {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await fetch("http://localhost:3000/auth/profile", {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Token non disponible. Veuillez vous connecter.");
+        }
+
+        const response = await fetch("http://localhost:3000/users/me", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         });
 

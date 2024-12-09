@@ -20,6 +20,8 @@ function Login({ onLogin }: LoginProps) {
         password: password,
       })
       .then((response) => {
+        const token = response.data.accessToken;
+        localStorage.setItem("token", token);
         onLogin();
         navigate("/docroadmap");
       })
