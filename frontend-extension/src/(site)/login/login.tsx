@@ -15,7 +15,7 @@ function Login({ onLogin }: LoginProps) {
 
   const handleLogin = () => {
     axios
-      .post("http://localhost:3000/users/login", {
+      .post("http://localhost:3000/auth/login", {
         email: email,
         password: password,
       })

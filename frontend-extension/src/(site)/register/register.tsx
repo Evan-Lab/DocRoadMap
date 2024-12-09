@@ -19,12 +19,11 @@ function Register() {
     }
 
     axios
-      .post("http://localhost:3000/users/register", {
+      .post("http://localhost:3000/auth/register", {
         firstName: firstName,
         lastName: lastName,
         email: email,
         password: password,
-        processIds: [],
       })
       .then((response) => {
         navigate("/account-confirmation");
