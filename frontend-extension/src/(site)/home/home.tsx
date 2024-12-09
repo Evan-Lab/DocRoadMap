@@ -8,6 +8,10 @@ function Menu() {
     navigate("/");
   };
 
+  const goToProfile = () => {
+    navigate("/profile");
+  };
+
   return (
     <div className="menu-container">
       <div className="menu-header">
@@ -15,7 +19,7 @@ function Menu() {
       </div>
       <div className="menu-buttons">
         <button>Tableau de bord</button>
-        <button>Profil</button>
+        <button onClick={goToProfile}>Profil</button>
         <button onClick={handleLogout}>Déconnexion</button>
       </div>
     </div>
