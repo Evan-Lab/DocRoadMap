@@ -27,6 +27,14 @@ export class AuthService {
     if (!isMatch) {
         throw new UnauthorizedException('Invalid Credentials');
     }
+
+    try { 
+        await this.usersService.update(user.id, { latestLogin: new Date() });
+    } catch (error) {
+        console.log('Error updating latest login', error)
+        throw new error
+    }
+
     const payload = { sub: user.id, email: user.email };
     return {
         message: 'User logged in successfully',
