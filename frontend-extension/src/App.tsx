@@ -29,16 +29,16 @@ function App() {
               !isLoggedIn ? (
                 <Login onLogin={handleLogin} />
               ) : (
-                <Navigate to="/connected" />
+                <Navigate to="/docroadmap" />
               )
             }
           />
           <Route
             path="/register"
-            element={!isLoggedIn ? <Register /> : <Navigate to="/connected" />}
+            element={!isLoggedIn ? <Register /> : <Navigate to="/docroadmap" />}
           />
           <Route
-            path="/connected"
+            path="/docroadmap"
             element={isLoggedIn ? <Menu /> : <Navigate to="/" />}
           />
           <Route

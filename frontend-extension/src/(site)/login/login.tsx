@@ -21,7 +21,7 @@ function Login({ onLogin }: LoginProps) {
       })
       .then((response) => {
         onLogin();
-        navigate("/connected");
+        navigate("/docroadmap");
       })
       .catch((error) => {
         console.error("Erreur lors de la connexion :", error);
@@ -49,7 +49,9 @@ function Login({ onLogin }: LoginProps) {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <button onClick={handleLogin}>Se connecter</button>
+      <button className="login-button" onClick={handleLogin}>
+        Se connecter
+      </button>
     </div>
   );
 }
