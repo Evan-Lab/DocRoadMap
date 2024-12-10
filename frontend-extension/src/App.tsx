@@ -8,6 +8,7 @@ import {
 import AccountConfirmation from "./(site)/accountConfirmation/accountConfirmation";
 import Menu from "./(site)/home/home";
 import Login from "./(site)/login/login";
+import Profile from "./(site)/profile/profile";
 import Register from "./(site)/register/register";
 import Home from "./Home";
 
@@ -29,22 +30,24 @@ function App() {
               !isLoggedIn ? (
                 <Login onLogin={handleLogin} />
               ) : (
-                <Navigate to="/connected" />
+                <Navigate to="/docroadmap" />
               )
             }
           />
           <Route
             path="/register"
-            element={!isLoggedIn ? <Register /> : <Navigate to="/connected" />}
+            element={!isLoggedIn ? <Register /> : <Navigate to="/docroadmap" />}
           />
           <Route
-            path="/connected"
+            path="/docroadmap"
             element={isLoggedIn ? <Menu /> : <Navigate to="/" />}
           />
           <Route
             path="/account-confirmation"
             element={<AccountConfirmation />}
           />
+          <Route path="/profile" element={<Profile />} />
+
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>

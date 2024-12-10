@@ -39,15 +39,16 @@ export class CreateProcessDto {
 
     @ApiProperty({
         description: 'The steps of the process',
-        type: '[number]',
-        required: false
+        type: 'number',
+        required: false,
+        isArray: true
     })
     @IsOptional()
     public stepsId: number[];
 
     @ApiProperty({
         description: 'The endedAt of the process',
-        type: 'date',
+        type: 'string',
         required: true
     })
     @IsDate()

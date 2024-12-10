@@ -48,4 +48,12 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
     })
     @IsOptional()
     public processIds?: number[];
+
+    @ApiProperty({
+        description: 'The latest login of the user',
+        type: 'Date',
+        required: false
+    })
+    @IsOptional()
+    public latestLogin?: Date;
 }

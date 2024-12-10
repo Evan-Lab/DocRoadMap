@@ -1,17 +1,27 @@
+import { useNavigate } from "react-router-dom";
 import "./home.css";
 
 function Menu() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate("/");
+  };
+
+  const goToProfile = () => {
+    navigate("/profile");
+  };
+
   return (
     <div className="menu-container">
       <div className="menu-header">
         <h1>Bienvenue sur DocRoadMap</h1>
-        <div className="menu-buttons">
-          <button>Tableau de bord</button>
-          <button>Profil</button>
-          <button>Déconnexion</button>
-        </div>
       </div>
-      <p className="welcome-message">Vous êtes connecté</p>
+      <div className="menu-buttons">
+        <button>Tableau de bord</button>
+        <button onClick={goToProfile}>Profil</button>
+        <button onClick={handleLogout}>Déconnexion</button>
+      </div>
     </div>
   );
 }

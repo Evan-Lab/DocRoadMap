@@ -1,16 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiBadRequestResponse, ApiConflictResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { LoginUserDto } from './dto/login-user.dto';
+import { ApiBadRequestResponse, ApiBearerAuth, ApiConflictResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { UserDtoResponse } from './dto/user-response.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post('register')
-  @ApiTags('Users Authentication')
+  @Post('create')
+  @ApiBearerAuth()
+  @ApiTags('Users')
   @ApiCreatedResponse({
     description: 'The user has been successfully created',
     type: CreateUserDto,
@@ -18,20 +20,12 @@ export class UsersController {
   })
   @ApiBadRequestResponse({description: 'Bad Request'})
   @ApiConflictResponse({description: 'User already exists'})
-  create(@Body() createUserDto: CreateUserDto) {
+  create(@Body() createUserDto: CreateUserDto): Promise<CreateUserDto> {
     return this.usersService.create(createUserDto);
   }
 
-  @Post('login')
-  @ApiTags('Users Authentication')
-  @ApiBadRequestResponse({description: 'Bad Request'})
-  @ApiNotFoundResponse({description: 'Invalid Credentials'})
-  @ApiNotFoundResponse({description: 'User Not Found'})
-  login(@Body() loginUserDto: LoginUserDto) {
-    return this.usersService.login(loginUserDto);
-  }
-
-  @Get()
+  @Get('all')
+  @ApiBearerAuth()
   @ApiTags('Users')
   @ApiOkResponse({
     description: 'The users has been successfully retrieved',
@@ -39,11 +33,34 @@ export class UsersController {
     isArray: true
   })
   @ApiBadRequestResponse({description: 'Bad Request'})
-  findAll() {
+  findAll(): Promise<CreateUserDto[]> {
     return this.usersService.findAll();
   }
 
-  @Get(':id')
+  @Get('me')
+  @ApiBearerAuth()
+  @ApiTags('Users')
+  @ApiOkResponse({
+    description: 'The user has been successfully retrieved',
+    type: UserDtoResponse,
+    isArray: false
+  })
+  @ApiBadRequestResponse({description: 'Bad Request'})
+  @ApiNotFoundResponse({description: 'User Not Found'})
+  async findMe(@Request() req: any): Promise<UserDtoResponse> {
+    const user = await this.usersService.findMe(req['user'].sub);
+    return {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      isActivated: user.isActive,
+      processIds: user.processes?.map((process: any) => process.id) || []
+    };
+  }
+
+  @Get(':email')
+  @ApiBearerAuth()
   @ApiTags('Users')
   @ApiOkResponse({
     description: 'The user has been successfully retrieved',
@@ -52,11 +69,12 @@ export class UsersController {
   })
   @ApiBadRequestResponse({description: 'Bad Request'})
   @ApiNotFoundResponse({description: 'User Not Found'})
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  findOne(@Param('email') email: string): Promise<CreateUserDto> {
+    return this.usersService.findOne(email);
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
   @ApiTags('Users')
   @ApiOkResponse({
     description: 'The user has been successfully updated',
@@ -70,6 +88,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @ApiTags('Users')
   @ApiOkResponse({
     description: 'The user has been successfully deleted',
@@ -77,7 +96,7 @@ export class UsersController {
     isArray: false
   })
   @ApiNotFoundResponse({description: 'User Not Found'})
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string){
     return this.usersService.remove(+id);
   }
 }

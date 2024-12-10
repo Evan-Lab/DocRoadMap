@@ -48,7 +48,7 @@ export class UpdateStepDto extends PartialType(CreateStepDto) {
     })
     @IsDate()
     @IsOptional()
-    public updatedAt?: Date
+    public updatedAt?: Date = new Date();
 
     @ApiProperty({
         description: 'The date when the step ended',
