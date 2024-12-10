@@ -36,6 +36,9 @@ function Register() {
 
   return (
     <div className="register-container">
+      <button className="back-button" onClick={() => navigate(-1)}>
+        &#8592;
+      </button>
       <h1>Inscription</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <div className="input-group">

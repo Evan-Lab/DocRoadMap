@@ -59,6 +59,9 @@ function Profile() {
 
   return (
     <div className="profile-container">
+      <button className="back-button" onClick={() => navigate(-1)}>
+        &#8592;
+      </button>
       <h1 className="profile-title">Profil</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <div className="profile-picture">
