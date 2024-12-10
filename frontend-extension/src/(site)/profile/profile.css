@@ -73,23 +73,3 @@ body {
 .profile-edit:hover {
   color: #0056b3;
 }
-
-.profile-header {
-  margin-bottom: 20px;
-  background-color: transparent;
-  padding: 0;
-}
-
-.back-button {
-  background-color: transparent;
-  border: none;
-  color: #007bff;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.back-button:hover {
-  text-decoration: underline;
-}

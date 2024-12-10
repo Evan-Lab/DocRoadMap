@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { MdArrowBack } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import "./profile.css";
 
@@ -60,11 +59,6 @@ function Profile() {
 
   return (
     <div className="profile-container">
-      <div className="profile-header">
-        <button className="back-button" onClick={handleGoBack}>
-          <MdArrowBack size={24} />
-        </button>
-      </div>
       <h1 className="profile-title">Profil</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <div className="profile-picture">
