@@ -13,9 +13,13 @@ export type SwaggerLogin = {
 export type SwaggerCreateCardProcess = {
     name: string;
     description: string;
+    status: string;
+    userId: number;
+    stepsId: number;
+    endedAt: string;
 };
 
-export type SwaggerCreateDescriptionStep = {
+export type SwaggerCreateStep = {
     name: string;
     description: string;
 };

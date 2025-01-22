@@ -2,41 +2,41 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function IdentityCardProgress() {
-  const [progress, setProgress] = useState(30); // 3 out of 10 steps = 30% pr la petite de barre de progression, à rendre dynamique ca pourrait etre cool de le garder.
+interface CardDemarcheProps {
+  name: string;
+  description: string;
+  progress: number;
+
+}
+
+const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress}) => {
+  // const [progress, setProgress] = useState(30); // 3 out of 10 steps = 30% pr la petite de barre de progression, à rendre dynamique ca pourrait etre cool de le garder.
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleChatBot = () => {
     console.log("Opening chat bot...");
   };
 
-  const handleContinue = () => {
-    setModalVisible(true);
-    console.log("Continuing to next step...");
-  };
-
   return (
     <View style={styles.card}>
       <View style={styles.cardHeader}>
         <Icon name="credit-card" size={24} color="white" />
-        <Text style={styles.headerTitle}>Carte d'identité</Text>
+        <Text style={styles.headerTitle}>{name}</Text>
       </View>
       <View style={styles.cardContent}>
-        <Text style={styles.contentTitle}>Ma demande de carte d'identité</Text>
+        <Text style={styles.contentTitle}>{description}</Text>
         <View style={styles.progressBarContainer}>
           <View style={[styles.progressBar, { width: `${progress}%` }]} />
         </View>
-        <Text style={styles.progressText}>3 étapes sur 10 validées</Text>
+        <Text style={styles.progressText}>{`${progress}% completed`}</Text>
       </View>
       <View style={styles.cardFooter}>
         <TouchableOpacity style={styles.chatButton} onPress={handleChatBot}>
           <Icon name="message-text" size={16} color="#007AFF" />
-          <Text style={styles.chatButtonText}>Discuter avec un assistant ?</Text>
+          <Text style={styles.chatButtonText}>Chat with Assistant</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.continueButton} onPress={handleContinue}>
-          <Text style={styles.continueButtonText}>Continuer</Text>
-          {/* permet de rendre visible le modal qui se trouve en dessous.*/}
-          {/* A rendre dynamique, si on est à 100% on affiche "Terminé" a la place de continuer et on archive la demande*/}
+        <TouchableOpacity style={styles.continueButton} onPress={() => {setModalVisible(true) }}>
+          <Text style={styles.continueButtonText}>{progress < 100 ? 'Continue' : 'Complete'}</Text>
         </TouchableOpacity>
       </View>
 
@@ -48,23 +48,23 @@ export default function IdentityCardProgress() {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Informations supplémentaires</Text>
-            <Text style={styles.modalDescription}>
-              Voici plus de détails sur votre demande de carte d'identité. 
-              Vous avez complété 3 étapes sur 10. Continuez pour finaliser votre demande.
-            </Text>
+            <Text style={styles.modalTitle}>More Details</Text>
+            <Text style={styles.modalDescription}>{description}</Text>
             <TouchableOpacity
               style={styles.closeButton}
               onPress={() => setModalVisible(false)}
             >
-              <Text style={styles.closeButtonText}>Fermer</Text>
+              <Text style={styles.closeButtonText}>Close</Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
     </View>
   );
-}
+};
+
+export default CardDemarche;
+
 
 const styles = StyleSheet.create({
   card: {

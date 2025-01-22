@@ -9,9 +9,9 @@ const ProfileCard = () => {
   const [description, setDescription] = useState(
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget aliquam ultricies.'
   );
-  const [firstname, setFirstname] = useState('John');
-  const [lastname, setLastname] = useState('Doe');
-  const [email, setEmail] = useState('john.doe@example.com');
+  const [firstname, setFirstname] = useState('test');
+  const [lastname, setLastname] = useState('test');
+  const [email, setEmail] = useState('test.test@test.com');
 
   const handleEditClick = () => setIsEditMode(true);
   const handleSaveClick = () => setIsEditMode(false);
@@ -62,17 +62,17 @@ const ProfileCard = () => {
           <View style={styles.descriptionContainer}>
             <Text style={styles.descriptionText}>{description}</Text>
             <TouchableOpacity onPress={handleEditClick}>
-              <Ionicons name="create-outline" size={24} color="white" />
+              <Ionicons name="create-outline" size={24} color="black" />
             </TouchableOpacity>
           </View>
         )}
       </Card.Content>
       <View style={styles.iconRow}>
         <TouchableOpacity onPress={handleSettingsClick}>
-          <MaterialIcons name="settings" size={28} color="white" />
+          <MaterialIcons name="settings" size={28} color="black" />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleExitClick}>
-          <Ionicons name="exit-outline" size={28} color="white" />
+          <Ionicons name="exit-outline" size={28} color="black" />
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -82,6 +82,7 @@ const ProfileCard = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    backgroundColor:"#f2f2f2"
   },
   imageContainer: {
     alignItems: 'center',
@@ -90,6 +91,7 @@ const styles = StyleSheet.create({
   cardContent: {
     alignItems: 'center',
     marginBottom: 15,
+    backgroundColor:"#f2f2f2"
   },
   image: {
     width: 150,
@@ -101,12 +103,12 @@ const styles = StyleSheet.create({
   },
   nameText: {
     fontSize: 20,
-    color: 'white',
+    color: 'black',
     marginBottom: 5,
   },
   infoText: {
     fontSize: 16,
-    color: 'white',
+    color: 'black',
   },
   editDescriptionContainer: {
     flexDirection: 'column',
@@ -115,9 +117,9 @@ const styles = StyleSheet.create({
   },
   editDescriptionInput: {
     fontSize: 16,
-    color: 'white',
+    color: 'black',
     borderWidth: 1,
-    borderColor: 'white',
+    borderColor: 'black',
     borderRadius: 8,
     paddingHorizontal: 10,
     paddingVertical: 5,
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
   },
   descriptionText: {
     fontSize: 16,
-    color: 'white',
+    color: 'black',
     flex: 1,
     marginRight: 10,
   },
