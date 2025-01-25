@@ -2,13 +2,15 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { StepsService } from './steps.service';
 import { CreateStepDto } from './dto/create-step.dto';
 import { UpdateStepDto } from './dto/update-step.dto';
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { Status } from 'src/enum/status.enum';
 
 @Controller('steps')
 export class StepsController {
   constructor(private readonly stepsService: StepsService) {}
 
   @Post('create')
+  @ApiBearerAuth()
   @ApiTags('Steps')
   @ApiCreatedResponse({ 
     description: 'The Step has been successfully created.',
@@ -21,6 +23,7 @@ export class StepsController {
   }
 
   @Get('all')
+  @ApiBearerAuth()
   @ApiTags('Steps')
   @ApiOkResponse({
     description: 'The Steps has been successfully retrieved.',
@@ -33,6 +36,7 @@ export class StepsController {
   }
 
   @Get(':id')
+  @ApiBearerAuth()
   @ApiTags('Steps')
   @ApiOkResponse({
     description: 'The Step has been successfully retrieved.',
@@ -45,11 +49,25 @@ export class StepsController {
     return this.stepsService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch('end-status/:id')
+  @ApiBearerAuth()
   @ApiTags('Steps')
   @ApiOkResponse({
     description: 'The Step has been successfully updated.',
-    type: CreateStepDto,
+    isArray: false
+  })
+  @ApiNotFoundResponse({ description: 'Step Not Found' })
+  @ApiBadRequestResponse({ description: 'Bad Request' })
+  endStep(@Param('id') id: string) {
+    return this.stepsService.update(+id, { status: Status.COMPLETED, endedAt: new Date() });
+  }
+
+  @Patch(':id')
+  @ApiBearerAuth()
+  @ApiTags('Steps')
+  @ApiOkResponse({
+    description: 'The Step has been successfully updated.',
+    type: UpdateStepDto,
     isArray: false
   })
   @ApiNotFoundResponse({ description: 'Step Not Found' })
@@ -59,6 +77,7 @@ export class StepsController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @ApiTags('Steps')
   @ApiOkResponse({
     description: 'The Step has been successfully deleted.',

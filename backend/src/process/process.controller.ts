@@ -2,13 +2,15 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ProcessService } from './process.service';
 import { CreateProcessDto } from './dto/create-process.dto';
 import { UpdateProcessDto } from './dto/update-process.dto';
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { Status } from 'src/enum/status.enum';
 
 @Controller('process')
 export class ProcessController {
   constructor(private readonly processService: ProcessService) {}
 
   @Post('create')
+  @ApiBearerAuth()
   @ApiTags('Process')
   @ApiCreatedResponse({ 
     description: 'The Process has been successfully created.',
@@ -20,7 +22,21 @@ export class ProcessController {
     return this.processService.create(createProcessDto);
   }
 
+  @Post('end-process/:id')
+  @ApiBearerAuth()
+  @ApiTags('Process')
+  @ApiOkResponse({
+    description: 'The Process has been successfully ended.',
+    isArray: false
+  })
+  @ApiBadRequestResponse({ description: 'Bad Request' })
+  @ApiNotFoundResponse({ description: 'Process Not Found' })
+  endProcess(@Param('id') id: string) {
+    return this.processService.update(+id, { status: Status.COMPLETED, endedAt: new Date() });
+  }
+
   @Get('all')
+  @ApiBearerAuth()
   @ApiTags('Process')
   @ApiOkResponse({
     description: 'The Processes has been successfully retrieved.',
@@ -33,6 +49,7 @@ export class ProcessController {
   }
 
   @Get(':id')
+  @ApiBearerAuth()
   @ApiTags('Process')
   @ApiOkResponse({
     description: 'The Process has been successfully retrieved.',
@@ -46,6 +63,7 @@ export class ProcessController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
   @ApiTags('Process')
   @ApiOkResponse({
     description: 'The Process has been successfully updated.',
@@ -59,6 +77,7 @@ export class ProcessController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   @ApiTags('Process')
   @ApiOkResponse({
     description: 'The Process has been successfully deleted.',
