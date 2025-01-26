@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "manifest_version": 3,
   "name": "DocRoadMap Extension",
-  "description": "This is the DocRoadMap Extension fro Browser",
+  "description": "This is the DocRoadMap Extension for Browser",
   "action": {
     "default_popup": "js/index.html",
     "default_title": "DocRoadMap Extension"
