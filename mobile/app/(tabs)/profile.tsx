@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { Image, StyleSheet, View, ScrollView, TouchableOpacity } from 'react-native';
 import { Button, Card, Text, TextInput } from 'react-native-paper';
 import { FontAwesome, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import UserContext from '@/constants/Context';
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { router } from "expo-router"
+import request from '@/constants/Request';
+
 
 const ProfileCard = () => {
   const MAX_DESCRIPTION_LENGTH = 150;
@@ -9,9 +14,11 @@ const ProfileCard = () => {
   const [description, setDescription] = useState(
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget aliquam ultricies.'
   );
-  const [firstname, setFirstname] = useState('test');
-  const [lastname, setLastname] = useState('test');
-  const [email, setEmail] = useState('test.test@test.com');
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [email, setEmail] = useState('');
+  const userCtx = useContext(UserContext)
+  const [error, setError] = useState<string | null>(null);
 
   const handleEditClick = () => setIsEditMode(true);
   const handleSaveClick = () => setIsEditMode(false);
@@ -25,9 +32,38 @@ const ProfileCard = () => {
     console.log("Settings clicked");
   };
 
-  const handleExitClick = () => {
-    console.log("Exit clicked");
-  };
+  const handleLogout = useCallback(async () => {
+    await AsyncStorage.removeItem("user", () => {
+      userCtx.setUser(null)
+      router.replace("/connexion")
+    })
+  }, [userCtx.user])
+
+  const updateProfile = useCallback(async () => {
+    setError(null);
+
+    try {
+        const registrationResponse = await request.infoProfile();
+        console.log('Registration Response:', registrationResponse);
+
+        if (registrationResponse.error) {
+            setError(registrationResponse.error);
+            return;
+        }
+        const userProfile = registrationResponse.data;
+        setEmail(userProfile.email);
+        setFirstname(userProfile.firstName);
+        setLastname(userProfile.lastName);
+
+    } catch (error) {
+        setError('There is an error, please check your information');
+    }
+  }, [firstname, lastname, email]);
+
+  useEffect(() => {
+    updateProfile();
+  }, [error])
+
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -71,7 +107,7 @@ const ProfileCard = () => {
         <TouchableOpacity onPress={handleSettingsClick}>
           <MaterialIcons name="settings" size={28} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleExitClick}>
+        <TouchableOpacity onPress={handleLogout}>
           <Ionicons name="exit-outline" size={28} color="black" />
         </TouchableOpacity>
       </View>
@@ -82,7 +118,8 @@ const ProfileCard = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    backgroundColor:"#f2f2f2"
+    backgroundColor:"#f2f2f2",
+    paddingTop: 100,
   },
   imageContainer: {
     alignItems: 'center',

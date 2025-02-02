@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingVi
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import request from '@/constants/Request';
+import { useRouter } from 'expo-router';
+import { BackHandler } from 'react-native';
 
 
 export default function Register() {
@@ -11,12 +13,25 @@ export default function Register() {
     const [email, setEmail] = useState("");
     const [lastname, setLastname] = useState("");
     const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
     useEffect(() => {
         if (error) {
             alert(error);
         }
-    }, [error]);
+    
+        const onBackPress = () => {
+            router.replace('/connexion');
+            return true;
+        };
+    
+        BackHandler.addEventListener('hardwareBackPress', onBackPress);
+    
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        };
+    }, [error, router]);
+    
 
     const handleSignUp = useCallback(async () => {
         setError(null);
@@ -57,7 +72,7 @@ export default function Register() {
             <View style={styles.container}>
 
                 <View style={styles.inputContainer}>
-                    <Ionicons name="person" size={24} color={COLORS.white} style={{ paddingRight: 10 }} />
+                    <Ionicons name="person" size={24} color="grey" style={{ paddingRight: 10 }} />
                     <TextInput 
                         style={styles.input} 
                         placeholder="First Name" 
@@ -67,7 +82,7 @@ export default function Register() {
                     />
                 </View>
                 <View style={styles.inputContainer}>
-                    <Ionicons name="person" size={24} color={COLORS.white} style={{ paddingRight: 10 }} />
+                    <Ionicons name="person" size={24} color="grey" style={{ paddingRight: 10 }} />
                     <TextInput 
                         style={styles.input} 
                         placeholder="Last Name" 
@@ -77,7 +92,7 @@ export default function Register() {
                     />
                 </View>
                 <View style={styles.inputContainer}>
-                    <Ionicons name="mail" size={24} color={COLORS.white} style={{ paddingRight: 10 }} />
+                    <Ionicons name="mail" size={24} color="grey" style={{ paddingRight: 10 }} />
                     <TextInput 
                         style={styles.input} 
                         placeholder="Email" 
@@ -87,7 +102,7 @@ export default function Register() {
                     />
                 </View>
                 <View style={styles.inputContainer}>
-                    <Ionicons name="lock-closed" size={24} color="white" style={{ paddingRight: 10 }} />
+                    <Ionicons name="lock-closed" size={24} color="grey" style={{ paddingRight: 10 }} />
                     <TextInput 
                         style={[styles.input, { paddingRight: 40 }]} 
                         placeholder="Password" 
@@ -126,10 +141,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     input: {
-        width: '95%',
+        width: '85%',
         padding: 10,
         marginVertical: 10,
-        backgroundColor: COLORS.grey,
+        backgroundColor: COLORS.black,
         borderRadius: 5,
         borderColor: COLORS.black,
         borderWidth: 1,
@@ -143,11 +158,11 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     customButton: {
-        backgroundColor: COLORS.grey,
+        backgroundColor: '#3498db',
         borderRadius: 5,
         paddingVertical: 12,
         paddingHorizontal: 40,
-        marginVertical: 10,
+        marginVertical: 30,
         alignItems: 'center',
         justifyContent: 'center',
     },

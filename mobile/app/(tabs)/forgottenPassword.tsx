@@ -1,8 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { View, TextInput, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
+import { BackHandler } from 'react-native';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (error) {
+        alert(error);
+    }
+
+    const onBackPress = () => {
+        router.replace('/connexion');
+        return true;
+    };
+
+    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+    return () => {
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    };
+  }, [error, router]);
 
   const handleSend = () => {
     console.log('Email:', email);
@@ -50,7 +71,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
-    color: COLORS.black,
+    color: '#3498db',
   },
   input: {
     height: 50,
@@ -60,16 +81,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 15,
     color: COLORS.white,
-    backgroundColor: COLORS.grey,
+    backgroundColor: COLORS.white,
   },
   buttonContainer: {
     position: 'absolute',
     bottom: 20,
     right: 20,
-    backgroundColor: COLORS.grey,
+    backgroundColor: COLORS.white,
   },
   customButton: {
-    backgroundColor: COLORS.grey,
+    backgroundColor: '#3498db',
     borderRadius: 5,
     paddingVertical: 12,
     paddingHorizontal: 20,

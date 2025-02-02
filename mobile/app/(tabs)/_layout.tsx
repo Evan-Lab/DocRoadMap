@@ -15,8 +15,63 @@ export default function TabLayout() {
         headerShown: false,
       }}>
 
-<Tabs.Screen
+      <Tabs.Screen
+        name="register"
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          href: null,
+          headerShown: false,
+          tabBarStyle: {
+            display: "none"
+          }
+        }}
+      />
+      <Tabs.Screen
+        name="connexion"
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          href: null,
+          headerShown: false,
+          tabBarStyle: {
+            display: "none"
+          }
+        }}
+      />
+      <Tabs.Screen
+        name="emailConfirmation"
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          href: null,
+          headerShown: false,
+          tabBarStyle: {
+            display: "none"
+          }
+        }}
+      />
+      <Tabs.Screen
+        name="forgottenPassword"
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          href: null,
+          headerShown: false,
+          tabBarStyle: {
+            display: "none"
+          }
+        }}
+      />
+       <Tabs.Screen
         name="index"
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          href: null,
+          headerShown: false,
+          tabBarStyle: {
+            display: "none"
+          }
+        }}
+      />
+      <Tabs.Screen
+        name="home"
         options={{
           title: 'Home',
           tabBarIcon: ({ color, focused }) => (
@@ -25,19 +80,19 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="register"
+        name="profile"
         options={{
-          title: 'Register',
+          title: 'Profile',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+            <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="steps"
         options={{
-          title: 'profile',
-          tabBarIcon: ({ color, focused }) => (
+          title: 'Steps',
+          tabBarIcon: ({color, focused }) => (
             <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
           ),
         }}

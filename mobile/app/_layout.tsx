@@ -49,9 +49,9 @@ export default function RootLayout() {
         } catch (e) {
           setUser(null)
         }}})()
-      /*if (user === null) {
-        router.replace("/login")
-      }*/
+      if (user === null) {
+        router.replace("/connexion")
+      }
     }, [user])
   
     return (
