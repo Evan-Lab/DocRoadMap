@@ -56,7 +56,7 @@ export class UpdateProcessDto extends PartialType(CreateProcessDto) {
     })
     @IsDate()
     @IsOptional()
-    public updatedAt?: Date;
+    public updatedAt?: Date = new Date();
 
     @ApiProperty({
         description: 'The date when the process was ended',

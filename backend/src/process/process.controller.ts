@@ -3,6 +3,7 @@ import { ProcessService } from './process.service';
 import { CreateProcessDto } from './dto/create-process.dto';
 import { UpdateProcessDto } from './dto/update-process.dto';
 import { ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { Status } from 'src/enum/status.enum';
 
 @Controller('process')
 export class ProcessController {
@@ -19,6 +20,19 @@ export class ProcessController {
   @ApiBadRequestResponse({ description: 'Bad Request' })
   create(@Body() createProcessDto: CreateProcessDto) {
     return this.processService.create(createProcessDto);
+  }
+
+  @Post('end-process/:id')
+  @ApiBearerAuth()
+  @ApiTags('Process')
+  @ApiOkResponse({
+    description: 'The Process has been successfully ended.',
+    isArray: false
+  })
+  @ApiBadRequestResponse({ description: 'Bad Request' })
+  @ApiNotFoundResponse({ description: 'Process Not Found' })
+  endProcess(@Param('id') id: string) {
+    return this.processService.update(+id, { status: Status.COMPLETED, endedAt: new Date() });
   }
 
   @Get('all')

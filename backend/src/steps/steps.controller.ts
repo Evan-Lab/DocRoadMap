@@ -3,6 +3,7 @@ import { StepsService } from './steps.service';
 import { CreateStepDto } from './dto/create-step.dto';
 import { UpdateStepDto } from './dto/update-step.dto';
 import { ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { Status } from 'src/enum/status.enum';
 
 @Controller('steps')
 export class StepsController {
@@ -48,12 +49,25 @@ export class StepsController {
     return this.stepsService.findOne(+id);
   }
 
+  @Patch('end-status/:id')
+  @ApiBearerAuth()
+  @ApiTags('Steps')
+  @ApiOkResponse({
+    description: 'The Step has been successfully updated.',
+    isArray: false
+  })
+  @ApiNotFoundResponse({ description: 'Step Not Found' })
+  @ApiBadRequestResponse({ description: 'Bad Request' })
+  endStep(@Param('id') id: string) {
+    return this.stepsService.update(+id, { status: Status.COMPLETED, endedAt: new Date() });
+  }
+
   @Patch(':id')
   @ApiBearerAuth()
   @ApiTags('Steps')
   @ApiOkResponse({
     description: 'The Step has been successfully updated.',
-    type: CreateStepDto,
+    type: UpdateStepDto,
     isArray: false
   })
   @ApiNotFoundResponse({ description: 'Step Not Found' })

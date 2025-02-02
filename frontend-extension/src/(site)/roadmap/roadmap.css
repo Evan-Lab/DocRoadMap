@@ -46,3 +46,23 @@ body {
 .menu-buttons button:hover {
   background-color: #0056b3;
 }
+
+.back-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 27px;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.back-button:hover {
+  background-color: white;
+}
