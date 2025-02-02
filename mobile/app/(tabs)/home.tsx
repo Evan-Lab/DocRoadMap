@@ -69,7 +69,7 @@ export default function HomePage() {
             <TouchableOpacity onPress={handleMenuPress} style={styles.menuButton}>
                 <Text style={styles.menuButtonText}>☰</Text>
             </TouchableOpacity>
-            <Text style={styles.headerTitle}>My App</Text>
+            <Text style={styles.headerTitle}>DocRoadmap</Text>
         </View>
 
         <ScrollView style={styles.content}>

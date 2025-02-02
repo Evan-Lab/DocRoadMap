@@ -64,7 +64,7 @@ export default function ConnectionPage() {
             />
             <TextInput
             style={styles.input}
-            placeholder="email"
+            placeholder="Email"
             placeholderTextColor="#D3D3D3"
             value={email}
             onChangeText={setEmail}

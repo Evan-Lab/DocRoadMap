@@ -118,7 +118,8 @@ const ProfileCard = () => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    backgroundColor:"#f2f2f2"
+    backgroundColor:"#f2f2f2",
+    paddingTop: 100,
   },
   imageContainer: {
     alignItems: 'center',

@@ -105,7 +105,7 @@ export default function StepForProcess() {
           <View style={styles.container}>
           
           <View style={styles.inputContainer}>
-            <Ionicons name="document-text" size={24} color={COLORS.white} style={{ paddingRight: 10 }} />
+            <Ionicons name="document-text" size={24} color="grey" style={{ paddingRight: 10 }} />
             <TextInput 
               style={styles.input} 
               placeholder="Step Name" 
@@ -117,7 +117,7 @@ export default function StepForProcess() {
           </View>
 
           <View style={styles.inputContainer}>
-            <Ionicons name="clipboard" size={24} color={COLORS.white} style={{ paddingRight: 10 }} />
+            <Ionicons name="clipboard" size={24} color="grey" style={{ paddingRight: 10 }} />
             <TextInput 
               style={[styles.input, styles.descriptionInput]} 
               placeholder="Step Description" 
@@ -156,7 +156,7 @@ export default function StepForProcess() {
             }}
             ListEmptyComponent={
               <View style={styles.emptyContainer}>
-                <Ionicons name="list" size={48} color={COLORS.grey} />
+                <Ionicons name="list" size={48} color="grey" />
                 <Text style={styles.emptyText}>No steps added yet</Text>
               </View>
             }
@@ -185,9 +185,10 @@ const styles = StyleSheet.create({
     backgroundColor:"#f2f2f2",
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: 100,
   },
   input: {
-    width: '95%',
+    width: '85%',
     padding: 10,
     marginVertical: 10,
     backgroundColor: COLORS.grey,
@@ -204,7 +205,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   customButton: {
-    backgroundColor: COLORS.grey,
+    backgroundColor: "#3498db",
     borderRadius: 5,
     paddingVertical: 12,
     paddingHorizontal: 40,
@@ -213,7 +214,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonText: {
-    color: COLORS.black,
+    color: COLORS.white,
     fontSize: 18,
   },
   buttonDisabled: {
@@ -258,6 +259,6 @@ const styles = StyleSheet.create({
   emptyText: {
     marginTop: 12,
     fontSize: 16,
-    color: COLORS.grey,
+    color: "grey",
   },
 });
