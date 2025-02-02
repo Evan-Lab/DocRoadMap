@@ -19,12 +19,11 @@ function Register() {
     }
 
     axios
-      .post("http://localhost:3000/users/register", {
+      .post("http://localhost:3000/auth/register", {
         firstName: firstName,
         lastName: lastName,
         email: email,
         password: password,
-        processIds: [],
       })
       .then((response) => {
         navigate("/account-confirmation");
@@ -37,6 +36,9 @@ function Register() {
 
   return (
     <div className="register-container">
+      <button className="back-button" onClick={() => navigate(-1)}>
+        &#8592;
+      </button>
       <h1>Inscription</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <div className="input-group">
@@ -79,7 +81,9 @@ function Register() {
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
       </div>
-      <button onClick={handleRegister}>S'inscrire</button>
+      <button className="register-button" onClick={handleRegister}>
+        S'inscrire
+      </button>
     </div>
   );
 }
