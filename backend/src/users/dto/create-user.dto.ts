@@ -37,12 +37,4 @@ export class CreateUserDto {
     @IsString()
     @IsNotEmpty()
     public password: string;
-
-    @ApiProperty({
-        description: 'The processes of the user',
-        type: '[number]',
-        required: false
-    })
-    @IsOptional()
-    public processIds: number[];
 }

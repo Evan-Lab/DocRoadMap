@@ -15,13 +15,15 @@ function Login({ onLogin }: LoginProps) {
 
   const handleLogin = () => {
     axios
-      .post("http://localhost:3000/users/login", {
+      .post("http://localhost:3000/auth/login", {
         email: email,
         password: password,
       })
       .then((response) => {
+        const token = response.data.accessToken;
+        localStorage.setItem("token", token);
         onLogin();
-        navigate("/connected");
+        navigate("/docroadmap");
       })
       .catch((error) => {
         console.error("Erreur lors de la connexion :", error);
@@ -31,6 +33,9 @@ function Login({ onLogin }: LoginProps) {
 
   return (
     <div className="login-container">
+      <button className="back-button" onClick={() => navigate(-1)}>
+        &#8592;
+      </button>
       <h1>Connexion</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <div className="input-group">
@@ -49,7 +54,9 @@ function Login({ onLogin }: LoginProps) {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <button onClick={handleLogin}>Se connecter</button>
+      <button className="login-button" onClick={handleLogin}>
+        Se connecter
+      </button>
     </div>
   );
 }

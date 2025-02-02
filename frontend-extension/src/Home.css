@@ -47,9 +47,9 @@ body {
 }
 
 .home-container button:last-child {
-  background-color: #28a745;
+  background-color: #007bff;
 }
 
 .home-container button:last-child:hover {
-  background-color: #218838;
+  background-color: #0056b3;
 }

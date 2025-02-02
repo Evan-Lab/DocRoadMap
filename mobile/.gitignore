@@ -12,6 +12,7 @@ expo-auth-session
 expo-web-browser
 react-native-paper
 package-lock.json
+.eslintrc.js
 
 # Native
 *.orig.*
