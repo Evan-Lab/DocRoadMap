@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
         width: '85%',
         padding: 10,
         marginVertical: 10,
-        backgroundColor: COLORS.black,
+        backgroundColor: COLORS.grey,
         borderRadius: 5,
         borderColor: COLORS.black,
         borderWidth: 1,
