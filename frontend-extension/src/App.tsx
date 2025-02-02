@@ -10,6 +10,7 @@ import Menu from "./(site)/home/home";
 import Login from "./(site)/login/login";
 import Profile from "./(site)/profile/profile";
 import Register from "./(site)/register/register";
+import Roadmap from "./(site)/roadmap/roadmap";
 import Home from "./Home";
 
 function App() {
@@ -46,8 +47,9 @@ function App() {
             path="/account-confirmation"
             element={<AccountConfirmation />}
           />
-          <Route path="/profile" element={<Profile />} />
 
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/roadmap" element={<Roadmap />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
