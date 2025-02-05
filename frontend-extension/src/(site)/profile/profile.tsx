@@ -53,10 +53,6 @@ function Profile() {
     fetchUserProfile();
   }, []);
 
-  const handleGoBack = () => {
-    navigate(-1);
-  };
-
   return (
     <div className="profile-container">
       <button className="back-button" onClick={() => navigate(-1)}>
