@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./register.css";
 
@@ -37,7 +38,7 @@ function Register() {
   return (
     <div className="register-container">
       <button className="back-button" onClick={() => navigate(-1)}>
-        &#8592;
+        <FaArrowLeft />
       </button>
       <h1>Inscription</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}

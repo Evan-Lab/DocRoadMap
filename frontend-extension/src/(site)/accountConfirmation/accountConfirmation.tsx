@@ -8,6 +8,10 @@ function AccountConfirmation() {
     navigate("/login");
   };
 
+  const handleResendEmail = () => {
+    alert("Email de confirmation renvoyé !");
+  };
+
   return (
     <div className="confirmation-wrapper">
       <div className="confirmation-container">
@@ -21,10 +25,14 @@ function AccountConfirmation() {
           Si vous ne trouvez pas l'email, vérifiez également dans vos courriers
           indésirables.
         </p>
-
-        <button className="login-button" onClick={handleLoginRedirect}>
-          Se connecter
-        </button>
+        <div className="button-group">
+          <button className="login-button" onClick={handleLoginRedirect}>
+            Se connecter
+          </button>
+          <button className="resend-button" onClick={handleResendEmail}>
+            Renvoyer l'email
+          </button>
+        </div>
       </div>
     </div>
   );

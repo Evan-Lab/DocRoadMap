@@ -39,19 +39,39 @@
   margin-bottom: 15px;
 }
 
-.login-button {
-  background-color: #007bff;
-  color: white;
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.login-button,
+.resend-button {
   padding: 8px 16px;
   font-size: 14px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  display: inline-block;
+}
+
+.login-button {
+  background-color: #007bff;
+  color: white;
 }
 
 .login-button:hover {
   background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.resend-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.resend-button:hover {
+  background-color: #218838;
   transform: scale(1.05);
 }

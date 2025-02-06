@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
 
@@ -34,7 +35,7 @@ function Login({ onLogin }: LoginProps) {
   return (
     <div className="login-container">
       <button className="back-button" onClick={() => navigate(-1)}>
-        &#8592;
+        <FaArrowLeft />
       </button>
       <h1>Connexion</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
