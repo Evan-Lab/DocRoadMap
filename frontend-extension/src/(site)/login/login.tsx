@@ -16,48 +16,50 @@ function Login({ onLogin }: LoginProps) {
 
   const handleLogin = () => {
     axios
-      .post("http://localhost:3000/auth/login", {
-        email: email,
-        password: password,
-      })
+      .post("http://localhost:3000/auth/login", { email, password })
       .then((response) => {
-        const token = response.data.accessToken;
-        localStorage.setItem("token", token);
+        localStorage.setItem("token", response.data.accessToken);
         onLogin();
         navigate("/docroadmap");
       })
-      .catch((error) => {
-        console.error("Erreur lors de la connexion :", error);
+      .catch(() => {
         setError("Email ou mot de passe incorrect");
       });
   };
 
   return (
-    <div className="login-container">
-      <button className="back-button" onClick={() => navigate(-1)}>
-        <FaArrowLeft />
-      </button>
-      <h1>Connexion</h1>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <div className="input-group">
-        <label>Email</label>
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+    <div className="login-page">
+      <div className="login-container">
+        <button className="back-button" onClick={() => navigate(-1)}>
+          <FaArrowLeft />
+        </button>
+        <h1>Connexion</h1>
+        {error && <p className="error-message">{error}</p>}
+        <div className="input-group">
+          <label>Email</label>
+          <input
+            type="email"
+            placeholder="Entrez votre email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="input-group">
+          <label>Mot de passe</label>
+          <input
+            type="password"
+            placeholder="Entrez votre mot de passe"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <button className="login-button" onClick={handleLogin}>
+          Se connecter
+        </button>
+        <p className="signup-text">
+          Pas encore de compte ? <a href="/register">Inscrivez-vous</a>
+        </p>
       </div>
-      <div className="input-group">
-        <label>Mot de passe</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <button className="login-button" onClick={handleLogin}>
-        Se connecter
-      </button>
     </div>
   );
 }
