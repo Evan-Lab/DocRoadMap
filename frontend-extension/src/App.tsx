@@ -6,11 +6,14 @@ import {
   Routes,
 } from "react-router-dom";
 import AccountConfirmation from "./(site)/accountConfirmation/accountConfirmation";
+import Chatbot from "./(site)/chatbot/chatbot";
 import Menu from "./(site)/home/home";
 import Login from "./(site)/login/login";
 import Profile from "./(site)/profile/profile";
 import Register from "./(site)/register/register";
-import Roadmap from "./(site)/roadmap/roadmap";
+import Roadmap from "./(site)/roadmap/roadmapHome";
+import CreateRoadmap from "./(site)/roadmapCreation/roadmapCreation";
+import RoadmapView from "./(site)/roadmapView/roadmapView";
 import Home from "./Home";
 
 function App() {
@@ -47,6 +50,9 @@ function App() {
             path="/account-confirmation"
             element={<AccountConfirmation />}
           />
+          <Route path="/roadmap-view" element={<RoadmapView />} />
+          <Route path="/chatbot" element={<Chatbot />} />
+          <Route path="/create-roadmap" element={<CreateRoadmap />} />
 
           <Route path="/profile" element={<Profile />} />
           <Route path="/roadmap" element={<Roadmap />} />

@@ -7,17 +7,3 @@
   height: 100vh;
   background-color: #f0f0f0;
 }
-
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: green;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: darkgreen;
-}
