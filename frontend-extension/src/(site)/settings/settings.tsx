@@ -1,4 +1,4 @@
-import { FaGlobe, FaSignOutAlt, FaUser } from "react-icons/fa";
+import { FaArrowLeft, FaGlobe, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./settings.css";
 
@@ -20,6 +20,9 @@ const Settings: React.FC = () => {
 
   return (
     <div className="roadmap-container">
+      <button className="back-button" onClick={() => navigate(-1)}>
+        <FaArrowLeft />
+      </button>
       <h1 className="roadmap-title">DocRoadMap paramètres</h1>
       <div className="roadmap-buttons">
         <button onClick={goToProfile}>

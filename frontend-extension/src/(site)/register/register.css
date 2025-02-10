@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100%;
   background: linear-gradient(to bottom, #f0f2f5, #cfd9df);
 }
 
@@ -61,12 +61,12 @@
 }
 
 .input-group input {
-  width: 90%; 
+  width: 90%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 16px;
-  text-align: center; 
+  text-align: center;
   transition: border-color 0.3s ease;
 }
 
@@ -102,7 +102,7 @@
 
 .login-text {
   margin-top: 10px;
-  margin-bottom: 0; 
+  margin-bottom: 0;
   font-size: 14px;
 }
 

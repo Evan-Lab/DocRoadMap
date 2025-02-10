@@ -6,4 +6,9 @@
   align-items: center;
   height: 100vh;
   background-color: #f0f0f0;
+
+  max-width: 550px;
+  max-height: 225px;
+
+  margin: 0 auto;
 }
