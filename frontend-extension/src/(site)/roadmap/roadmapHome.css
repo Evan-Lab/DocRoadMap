@@ -27,6 +27,7 @@ body {
 .roadmap-buttons {
   display: flex;
   gap: 16px;
+  justify-content: center;
 }
 
 .roadmap-buttons button {
@@ -43,6 +44,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   width: 120px;
   height: 120px;
 }
