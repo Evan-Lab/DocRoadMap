@@ -1,8 +1,8 @@
-import { FaEye, FaMap, FaRobot, FaUser } from "react-icons/fa";
+import { FaCog, FaEye, FaMap, FaRobot } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import "./roadmapHome.css";
+import "./docroadmap.css";
 
-const Roadmap: React.FC = () => {
+const Docroadmap: React.FC = () => {
   const navigate = useNavigate();
 
   const goToChatbot = () => {
@@ -17,8 +17,8 @@ const Roadmap: React.FC = () => {
     navigate("/roadmap-view");
   };
 
-  const goToProfile = () => {
-    navigate("/profile");
+  const goToSettings = () => {
+    navigate("/settings");
   };
 
   return (
@@ -40,13 +40,13 @@ const Roadmap: React.FC = () => {
           <span className="button-text">Voir les Roadmaps</span>
         </button>
 
-        <button onClick={goToProfile}>
-          <FaUser className="button-icon" />
-          <span className="button-text">Profil</span>
+        <button onClick={goToSettings}>
+          <FaCog className="button-icon" />
+          <span className="button-text">Paramètres</span>
         </button>
       </div>
     </div>
   );
 };
 
-export default Roadmap;
+export default Docroadmap;
