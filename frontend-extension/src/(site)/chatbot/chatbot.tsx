@@ -11,14 +11,14 @@ const Chatbot: React.FC = () => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const API_KEY = "PROVISORY-API-KEY";
+  const API_KEY = "API_KEY";
 
   const sendMessage = async () => {
     if (!input.trim()) return;
 
-    const newMessages = [
+    const newMessages: { text: string; sender: "user" | "bot" }[] = [
       ...messages,
-      { text: input, sender: "user" as "user" },
+      { text: input, sender: "user" },
     ];
     setMessages(newMessages);
     setInput("");
@@ -54,13 +54,15 @@ const Chatbot: React.FC = () => {
         if (done) break;
 
         const chunk = decoder.decode(value, { stream: true });
-
         const lines = chunk
           .split("\n")
           .filter((line) => line.startsWith("data:"));
+
         for (const line of lines) {
           const data = line.replace("data: ", "").trim();
-          if (data === "[DONE]") return;
+          if (data === "[DONE]") {
+            break;
+          }
 
           try {
             const parsedData = JSON.parse(data);
