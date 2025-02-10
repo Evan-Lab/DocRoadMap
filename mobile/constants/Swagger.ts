@@ -30,10 +30,6 @@ export type SwaggerProfileInfo = {
     email: string;
 }
 
-export type TokenLogin = {
-    token: string;
-};
-
 export type SwaggerProcessList = {
     name: string;
     description : string;
