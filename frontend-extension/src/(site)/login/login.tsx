@@ -19,7 +19,7 @@ function Login({ onLogin }: LoginProps) {
 
   const handleLogin = () => {
     axios
-      .post("http://localhost:3000/auth/login", { email, password })
+      .post("http://localhost:8080/auth/login", { email, password })
       .then((response) => {
         localStorage.setItem("token", response.data.accessToken);
         onLogin();

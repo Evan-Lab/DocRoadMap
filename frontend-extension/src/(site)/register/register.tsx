@@ -20,7 +20,7 @@ function Register() {
     }
 
     axios
-      .post("http://localhost:3000/auth/register", {
+      .post("http://localhost:8080/auth/register", {
         firstName,
         lastName,
         email,

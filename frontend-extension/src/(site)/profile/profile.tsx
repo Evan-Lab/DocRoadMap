@@ -3,7 +3,6 @@ import { FaArrowLeft, FaEnvelope, FaLock, FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./profile.css";
 
-
 function Profile() {
   const navigate = useNavigate();
   const [user, setUser] = useState({
@@ -26,7 +25,7 @@ function Profile() {
           throw new Error("Token non disponible. Veuillez vous connecter.");
         }
 
-        const response = await fetch("http://localhost:3000/users/me", {
+        const response = await fetch("http://localhost:8080/users/me", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
