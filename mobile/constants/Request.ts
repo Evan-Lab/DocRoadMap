@@ -26,6 +26,12 @@ const getAccessToken = async () => {
   return await AsyncStorage.getItem('accessToken');
 };
 
+const getId = async (): Promise<number | null> => {
+  const id = await AsyncStorage.getItem('id');
+  return id ? parseInt(id, 10) : null;
+};
+
+
 const request = {
   register: async (data: SwaggerRegister): Promise<SwaggerRequest<SwaggerRegister>> => {
       try {
@@ -137,14 +143,15 @@ const request = {
   },
   create: async (data: SwaggerCreateCardProcess): Promise<SwaggerRequest<SwaggerCreateCardProcess>> => {
     const accessToken = await getAccessToken(); 
+    const id = await getId();
     try {
       const response = await axios.post(
         `${url}/process/create`,
         {
-          name: "id card",
-          description:"ID card process",
+          name: data.name,
+          description: data.description,
           status: "PENDING",
-          userId: 2,
+          userId: id,
           stepsId: 15,
           endedAt: "2024-12-12, 12:00:00",
         },
@@ -178,102 +185,102 @@ const request = {
           return {error: 'Something went wrong. Please try again.',};
       }
   }
-},
-createStep: async (data: SwaggerCreateStep): Promise<SwaggerRequest<SwaggerCreateStep>> => {
-  const accessToken = await getAccessToken();  
-  try {
-    const response = await axios.post(
-      `${url}/steps/create`,
-      {
-        name: data.name,
-        description: data.description
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    return {
-      data: response.data,
-      error: null,
-    };
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const status = error.response?.status;
-      if (status === 400) {
-        return { error: 'Invalid data. Please check your inputs and try again.' };
-      } else if (status === 404) {
-        return { error: 'Process not found. Please check the process ID and try again.' };
-      } else if (status === 403) {
-        return { error: 'Unauthorized access. You do not have permission to add steps.' };
-      } else if (status === 500) {
-        return { error: 'Server error. Please try again later.' };
-      } else {
-        return { error: `Unexpected error: ${status}. Please try again later.` };
-      }
-    } else {
-      return {error: 'Something went wrong. Please try again.',};
-    }
-  }
-},
-infoProfile: async (): Promise<SwaggerRequest<SwaggerProfileInfo>> => {
-  const accessToken = await getAccessToken();
-  try {
-      const headers = {
-          Authorization: `Bearer ${accessToken}`,
-      }
-      const response = await axios.get(`${url}/users/me`, {
-          headers,
-      });
-      console.log(response.data)
-      return {
-          data: response.data,
-          error: null,
-      }
-  } catch (error) {
-      return {
-          error: 'Unauthorized access. You do not have permission.',
-      }
-  }
-},
-stepList: async (): Promise<SwaggerRequest<SwaggerStepList[]>> => {
-  const accessToken = await getAccessToken();
-  try {
-      const headers = {
-        Authorization: `Bearer ${accessToken}`,
-      }
-      const response = await axios.get(`${url}/steps/all`, { headers });
-      console.log(response.data);
-      return {
-          data: response.data,
-          error: null,
-      };
-  } catch (error) {
-      return {
-          error: 'Unauthorized access. You do not have permission.',
-      };
-  }
-},
-processList:  async (): Promise<SwaggerRequest<SwaggerProcessList[]>> => {
-  const accessToken = await getAccessToken();
-  try {
-      const headers = {
-          Authorization: `Bearer ${accessToken}`,
-      }
-      const response = await axios.get(`${url}/process/all`, { headers });
-      console.log(response.data)
-      return {
-          data: response.data,
-          error: null,
-      }
-  } catch (error) {
-      return {
-          error: 'Unauthorized access. You do not have permission.',
-      }
-  }
   },
+  createStep: async (data: SwaggerCreateStep): Promise<SwaggerRequest<SwaggerCreateStep>> => {
+    const accessToken = await getAccessToken();  
+    try {
+      const response = await axios.post(
+        `${url}/steps/create`,
+        {
+          name: data.name,
+          description: data.description
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      return {
+        data: response.data,
+        error: null,
+      };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const status = error.response?.status;
+        if (status === 400) {
+          return { error: 'Invalid data. Please check your inputs and try again.' };
+        } else if (status === 404) {
+          return { error: 'Process not found. Please check the process ID and try again.' };
+        } else if (status === 403) {
+          return { error: 'Unauthorized access. You do not have permission to add steps.' };
+        } else if (status === 500) {
+          return { error: 'Server error. Please try again later.' };
+        } else {
+          return { error: `Unexpected error: ${status}. Please try again later.` };
+        }
+      } else {
+        return {error: 'Something went wrong. Please try again.',};
+      }
+    }
+  },
+  infoProfile: async (): Promise<SwaggerRequest<SwaggerProfileInfo>> => {
+    const accessToken = await getAccessToken();
+    try {
+        const headers = {
+            Authorization: `Bearer ${accessToken}`,
+        }
+        const response = await axios.get(`${url}/users/me`, {
+            headers,
+        });
+        console.log(response.data)
+        return {
+            data: response.data,
+            error: null,
+        }
+    } catch (error) {
+        return {
+            error: 'Unauthorized access. You do not have permission.',
+        }
+    }
+  },
+  stepList: async (): Promise<SwaggerRequest<SwaggerStepList[]>> => {
+    const accessToken = await getAccessToken();
+    try {
+        const headers = {
+          Authorization: `Bearer ${accessToken}`,
+        }
+        const response = await axios.get(`${url}/steps/all`, { headers });
+        console.log(response.data);
+        return {
+            data: response.data,
+            error: null,
+        };
+    } catch (error) {
+        return {
+            error: 'Unauthorized access. You do not have permission.',
+        };
+    }
+  },
+  processList:  async (): Promise<SwaggerRequest<SwaggerProcessList[]>> => {
+    const accessToken = await getAccessToken();
+    try {
+        const headers = {
+            Authorization: `Bearer ${accessToken}`,
+        }
+        const response = await axios.get(`${url}/process/all`, { headers });
+        console.log(response.data)
+        return {
+            data: response.data,
+            error: null,
+        }
+    } catch (error) {
+        return {
+            error: 'Unauthorized access. You do not have permission.',
+        }
+    }
+    },
 }
 export default request;

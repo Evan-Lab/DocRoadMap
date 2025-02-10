@@ -22,6 +22,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
   const [modalVisible, setModalVisible] = useState(false);
   const [steps, setSteps] = useState<Step[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchSteps = useCallback(async () => {
@@ -37,6 +38,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
       setError('Failed to fetch steps. Please try again later.');
     } finally {
       setIsLoading(false);
+      setRefreshing(false);
     }
   }, []);
 
@@ -47,7 +49,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
   const StepItem = ({ item }: { item: Step }) => (
     <View style={styles.stepItem}>
       <View style={styles.stepHeader}>
-        <Ionicons name={item.completed ? "checkbox-marked" : "checkbox-blank"} size={24} color={item.completed ? '#007AFF' : '#D3D3D3'} />
+        <Ionicons name={item.completed ? "checkbox-outline" : "help-outline"} size={24} color={item.completed ? '#007AFF' : '#D3D3D3'} />
         <Text style={styles.stepName}>{item.name}</Text>
       </View>
       <Text style={styles.stepDescription}>{item.description}</Text>
@@ -95,7 +97,10 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
               keyExtractor={(item) => item.id}
               renderItem={({ item }) => <StepItem item={item} />}
               refreshing={isLoading}
-              onRefresh={fetchSteps}
+              onRefresh={() => {
+                setRefreshing(true);
+                fetchSteps();
+              }}
               ListEmptyComponent={
                 <View style={styles.emptyContainer}>
                   <Ionicons name="list" size={48} color="grey" />
