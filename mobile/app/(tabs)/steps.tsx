@@ -144,23 +144,6 @@ export default function StepForProcess() {
               <Text style={styles.buttonText}>Add Step</Text>
             )}
           </TouchableOpacity>
-
-          <FlatList
-            data={steps}
-            keyExtractor={(item) => item.id}
-            renderItem={stepList}
-            refreshing={refreshing}
-            onRefresh={() => {
-              setRefreshing(true);
-              fetchSteps();
-            }}
-            ListEmptyComponent={
-              <View style={styles.emptyContainer}>
-                <Ionicons name="list" size={48} color="grey" />
-                <Text style={styles.emptyText}>No steps added yet</Text>
-              </View>
-            }
-          />
         </View>
         </SafeAreaView>
       </KeyboardAvoidingView>
@@ -185,7 +168,7 @@ const styles = StyleSheet.create({
     backgroundColor:"#f2f2f2",
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 100,
+    paddingTop: 10,
   },
   input: {
     width: '85%',

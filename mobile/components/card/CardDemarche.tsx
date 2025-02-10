@@ -1,17 +1,58 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import request from '@/constants/Request';
 
 interface CardDemarcheProps {
   name: string;
   description: string;
   progress: number;
-
 }
+
+type Step = {
+  id: string;
+  name: string;
+  description: string;
+  completed?: boolean;
+};
 
 const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress}) => {
   // const [progress, setProgress] = useState(30); // 3 out of 10 steps = 30% pr la petite de barre de progression, à rendre dynamique ca pourrait etre cool de le garder.
   const [modalVisible, setModalVisible] = useState(false);
+  const [steps, setSteps] = useState<Step[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchSteps = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const response = await request.stepList();
+      if (response.error) {
+        setError(response.error);
+      } else {
+        setSteps(response.data);
+      }
+    } catch (error) {
+      setError('Failed to fetch steps. Please try again later.');
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchSteps();
+  }, [fetchSteps]);
+
+  const StepItem = ({ item }: { item: Step }) => (
+    <View style={styles.stepItem}>
+      <View style={styles.stepHeader}>
+        <Ionicons name={item.completed ? "checkbox-marked" : "checkbox-blank"} size={24} color={item.completed ? '#007AFF' : '#D3D3D3'} />
+        <Text style={styles.stepName}>{item.name}</Text>
+      </View>
+      <Text style={styles.stepDescription}>{item.description}</Text>
+    </View>
+  );
 
   const handleChatBot = () => {
     console.log("Opening chat bot...");
@@ -35,7 +76,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
           <Icon name="message-text" size={16} color="#007AFF" />
           <Text style={styles.chatButtonText}>Chat with Assistant</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.continueButton} onPress={() => {setModalVisible(true) }}>
+        <TouchableOpacity style={styles.continueButton} onPress={() => { setModalVisible(true) }}>
           <Text style={styles.continueButtonText}>{progress < 100 ? 'Continue' : 'Complete'}</Text>
         </TouchableOpacity>
       </View>
@@ -49,7 +90,19 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>More Details</Text>
-            <Text style={styles.modalDescription}>{description}</Text>
+            <FlatList
+              data={steps}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => <StepItem item={item} />}
+              refreshing={isLoading}
+              onRefresh={fetchSteps}
+              ListEmptyComponent={
+                <View style={styles.emptyContainer}>
+                  <Ionicons name="list" size={48} color="grey" />
+                  <Text style={styles.emptyText}>No steps added yet</Text>
+                </View>
+              }
+            />
             <TouchableOpacity
               style={styles.closeButton}
               onPress={() => setModalVisible(false)}
@@ -64,7 +117,6 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
 };
 
 export default CardDemarche;
-
 
 const styles = StyleSheet.create({
   card: {
@@ -165,5 +217,42 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: 'white',
     fontWeight: 'bold',
+  },
+  stepItem: {
+    backgroundColor: '#FFF',
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  stepHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  stepName: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#000',
+    marginLeft: 12,
+  },
+  stepDescription: {
+    fontSize: 16,
+    color: '#D3D3D3',
+    marginLeft: 36,
+  },
+  emptyContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 32,
+  },
+  emptyText: {
+    marginTop: 12,
+    fontSize: 16,
+    color: "grey",
   },
 });
