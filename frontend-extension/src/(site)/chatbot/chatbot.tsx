@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { FaArrowLeft } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import "./chatbot.css";
 
 const Chatbot: React.FC = () => {
+  const navigate = useNavigate();
   const [messages, setMessages] = useState<
     { text: string; sender: "user" | "bot" }[]
   >([]);
@@ -88,6 +91,9 @@ const Chatbot: React.FC = () => {
   return (
     <div className="chatbot-container">
       <h1 className="chatbot-title">Donna Chatbot</h1>
+      <button className="back-button" onClick={() => navigate(-1)}>
+        <FaArrowLeft />
+      </button>
       <div className="chatbot-messages">
         {messages.map((msg, index) => (
           <div key={index} className={`chat-message ${msg.sender}`}>
@@ -98,7 +104,7 @@ const Chatbot: React.FC = () => {
       <div className="chatbot-input">
         <input
           type="text"
-          placeholder="Écris un message..."
+          placeholder="Posez votre question..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}

@@ -23,7 +23,7 @@ function Login({ onLogin }: LoginProps) {
       .then((response) => {
         localStorage.setItem("token", response.data.accessToken);
         onLogin();
-        navigate("/docroadmap");
+        navigate("/roadmap");
       })
       .catch(() => {
         setError("Email ou mot de passe incorrect");

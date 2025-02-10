@@ -1,4 +1,4 @@
-import { FaArrowLeft } from "react-icons/fa";
+import { FaEye, FaMap, FaRobot } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./roadmapHome.css";
 
@@ -19,14 +19,25 @@ const Roadmap: React.FC = () => {
 
   return (
     <div className="roadmap-container">
-      <button className="back-button" onClick={() => navigate(-1)}>
-        <FaArrowLeft />
-      </button>
       <h1 className="roadmap-title">DocRoadMap</h1>
       <div className="roadmap-buttons">
-        <button onClick={goToChatbot}>Donna Chatbot</button>
-        <button onClick={createRoadmap}>Créer une Roadmap</button>
-        <button onClick={viewRoadmaps}>Voir les Roadmaps</button>
+        {/* Bouton Chatbot */}
+        <button onClick={goToChatbot}>
+          <FaRobot className="button-icon" />
+          <span className="button-text">Donna Chatbot</span>
+        </button>
+
+        {/* Bouton Créer une Roadmap */}
+        <button onClick={createRoadmap}>
+          <FaMap className="button-icon" />
+          <span className="button-text">Créer une Roadmap</span>
+        </button>
+
+        {/* Bouton Voir les Roadmaps */}
+        <button onClick={viewRoadmaps}>
+          <FaEye className="button-icon" />
+          <span className="button-text">Voir les Roadmaps</span>
+        </button>
       </div>
     </div>
   );
