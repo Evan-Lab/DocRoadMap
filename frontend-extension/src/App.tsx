@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import AccountConfirmation from "./(site)/accountConfirmation/accountConfirmation";
 import Chatbot from "./(site)/chatbot/chatbot";
-import Menu from "./(site)/home/home";
 import Login from "./(site)/login/login";
 import Profile from "./(site)/profile/profile";
 import Register from "./(site)/register/register";
@@ -41,10 +40,6 @@ function App() {
           <Route
             path="/register"
             element={!isLoggedIn ? <Register /> : <Navigate to="/roadmap" />}
-          />
-          <Route
-            path="/docroadmap"
-            element={isLoggedIn ? <Menu /> : <Navigate to="/" />}
           />
           <Route
             path="/account-confirmation"
