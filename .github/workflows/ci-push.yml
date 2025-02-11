@@ -40,7 +40,7 @@ jobs:
                     { "name": "👤 Auteur", "value": $author, "inline": true },
                     { "name": "🌿 Branche", "value": $branch, "inline": true },
                     { "name": "📝 Commit", "value": $commit },
-                    { "name": "🔗 Voir le commit", "value": "[Lien vers le commit](" + $url + ")" }
+                    { "name": "🔗 Voir le commit", "value": "[Lien vers le commit](\($url))" }
                   ],
                   "footer": { "text": "🚀 Push automatique - GitHub Actions" }
                 }
