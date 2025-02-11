@@ -25,27 +25,28 @@ jobs:
           EMBED_COLOR=16776960
 
           JSON_PAYLOAD=$(jq -n \
-            --arg title "📢 Nouveau push sur $REPO_NAME" \
-            --arg author "👤 Auteur: $AUTHOR_NAME" \
-            --arg branch "🌿 Branche: $BRANCH_NAME" \
-            --arg commit "📝 Commit: $COMMIT_MESSAGE" \
-            --arg url "$COMMIT_URL" \
-            --argjson color "$EMBED_COLOR" \
-            '{
-              "embeds": [
-                {
-                  "title": $title,
-                  "color": $color,
-                  "fields": [
-                    { "name": "👤 Auteur", "value": $author, "inline": true },
-                    { "name": "🌿 Branche", "value": $branch, "inline": true },
-                    { "name": "📝 Commit", "value": $commit },
-                    { "name": "🔗 Voir le commit", "value": "[Lien vers le commit](\($url))" }
-                  ],
-                  "footer": { "text": "🚀 Push automatique - GitHub Actions" }
-                }
-              ]
-            }')
+          --arg title "📢 Nouveau push sur $REPO_NAME" \
+          --arg author "$AUTHOR_NAME" \
+          --arg branch "$BRANCH_NAME" \
+          --arg commit "$COMMIT_MESSAGE" \
+          --arg url "$COMMIT_URL" \
+          --argjson color "$EMBED_COLOR" \
+          '{
+            "embeds": [
+              {
+                "title": $title,
+                "color": $color,
+                "fields": [
+                  { "name": "👤 Auteur", "value": $author, "inline": true },
+                  { "name": "🌿 Branche", "value": $branch, "inline": true },
+                  { "name": "📝 Commit", "value": $commit },
+                  { "name": "🔗 Voir le commit", "value": "[Clique ici](\($url))" }
+                ],
+                "footer": { "text": "🚀 Push automatique - GitHub Actions" }
+              }
+            ]
+          }')
+
 
           curl -H "Content-Type: application/json" \
                -X POST \
