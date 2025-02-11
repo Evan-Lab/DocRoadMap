@@ -8,7 +8,7 @@ body {
   height: 100vh;
 }
 
-.menu-container {
+.roadmap-container {
   width: 100%;
   max-width: 800px;
   background-color: #ffffff;
@@ -16,33 +16,42 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
   padding: 20px;
+  position: relative;
 }
 
-.menu-header h1 {
+.back-button {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.roadmap-title {
   font-size: 24px;
   color: #333333;
   margin-bottom: 20px;
 }
 
-.menu-buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
+.roadmap-list {
+  list-style: none;
+  padding: 0;
 }
 
-.menu-buttons button {
-  width: 200px;
-  padding: 10px;
-  border: none;
+.roadmap-item {
+  background-color: #f0f0f0;
+  padding: 15px;
+  margin: 10px auto;
   border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #007bff;
-  color: #ffffff;
+  max-width: 600px;
+  text-align: center;
+  font-size: 18px;
   transition: background-color 0.3s ease;
+  cursor: pointer;
 }
 
-.menu-buttons button:hover {
-  background-color: #0056b3;
+.roadmap-item:hover {
+  background-color: #e0e0e0;
 }
