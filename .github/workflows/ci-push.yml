@@ -1,0 +1,34 @@
+name: Notify Discord on push
+
+on:
+  push:
+    branches:
+      - "*"
+
+jobs:
+  notify-discord:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Send notification each push to prevent the team
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          # Take the information of the author
+          COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
+          AUTHOR_NAME=$GITHUB_ACTOR
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          REPO_NAME=${GITHUB_REPOSITORY}
+
+          # Create the JSON payload
+          JSON_PAYLOAD=$(jq -n \
+            --arg content "**📢 Nouveau push sur $REPO_NAME**\n\n🔹 **Auteur**: $AUTHOR_NAME\n🔹 **Branche**: $BRANCH_NAME\n🔹 **Commit**: $COMMIT_MESSAGE" \
+            '{ content: $content }')
+
+          # Send to Team
+          curl -H "Content-Type: application/json" \
+               -X POST \
+               -d "$JSON_PAYLOAD" \
+               "$DISCORD_WEBHOOK_URL"
