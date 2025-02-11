@@ -1,4 +1,4 @@
-name: Notify Discord on push
+name: Notify on Push
 
 on:
   push:
@@ -12,22 +12,41 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Send notification each push to prevent the team
+      - name: Github push check
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
-          # Take the information of the author
           COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
           AUTHOR_NAME=$GITHUB_ACTOR
           BRANCH_NAME=${GITHUB_REF#refs/heads/}
           REPO_NAME=${GITHUB_REPOSITORY}
+          COMMIT_URL="https://github.com/$REPO_NAME/commit/$(git rev-parse HEAD)"
 
-          # Create the JSON payload
+          EMBED_COLOR=16776960
+
           JSON_PAYLOAD=$(jq -n \
-            --arg content "**📢 Nouveau push sur $REPO_NAME**\n\n🔹 **Auteur**: $AUTHOR_NAME\n🔹 **Branche**: $BRANCH_NAME\n🔹 **Commit**: $COMMIT_MESSAGE" \
-            '{ content: $content }')
+            --arg title "📢 Nouveau push sur $REPO_NAME" \
+            --arg author "👤 Auteur: $AUTHOR_NAME" \
+            --arg branch "🌿 Branche: $BRANCH_NAME" \
+            --arg commit "📝 Commit: $COMMIT_MESSAGE" \
+            --arg url "$COMMIT_URL" \
+            --argjson color "$EMBED_COLOR" \
+            '{
+              "embeds": [
+                {
+                  "title": $title,
+                  "color": $color,
+                  "fields": [
+                    { "name": "👤 Auteur", "value": $author, "inline": true },
+                    { "name": "🌿 Branche", "value": $branch, "inline": true },
+                    { "name": "📝 Commit", "value": $commit },
+                    { "name": "🔗 Voir le commit", "value": "[Lien vers le commit](" + $url + ")" }
+                  ],
+                  "footer": { "text": "🚀 Push automatique - GitHub Actions" }
+                }
+              ]
+            }')
 
-          # Send to Team
           curl -H "Content-Type: application/json" \
                -X POST \
                -d "$JSON_PAYLOAD" \
