@@ -42,7 +42,7 @@ jobs:
                   { "name": "📝 Commit", "value": $commit },
                   { "name": "🔗 Voir le commit", "value": "[Clique ici](\($url))" }
                 ],
-                "footer": { "text": "🚀 Push automatique - GitHub Actions" }
+                "footer": { "text": "🚀 Push - GitHub Actions" }
               }
             ]
           }')
