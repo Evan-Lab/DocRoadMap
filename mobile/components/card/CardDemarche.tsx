@@ -71,7 +71,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
         <View style={styles.progressBarContainer}>
           <View style={[styles.progressBar, { width: `${progress}%` }]} />
         </View>
-        <Text style={styles.progressText}>{`${progress}% completed`}</Text>
+        <Text style={styles.progressText}>{`${progress}% completé`}</Text>
       </View>
       <View style={styles.cardFooter}>
         <TouchableOpacity style={styles.chatButton} onPress={handleChatBot}>

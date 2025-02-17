@@ -99,7 +99,7 @@ export default function StepForProcess() {
             <Ionicons name="document-text" size={24} color="grey" style={{ paddingRight: 10 }} />
             <TextInput 
               style={styles.input} 
-              placeholder="Step Name" 
+              placeholder="Nom de l'étape"
               placeholderTextColor={COLORS.black} 
               value={name} 
               onChangeText={setName} 
@@ -132,7 +132,7 @@ export default function StepForProcess() {
             {isLoading ? (
               <ActivityIndicator color={COLORS.white} />
             ) : (
-              <Text style={styles.buttonText} accessibilityLabel='Boutton pour généer une nouvelle étape administrative'>Add Step</Text>
+              <Text style={styles.buttonText} accessibilityLabel='Boutton pour généer une nouvelle étape administrative'>Ajouter l'étape</Text>
             )}
           </TouchableOpacity>
         </View>

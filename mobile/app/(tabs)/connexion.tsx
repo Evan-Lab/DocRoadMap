@@ -102,7 +102,7 @@ export default function ConnectionPage() {
                             accessibilityRole="button"
                             accessible={true}
             >
-            <Text style={styles.loginButtonText}>Log In</Text>
+            <Text style={styles.loginButtonText}>Connexion</Text>
             </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={() => router.push('/forgottenPassword')}>

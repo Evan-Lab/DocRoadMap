@@ -57,27 +57,28 @@ const request = {
       } catch (error) {
         if (axios.isAxiosError(error)) {
           const status = error.response?.status;
+          Alert.alert('Compte créer');
           if (status === 400) {
             return {
-              error: 'Bad request. Please check your data and try again.',
+              error: 'Veuillez vérifier vos données et réessayer.'
             };
           } else if (status === 409) {
             return {
-              error: 'The email address is already in use. Please use a different email.',
+              error: 'L adresse e-mail est déjà utilisée. Veuillez utiliser une autre adresse e-mail.',
             };
           } else if (status === 500) {
             return {
-              error: 'Server error. Please try again later.',
+              error: 'Problème de serveur interne, veuillez réessayer plus tard'
             };
           } else {
             return {
-              error: `Error: ${status}. Something went wrong.`,
+              error: 'rror: ${status}. Quelque chose ne va pas'
             };
           }
         } else {
           console.error('Unexpected error:', error);
           return {
-            error: 'Unexpected error. Please try again later.',
+            error: 'Error inpromptu. Veuillez réessayer plus tard'
           };
         }
       }
@@ -100,41 +101,40 @@ const request = {
         if (response.status === 200 || response.status === 201 ) {
           const result = response.data;
           await AsyncStorage.setItem('accessToken', result.accessToken);
-          console.log('Login successful:', result);
-          Alert.alert('Login successful', 'Logged In!');
+          console.log('Connecté !');
+          Alert.alert('Connecté !')
           return {
             data: result,
             error: null,
           };
         } else if (response.status === 400) {
-          console.warn('Login failed: Bad Request');
-          Alert.alert('Bad Request', 'Please check your data and try again.');
+          console.warn('Connexion échoué')
+          Alert.alert('Veuillez vérifier vos données et réessayer')
           return {
-            error: 'Bad Request. Please check your data and try again.',
+            error: 'Veuillez vérifier vos données et réessayer'
           };
         } else if (response.status === 404) {
-          console.warn('Login failed: Invalid Credentials');
-          Alert.alert('Invalid Credentials', 'Please check your email and password.');
+          console.warn('Connexion échoué')
+          Alert.alert('Mauvaise information. Veuillez vérifier votre mail et votre mot de passe')
           return {
-            error: 'Invalid credentials. Please check your email and password.',
+            error: 'Mauvaise information. Veuillez vérifier votre mail et votre mot de passe'
           };
         } else {
-          console.warn('Unexpected error:', response.status);
-          Alert.alert('Unexpected error', 'Something went wrong, please try again later.');
+          Alert.alert('Error inpromptu. Veuillez réessayer plus tard')
           return {
-            error: 'Unexpected error.',
+            error: 'Error inpromptu. Veuillez réessayer plus tard'
           };
         }
       } catch (error) {
         if (axios.isAxiosError(error)) {
           console.error('Axios error:', error);
-          Alert.alert('Request Error', 'Network error. Please try again later.');
+          Alert.alert('Problème de connexion internet, veuillez réessayer plus tard')
           return {
-            error: 'Network error. Please try again later.',
+            error: 'Problème de connexion internet, veuillez réessayer plus tard'
           };
         } else {
           console.error('Unexpected error:', error);
-          Alert.alert('Error', 'Something went wrong. Please try again.');
+          Alert.alert('Connexion échoué, veuillez vérifier vos informations et réessayer')
           return {
             error: 'Something went wrong. Please try again.',
           };
@@ -171,18 +171,18 @@ const request = {
       if (axios.isAxiosError(error)) {
           const status = error.response?.status;
           if (status === 400) {
-              return { error: 'Required fields are missing. Please check your inputs and try again.' };
+            return { error: 'Des champs obligatoires sont manquants. Veuillez vérifier vos entrées et réessayer.' };
           } else if (status === 409) {
-              return { error: 'A card with this name already exists. Please choose a different name.' };
+            return { error: 'Une carte avec ce nom existe déjà. Veuillez choisir un autre nom.' };
           } else if (status === 500) {
-              return { error: 'Server error. Please try again later.' };
+            return { error: 'Erreur serveur. Veuillez réessayer plus tard.' };
           } else if (status === 401) {
-              return { error: 'You are not authorized to create a card. Please log in and try again.' };
+            return { error: 'Vous n\êtes pas autorisé à créer une carte. Veuillez vous connecter et réessayer.' };
           } else {
-              return { error: `Unexpected error: ${status}. Please try again later.` };
+            return { error: `Erreur inattendue : ${status}. Veuillez réessayer plus tard.` };
           }
       } else {
-          return {error: 'Something went wrong. Please try again.',};
+          return {error: 'Error inpromptu. Veuillez réessayer plus tard',};
       }
   }
   },
@@ -211,18 +211,18 @@ const request = {
       if (axios.isAxiosError(error)) {
         const status = error.response?.status;
         if (status === 400) {
-          return { error: 'Invalid data. Please check your inputs and try again.' };
+          return { error: 'Données invalides. Veuillez vérifier vos entrées et réessayer.' };
         } else if (status === 404) {
-          return { error: 'Process not found. Please check the process ID and try again.' };
+          return { error: 'Processus non trouvé. Veuillez vérifier l\'ID du processus et réessayer.' };
         } else if (status === 403) {
-          return { error: 'Unauthorized access. You do not have permission to add steps.' };
+          return { error: 'Accès non autorisé. Vous n\'avez pas la permission d\'ajouter des étapes.' };
         } else if (status === 500) {
-          return { error: 'Server error. Please try again later.' };
+          return { error: 'Erreur serveur. Veuillez réessayer plus tard.' };
         } else {
-          return { error: `Unexpected error: ${status}. Please try again later.` };
+          return { error: `Erreur inattendue : ${status}. Veuillez réessayer plus tard.` };
         }
       } else {
-        return {error: 'Something went wrong. Please try again.',};
+        return {error: 'Error inpromptu. Veuillez réessayer plus tard',};
       }
     }
   },
@@ -242,7 +242,7 @@ const request = {
         }
     } catch (error) {
         return {
-            error: 'Unauthorized access. You do not have permission.',
+            error: 'Vous n avez pas la permission',
         }
     }
   },
@@ -260,7 +260,7 @@ const request = {
         };
     } catch (error) {
         return {
-            error: 'Unauthorized access. You do not have permission.',
+          error: 'Vous n avez pas la permission',
         };
     }
   },
@@ -278,7 +278,7 @@ const request = {
         }
     } catch (error) {
         return {
-            error: 'Unauthorized access. You do not have permission.',
+          error: 'Vous n avez pas la permission',
         }
     }
     },
