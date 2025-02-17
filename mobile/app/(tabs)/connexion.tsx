@@ -4,6 +4,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import CustomCheckbox from '../../components/reusable/CustomCheckbox';
 import request from '@/constants/Request';
 import { useRouter } from 'expo-router';
+import { Vibration } from 'react-native';
+
 
 export default function ConnectionPage() {
   const [email, setEmail] = useState('');
@@ -53,7 +55,8 @@ export default function ConnectionPage() {
 
   return (
     <View style={styles.container}>
-        <Text style={styles.title}>Bienvenue !</Text>
+        <Text style={styles.title} accessibilityLabel="Bienvenue sur l'application DocRoadMap. 
+            Il s'agit d'une appication pour aider et faciliter les démarches administratrives !" >Bienvenue ! </Text>
         <Text style={styles.welcometxt}>Veuillez vous connecter.</Text>
         <View style={styles.inputContainer}>
             <Icon
@@ -69,6 +72,7 @@ export default function ConnectionPage() {
             value={email}
             onChangeText={setEmail}
             autoCapitalize="none"
+            accessibilityLabel='Champ de texte pour saisir son email' 
             />
         </View>
         <View style={styles.inputContainer}>
@@ -84,6 +88,7 @@ export default function ConnectionPage() {
             placeholderTextColor="#D3D3D3"
             value={password}
             onChangeText={setPassword}
+            accessibilityLabel='Champ de texte pour saisir son mot de passe' 
             // secureTextEntry //pr cacher le mot de passe
             />
         </View>
@@ -92,8 +97,12 @@ export default function ConnectionPage() {
             <Text style={styles.checkboxLabel}>Se souvenir de moi</Text>
         </View>
        <View style={styles.loginButtonContainer}>
-            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-                <Text style={styles.loginButtonText}>Log In</Text>
+            <TouchableOpacity style={styles.loginButton} onPress={() => { Vibration.vibrate(100); handleLogin()}}
+                            accessibilityLabel="Boutton pour se connecter à l'application"
+                            accessibilityRole="button"
+                            accessible={true}
+            >
+            <Text style={styles.loginButtonText}>Log In</Text>
             </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={() => router.push('/forgottenPassword')}>

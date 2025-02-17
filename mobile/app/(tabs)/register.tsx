@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import request from '@/constants/Request';
 import { useRouter } from 'expo-router';
 import { BackHandler } from 'react-native';
+import { Vibration } from 'react-native';
 
 
 export default function Register() {
@@ -78,7 +79,8 @@ export default function Register() {
                         placeholder="First Name" 
                         placeholderTextColor={COLORS.black} 
                         value={firstname} 
-                        onChangeText={setFirstname} 
+                        onChangeText={setFirstname}
+                        accessibilityLabel='Champ de texte pour son prénom' 
                     />
                 </View>
                 <View style={styles.inputContainer}>
@@ -89,6 +91,7 @@ export default function Register() {
                         placeholderTextColor={COLORS.black} 
                         value={lastname} 
                         onChangeText={setLastname} 
+                        accessibilityLabel='Champ de texte pour son nom de famille' 
                     />
                 </View>
                 <View style={styles.inputContainer}>
@@ -99,6 +102,7 @@ export default function Register() {
                         placeholderTextColor={COLORS.black} 
                         value={email} 
                         onChangeText={setEmail} 
+                        accessibilityLabel='Champ de texte pour son addresse email' 
                     />
                 </View>
                 <View style={styles.inputContainer}>
@@ -110,10 +114,15 @@ export default function Register() {
                         value={password} 
                         onChangeText={setPassword} 
                         secureTextEntry={true} 
+                        accessibilityLabel='Champ de texte pour son mot de passe' 
                     />
                 </View>
                 <View>
-                    <TouchableOpacity style={styles.customButton} onPress={() => handleSignUp()}>
+                    <TouchableOpacity style={styles.customButton} onPress={() => { Vibration.vibrate(100); handleSignUp()}}
+                            accessibilityLabel="Boutton pour créer un nouveau compte"
+                            accessibilityRole="button"
+                            accessible={true}
+                    >
                         <Text style={styles.buttonText}>Create Account</Text>
                     </TouchableOpacity>
                 </View>

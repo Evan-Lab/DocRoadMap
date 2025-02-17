@@ -132,7 +132,7 @@ export default function StepForProcess() {
             {isLoading ? (
               <ActivityIndicator color={COLORS.white} />
             ) : (
-              <Text style={styles.buttonText}>Add Step</Text>
+              <Text style={styles.buttonText} accessibilityLabel='Boutton pour généer une nouvelle étape administrative'>Add Step</Text>
             )}
           </TouchableOpacity>
         </View>

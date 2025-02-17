@@ -75,10 +75,10 @@ export default function HomePage() {
         <ScrollView style={styles.content}>
           <View style={styles.buttonsArea}>
             <TouchableOpacity style={styles.button} onPress={handleGenerateRoadmap}>
-                <Text style={styles.buttonText}>Générer une nouvelle roadmap</Text>
+                <Text style={styles.buttonText}accessibilityLabel='Boutton pour généer une nouvelle roadmap administrative' >Générer une nouvelle roadmap</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={handleReminders}>
+            <TouchableOpacity style={styles.button} onPress={handleReminders} accessibilityLabel='Boutton pour accéder aux rappels'>
                 <Text style={styles.buttonText}>Mes rappels</Text>
             </TouchableOpacity>
           </View>

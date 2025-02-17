@@ -116,7 +116,7 @@ export default function CreateCardProcess() {
             {isLoading ? (
               <ActivityIndicator color={COLORS.white} />
             ) : (
-              <Text style={styles.buttonText}>Create Card Process</Text>
+              <Text style={styles.buttonText} accessibilityLabel='Boutton pour généer une nouvelle démarche administrative'>Create Card Process</Text>
             )}
           </TouchableOpacity>
         </View>
