@@ -38,7 +38,7 @@ export default function CreateCardProcess() {
 
   const handleCreateCardProcess = useCallback(async () => {
     if (!name.trim() || !description.trim()) {
-      Alert.alert('Validation Error', 'Please fill in all fields.');
+      Alert.alert('Erreur de validation', 'Veuillez remplir tous les champs');
       return;
     }
 
@@ -62,10 +62,10 @@ export default function CreateCardProcess() {
         setUserId(null);
         setStepsId(null);
         setEndedAt("");
-        Alert.alert('Success', 'Card Process created successfully!');
+        Alert.alert('Réussite', 'Création de la démarche!');
       }
     } catch (error) {
-      setError('Failed to create card process. Please try again.');
+      setError('Echec lors de la création de la démarche administrative. Veuillez réessayer plus tard');
     } finally {
       setIsLoading(false);
     }
@@ -83,7 +83,7 @@ export default function CreateCardProcess() {
             <Ionicons name="document-text" size={24} color="grey" style={{ paddingRight: 10 }} />
             <TextInput 
               style={styles.input} 
-              placeholder="Card Process Name" 
+              placeholder="Nom de la démarche administrative" 
               placeholderTextColor={COLORS.black} 
               value={name} 
               onChangeText={setName} 
@@ -95,7 +95,7 @@ export default function CreateCardProcess() {
             <Ionicons name="clipboard" size={24} color="grey" style={{ paddingRight: 10 }} />
             <TextInput 
               style={[styles.input, styles.descriptionInput]} 
-              placeholder="Card Process Description" 
+              placeholder="Description de la démarche administrative" 
               placeholderTextColor={COLORS.black} 
               value={description} 
               onChangeText={setDescription} 

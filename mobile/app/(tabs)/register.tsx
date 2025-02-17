@@ -59,7 +59,7 @@ export default function Register() {
             setLastname("");
     
         } catch (error) {
-            setError('There is an error, please check your information');
+            setError('Erreur, veuillez vérifier vos informations');
         }
     }, [firstname, lastname, email, password]);
     
@@ -76,7 +76,7 @@ export default function Register() {
                     <Ionicons name="person" size={24} color="grey" style={{ paddingRight: 10 }} />
                     <TextInput 
                         style={styles.input} 
-                        placeholder="First Name" 
+                        placeholder="Prénom" 
                         placeholderTextColor={COLORS.black} 
                         value={firstname} 
                         onChangeText={setFirstname}
@@ -87,7 +87,7 @@ export default function Register() {
                     <Ionicons name="person" size={24} color="grey" style={{ paddingRight: 10 }} />
                     <TextInput 
                         style={styles.input} 
-                        placeholder="Last Name" 
+                        placeholder="Nom de famille" 
                         placeholderTextColor={COLORS.black} 
                         value={lastname} 
                         onChangeText={setLastname} 
@@ -109,7 +109,7 @@ export default function Register() {
                     <Ionicons name="lock-closed" size={24} color="grey" style={{ paddingRight: 10 }} />
                     <TextInput 
                         style={[styles.input, { paddingRight: 40 }]} 
-                        placeholder="Password" 
+                        placeholder="Mot de passe" 
                         placeholderTextColor={COLORS.black} 
                         value={password} 
                         onChangeText={setPassword} 

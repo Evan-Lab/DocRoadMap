@@ -45,7 +45,7 @@ export default function StepForProcess() {
         setSteps(response.data);
       }
     } catch (error) {
-      setError('Failed to fetch steps. Please try again later.');
+      setError('Echec de la récupération des étapes. Ressayez plus tard !');
     } finally {
       setIsLoading(false);
       setRefreshing(false);
@@ -58,7 +58,7 @@ export default function StepForProcess() {
 
   const handleCreateStep = useCallback(async () => {
     if (!name.trim() || !description.trim()) {
-      Alert.alert('Validation Error', 'Please fill in both name and description');
+      Alert.alert('Erreur de validation', 'Veuillez remplir à la fois le nom et la description de l étape');
       return;
     }
 
@@ -76,7 +76,7 @@ export default function StepForProcess() {
         setName("");
         setDescription("");
         fetchSteps();
-        Alert.alert('Success', 'Step created successfully!');
+        Alert.alert('Succès', 'L étape a été crée');
       }
     } catch (error) {
       setError('Failed to create step. Please try again.');
@@ -111,7 +111,7 @@ export default function StepForProcess() {
             <Ionicons name="clipboard" size={24} color="grey" style={{ paddingRight: 10 }} />
             <TextInput 
               style={[styles.input, styles.descriptionInput]} 
-              placeholder="Step Description" 
+              placeholder="Description de l'étape" 
               placeholderTextColor={COLORS.black} 
               value={description} 
               onChangeText={setDescription} 

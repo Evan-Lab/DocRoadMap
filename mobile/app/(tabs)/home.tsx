@@ -18,7 +18,7 @@ export default function HomePage() {
       if ('data' in response && response.data) {
         setCards(response.data);
       } else {
-        Alert.alert("Error", response.error || "Failed to fetch cards");
+        Alert.alert("Erreur", response.error || "Impossible de récupérer les cartes des démarches administratives. Veuillez réessayer");
       }
     };
     fetchCards();
@@ -45,7 +45,7 @@ export default function HomePage() {
             return;
         }
     } catch (error) {
-        setError('There is an error, please check your information');
+        setError('Erreur, veuillez vérifier vos information');
     }
 }, []);
 

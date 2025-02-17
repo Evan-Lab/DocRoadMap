@@ -48,7 +48,7 @@ export default function ConnectionPage() {
             setPassword("");
             router.replace('/home');
         } catch (error) {
-            setError('Request Error: Network error. Please try again later.');
+            setError('Erreur de requête: Erreur de connexion internet. Veuillez réessayer plus tard.');
         }
     }, [email, password]);
 
@@ -84,7 +84,7 @@ export default function ConnectionPage() {
             />
             <TextInput
             style={styles.input}
-            placeholder="Password"
+            placeholder="Mot de passe"
             placeholderTextColor="#D3D3D3"
             value={password}
             onChangeText={setPassword}
@@ -110,7 +110,7 @@ export default function ConnectionPage() {
         </TouchableOpacity>
         <View>
             <TouchableOpacity onPress={() => router.push('/register')}>
-                <Text >Create Account</Text>
+                <Text >Creation d'un compte</Text>
             </TouchableOpacity>
          </View>
     </View>

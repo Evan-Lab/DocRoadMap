@@ -56,7 +56,7 @@ const ProfileCard = () => {
         setLastname(userProfile.lastName);
 
     } catch (error) {
-        setError('There is an error, please check your information');
+        setError('Erreur, veuillez vérifier vos information');
     }
   }, [firstname, lastname, email]);
 
@@ -93,7 +93,7 @@ const ProfileCard = () => {
             <Button onPress={() => {handleSaveClick; Vibration.vibrate(100)}}
               mode="contained" buttonColor="grey" style={styles.saveButton} accessibilityLabel="Boutton pour sauvegarder ta description"
               accessibilityRole="button">
-              Save Description
+              Sauvegarder la description actuelle
             </Button>
           </View>
         ) : (

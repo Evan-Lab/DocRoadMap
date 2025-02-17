@@ -35,7 +35,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
         setSteps(response.data);
       }
     } catch (error) {
-      setError('Failed to fetch steps. Please try again later.');
+      setError('Echec de la récupération des étapes. Ressayez plus tard !');
     } finally {
       setIsLoading(false);
       setRefreshing(false);
@@ -57,7 +57,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
   );
 
   const handleChatBot = () => {
-    console.log("Opening chat bot...");
+    console.log("Ouverture chat bot...");
   };
 
   return (
@@ -76,10 +76,10 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
       <View style={styles.cardFooter}>
         <TouchableOpacity style={styles.chatButton} onPress={handleChatBot}>
           <Icon name="message-text" size={16} color="#007AFF" />
-          <Text style={styles.chatButtonText}>Chat with Assistant</Text>
+          <Text style={styles.chatButtonText}>Discute avec l'Assistant</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.continueButton} onPress={() => { setModalVisible(true) }}>
-          <Text style={styles.continueButtonText}>{progress < 100 ? 'Continue' : 'Complete'}</Text>
+          <Text style={styles.continueButtonText}>{progress < 100 ? 'Continuer' : 'Compléter'}</Text>
         </TouchableOpacity>
       </View>
 
@@ -91,7 +91,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>More Details</Text>
+            <Text style={styles.modalTitle}>Plus de details</Text>
             <FlatList
               data={steps}
               keyExtractor={(item) => item.id}
@@ -104,7 +104,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
               ListEmptyComponent={
                 <View style={styles.emptyContainer}>
                   <Ionicons name="list" size={48} color="grey" />
-                  <Text style={styles.emptyText}>No steps added yet</Text>
+                  <Text style={styles.emptyText}>Aucune étape disponible pour le moment</Text>
                 </View>
               }
             />
@@ -112,7 +112,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
               style={styles.closeButton}
               onPress={() => setModalVisible(false)}
             >
-              <Text style={styles.closeButtonText}>Close</Text>
+              <Text style={styles.closeButtonText}>Fermer</Text>
             </TouchableOpacity>
           </View>
         </View>
