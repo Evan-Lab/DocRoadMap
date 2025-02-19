@@ -1,108 +1,102 @@
 import React, { useState } from 'react';
-import {View, Text, TextInput, TouchableOpacity,
-        StyleSheet, SafeAreaView, ScrollView, Image, Modal,} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  Image,
+  Modal,
+} from 'react-native';
 
 export default function ChatInterface() {
   const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState<{ text: string; sender: string }[]>([]);
+
   const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleFloatingButton = () => {
-    setModalVisible(true);
-    console.log('Floating button pressed');
-  };
+  const API_KEY =  process.env.EXPO_PUBLIC_GPT_KEY;
 
-  const handleClose = () => {
-    setModalVisible(false);
-    console.log('Close button pressed');
-  };
+  const handleFloatingButton = () => setModalVisible(true);
+  const handleClose = () => setModalVisible(false);
 
-  const handleSend = () => {
-    console.log('Send message:', message);
-    setMessage(message);
+  const handleSend = async () => {
+    if (!message.trim()) return;
+
+    const newMessages = [...messages, { text: message, sender: 'user' }];
+    setMessages(newMessages);
+    setMessage('');
+    setLoading(true);
+
+    try {
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${API_KEY}`,
+          
+        },
+        body: JSON.stringify({
+          model: 'gpt-3.5-turbo',
+          messages: [{ role: 'user', content: message }],
+        }),
+      });
+      console.log('API Key:', API_KEY ? 'Key exists' : 'Key is undefined');
+
+      const data = await response.json();
+      const botMessage = data.choices[0]?.message?.content || 'Désolé, une erreur est survenue';
+
+      setMessages([...newMessages, { text: botMessage, sender: 'bot' }]);
+    } catch (error) {
+      console.error('Erreur lors de la communication avec l\'API', error);
+      setMessages([...newMessages, { text: 'Erreur de connexion', sender: 'bot' }]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <View>
       <TouchableOpacity style={styles.floatingButton} onPress={handleFloatingButton}>
-        <Image source={require('../../assets/images/chatbot.png')} style={{width: 45, height: 45}} />
+        <Image source={require('../../assets/images/chatbot.png')} style={{ width: 45, height: 45 }} />
       </TouchableOpacity>
-      
-        <Modal animationType="slide" transparent={false} visible={modalVisible}
-          onRequestClose={() => setModalVisible(false)}
-        >
-          <SafeAreaView style={styles.container}>
+
+      <Modal animationType="slide" transparent={false} visible={modalVisible} onRequestClose={handleClose}>
+        <SafeAreaView style={styles.container}>
           <View style={styles.header}>
-            <View style={styles.avatarContainer}>
-              <View style={styles.avatar}>
-              <Image source={require('../../assets/images/chatbot.png')} style={{width: 45, height: 45}} />
-              </View>
-              <Text style={styles.headerTitle}>Donna</Text>
-            </View>
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => handleClose()}
-            >
+            <Text style={styles.headerTitle}>Donna Chatbot</Text>
+            <TouchableOpacity onPress={handleClose}>
               <Text style={styles.closeText}>✖</Text>
             </TouchableOpacity>
           </View>
 
-          {/* Chat Messages */}
           <ScrollView style={styles.chatContainer}>
-            <View style={styles.assistantMessage}>
-              <Text style={styles.messageText}>
-                Bonjour, je suis Donna, votre assistant personnel.
-              </Text>
-            </View>
-            
-            <View style={styles.assistantMessage}>
-              <Text style={styles.messageText}>
-                Quelle est votre problème ?
-              </Text>
-            </View>
-
-            <View style={styles.userMessage}>
-              <Text style={styles.userMessageText}>
-                Quelles sont les justificatifs de domicile valide ?
-              </Text>
-            </View>
-
-            <View style={styles.assistantMessage}>
-              <Text style={styles.messageText}>
-                Les justificatifs de domicile valident sont:
-              </Text>
-              <View style={styles.bulletList}>
-                <Text style={styles.bulletItem}>• Facture téléphonique</Text>
-                <Text style={styles.bulletItem}>• Facture d'internet</Text>
-                <Text style={styles.bulletItem}>• Facture d'électricité</Text>
-                <Text style={styles.bulletItem}>• Quittances de loyer</Text>
+            {messages.map((msg, index) => (
+              <View
+                key={index}
+                style={msg.sender === 'user' ? styles.userMessage : styles.botMessage}
+              >
+                <Text style={styles.messageText}>{msg.text}</Text>
               </View>
-            </View>
-
-            <View style={styles.assistantMessage}>
-              <Text style={styles.messageText}>
-                Avez vous d'autre questions ?
-              </Text>
-            </View>
-
-            <View style={styles.userMessage}>
-              <Text style={styles.userMessageText}>Non</Text>
-            </View>
+            ))}
           </ScrollView>
 
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
-              placeholder="Ecrivez votre message ici..."
-              placeholderTextColor="#D3D3D3"
+              placeholder="Posez votre question..."
               value={message}
               onChangeText={setMessage}
-              multiline
+              onSubmitEditing={handleSend}
             />
-            <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
-              <Text style={styles.sendButtonText}>→</Text>
+            <TouchableOpacity style={styles.sendButton} onPress={handleSend} disabled={loading}>
+              <Text style={styles.sendButtonText}>{loading ? '...' : '→'}</Text>
             </TouchableOpacity>
           </View>
-          </SafeAreaView>
+        </SafeAreaView>
       </Modal>
     </View>
   );
@@ -111,67 +105,18 @@ export default function ChatInterface() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E8E8E8',
+    backgroundColor: '#fff',
   },
   header: {
     flexDirection: 'row',
-    alignItems: 'center',
+    justifyContent: 'space-between',
     padding: 15,
-    backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
-  },
-  floatingButton: {
-    position: 'absolute',
-    right: 20,
-    bottom: 20,
-    backgroundColor: 'grey',
-    width: 60,
-    height: 60,
-    borderRadius: 28,
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
-  floatingButtonText: {
-    fontSize: 24,
-    color: '#ffffff',
-  },
-  backButton: {
-    padding: 5,
-  },
-  backArrow: {
-    fontSize: 24,
-    color: '#666',
-  },
-  avatarContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginLeft: 10,
-  },
-  avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#FFD700',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  avatarText: {
-    fontSize: 24,
   },
   headerTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginLeft: 10,
-  },
-  closeButton: {
-    padding: 5,
   },
   closeText: {
     fontSize: 20,
@@ -181,61 +126,64 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 15,
   },
-  assistantMessage: {
-    backgroundColor: '#fff',
-    padding: 15,
+  userMessage: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#007AFF',
+    padding: 10,
     borderRadius: 20,
-    maxWidth: '80%',
     marginBottom: 10,
   },
-  userMessage: {
-    backgroundColor: '#007AFF',
-    padding: 15,
+  botMessage: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#E8E8E8',
+    padding: 10,
     borderRadius: 20,
-    maxWidth: '80%',
     marginBottom: 10,
-    alignSelf: 'flex-end',
   },
   messageText: {
     fontSize: 16,
-    color: '#000',
-  },
-  userMessageText: {
-    fontSize: 16,
-    color: '#fff',
-  },
-  bulletList: {
-    marginTop: 5,
-  },
-  bulletItem: {
-    fontSize: 16,
-    color: '#000',
-    marginTop: 2,
+    color: '#00000',
   },
   inputContainer: {
     flexDirection: 'row',
     padding: 10,
     backgroundColor: '#fff',
-    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
   },
   input: {
     flex: 1,
-    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#ddd',
     borderRadius: 20,
     padding: 10,
-    marginRight: 10,
     fontSize: 16,
   },
   sendButton: {
     backgroundColor: '#007AFF',
-    width: 40,
-    height: 40,
     borderRadius: 20,
+    padding: 10,
+    marginLeft: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
   sendButtonText: {
     color: '#fff',
-    fontSize: 24,
+    fontSize: 20,
+  },
+  floatingButton: {
+    position: 'absolute',
+    right: 20,
+    bottom: 20,
+    backgroundColor: '#007AFF',
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
   },
 });
