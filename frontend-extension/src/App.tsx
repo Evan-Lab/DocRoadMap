@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Navigate,
   Route,
@@ -17,31 +16,13 @@ import Settings from "./(site)/settings/settings";
 import Home from "./Home";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
-
   return (
     <Router>
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route
-            path="/login"
-            element={
-              !isLoggedIn ? (
-                <Login onLogin={handleLogin} />
-              ) : (
-                <Navigate to="/roadmap" />
-              )
-            }
-          />
-          <Route
-            path="/register"
-            element={!isLoggedIn ? <Register /> : <Navigate to="/roadmap" />}
-          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route
             path="/account-confirmation"
             element={<AccountConfirmation />}

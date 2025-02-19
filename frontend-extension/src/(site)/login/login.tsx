@@ -4,11 +4,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
 
-interface LoginProps {
-  onLogin: () => void;
-}
-
-function Login({ onLogin }: LoginProps) {
+function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,14 +15,18 @@ function Login({ onLogin }: LoginProps) {
 
   const handleLogin = () => {
     axios
-      .post("http://localhost:8080/auth/login", { email, password })
+      .post("http://localhost:8082/auth/login", { email, password })
       .then((response) => {
         localStorage.setItem("token", response.data.accessToken);
-        onLogin();
-        navigate("/roadmap");
+
+        if (localStorage.getItem("token") != null) {
+          navigate("/roadmap");
+          console.log("i am connected, token: ", localStorage.getItem("token"));
+        }
       })
       .catch(() => {
         setError("Email ou mot de passe incorrect");
+        console.log("NOT connected, token: ", localStorage.getItem("token"));
       });
   };
 

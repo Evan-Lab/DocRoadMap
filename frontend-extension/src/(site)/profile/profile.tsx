@@ -25,7 +25,7 @@ function Profile() {
           throw new Error("Token non disponible. Veuillez vous connecter.");
         }
 
-        const response = await fetch("http://localhost:8080/users/me", {
+        const response = await fetch("http://localhost:8082/users/me", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
