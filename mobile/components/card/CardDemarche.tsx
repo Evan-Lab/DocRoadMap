@@ -8,6 +8,7 @@ interface CardDemarcheProps {
   name: string;
   description: string;
   progress: number;
+  id: number;
 }
 
 type Step = {
@@ -17,7 +18,7 @@ type Step = {
   completed?: boolean;
 };
 
-const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress}) => {
+const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress, id}) => {
   // const [progress, setProgress] = useState(30); // 3 out of 10 steps = 30% pr la petite de barre de progression, à rendre dynamique ca pourrait etre cool de le garder.
   const [modalVisible, setModalVisible] = useState(false);
   const [steps, setSteps] = useState<Step[]>([]);
@@ -26,9 +27,11 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchSteps = useCallback(async () => {
+    if (typeof id !== 'number')
+      return;
     setIsLoading(true);
     try {
-      const response = await request.stepList();
+      const response = await request.stepperID(id)
       if (response.error) {
         setError(response.error);
       } else {
@@ -65,6 +68,9 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
       <View style={styles.cardHeader}>
         <Icon name="credit-card" size={24} color="white" />
         <Text style={styles.headerTitle} allowFontScaling={true}>{name}</Text>
+        {id && (
+        <Text style={styles.headerTitle} allowFontScaling={true}> ({id})</Text>
+      )}
       </View>
       <View style={styles.cardContent}>
         <Text style={styles.contentTitle} allowFontScaling={true}>{description}</Text>

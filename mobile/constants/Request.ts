@@ -190,13 +190,15 @@ const request = {
   }
   },
   createStep: async (data: SwaggerCreateStep): Promise<SwaggerRequest<SwaggerCreateStep>> => {
-    const accessToken = await getAccessToken();  
+    const accessToken = await getAccessToken(); 
+    const id = await getId(); 
     try {
       const response = await axios.post(
         `${url}/steps/create`,
         {
           name: data.name,
-          description: data.description
+          description: data.description,
+          processId: data.processId,
         },
         {
           headers: {
@@ -308,9 +310,31 @@ const request = {
             error: 'Vous n avez pas la permission',
         };
     }
+   },
 
-   }
+  stepperID: async (processId: number) => {
+    const accessToken = await getAccessToken();
+    try {
+      const headers = {
+        Authorization: `Bearer ${accessToken}`,
+      };
+      const response = await axios.get(`${url}/users/me`, { headers });
+      const processes = response.data?.processes || [];
 
+      const process = processes.find((p: any) => p.id === processId);
+      const steps = process?.steps || [];
+      
+      return {
+        data: steps,
+        error: null,
+      };
+    } catch (error) {
+      console.error(error);
+      return {
+        error: 'Vous n’avez pas la permission',
+      };
+    }
+  }
 
 }
 export default request;

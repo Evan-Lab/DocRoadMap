@@ -24,6 +24,7 @@ type Step = {
 export default function StepForProcess() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [processId, setProcessId] = useState<number | null>(null);
   const [steps, setSteps] = useState<Step[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -36,9 +37,11 @@ export default function StepForProcess() {
   }, [error]);
 
   const fetchSteps = useCallback(async () => {
+    if (typeof processId !== 'number')
+      return;
     setIsLoading(true);
     try {
-      const response = await request.stepList();
+      const response = await request.stepperID(processId)
       if (response.error) {
         setError(response.error);
       } else {
@@ -65,7 +68,8 @@ export default function StepForProcess() {
     setIsLoading(true);
     const stepData = { 
       name: name.trim(), 
-      description: description.trim() 
+      description: description.trim() ,
+      processId:0,
     };
 
     try {
@@ -75,15 +79,17 @@ export default function StepForProcess() {
       } else {
         setName("");
         setDescription("");
+        setProcessId(0);
         fetchSteps();
         Alert.alert('Succès', 'L étape a été crée');
+        console.log(response)
       }
     } catch (error) {
       setError('Failed to create step. Please try again.');
     } finally {
       setIsLoading(false);
     }
-  }, [name, description, fetchSteps]);
+  }, [name, description, processId, fetchSteps]);
 
 
   return (
@@ -122,11 +128,29 @@ export default function StepForProcess() {
               allowFontScaling={true}
             />
           </View>
+
+          <View style={styles.inputContainer}>
+            <Ionicons name="document-text" size={24} color="grey" style={{ paddingRight: 10 }} />
+            <TextInput
+              style={styles.input}
+              placeholder="Ton process id"
+              placeholderTextColor={COLORS.black}
+              value={processId !== null ? processId.toString() : ''}
+              onChangeText={(text) => {
+                const value = parseInt(text, 10);
+                if (!isNaN(value)) {
+                  setProcessId(value);
+                }
+              }}
+              maxLength={3}
+              allowFontScaling={true}
+            />
+          </View>
           
           <TouchableOpacity 
             style={[
               styles.customButton, 
-              (!name.trim() || !description.trim()) && styles.buttonDisabled
+              (!name.trim() || !description.trim()|| processId === null || processId === 0) && styles.buttonDisabled
             ]}
             onPress={handleCreateStep}
             disabled={isLoading || !name.trim() || !description.trim()}

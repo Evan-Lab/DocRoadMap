@@ -35,6 +35,7 @@ export default function HomePage() {
             userId: 7,
             stepsId: 2,
             endedAt: "2022-12-31",
+           
     };
 
     try {
@@ -97,16 +98,18 @@ export default function HomePage() {
 
           <ScrollView horizontal={true}>
             {cards.map((card, index) => (
-              <View key={index} style={{ marginRight: 16 }}>
+              <View key={card.id} style={{ marginRight: 16 }}>
                 <CardDemarche
                   name={card.name}
                   description={card.description}
                   progress={Math.floor(Math.random() * 100)} // Placeholder progress
+                  id={card.id}
                 />
+                {/*
                 <View>
                   {card.steps && card.steps.length > 0 ? (
                     card.steps.map((step) => (
-                      <View>
+                      <View key={step.id}>
                         <Text style={{ fontWeight: 'bold' }} allowFontScaling={true}>{step.name}</Text>
                         <Text>{step.description}</Text>
                       </View>
@@ -115,6 +118,7 @@ export default function HomePage() {
                     null
                   )}
                 </View>
+                */}
               </View>
             ))}
           </ScrollView>

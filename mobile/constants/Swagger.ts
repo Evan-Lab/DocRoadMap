@@ -22,6 +22,7 @@ export type SwaggerCreateCardProcess = {
 export type SwaggerCreateStep = {
     name: string;
     description: string;
+    processId: number;
 };
 
 export type SwaggerProfileInfo = {
