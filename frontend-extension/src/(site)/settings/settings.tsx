@@ -15,7 +15,8 @@ const Settings: React.FC = () => {
 
   const logout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    sessionStorage.clear(); 
+    navigate("/");
   };
 
   return (
