@@ -49,7 +49,7 @@ export class CreateProcessDto {
     @ApiProperty({
         description: 'The endedAt of the process',
         type: 'string',
-        required: true
+        required: false
     })
     @IsDate()
     @IsOptional()
