@@ -1,94 +1,66 @@
-import axios from "axios";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import "./roadmapView.css";
 
 const token = localStorage.getItem("token");
-console.log(token);
 
-const fetchProcesses = async () => {
+// Define TypeScript interface for cards
+interface Card {
+  id: number;
+  name: string;
+  description: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  endedAt?: string;
+  steps: any[]; // Adjust type if necessary
+}
+
+const fetchProcesses = async (): Promise<Card[]> => {
   try {
     const response = await axios.get("http://localhost:8082/users/me", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response.data.process);
-    return {
-      data: response.data,
-      error: null,
-    };
+    console.log(response.data);
+    return response.data.processes || [];
   } catch (error) {
-    return {
-      error: "Unauthorized access. You do not have permission.",
-    };
+    console.error("Unauthorized access. You do not have permission.");
+    return [];
   }
 };
 
 const RoadmapView: React.FC = () => {
   const navigate = useNavigate();
+  const [cards, setCards] = useState<Card[]>([]); // Explicitly setting type
 
-  const roadmaps = [
-    {
-      id: 1,
-      title: "Déclaration des impôts",
-      process: "Collecting documents",
-      progress: 50,
-    },
-    {
-      id: 2,
-      title: "nouveau Passport",
-      process: "Waiting for appointment",
-      progress: 20,
-    },
-    {
-      id: 3,
-      title: "Renouveler titre de séjour",
-      process: "Collecting documents",
-      progress: 80,
-    },
-    {
-      id: 4,
-      title: "Créer mon entreprise",
-      process: "Creating business plan",
-      progress: 10,
-    },
-    {
-      id: 5,
-      title: "Demander ma retraite",
-      process: "Collecting documents",
-      progress: 30,
-    },
-  ];
+  useEffect(() => {
+    const getProcesses = async () => {
+      const processes = await fetchProcesses();
+      setCards(processes);
+    };
+    getProcesses();
+  }, []);
 
-  const cards = fetchProcesses();
   return (
     <div className="roadmap-container">
       <button className="back-button" onClick={() => navigate(-1)}>
         <FaArrowLeft />
       </button>
       <h1 className="roadmap-title">Mes Roadmaps </h1>
-      <button
-        className="fetch-process-button"
-        onClick={() => console.log(cards)}
-      >
-        click me
-      </button>
+      {/* <button className="fetch-process-button" onClick={() => console.log(cards)}>click me</button> */}
       <div className="carousel-container">
-        {roadmaps.map((roadmap) => (
-          <div className="card">
-            <div key={roadmap.id} className="card-header">
-              <h3>{roadmap.title}</h3>
+        {cards.map((card) => (
+          <div className="card" key={card.id}>
+            <div className="card-header">
+              <h3>{card.name}</h3>
             </div>
             <div className="card-body">
-              <p className="process">{roadmap.process}</p>
-              <div className="progress-bar">
-                <div
-                  className="progress"
-                  style={{ width: `${roadmap.progress}%` }}
-                ></div>
-              </div>
-              <p>{roadmap.progress}% completed</p>
+              <p className="process">{card.description}</p>
+              <p>Status: {card.status}</p>
               <button className="chat-button">Chat with Assistant</button>
               <button className="continue-button"> Continue </button>
             </div>
