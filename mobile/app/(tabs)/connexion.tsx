@@ -37,7 +37,6 @@ export default function ConnectionPage() {
 
         try {
             const registrationResponse = await request.login(requestBody);
-            console.log('Registration Response:', registrationResponse);
     
             if (registrationResponse.error) {
                 setError(registrationResponse.error);

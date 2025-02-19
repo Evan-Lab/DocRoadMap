@@ -6,6 +6,8 @@ import {
   SwaggerProfileInfo,
   SwaggerRegister,
   SwaggerStepList,
+  SwaggerProcessPerIdList,
+  SwaggerStepPerIdList,
 } from './Swagger'
 import axios, { AxiosError } from "axios"
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -101,8 +103,9 @@ const request = {
         if (response.status === 200 || response.status === 201 ) {
           const result = response.data;
           await AsyncStorage.setItem('accessToken', result.accessToken);
+          await AsyncStorage.setItem('id', result.id.toString());
           console.log('Connecté !');
-          Alert.alert('Connecté !')
+          Alert.alert('Connecté ! Bienvenue sur DocRoadmap')
           return {
             data: result,
             error: null,
@@ -235,7 +238,7 @@ const request = {
         const response = await axios.get(`${url}/users/me`, {
             headers,
         });
-        console.log(response.data)
+        //console.log(response.data)
         return {
             data: response.data,
             error: null,
@@ -253,7 +256,7 @@ const request = {
           Authorization: `Bearer ${accessToken}`,
         }
         const response = await axios.get(`${url}/steps/all`, { headers });
-        console.log(response.data);
+        //console.log(response.data);
         return {
             data: response.data,
             error: null,
@@ -271,7 +274,7 @@ const request = {
             Authorization: `Bearer ${accessToken}`,
         }
         const response = await axios.get(`${url}/process/all`, { headers });
-        console.log(response.data)
+        //console.log(response.data)
         return {
             data: response.data,
             error: null,
@@ -281,6 +284,33 @@ const request = {
           error: 'Vous n avez pas la permission',
         }
     }
-    },
+   },
+   processperID: async (): Promise<SwaggerRequest<SwaggerProcessPerIdList[]>> => {
+    const accessToken = await getAccessToken();
+    try {
+        const headers = {
+            Authorization: `Bearer ${accessToken}`,
+        };
+
+        const response = await axios.get(`${url}/users/me`, {
+            headers,
+        });
+        const processes = response.data?.processes || [];
+        console.log(processes);
+
+        return {
+            data: processes,
+            error: null,
+        };
+    } catch (error) {
+        console.error(error);
+        return {
+            error: 'Vous n avez pas la permission',
+        };
+    }
+
+   }
+
+
 }
 export default request;

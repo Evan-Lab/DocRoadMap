@@ -39,3 +39,16 @@ export type SwaggerStepList = {
     name: string;
     description : string;
 }
+
+export type SwaggerStepPerIdList = {
+    id: number;
+    name: string;
+    description: string;
+};
+
+export type SwaggerProcessPerIdList = {
+    id: number;
+    name: string;
+    description: string;
+    steps: SwaggerStepPerIdList[];
+};

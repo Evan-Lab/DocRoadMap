@@ -44,7 +44,6 @@ export default function ChatInterface() {
           messages: [{ role: 'user', content: message }],
         }),
       });
-      console.log('API Key:', API_KEY ? 'Key exists' : 'Key is undefined');
 
       const data = await response.json();
       const botMessage = data.choices[0]?.message?.content || 'Désolé, une erreur est survenue';

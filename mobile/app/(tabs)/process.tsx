@@ -41,7 +41,6 @@ export default function CreateCardProcess() {
       Alert.alert('Erreur de validation', 'Veuillez remplir tous les champs');
       return;
     }
-
     setIsLoading(true);
     const cardProcessData = { 
       name: name.trim(), 

@@ -42,11 +42,10 @@ export default function Register() {
             email: email,
             password: password,
         };
-        console.log('Request Body:', requestBody);
     
         try {
             const registrationResponse = await request.register(requestBody);
-            console.log('Registration Response:', registrationResponse);
+
     
             if (registrationResponse.error) {
                 setError(registrationResponse.error);
