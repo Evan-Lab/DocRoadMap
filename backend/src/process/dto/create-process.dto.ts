@@ -44,7 +44,7 @@ export class CreateProcessDto {
         isArray: true
     })
     @IsOptional()
-    public stepsId: number[];
+    public stepsId?: number[];
 
     @ApiProperty({
         description: 'The endedAt of the process',
@@ -52,5 +52,6 @@ export class CreateProcessDto {
         required: true
     })
     @IsDate()
-    public endedAt: Date;
+    @IsOptional()
+    public endedAt?: Date;
 }
