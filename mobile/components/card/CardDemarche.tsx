@@ -50,9 +50,9 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
     <View style={styles.stepItem}>
       <View style={styles.stepHeader}>
         <Ionicons name={item.completed ? "checkbox-outline" : "help-outline"} size={24} color={item.completed ? '#007AFF' : '#D3D3D3'} />
-        <Text style={styles.stepName}>{item.name}</Text>
+        <Text style={styles.stepName} allowFontScaling={true}>{item.name}</Text>
       </View>
-      <Text style={styles.stepDescription}>{item.description}</Text>
+      <Text style={styles.stepDescription} allowFontScaling={true}>{item.description}</Text>
     </View>
   );
 
@@ -64,22 +64,22 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
     <View style={styles.card}>
       <View style={styles.cardHeader}>
         <Icon name="credit-card" size={24} color="white" />
-        <Text style={styles.headerTitle}>{name}</Text>
+        <Text style={styles.headerTitle} allowFontScaling={true}>{name}</Text>
       </View>
       <View style={styles.cardContent}>
-        <Text style={styles.contentTitle}>{description}</Text>
+        <Text style={styles.contentTitle} allowFontScaling={true}>{description}</Text>
         <View style={styles.progressBarContainer}>
           <View style={[styles.progressBar, { width: `${progress}%` }]} />
         </View>
-        <Text style={styles.progressText}>{`${progress}% completé`}</Text>
+        <Text style={styles.progressText} allowFontScaling={true}>{`${progress}% completé`}</Text>
       </View>
       <View style={styles.cardFooter}>
         <TouchableOpacity style={styles.chatButton} onPress={handleChatBot}>
           <Icon name="message-text" size={16} color="#007AFF" />
-          <Text style={styles.chatButtonText}>Discute avec l'Assistant</Text>
+          <Text style={styles.chatButtonText} allowFontScaling={true}>Discute avec l'Assistant</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.continueButton} onPress={() => { setModalVisible(true) }}>
-          <Text style={styles.continueButtonText}>{progress < 100 ? 'Continuer' : 'Compléter'}</Text>
+          <Text style={styles.continueButtonText} allowFontScaling={true}>{progress < 100 ? 'Continuer' : 'Compléter'}</Text>
         </TouchableOpacity>
       </View>
 
@@ -91,7 +91,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Plus de details</Text>
+            <Text style={styles.modalTitle} allowFontScaling={true}>Plus de details</Text>
             <FlatList
               data={steps}
               keyExtractor={(item) => item.id}
@@ -104,7 +104,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
               ListEmptyComponent={
                 <View style={styles.emptyContainer}>
                   <Ionicons name="list" size={48} color="grey" />
-                  <Text style={styles.emptyText}>Aucune étape disponible pour le moment</Text>
+                  <Text style={styles.emptyText} allowFontScaling={true}>Aucune étape disponible pour le moment</Text>
                 </View>
               }
             />
@@ -112,7 +112,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
               style={styles.closeButton}
               onPress={() => setModalVisible(false)}
             >
-              <Text style={styles.closeButtonText}>Fermer</Text>
+              <Text style={styles.closeButtonText} allowFontScaling={true}>Fermer</Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -81,6 +81,7 @@ export default function Register() {
                         value={firstname} 
                         onChangeText={setFirstname}
                         accessibilityLabel='Champ de texte pour son prénom' 
+                        allowFontScaling={true}
                     />
                 </View>
                 <View style={styles.inputContainer}>
@@ -92,6 +93,7 @@ export default function Register() {
                         value={lastname} 
                         onChangeText={setLastname} 
                         accessibilityLabel='Champ de texte pour son nom de famille' 
+                        allowFontScaling={true}
                     />
                 </View>
                 <View style={styles.inputContainer}>
@@ -103,6 +105,7 @@ export default function Register() {
                         value={email} 
                         onChangeText={setEmail} 
                         accessibilityLabel='Champ de texte pour son addresse email' 
+                        allowFontScaling={true}
                     />
                 </View>
                 <View style={styles.inputContainer}>
@@ -115,6 +118,7 @@ export default function Register() {
                         onChangeText={setPassword} 
                         secureTextEntry={true} 
                         accessibilityLabel='Champ de texte pour son mot de passe' 
+                        allowFontScaling={true}
                     />
                 </View>
                 <View>
@@ -123,7 +127,7 @@ export default function Register() {
                             accessibilityRole="button"
                             accessible={true}
                     >
-                        <Text style={styles.buttonText}>Create Account</Text>
+                        <Text style={styles.buttonText} allowFontScaling={true}>Create Account</Text>
                     </TouchableOpacity>
                 </View>
             </View>

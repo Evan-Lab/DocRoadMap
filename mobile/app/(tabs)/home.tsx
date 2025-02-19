@@ -69,17 +69,17 @@ export default function HomePage() {
             <TouchableOpacity onPress={handleMenuPress} style={styles.menuButton}>
                 <Text style={styles.menuButtonText}>☰</Text>
             </TouchableOpacity>
-            <Text style={styles.headerTitle}>DocRoadmap</Text>
+            <Text style={styles.headerTitle} allowFontScaling={true} >DocRoadmap</Text>
         </View>
 
         <ScrollView style={styles.content}>
           <View style={styles.buttonsArea}>
             <TouchableOpacity style={styles.button} onPress={handleGenerateRoadmap}>
-                <Text style={styles.buttonText}accessibilityLabel='Boutton pour généer une nouvelle roadmap administrative' >Générer une nouvelle roadmap</Text>
+                <Text style={styles.buttonText} allowFontScaling={true} accessibilityLabel='Boutton pour généer une nouvelle roadmap administrative' >Générer une nouvelle roadmap</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.button} onPress={handleReminders} accessibilityLabel='Boutton pour accéder aux rappels'>
-                <Text style={styles.buttonText}>Mes rappels</Text>
+                <Text style={styles.buttonText} allowFontScaling={true} >Mes rappels</Text>
             </TouchableOpacity>
           </View>
 

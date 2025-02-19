@@ -88,6 +88,7 @@ export default function CreateCardProcess() {
               value={name} 
               onChangeText={setName} 
               maxLength={50}
+              allowFontScaling={true}
             />
           </View>
 
@@ -102,6 +103,7 @@ export default function CreateCardProcess() {
               multiline
               numberOfLines={3}
               maxLength={200}
+              allowFontScaling={true}
             />
           </View>
 
@@ -116,7 +118,7 @@ export default function CreateCardProcess() {
             {isLoading ? (
               <ActivityIndicator color={COLORS.white} />
             ) : (
-              <Text style={styles.buttonText} accessibilityLabel='Boutton pour généer une nouvelle démarche administrative'>Créer la démarche administrative</Text>
+              <Text style={styles.buttonText} allowFontScaling={true} accessibilityLabel='Boutton pour généer une nouvelle démarche administrative'>Créer la démarche administrative</Text>
             )}
           </TouchableOpacity>
         </View>

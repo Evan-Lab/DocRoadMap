@@ -104,6 +104,7 @@ export default function StepForProcess() {
               value={name} 
               onChangeText={setName} 
               maxLength={50}
+              allowFontScaling={true}
             />
           </View>
 
@@ -118,6 +119,7 @@ export default function StepForProcess() {
               multiline
               numberOfLines={3}
               maxLength={200}
+              allowFontScaling={true}
             />
           </View>
           
@@ -132,7 +134,7 @@ export default function StepForProcess() {
             {isLoading ? (
               <ActivityIndicator color={COLORS.white} />
             ) : (
-              <Text style={styles.buttonText} accessibilityLabel='Boutton pour généer une nouvelle étape administrative'>Ajouter l'étape</Text>
+              <Text style={styles.buttonText} accessibilityLabel='Boutton pour généer une nouvelle étape administrative' allowFontScaling={true}>Ajouter l'étape</Text>
             )}
           </TouchableOpacity>
         </View>

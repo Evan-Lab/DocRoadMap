@@ -55,9 +55,9 @@ export default function ConnectionPage() {
 
   return (
     <View style={styles.container}>
-        <Text style={styles.title} accessibilityLabel="Bienvenue sur l'application DocRoadMap. 
+        <Text style={styles.title} allowFontScaling={true} accessibilityLabel="Bienvenue sur l'application DocRoadMap. 
             Il s'agit d'une appication pour aider et faciliter les démarches administratrives !" >Bienvenue ! </Text>
-        <Text style={styles.welcometxt}>Veuillez vous connecter.</Text>
+        <Text style={styles.welcometxt}allowFontScaling={true}>Veuillez vous connecter.</Text>
         <View style={styles.inputContainer}>
             <Icon
             name="user"
@@ -73,6 +73,7 @@ export default function ConnectionPage() {
             onChangeText={setEmail}
             autoCapitalize="none"
             accessibilityLabel='Champ de texte pour saisir son email' 
+            allowFontScaling={true}
             />
         </View>
         <View style={styles.inputContainer}>
@@ -89,12 +90,13 @@ export default function ConnectionPage() {
             value={password}
             onChangeText={setPassword}
             accessibilityLabel='Champ de texte pour saisir son mot de passe' 
+            allowFontScaling={true}
             // secureTextEntry //pr cacher le mot de passe
             />
         </View>
         <View style={styles.checkboxContainer}>
             <CustomCheckbox value={stayConnected} onValueChange={setStayConnected} />
-            <Text style={styles.checkboxLabel}>Se souvenir de moi</Text>
+            <Text style={styles.checkboxLabel} allowFontScaling={true} >Se souvenir de moi</Text>
         </View>
        <View style={styles.loginButtonContainer}>
             <TouchableOpacity style={styles.loginButton} onPress={() => { Vibration.vibrate(100); handleLogin()}}
@@ -102,15 +104,15 @@ export default function ConnectionPage() {
                             accessibilityRole="button"
                             accessible={true}
             >
-            <Text style={styles.loginButtonText}>Connexion</Text>
+            <Text style={styles.loginButtonText} allowFontScaling={true}>Connexion</Text>
             </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={() => router.push('/forgottenPassword')}>
-            <Text>Mot de passe oublié ?</Text>
+            <Text allowFontScaling={true}>Mot de passe oublié ?</Text>
         </TouchableOpacity>
         <View>
             <TouchableOpacity onPress={() => router.push('/register')}>
-                <Text >Creation d'un compte</Text>
+                <Text  allowFontScaling={true}>Creation d'un compte</Text>
             </TouchableOpacity>
          </View>
     </View>

@@ -67,9 +67,9 @@ export default function ChatInterface() {
       <Modal animationType="slide" transparent={false} visible={modalVisible} onRequestClose={handleClose}>
         <SafeAreaView style={styles.container}>
           <View style={styles.header}>
-            <Text style={styles.headerTitle}>Donna Chatbot</Text>
+            <Text style={styles.headerTitle} allowFontScaling={true} >Donna Chatbot</Text>
             <TouchableOpacity onPress={handleClose}>
-              <Text style={styles.closeText}>✖</Text>
+              <Text style={styles.closeText} allowFontScaling={true} >✖</Text>
             </TouchableOpacity>
           </View>
 
@@ -79,7 +79,7 @@ export default function ChatInterface() {
                 key={index}
                 style={msg.sender === 'user' ? styles.userMessage : styles.botMessage}
               >
-                <Text style={styles.messageText}>{msg.text}</Text>
+                <Text style={styles.messageText} allowFontScaling={true}>{msg.text}</Text>
               </View>
             ))}
           </ScrollView>
@@ -91,6 +91,8 @@ export default function ChatInterface() {
               value={message}
               onChangeText={setMessage}
               onSubmitEditing={handleSend}
+              allowFontScaling={true}
+              accessibilityLabel='Champ de texte pour poser ta question au chatbot' 
             />
             <TouchableOpacity style={styles.sendButton} onPress={handleSend} disabled={loading}>
               <Text style={styles.sendButtonText}>{loading ? '...' : '→'}</Text>

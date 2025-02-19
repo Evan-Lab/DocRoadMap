@@ -74,8 +74,8 @@ const ProfileCard = () => {
         />
       </View>
       <Card.Content style={styles.cardContent}>
-        <Text style={styles.nameText}>{firstname} {lastname}</Text>
-        <Text style={styles.infoText}>
+        <Text style={styles.nameText} allowFontScaling={true}>{firstname} {lastname}</Text>
+        <Text style={styles.infoText} allowFontScaling={true}>
           <FontAwesome name="envelope" size={16} /> {email}
         </Text>
       </Card.Content>
@@ -89,8 +89,9 @@ const ProfileCard = () => {
               multiline
               maxLength={MAX_DESCRIPTION_LENGTH}
               mode="outlined"
+              allowFontScaling={true}
             />
-            <Button onPress={() => {handleSaveClick; Vibration.vibrate(100)}}
+            <Button onPress={() => {handleSaveClick(); Vibration.vibrate(100)}}
               mode="contained" buttonColor="grey" style={styles.saveButton} accessibilityLabel="Boutton pour sauvegarder ta description"
               accessibilityRole="button">
               Sauvegarder la description actuelle
@@ -98,8 +99,8 @@ const ProfileCard = () => {
           </View>
         ) : (
           <View style={styles.descriptionContainer}>
-            <Text style={styles.descriptionText}>{description}</Text>
-            <TouchableOpacity onPress={() => {handleEditClick; Vibration.vibrate(100)}}
+            <Text style={styles.descriptionText} allowFontScaling={true}>{description}</Text>
+            <TouchableOpacity onPress={() => {handleEditClick(); Vibration.vibrate(100)}}
             accessibilityLabel="Boutton pour accèder aux paramètres"
             accessibilityRole="button">
               <Ionicons name="create-outline" size={24} color="black" />
