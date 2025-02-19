@@ -1,0 +1,54 @@
+name: Notify on Push
+
+on:
+  push:
+    branches:
+      - "*"
+
+jobs:
+  notify-discord:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Github push check
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
+          AUTHOR_NAME=$GITHUB_ACTOR
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          REPO_NAME=${GITHUB_REPOSITORY}
+          COMMIT_URL="https://github.com/$REPO_NAME/commit/$(git rev-parse HEAD)"
+
+          EMBED_COLOR=16776960
+
+          JSON_PAYLOAD=$(jq -n \
+          --arg title "📢 Nouveau push sur $REPO_NAME" \
+          --arg author "$AUTHOR_NAME" \
+          --arg branch "$BRANCH_NAME" \
+          --arg commit "$COMMIT_MESSAGE" \
+          --arg url "$COMMIT_URL" \
+          --argjson color "$EMBED_COLOR" \
+          '{
+            "embeds": [
+              {
+                "title": $title,
+                "color": $color,
+                "fields": [
+                  { "name": "👤 Auteur", "value": $author, "inline": true },
+                  { "name": "🌿 Branche", "value": $branch, "inline": true },
+                  { "name": "📝 Commit", "value": $commit },
+                  { "name": "🔗 Voir le commit", "value": "[Clique ici](\($url))" }
+                ],
+                "footer": { "text": "🚀 Push - GitHub Actions" }
+              }
+            ]
+          }')
+
+
+          curl -H "Content-Type: application/json" \
+               -X POST \
+               -d "$JSON_PAYLOAD" \
+               "$DISCORD_WEBHOOK_URL"
