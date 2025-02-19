@@ -22,6 +22,7 @@ export type SwaggerCreateCardProcess = {
 export type SwaggerCreateStep = {
     name: string;
     description: string;
+    processId: number;
 };
 
 export type SwaggerProfileInfo = {
@@ -29,10 +30,6 @@ export type SwaggerProfileInfo = {
     lastName: string;
     email: string;
 }
-
-export type TokenLogin = {
-    token: string;
-};
 
 export type SwaggerProcessList = {
     name: string;
@@ -43,3 +40,16 @@ export type SwaggerStepList = {
     name: string;
     description : string;
 }
+
+export type SwaggerStepPerIdList = {
+    id: number;
+    name: string;
+    description: string;
+};
+
+export type SwaggerProcessPerIdList = {
+    id: number;
+    name: string;
+    description: string;
+    steps: SwaggerStepPerIdList[];
+};

@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import request from '@/constants/Request';
 import { useRouter } from 'expo-router';
 import { BackHandler } from 'react-native';
+import { Vibration } from 'react-native';
 
 
 export default function Register() {
@@ -41,11 +42,10 @@ export default function Register() {
             email: email,
             password: password,
         };
-        console.log('Request Body:', requestBody);
     
         try {
             const registrationResponse = await request.register(requestBody);
-            console.log('Registration Response:', registrationResponse);
+
     
             if (registrationResponse.error) {
                 setError(registrationResponse.error);
@@ -58,7 +58,7 @@ export default function Register() {
             setLastname("");
     
         } catch (error) {
-            setError('There is an error, please check your information');
+            setError('Erreur, veuillez vérifier vos informations');
         }
     }, [firstname, lastname, email, password]);
     
@@ -75,20 +75,24 @@ export default function Register() {
                     <Ionicons name="person" size={24} color="grey" style={{ paddingRight: 10 }} />
                     <TextInput 
                         style={styles.input} 
-                        placeholder="First Name" 
+                        placeholder="Prénom" 
                         placeholderTextColor={COLORS.black} 
                         value={firstname} 
-                        onChangeText={setFirstname} 
+                        onChangeText={setFirstname}
+                        accessibilityLabel='Champ de texte pour son prénom' 
+                        allowFontScaling={true}
                     />
                 </View>
                 <View style={styles.inputContainer}>
                     <Ionicons name="person" size={24} color="grey" style={{ paddingRight: 10 }} />
                     <TextInput 
                         style={styles.input} 
-                        placeholder="Last Name" 
+                        placeholder="Nom de famille" 
                         placeholderTextColor={COLORS.black} 
                         value={lastname} 
                         onChangeText={setLastname} 
+                        accessibilityLabel='Champ de texte pour son nom de famille' 
+                        allowFontScaling={true}
                     />
                 </View>
                 <View style={styles.inputContainer}>
@@ -99,22 +103,30 @@ export default function Register() {
                         placeholderTextColor={COLORS.black} 
                         value={email} 
                         onChangeText={setEmail} 
+                        accessibilityLabel='Champ de texte pour son addresse email' 
+                        allowFontScaling={true}
                     />
                 </View>
                 <View style={styles.inputContainer}>
                     <Ionicons name="lock-closed" size={24} color="grey" style={{ paddingRight: 10 }} />
                     <TextInput 
                         style={[styles.input, { paddingRight: 40 }]} 
-                        placeholder="Password" 
+                        placeholder="Mot de passe" 
                         placeholderTextColor={COLORS.black} 
                         value={password} 
                         onChangeText={setPassword} 
                         secureTextEntry={true} 
+                        accessibilityLabel='Champ de texte pour son mot de passe' 
+                        allowFontScaling={true}
                     />
                 </View>
                 <View>
-                    <TouchableOpacity style={styles.customButton} onPress={() => handleSignUp()}>
-                        <Text style={styles.buttonText}>Create Account</Text>
+                    <TouchableOpacity style={styles.customButton} onPress={() => { Vibration.vibrate(100); handleSignUp()}}
+                            accessibilityLabel="Boutton pour créer un nouveau compte"
+                            accessibilityRole="button"
+                            accessible={true}
+                    >
+                        <Text style={styles.buttonText} allowFontScaling={true}>Create Account</Text>
                     </TouchableOpacity>
                 </View>
             </View>

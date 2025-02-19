@@ -12,7 +12,7 @@ const EmailConfirmation = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Email Confirmation</Text>
       <Text style={styles.instruction}>
-        Please enter the confirmation code sent to your email.
+        Entrez le code de confirmation de votre adresse email.
       </Text>
       <TextInput
         style={styles.input}
@@ -23,7 +23,7 @@ const EmailConfirmation = () => {
       />
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.customButton} onPress={handleConfirm}>
-          <Text style={styles.buttonText}>Confirm</Text>
+          <Text style={styles.buttonText}>Confirmation</Text>
         </TouchableOpacity>
       </View>
     </View>

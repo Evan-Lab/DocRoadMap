@@ -24,6 +24,7 @@ type Step = {
 export default function StepForProcess() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [processId, setProcessId] = useState<number | null>(null);
   const [steps, setSteps] = useState<Step[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -36,16 +37,18 @@ export default function StepForProcess() {
   }, [error]);
 
   const fetchSteps = useCallback(async () => {
+    if (typeof processId !== 'number')
+      return;
     setIsLoading(true);
     try {
-      const response = await request.stepList();
+      const response = await request.stepperID(processId)
       if (response.error) {
         setError(response.error);
       } else {
         setSteps(response.data);
       }
     } catch (error) {
-      setError('Failed to fetch steps. Please try again later.');
+      setError('Echec de la récupération des étapes. Ressayez plus tard !');
     } finally {
       setIsLoading(false);
       setRefreshing(false);
@@ -58,14 +61,15 @@ export default function StepForProcess() {
 
   const handleCreateStep = useCallback(async () => {
     if (!name.trim() || !description.trim()) {
-      Alert.alert('Validation Error', 'Please fill in both name and description');
+      Alert.alert('Erreur de validation', 'Veuillez remplir à la fois le nom et la description de l étape');
       return;
     }
 
     setIsLoading(true);
     const stepData = { 
       name: name.trim(), 
-      description: description.trim() 
+      description: description.trim() ,
+      processId:processId,
     };
 
     try {
@@ -75,28 +79,20 @@ export default function StepForProcess() {
       } else {
         setName("");
         setDescription("");
+        setProcessId(0);
         fetchSteps();
-        Alert.alert('Success', 'Step created successfully!');
+        Alert.alert('Succès', 'L étape a été crée');
+        console.log(response)
       }
     } catch (error) {
       setError('Failed to create step. Please try again.');
     } finally {
       setIsLoading(false);
     }
-  }, [name, description, fetchSteps]);
+  }, [name, description, processId, fetchSteps]);
 
-  const stepList = ({ item }: { item: Step }) => (
-    <View style={styles.stepItem}>
-      <View style={styles.stepHeader}>
-        <Ionicons name="checkbox-outline" size={24} color={COLORS.primary} />
-        <Text style={styles.stepName}>{item.name}</Text>
-      </View>
-      <Text style={styles.stepDescription}>{item.description}</Text>
-    </View>
-  );
 
   return (
-    
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -108,11 +104,12 @@ export default function StepForProcess() {
             <Ionicons name="document-text" size={24} color="grey" style={{ paddingRight: 10 }} />
             <TextInput 
               style={styles.input} 
-              placeholder="Step Name" 
+              placeholder="Nom de l'étape"
               placeholderTextColor={COLORS.black} 
               value={name} 
               onChangeText={setName} 
               maxLength={50}
+              allowFontScaling={true}
             />
           </View>
 
@@ -120,20 +117,39 @@ export default function StepForProcess() {
             <Ionicons name="clipboard" size={24} color="grey" style={{ paddingRight: 10 }} />
             <TextInput 
               style={[styles.input, styles.descriptionInput]} 
-              placeholder="Step Description" 
+              placeholder="Description de l'étape" 
               placeholderTextColor={COLORS.black} 
               value={description} 
               onChangeText={setDescription} 
               multiline
               numberOfLines={3}
               maxLength={200}
+              allowFontScaling={true}
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Ionicons name="document-text" size={24} color="grey" style={{ paddingRight: 10 }} />
+            <TextInput
+              style={styles.input}
+              placeholder="Ton process id"
+              placeholderTextColor={COLORS.black}
+              value={processId !== null ? processId.toString() : ''}
+              onChangeText={(text) => {
+                const value = parseInt(text, 10);
+                if (!isNaN(value)) {
+                  setProcessId(value);
+                }
+              }}
+              maxLength={3}
+              allowFontScaling={true}
             />
           </View>
           
           <TouchableOpacity 
             style={[
               styles.customButton, 
-              (!name.trim() || !description.trim()) && styles.buttonDisabled
+              (!name.trim() || !description.trim()|| processId === null || processId === 0) && styles.buttonDisabled
             ]}
             onPress={handleCreateStep}
             disabled={isLoading || !name.trim() || !description.trim()}
@@ -141,26 +157,9 @@ export default function StepForProcess() {
             {isLoading ? (
               <ActivityIndicator color={COLORS.white} />
             ) : (
-              <Text style={styles.buttonText}>Add Step</Text>
+              <Text style={styles.buttonText} accessibilityLabel='Boutton pour généer une nouvelle étape administrative' allowFontScaling={true}>Ajouter l'étape</Text>
             )}
           </TouchableOpacity>
-
-          <FlatList
-            data={steps}
-            keyExtractor={(item) => item.id}
-            renderItem={stepList}
-            refreshing={refreshing}
-            onRefresh={() => {
-              setRefreshing(true);
-              fetchSteps();
-            }}
-            ListEmptyComponent={
-              <View style={styles.emptyContainer}>
-                <Ionicons name="list" size={48} color="grey" />
-                <Text style={styles.emptyText}>No steps added yet</Text>
-              </View>
-            }
-          />
         </View>
         </SafeAreaView>
       </KeyboardAvoidingView>
@@ -185,7 +184,7 @@ const styles = StyleSheet.create({
     backgroundColor:"#f2f2f2",
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 100,
+    paddingTop: 10,
   },
   input: {
     width: '85%',
