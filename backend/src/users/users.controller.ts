@@ -55,7 +55,7 @@ export class UsersController {
       lastName: user.lastName,
       email: user.email,
       isActivated: user.isActive,
-      processIds: user.processes?.map((process: any) => process.id) || []
+      processes: user.processes
     };
   }
 
