@@ -190,8 +190,7 @@ const request = {
   }
   },
   createStep: async (data: SwaggerCreateStep): Promise<SwaggerRequest<SwaggerCreateStep>> => {
-    const accessToken = await getAccessToken(); 
-    const id = await getId(); 
+    const accessToken = await getAccessToken();
     try {
       const response = await axios.post(
         `${url}/steps/create`,
@@ -298,7 +297,7 @@ const request = {
             headers,
         });
         const processes = response.data?.processes || [];
-        console.log(processes);
+        //console.log(processes);
 
         return {
             data: processes,
@@ -311,7 +310,6 @@ const request = {
         };
     }
    },
-
   stepperID: async (processId: number) => {
     const accessToken = await getAccessToken();
     try {

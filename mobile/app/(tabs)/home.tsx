@@ -14,7 +14,7 @@ export default function HomePage() {
 
   const fetchCards = useCallback(async () => {
     const response = await request.processperID();
-    console.log('API Response:', response);
+    //console.log('API Response:', response);
     if ('data' in response && response.data) {
       setCards(response.data);
     } else {

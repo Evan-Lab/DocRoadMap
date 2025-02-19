@@ -69,7 +69,7 @@ export default function StepForProcess() {
     const stepData = { 
       name: name.trim(), 
       description: description.trim() ,
-      processId:0,
+      processId:processId,
     };
 
     try {
@@ -93,7 +93,6 @@ export default function StepForProcess() {
 
 
   return (
-    
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
