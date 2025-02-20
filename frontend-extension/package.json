@@ -8,8 +8,6 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.125",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
     "axios": "^1.7.9",
     "frontend-extension": "file:",
     "nth-check": "^2.1.1",
@@ -49,6 +47,8 @@
     ]
   },
   "devDependencies": {
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
     "@types/webextension-polyfill": "^0.12.1",
     "@typescript-eslint/eslint-plugin": "^8.21.0",
     "@typescript-eslint/parser": "^8.21.0",
