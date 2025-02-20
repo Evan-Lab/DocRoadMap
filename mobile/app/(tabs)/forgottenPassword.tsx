@@ -31,7 +31,7 @@ const ForgotPassword = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Forgot Password</Text>
+      <Text style={styles.title}>Mot de passe oublié</Text>
       <TextInput
         style={styles.input}
         placeholder="Enter your email"
@@ -41,7 +41,7 @@ const ForgotPassword = () => {
       />
        <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.customButton} onPress={handleSend}>
-          <Text style={styles.buttonText}>Send</Text>
+          <Text style={styles.buttonText}>Envoyé</Text>
         </TouchableOpacity>
       </View>
     </View>

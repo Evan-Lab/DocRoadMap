@@ -1,28 +1,30 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, RefreshControl } from 'react-native';
 import CardDemarche from '../../components/card/CardDemarche';
 import ChatInterface from '../../components/chat/ChatInterface';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
-import { SwaggerProcessList } from '@/constants/Swagger';
+import { SwaggerProcessPerIdList } from '@/constants/Swagger';
 import request from '@/constants/Request';
 
 export default function HomePage() {
-  const [cards, setCards] = useState<SwaggerProcessList[]>([]);
+  const [cards, setCards] = useState<SwaggerProcessPerIdList[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const fetchCards = useCallback(async () => {
+    const response = await request.processperID();
+    //console.log('API Response:', response);
+    if ('data' in response && response.data) {
+      setCards(response.data);
+    } else {
+      Alert.alert("Erreur", response.error || "Impossible de récupérer les cartes des démarches administratives. Veuillez réessayer");
+    }
+  }, []);
 
   useEffect(() => {
-    const fetchCards = async () => {
-      const response = await request.processList();
-      
-      if ('data' in response && response.data) {
-        setCards(response.data);
-      } else {
-        Alert.alert("Error", response.error || "Failed to fetch cards");
-      }
-    };
     fetchCards();
-  }, []);
+  }, [fetchCards]);
 
   const createCard = useCallback(async () => {
 
@@ -30,11 +32,11 @@ export default function HomePage() {
       name: "Test",
             description: "Test description",
             status: "Test status",
-            userId: 1,
-            stepsId: 1,
+            userId: 7,
+            stepsId: 2,
             endedAt: "2022-12-31",
+           
     };
-    console.log('Request Body:', requestBody);
 
     try {
         const registrationResponse = await request.create(requestBody);
@@ -45,7 +47,7 @@ export default function HomePage() {
             return;
         }
     } catch (error) {
-        setError('There is an error, please check your information');
+        setError('Erreur, veuillez vérifier vos information');
     }
 }, []);
 
@@ -63,36 +65,63 @@ export default function HomePage() {
     console.log('My reminders pressed');
   };
 
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await fetchCards();
+    setIsRefreshing(false);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
         <View style={styles.header}>
             <TouchableOpacity onPress={handleMenuPress} style={styles.menuButton}>
                 <Text style={styles.menuButtonText}>☰</Text>
             </TouchableOpacity>
-            <Text style={styles.headerTitle}>DocRoadmap</Text>
+            <Text style={styles.headerTitle} allowFontScaling={true} >DocRoadmap</Text>
         </View>
 
-        <ScrollView style={styles.content}>
+        <ScrollView style={styles.content} refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={handleRefresh}
+          />
+        }>
           <View style={styles.buttonsArea}>
             <TouchableOpacity style={styles.button} onPress={handleGenerateRoadmap}>
-                <Text style={styles.buttonText}>Générer une nouvelle roadmap</Text>
+                <Text style={styles.buttonText} allowFontScaling={true} accessibilityLabel='Boutton pour généer une nouvelle roadmap administrative' >Générer une nouvelle roadmap</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={handleReminders}>
-                <Text style={styles.buttonText}>Mes rappels</Text>
+            <TouchableOpacity style={styles.button} onPress={handleReminders} accessibilityLabel='Boutton pour accéder aux rappels'>
+                <Text style={styles.buttonText} allowFontScaling={true} >Mes rappels</Text>
             </TouchableOpacity>
           </View>
 
-            <ScrollView horizontal={true}>
-              {cards.map((card, index) => (
-              <CardDemarche
-                key={index}
-                name={card.name}
-                description={card.description}
-                progress={Math.floor(Math.random() * 100)} // Placeholder progress
-              />
+          <ScrollView horizontal={true}>
+            {cards.map((card, index) => (
+              <View key={card.id} style={{ marginRight: 16 }}>
+                <CardDemarche
+                  name={card.name}
+                  description={card.description}
+                  progress={Math.floor(Math.random() * 100)} // Placeholder progress
+                  id={card.id}
+                />
+                {/*
+                <View>
+                  {card.steps && card.steps.length > 0 ? (
+                    card.steps.map((step) => (
+                      <View key={step.id}>
+                        <Text style={{ fontWeight: 'bold' }} allowFontScaling={true}>{step.name}</Text>
+                        <Text>{step.description}</Text>
+                      </View>
+                    ))
+                  ) : (
+                    null
+                  )}
+                </View>
+                */}
+              </View>
             ))}
-            </ScrollView>
+          </ScrollView>
         </ScrollView>
         <ChatInterface /> 
     </SafeAreaView>

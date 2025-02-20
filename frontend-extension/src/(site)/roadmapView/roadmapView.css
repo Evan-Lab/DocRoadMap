@@ -1,0 +1,83 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.roadmap-container {
+  width: 100%;
+  max-width: 800px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  padding: 20px;
+  position: relative;
+}
+
+.carousel-container {
+  display: flex;
+  gap: 20px;
+  padding-bottom: 10px;
+  overflow-x: auto;
+}
+
+.card { 
+  background-color: #ffffff; 
+  border-radius: 15;
+  border-color: grey;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: fit-content;
+  font-family: Arial, sans-serif; 
+} 
+.card-header h3 { 
+  background-color: #007bff;
+  margin: 0;
+  color: white; 
+  border-radius: 5px 5px 0px 0px; 
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width:100%;
+} 
+.card-body { 
+  text-align: left;
+  padding: 20px;
+  width: max-content;
+} 
+.process { 
+  font-size: 14px; 
+  margin-bottom: 8px; 
+  color: #555;
+}
+.progress-bar { 
+  width: 100%; 
+  background-color: #f1f1f1; 
+  border-radius: 5px; 
+  height: 8px; 
+  margin-bottom: 8px; 
+  overflow: hidden; 
+} 
+.progress { 
+  background-color: #007bff; 
+  height: 100%; 
+} 
+.chat-button, .continue-button { 
+  width:100%;
+  padding: 10px; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  margin-top: 8px; 
+} 
+.chat-button { 
+  background-color: #f1f1f1; 
+  color: #555; 
+} 
+.continue-button { 
+  background-color: #007bff; 
+  color: white; 
+}

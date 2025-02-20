@@ -1,4 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { CreateProcessDto } from 'src/process/dto/create-process.dto';
+import { Process } from 'src/process/entities/process.entity';
 
 export class UserDtoResponse {
     @ApiProperty({
@@ -33,8 +35,8 @@ export class UserDtoResponse {
 
     @ApiProperty({
         description: 'The processes of the user',
-        type: 'number',
+        type: CreateProcessDto,
         isArray: true
     })
-    public processIds?: number[];
+    public processes?: Process[];
 }

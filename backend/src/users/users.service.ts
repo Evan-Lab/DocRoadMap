@@ -5,7 +5,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import { Process } from '../process/entities/process.entity';
 
 @Injectable()
 export class UsersService {
@@ -36,7 +35,7 @@ export class UsersService {
   async findMe(userId: number): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { id: userId },
-      relations: ['processes'],
+      relations: ['processes', 'processes.steps'],
     });
 
     if (!user) {
@@ -46,14 +45,14 @@ export class UsersService {
   }
 
   async findAll() {
-    const users = await this.userRepository.find({ relations: ['processes'] });
+    const users = await this.userRepository.find({ relations: ['processes', 'processes.steps'] });
     return users
   }
 
   async findOne(email: string) {
     const findUser = await this.userRepository.findOne({
       where: { email: email },
-      relations: ['processes']
+      relations: ['processes', 'processes.steps']
     });
     if (!findUser) {
       throw new NotFoundException('User Not Found');

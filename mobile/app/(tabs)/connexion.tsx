@@ -4,6 +4,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import CustomCheckbox from '../../components/reusable/CustomCheckbox';
 import request from '@/constants/Request';
 import { useRouter } from 'expo-router';
+import { Vibration } from 'react-native';
+
 
 export default function ConnectionPage() {
   const [email, setEmail] = useState('');
@@ -35,7 +37,6 @@ export default function ConnectionPage() {
 
         try {
             const registrationResponse = await request.login(requestBody);
-            console.log('Registration Response:', registrationResponse);
     
             if (registrationResponse.error) {
                 setError(registrationResponse.error);
@@ -46,15 +47,16 @@ export default function ConnectionPage() {
             setPassword("");
             router.replace('/home');
         } catch (error) {
-            setError('Request Error: Network error. Please try again later.');
+            setError('Erreur de requête: Erreur de connexion internet. Veuillez réessayer plus tard.');
         }
     }, [email, password]);
 
 
   return (
     <View style={styles.container}>
-        <Text style={styles.title}>Bienvenue !</Text>
-        <Text style={styles.welcometxt}>Veuillez vous connecter.</Text>
+        <Text style={styles.title} allowFontScaling={true} accessibilityLabel="Bienvenue sur l'application DocRoadMap. 
+            Il s'agit d'une appication pour aider et faciliter les démarches administratrives !" >Bienvenue ! </Text>
+        <Text style={styles.welcometxt}allowFontScaling={true}>Veuillez vous connecter.</Text>
         <View style={styles.inputContainer}>
             <Icon
             name="user"
@@ -69,6 +71,8 @@ export default function ConnectionPage() {
             value={email}
             onChangeText={setEmail}
             autoCapitalize="none"
+            accessibilityLabel='Champ de texte pour saisir son email' 
+            allowFontScaling={true}
             />
         </View>
         <View style={styles.inputContainer}>
@@ -80,28 +84,34 @@ export default function ConnectionPage() {
             />
             <TextInput
             style={styles.input}
-            placeholder="Password"
+            placeholder="Mot de passe"
             placeholderTextColor="#D3D3D3"
             value={password}
             onChangeText={setPassword}
+            accessibilityLabel='Champ de texte pour saisir son mot de passe' 
+            allowFontScaling={true}
             // secureTextEntry //pr cacher le mot de passe
             />
         </View>
         <View style={styles.checkboxContainer}>
             <CustomCheckbox value={stayConnected} onValueChange={setStayConnected} />
-            <Text style={styles.checkboxLabel}>Se souvenir de moi</Text>
+            <Text style={styles.checkboxLabel} allowFontScaling={true} >Se souvenir de moi</Text>
         </View>
        <View style={styles.loginButtonContainer}>
-            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-                <Text style={styles.loginButtonText}>Log In</Text>
+            <TouchableOpacity style={styles.loginButton} onPress={() => { Vibration.vibrate(100); handleLogin()}}
+                            accessibilityLabel="Boutton pour se connecter à l'application"
+                            accessibilityRole="button"
+                            accessible={true}
+            >
+            <Text style={styles.loginButtonText} allowFontScaling={true}>Connexion</Text>
             </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={() => router.push('/forgottenPassword')}>
-            <Text>Mot de passe oublié ?</Text>
+            <Text allowFontScaling={true}>Mot de passe oublié ?</Text>
         </TouchableOpacity>
         <View>
             <TouchableOpacity onPress={() => router.push('/register')}>
-                <Text >Create Account</Text>
+                <Text  allowFontScaling={true}>Creation d'un compte</Text>
             </TouchableOpacity>
          </View>
     </View>
