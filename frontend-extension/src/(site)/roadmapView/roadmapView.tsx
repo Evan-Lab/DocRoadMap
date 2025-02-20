@@ -1,9 +1,10 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import axios from "axios";
 import "./roadmapView.css";
 
+const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
 const token = localStorage.getItem("token");
 
 // Define TypeScript interface for cards
@@ -48,7 +49,7 @@ const RoadmapView: React.FC = () => {
   return (
     <div className="roadmap-container">
       <button className="back-button" onClick={() => navigate(-1)}>
-        <FaArrowLeft />
+        <ArrowLeftIcon />
       </button>
       <h1 className="roadmap-title">Mes Roadmaps </h1>
       {/* <button className="fetch-process-button" onClick={() => console.log(cards)}>click me</button> */}

@@ -4,6 +4,8 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
 
+const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
+
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -44,7 +46,7 @@ function Login() {
     <div className="login-page">
       <div className="login-container">
         <button className="back-button" onClick={() => navigate(-1)}>
-          <FaArrowLeft />
+          <ArrowLeftIcon />
         </button>
 
         {!isResetMode ? (

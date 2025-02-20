@@ -30,7 +30,10 @@ module.exports = {
   },
   plugins: [
     new CopyPlugin({
-      patterns: [{ from: "manifest.json", to: "../manifest.json" }],
+      patterns: [
+        { from: "manifest.json", to: "../manifest.json" },
+        { from: "content.js", to: "../content.js" },
+      ],
     }),
     ...getHtmlPlugins(["index"]),
   ],
@@ -40,6 +43,11 @@ module.exports = {
   output: {
     path: path.join(__dirname, "dist/js"),
     filename: "[name].js",
+  },
+  performance: {
+    hints: false,
+    maxAssetSize: 512000,
+    maxEntrypointSize: 512000,
   },
 };
 

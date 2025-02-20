@@ -3,6 +3,11 @@ import { FaArrowLeft, FaEnvelope, FaLock, FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./profile.css";
 
+const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
+const UserIcon = FaUser as unknown as React.FC<any>;
+const EnvelopeIcon = FaEnvelope as unknown as React.FC<any>;
+const LockIcon = FaLock as unknown as React.FC<any>;
+
 function Profile() {
   const navigate = useNavigate();
   const [user, setUser] = useState({
@@ -76,7 +81,7 @@ function Profile() {
   return (
     <div className="profile-container">
       <button className="back-button" onClick={() => navigate(-1)}>
-        <FaArrowLeft />
+        <ArrowLeftIcon />
       </button>
       <h1 className="profile-title">Profil</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
@@ -88,11 +93,11 @@ function Profile() {
           <div className="profile-item" key={field}>
             <span className="profile-label">
               {field === "firstName" || field === "lastName" ? (
-                <FaUser color="black" />
+                <UserIcon color="black" />
               ) : field === "email" ? (
-                <FaEnvelope color="black" />
+                <EnvelopeIcon color="black" />
               ) : (
-                <FaLock color="black" />
+                <LockIcon color="black" />
               )}
             </span>
             {editingField === field ? (
