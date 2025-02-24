@@ -1,6 +1,6 @@
-// petite note: comment the code to hide accessibility button
-// if display is not working, thik about reloading the page.
-console.log("DocRoadMap Accessibility extension loaded!");
+// // petite note: comment the code to hide accessibility button
+// // if display is not working, thik about reloading the page.
+// console.log("DocRoadMap Accessibility extension loaded!");
 
 const generateAltText = (img) => {
   return "Generated alt text"; // Replace with AI logic
