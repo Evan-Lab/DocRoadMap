@@ -14,11 +14,22 @@ def send_request_to_model(question):
     output = llm(
         f"Q: {question}. A:",
         max_tokens=None,
-        stop=["Q:", "\n"],
+        stop=[],
         echo=False
     )
-    return output
+    response = output['choices'][0]['text'].strip()
+    
+    formatted_response = response.split("\n")
+    formatted_response = [line.strip() for line in formatted_response if line.strip()]
+
+    return {"response": formatted_response}
 
 if __name__ == "__main__":
     question = argv[1]
-    print(dumps(send_request_to_model(question)))
+    response_data = send_request_to_model(question)
+
+    #line by line print
+    for line in response_data["response"]:
+        print(line)
+
+    print(dumps(response_data)) #serialize json print
