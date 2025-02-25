@@ -1,0 +1,5 @@
+numpy
+requests
+faiss-cpu
+llama-cpp-python
+llama-index-embeddings-huggingface
