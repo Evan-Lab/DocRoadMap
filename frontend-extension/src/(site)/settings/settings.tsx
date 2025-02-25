@@ -2,6 +2,11 @@ import { FaArrowLeft, FaGlobe, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./settings.css";
 
+const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
+const UserIcon = FaUser as unknown as React.FC<any>;
+const GlobeIcon = FaGlobe as unknown as React.FC<any>;
+const SignOutIcon = FaSignOutAlt as unknown as React.FC<any>;
+
 const Settings: React.FC = () => {
   const navigate = useNavigate();
 
@@ -15,29 +20,29 @@ const Settings: React.FC = () => {
 
   const logout = () => {
     localStorage.removeItem("token");
-    sessionStorage.clear(); 
+    sessionStorage.clear();
     navigate("/");
   };
 
   return (
     <div className="roadmap-container">
       <button className="back-button" onClick={() => navigate(-1)}>
-        <FaArrowLeft />
+        <ArrowLeftIcon />
       </button>
       <h1 className="roadmap-title">DocRoadMap paramètres</h1>
       <div className="roadmap-buttons">
         <button onClick={goToProfile}>
-          <FaUser className="button-icon" />
+          <UserIcon className="button-icon" />
           <span className="button-text">Profil</span>
         </button>
 
         <button onClick={changeLanguage}>
-          <FaGlobe className="button-icon" />
+          <GlobeIcon className="button-icon" />
           <span className="button-text">Langue</span>
         </button>
 
         <button onClick={logout}>
-          <FaSignOutAlt className="button-icon" />
+          <SignOutIcon className="button-icon" />
           <span className="button-text">Déconnexion</span>
         </button>
       </div>

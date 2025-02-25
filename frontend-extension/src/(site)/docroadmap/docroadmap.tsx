@@ -2,6 +2,11 @@ import { FaCog, FaEye, FaMap, FaRobot } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./docroadmap.css";
 
+const RobotIcon = FaRobot as unknown as React.FC<any>;
+const MapIcon = FaMap as unknown as React.FC<any>;
+const EyeIcon = FaEye as unknown as React.FC<any>;
+const CogIcon = FaCog as unknown as React.FC<any>;
+
 const Docroadmap: React.FC = () => {
   const navigate = useNavigate();
 
@@ -26,22 +31,22 @@ const Docroadmap: React.FC = () => {
       <h1 className="roadmap-title">DocRoadMap</h1>
       <div className="roadmap-buttons">
         <button onClick={goToChatbot}>
-          <FaRobot className="button-icon" />
+          <RobotIcon className="button-icon" />
           <span className="button-text">Donna Chatbot</span>
         </button>
 
         <button onClick={createRoadmap}>
-          <FaMap className="button-icon" />
+          <MapIcon className="button-icon" />
           <span className="button-text">Créer une Roadmap</span>
         </button>
 
         <button onClick={viewRoadmaps}>
-          <FaEye className="button-icon" />
+          <EyeIcon className="button-icon" />
           <span className="button-text">Voir les Roadmaps</span>
         </button>
 
         <button onClick={goToSettings}>
-          <FaCog className="button-icon" />
+          <CogIcon className="button-icon" />
           <span className="button-text">Paramètres</span>
         </button>
       </div>
