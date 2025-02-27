@@ -3,8 +3,6 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./chatbot.css";
 
-const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
-
 const Chatbot: React.FC = () => {
   const navigate = useNavigate();
   const [messages, setMessages] = useState<
@@ -96,7 +94,7 @@ const Chatbot: React.FC = () => {
     <div className="chatbot-container">
       <h1 className="chatbot-title">Donna Chatbot</h1>
       <button className="back-button" onClick={() => navigate(-1)}>
-        <ArrowLeftIcon />
+        <FaArrowLeft />
       </button>
       <div className="chatbot-messages">
         {messages.map((msg, index) => (

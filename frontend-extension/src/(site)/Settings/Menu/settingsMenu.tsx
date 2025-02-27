@@ -1,13 +1,13 @@
 import { FaArrowLeft, FaGlobe, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import "./settings.css";
+import "./settingsMenu.css";
 
 const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
 const UserIcon = FaUser as unknown as React.FC<any>;
 const GlobeIcon = FaGlobe as unknown as React.FC<any>;
 const SignOutIcon = FaSignOutAlt as unknown as React.FC<any>;
 
-const Settings: React.FC = () => {
+const SettingsMenu: React.FC = () => {
   const navigate = useNavigate();
 
   const goToProfile = () => {
@@ -50,4 +50,4 @@ const Settings: React.FC = () => {
   );
 };
 
-export default Settings;
+export default SettingsMenu;

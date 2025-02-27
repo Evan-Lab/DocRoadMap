@@ -5,7 +5,7 @@ import "./roadmapCreation.css";
 
 const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
 
-const CreateRoadmap: React.FC = () => {
+const RoadmapCreation: React.FC = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
@@ -60,4 +60,4 @@ const CreateRoadmap: React.FC = () => {
   );
 };
 
-export default CreateRoadmap;
+export default RoadmapCreation;
