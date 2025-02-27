@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import DocRoadMap from "../../../public/docroadmap.png";
+// import DocRoadMap from "../../../public/docroadmap.png";
 import "./login.css";
 
 const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
@@ -52,7 +52,7 @@ function Login() {
           <>
             <div className="login-header">
               <div className="DocRoadMap-Logo login">
-                <img src={DocRoadMap} alt="DocRoadMap" />
+                {/* <img src={DocRoadMap} alt="DocRoadMap" /> */}
               </div>
               <h1>Connexion</h1>
             </div>

@@ -11,7 +11,7 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        type: "asset/resource",
+        // type: "asset/resource",
         use: [
           {
             loader: "ts-loader",
