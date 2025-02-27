@@ -4,12 +4,12 @@ import {
   BrowserRouter as Router,
   Routes,
 } from "react-router-dom";
-import AccountConfirmation from "./(site)/accountConfirmation/accountConfirmation";
+import Login from "./(site)/Connexion/login/login";
+import Register from "./(site)/Connexion/register/register";
+import RegisterConfirmation from "./(site)/Connexion/registerConfirmation/registerConfirmation";
 import Chatbot from "./(site)/chatbot/chatbot";
 import Docroadmap from "./(site)/docroadmap/docroadmap";
-import Login from "./(site)/login/login";
 import Profile from "./(site)/profile/profile";
-import Register from "./(site)/register/register";
 import CreateRoadmap from "./(site)/roadmapCreation/roadmapCreation";
 import RoadmapView from "./(site)/roadmapView/roadmapView";
 import Settings from "./(site)/settings/settings";
@@ -25,7 +25,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route
             path="/account-confirmation"
-            element={<AccountConfirmation />}
+            element={<RegisterConfirmation />}
           />
           <Route path="/roadmap-view" element={<RoadmapView />} />
           <Route path="/chatbot" element={<Chatbot />} />

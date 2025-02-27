@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import "./accountConfirmation.css";
+import DocRoadMap from "../../../public/docroadmap.png";
+import "./registerConfirmation.css";
 
-function AccountConfirmation() {
+function RegisterConfirmation() {
   const navigate = useNavigate();
 
   const handleLoginRedirect = () => {
@@ -13,17 +14,17 @@ function AccountConfirmation() {
   };
 
   return (
-    <div className="confirmation-wrapper">
+    <div className="confirmation-page">
       <div className="confirmation-container">
-        <h1>Compte créé avec succès !</h1>
+        <div className="confirmation-header">
+          <div className="DocRoadMap-Logo confirmation">
+            <img src={DocRoadMap} alt="DocRoadMap" />
+          </div>
+          <h1>Compte créé avec succès !</h1>
+        </div>
         <p>
-          Un email de confirmation a été envoyé à votre adresse. Veuillez
-          vérifier votre boîte de réception et cliquer sur le lien de
-          confirmation pour activer votre compte.
-        </p>
-        <p>
-          Si vous ne trouvez pas l'email, vérifiez également dans vos courriers
-          indésirables.
+          Un email de confirmation a été envoyé à votre adresse email. Veuillez
+          cliquer sur le lien de confirmation pour activer votre compte.
         </p>
         <div className="button-group">
           <button className="login-button" onClick={handleLoginRedirect}>
@@ -38,4 +39,4 @@ function AccountConfirmation() {
   );
 }
 
-export default AccountConfirmation;
+export default RegisterConfirmation;

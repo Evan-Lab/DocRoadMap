@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import DocRoadMap from "../../../public/docroadmap.png";
 import "./register.css";
 
 const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
@@ -42,13 +43,18 @@ function Register() {
         <button className="back-button" onClick={() => navigate(-1)}>
           <ArrowLeftIcon />
         </button>
-        <h1>Inscription</h1>
+        <div className="register-header">
+          <div className="DocRoadMap-Logo register">
+            <img src={DocRoadMap} alt="DocRoadMap" />
+          </div>
+          <h1>Inscription</h1>
+        </div>
         {error && <p className="error-message">{error}</p>}
         <div className="input-group">
           <label>Prénom</label>
           <input
             type="text"
-            placeholder="Entrez votre prénom"
+            placeholder="Prénom"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
           />
@@ -57,7 +63,7 @@ function Register() {
           <label>Nom de famille</label>
           <input
             type="text"
-            placeholder="Entrez votre nom"
+            placeholder="Nom"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
           />
@@ -66,7 +72,7 @@ function Register() {
           <label>Adresse e-mail</label>
           <input
             type="email"
-            placeholder="Entrez votre email"
+            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -75,7 +81,7 @@ function Register() {
           <label>Mot de passe</label>
           <input
             type="password"
-            placeholder="Choisissez un mot de passe"
+            placeholder=""
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -84,7 +90,7 @@ function Register() {
           <label>Confirmation du mot de passe</label>
           <input
             type="password"
-            placeholder="Confirmez votre mot de passe"
+            placeholder=""
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />

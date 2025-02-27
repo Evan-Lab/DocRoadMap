@@ -1,4 +1,4 @@
-.register-page {
+.login-page {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,7 +6,7 @@
   background: linear-gradient(to bottom, #f0f2f5, #cfd9df);
 }
 
-.register-container {
+.login-container {
   position: relative;
   background: white;
   padding: 30px;
@@ -39,44 +39,38 @@
   transform: scale(1.1);
 }
 
-.register-container h1 {
+.login-container h1 {
   font-size: 26px;
-  margin-bottom: 20px;
-  color: #333;
-}
-.input-group {
   margin-bottom: 15px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  color: #333;
 }
 
-.input-group label {
-  font-weight: 600;
-  margin-bottom: 5px;
-  color: #333;
+.input-group {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  text-align: center;
 }
 
 .input-group input {
-  width: 90%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
-  text-align: center;
-  transition: border-color 0.3s ease;
+  width: 100%;
+  text-align: left;
+  padding-left: 10px;
+  text-align: left !important;
+  width: 100%;
+  text-align: left !important;
+  padding-left: 10px;
+  direction: ltr;
+  caret-color: black;
 }
 
-.input-group input:focus {
-  border-color: #007bff;
-  outline: none;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+.input-group label {
+  text-align: left !important;
+  align-self: flex-start;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
-.register-button {
+.login-button {
   width: 100%;
   padding: 12px;
   background-color: #007bff;
@@ -87,9 +81,13 @@
   font-size: 16px;
   font-weight: bold;
   transition: background-color 0.3s ease, transform 0.2s;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  width: 80%;
 }
 
-.register-button:hover {
+.login-button:hover {
   background-color: #0056b3;
   transform: scale(1.05);
 }
@@ -100,18 +98,69 @@
   margin-bottom: 10px;
 }
 
-.login-text {
-  margin-top: 10px;
-  margin-bottom: 0;
+.signup-text {
+  margin-top: 15px;
   font-size: 14px;
+  margin-bottom: 0%;
 }
 
-.login-text a {
+.signup-text a {
   color: #007bff;
   text-decoration: none;
   font-weight: bold;
 }
 
-.login-text a:hover {
+.signup-text a:hover {
   text-decoration: underline;
+}
+
+.forgot-password {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.success-message {
+  color: green;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.back-to-login {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.back-to-login:hover {
+  text-decoration: underline;
+}
+
+.login-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.DocRoadMap-Logo.login img {
+  width: 150px;
+  max-width: 150px;
+  height: auto;
+}
+
+.login-header h1 {
+  font-size: 22px;
+  margin: 0;
+  font-weight: 600;
+  transform: translateX(-40px);
 }

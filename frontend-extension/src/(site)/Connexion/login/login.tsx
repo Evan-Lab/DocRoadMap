@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import DocRoadMap from "../../../public/docroadmap.png";
 import "./login.css";
 
 const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
@@ -20,7 +21,6 @@ function Login() {
       .post("http://localhost:8082/auth/login", { email, password })
       .then((response) => {
         localStorage.setItem("token", response.data.accessToken);
-
         if (localStorage.getItem("token") != null) {
           navigate("/roadmap");
           console.log("i am connected, token: ", localStorage.getItem("token"));
@@ -36,7 +36,6 @@ function Login() {
     setResetMessage(
       "Si un compte est associé à cet email, un lien de réinitialisation a été envoyé."
     );
-
     setTimeout(() => {
       setResetMessage("");
     }, 5000);
@@ -51,13 +50,18 @@ function Login() {
 
         {!isResetMode ? (
           <>
-            <h1>Connexion</h1>
+            <div className="login-header">
+              <div className="DocRoadMap-Logo login">
+                <img src={DocRoadMap} alt="DocRoadMap" />
+              </div>
+              <h1>Connexion</h1>
+            </div>
             {error && <p className="error-message">{error}</p>}
             <div className="input-group">
               <label>Email</label>
               <input
                 type="email"
-                placeholder="Entrez votre email"
+                placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -66,7 +70,7 @@ function Login() {
               <label>Mot de passe</label>
               <input
                 type="password"
-                placeholder="Entrez votre mot de passe"
+                placeholder=""
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -83,13 +87,13 @@ function Login() {
           </>
         ) : (
           <>
-            <h1>Réinitialisation du mot de passe</h1>
+            <h2>Réinitialisation du mot de passe</h2>
             {resetMessage && <p className="success-message">{resetMessage}</p>}
             <div className="input-group">
               <label>Email</label>
               <input
                 type="email"
-                placeholder="Entrez votre email"
+                placeholder="Email"
                 value={resetEmail}
                 onChange={(e) => setResetEmail(e.target.value)}
               />
