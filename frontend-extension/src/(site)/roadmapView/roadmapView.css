@@ -46,7 +46,7 @@ body {
 .card-body { 
   text-align: left;
   padding: 20px;
-  width: max-content;
+  width: 80%;
 } 
 .process { 
   font-size: 14px; 

@@ -3,6 +3,8 @@ import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./roadmapCreation.css";
 
+const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
+
 const CreateRoadmap: React.FC = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -40,7 +42,7 @@ const CreateRoadmap: React.FC = () => {
   return (
     <div className="roadmap-container">
       <button className="back-button" onClick={() => navigate(-1)}>
-        <FaArrowLeft />
+        <ArrowLeftIcon />
       </button>
       <h1 className="roadmap-title">Création d'une Roadmap</h1>
       <div className="action-section">
