@@ -23,8 +23,8 @@ jobs:
         working-directory: mobile
 
       - name: Format check
-        run: |
-         npm run format:check
+        run: npm run format:check
+        working-directory: mobile
 
      # - name: Run Jest tests (unit + UI)
       #  run: npm test
