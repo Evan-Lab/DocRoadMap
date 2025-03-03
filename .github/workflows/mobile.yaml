@@ -23,7 +23,9 @@ jobs:
         working-directory: mobile
 
       - name: Format check
-        run: npm run format:check
+        run: |
+          npx prettier --check .
+          npx prettier --write .
         working-directory: mobile
 
      # - name: Run Jest tests (unit + UI)
