@@ -1,22 +1,19 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack, router } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect, useState } from 'react';
-import 'react-native-reanimated';
-import { StorageLogin } from '../constants/Storage';
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import  UserContext  from '../constants/Context';
+import { ThemeProvider, useTheme } from "@/components/ThemeContext";
+import { useFonts } from "expo-font";
+import { Stack, router } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect, useState } from "react";
+import "react-native-reanimated";
+import { StorageLogin } from "../constants/Storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import UserContext from "../constants/Context";
+import { View } from "react-native";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
   const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
   useEffect(() => {
@@ -29,39 +26,41 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <ThemeProvider>
+      <RootLayoutNav />
+    </ThemeProvider>
+  );
 }
 
-  function RootLayoutNav() {
-    const colorScheme = useColorScheme();
-    const [user, setUser] = useState<StorageLogin | null | undefined>(undefined)
-  
-    useEffect(() => {
-      (async () => {
-      if (user === undefined ) {
-        try {
-          const user = await AsyncStorage.getItem("user")
-          if (user === null) {
-            setUser(null)
-          } else {
-            setUser(JSON.parse(user))
-          }
-        } catch (e) {
-          setUser(null)
-        }}})()
-      if (user === null) {
-        router.replace("/connexion")
+function RootLayoutNav() {
+  const { theme } = useTheme();
+  const [user, setUser] = useState<StorageLogin | null | undefined>(undefined);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const storedUser = await AsyncStorage.getItem("user");
+        setUser(storedUser ? JSON.parse(storedUser) : null);
+      } catch (e) {
+        setUser(null);
       }
-    }, [user])
-  
-    return (
-      <UserContext.Provider value={{ user, setUser }}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (user === null) {
+      router.replace("/connexion");
+    }
+  }, [user]);
+
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      <View style={{ flex: 1, backgroundColor: theme.background }}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-
         </Stack>
-      </ThemeProvider>
-      </UserContext.Provider>
-    )
-  }
+      </View>
+    </UserContext.Provider>
+  );
+}

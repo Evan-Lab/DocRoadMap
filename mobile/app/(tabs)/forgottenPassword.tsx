@@ -1,104 +1,106 @@
-import React, { useState, useEffect} from 'react';
-import { View, TextInput, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useRouter } from 'expo-router';
-import { BackHandler } from 'react-native';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  TextInput,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import { useRouter } from "expo-router";
+import { BackHandler } from "react-native";
+import { useTheme } from "@/components/ThemeContext";
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState('');
+  const { theme } = useTheme();
+  const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     if (error) {
-        alert(error);
+      alert(error);
     }
 
     const onBackPress = () => {
-        router.replace('/connexion');
-        return true;
+      router.replace("/connexion");
+      return true;
     };
 
-    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+    BackHandler.addEventListener("hardwareBackPress", onBackPress);
 
     return () => {
-        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      BackHandler.removeEventListener("hardwareBackPress", onBackPress);
     };
   }, [error, router]);
 
   const handleSend = () => {
-    console.log('Email:', email);
+    console.log("Email:", email);
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Mot de passe oublié</Text>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <Text style={[styles.title, { color: theme.text }]}>
+        Mot de passe oublié
+      </Text>
       <TextInput
-        style={styles.input}
+        style={[
+          styles.input,
+          { borderColor: theme.text, backgroundColor: theme.background },
+        ]}
         placeholder="Enter your email"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
+        placeholderTextColor={theme.text}
       />
-       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.customButton} onPress={handleSend}>
-          <Text style={styles.buttonText}>Envoyé</Text>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={[styles.customButton, { backgroundColor: theme.primary }]}
+          onPress={handleSend}
+        >
+          <Text style={[styles.buttonText, { color: theme.buttonText }]}>
+            Envoyé
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-const COLORS = {
-    primary: '#C49D83',
-    secondary: '#BDA18A',
-    tertiary: '#E8D5CC',
-    grey: '#D3D3D3',
-    light: '#F5EFE6',
-    white: '#FFF',
-    black: '#000000',
-    orange: '#ffa500',
-};
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     paddingHorizontal: 20,
-    backgroundColor:"#f2f2f2"
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
     marginBottom: 20,
-    color: '#3498db',
   },
   input: {
     height: 50,
-    borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 15,
-    color: COLORS.white,
-    backgroundColor: COLORS.white,
+    color: "#000000",
   },
   buttonContainer: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 20,
     right: 20,
-    backgroundColor: COLORS.white,
+    backgroundColor: "transparent",
   },
   customButton: {
-    backgroundColor: '#3498db',
     borderRadius: 5,
     paddingVertical: 12,
     paddingHorizontal: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   buttonText: {
-    color: COLORS.white,
     fontSize: 18,
   },
 });
