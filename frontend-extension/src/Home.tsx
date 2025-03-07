@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 // import DocRoadMap from "../public/docroadmap.png";
-import "./Home.css";
+import "./Home.css"
 
 function Home() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <div className="home-container">
@@ -13,7 +13,7 @@ function Home() {
       <button onClick={() => navigate("/login")}>Se connecter</button>
       <button onClick={() => navigate("/register")}>S'inscrire</button>
     </div>
-  );
+  )
 }
 
-export default Home;
+export default Home

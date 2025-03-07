@@ -1,17 +1,17 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 // import DocRoadMap from "../../../public/docroadmap.png";
-import "./registerConfirmation.css";
+import "./registerConfirmation.css"
 
 function RegisterConfirmation() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleLoginRedirect = () => {
-    navigate("/login");
-  };
+    navigate("/login")
+  }
 
   const handleResendEmail = () => {
-    alert("Email de confirmation renvoyé !");
-  };
+    alert("Email de confirmation renvoyé !")
+  }
 
   return (
     <div className="confirmation-page">
@@ -36,7 +36,7 @@ function RegisterConfirmation() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default RegisterConfirmation;
+export default RegisterConfirmation

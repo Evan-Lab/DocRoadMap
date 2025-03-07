@@ -1,28 +1,28 @@
-import { FaCog, FaEye, FaMap, FaRobot } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import "./docroadmapHome.css";
+import { FaCog, FaEye, FaMap, FaRobot } from "react-icons/fa"
+import { useNavigate } from "react-router-dom"
+import "./docroadmapHome.css"
 
-const RobotIcon = FaRobot as unknown as React.FC<any>;
-const MapIcon = FaMap as unknown as React.FC<any>;
-const EyeIcon = FaEye as unknown as React.FC<any>;
-const CogIcon = FaCog as unknown as React.FC<any>;
+const RobotIcon = FaRobot as unknown as React.FC<any>
+const MapIcon = FaMap as unknown as React.FC<any>
+const EyeIcon = FaEye as unknown as React.FC<any>
+const CogIcon = FaCog as unknown as React.FC<any>
 
 const DocroadmapHome: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const createRoadmap = () => {
-    navigate("/create-roadmap");
-  };
+    navigate("/create-roadmap")
+  }
   const viewRoadmaps = () => {
-    navigate("/roadmap-view");
-  };
+    navigate("/roadmap-view")
+  }
   const goToChatbot = () => {
-    navigate("/chatbot");
-  };
+    navigate("/chatbot")
+  }
 
   const goToSettings = () => {
-    navigate("/settings");
-  };
+    navigate("/settings")
+  }
 
   return (
     <div className="roadmap-container" style={{ backgroundColor: "white" }}>
@@ -48,7 +48,7 @@ const DocroadmapHome: React.FC = () => {
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DocroadmapHome;
+export default DocroadmapHome

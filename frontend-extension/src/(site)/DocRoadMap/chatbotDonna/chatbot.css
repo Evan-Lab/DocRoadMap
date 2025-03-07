@@ -118,7 +118,9 @@ body {
   cursor: pointer;
   font-size: 24px;
   color: #007bff;
-  transition: color 0.3s ease, transform 0.2s ease;
+  transition:
+    color 0.3s ease,
+    transform 0.2s ease;
 }
 
 .back-button:hover {

@@ -3,20 +3,20 @@ import {
   Route,
   BrowserRouter as Router,
   Routes,
-} from "react-router-dom";
-import Home from "./Home";
+} from "react-router-dom"
+import Home from "./Home"
 
-import Login from "./(site)/Connexion/login/login";
-import Register from "./(site)/Connexion/register/register";
-import RegisterConfirmation from "./(site)/Connexion/registerConfirmation/registerConfirmation";
+import Login from "./(site)/Connexion/login/login"
+import Register from "./(site)/Connexion/register/register"
+import RegisterConfirmation from "./(site)/Connexion/registerConfirmation/registerConfirmation"
 
-import Chatbot from "./(site)/DocRoadMap/chatbotDonna/chatbot";
-import DocroadmapHome from "./(site)/DocRoadMap/docroadmapHome/docroadmapHome";
-import RoadmapCreation from "./(site)/DocRoadMap/roadmapCreation/roadmapCreation";
-import RoadmapView from "./(site)/DocRoadMap/roadmapView/roadmapView";
+import Chatbot from "./(site)/DocRoadMap/chatbotDonna/chatbot"
+import DocroadmapHome from "./(site)/DocRoadMap/docroadmapHome/docroadmapHome"
+import RoadmapCreation from "./(site)/DocRoadMap/roadmapCreation/roadmapCreation"
+import RoadmapView from "./(site)/DocRoadMap/roadmapView/roadmapView"
 
-import SettingsMenu from "./(site)/Settings/Menu/settingsMenu";
-import Profile from "./(site)/Settings/profile/profile";
+import SettingsMenu from "./(site)/Settings/Menu/settingsMenu"
+import Profile from "./(site)/Settings/profile/profile"
 
 function App() {
   return (
@@ -41,7 +41,7 @@ function App() {
         </Routes>
       </div>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -1,28 +1,28 @@
-import { FaArrowLeft, FaGlobe, FaSignOutAlt, FaUser } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import "./settingsMenu.css";
+import { FaArrowLeft, FaGlobe, FaSignOutAlt, FaUser } from "react-icons/fa"
+import { useNavigate } from "react-router-dom"
+import "./settingsMenu.css"
 
-const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
-const UserIcon = FaUser as unknown as React.FC<any>;
-const GlobeIcon = FaGlobe as unknown as React.FC<any>;
-const SignOutIcon = FaSignOutAlt as unknown as React.FC<any>;
+const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>
+const UserIcon = FaUser as unknown as React.FC<any>
+const GlobeIcon = FaGlobe as unknown as React.FC<any>
+const SignOutIcon = FaSignOutAlt as unknown as React.FC<any>
 
 const SettingsMenu: React.FC = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const goToProfile = () => {
-    navigate("/profile");
-  };
+    navigate("/profile")
+  }
 
   const changeLanguage = () => {
-    console.log("Work in progress");
-  };
+    console.log("Work in progress")
+  }
 
   const logout = () => {
-    localStorage.removeItem("token");
-    sessionStorage.clear();
-    navigate("/");
-  };
+    localStorage.removeItem("token")
+    sessionStorage.clear()
+    navigate("/")
+  }
 
   return (
     <div className="roadmap-container">
@@ -47,7 +47,7 @@ const SettingsMenu: React.FC = () => {
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SettingsMenu;
+export default SettingsMenu
