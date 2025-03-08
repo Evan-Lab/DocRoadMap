@@ -16,12 +16,21 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
   padding: 20px;
+  position: relative;
+  padding-top: 10px; /* Réduction de l'espace blanc en haut */
+}
+
+.settings-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .roadmap-title {
   font-size: 24px;
   color: #333333;
-  margin-bottom: 20px;
+  margin-bottom: 20px; /* Espacement entre le titre et les boutons */
+  font-weight: bold;
 }
 
 .roadmap-buttons {
@@ -66,7 +75,7 @@ body {
 
 .back-button {
   position: absolute;
-  top: 15px;
+  top: 40px; /* Descend la flèche */
   left: 15px;
   width: 40px;
   height: 40px;

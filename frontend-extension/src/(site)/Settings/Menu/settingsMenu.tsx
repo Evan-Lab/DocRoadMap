@@ -29,22 +29,24 @@ const SettingsMenu: React.FC = () => {
       <button className="back-button" onClick={() => navigate(-1)}>
         <ArrowLeftIcon />
       </button>
-      <h1 className="roadmap-title">DocRoadMap paramètres</h1>
-      <div className="roadmap-buttons">
-        <button onClick={goToProfile}>
-          <UserIcon className="button-icon" />
-          <span className="button-text">Profil</span>
-        </button>
+      <div className="settings-content">
+        <h1 className="roadmap-title">Paramètres</h1>
+        <div className="roadmap-buttons">
+          <button onClick={goToProfile}>
+            <UserIcon className="button-icon" />
+            <span className="button-text">Profil</span>
+          </button>
 
-        <button onClick={changeLanguage}>
-          <GlobeIcon className="button-icon" />
-          <span className="button-text">Langue</span>
-        </button>
+          <button onClick={changeLanguage}>
+            <GlobeIcon className="button-icon" />
+            <span className="button-text">Langue</span>
+          </button>
 
-        <button onClick={logout}>
-          <SignOutIcon className="button-icon" />
-          <span className="button-text">Déconnexion</span>
-        </button>
+          <button onClick={logout}>
+            <SignOutIcon className="button-icon" />
+            <span className="button-text">Déconnexion</span>
+          </button>
+        </div>
       </div>
     </div>
   )
