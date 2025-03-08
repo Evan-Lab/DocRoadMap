@@ -19,15 +19,22 @@ body {
   overflow: hidden;
 }
 
-.chatbot-title {
-  background: #007bff;
-  color: #fff;
-  margin: 0;
+.chatbot-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   padding: 16px;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+}
+
+.chatbot-title {
+  color: #000;
   font-size: 20px;
+  font-weight: bold;
   text-align: center;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
+  margin: 0;
 }
 
 .chatbot-messages {
@@ -105,11 +112,6 @@ body {
 }
 
 .back-button {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  width: 40px;
-  height: 40px;
   background-color: transparent;
   border: none;
   display: flex;

@@ -90,10 +90,13 @@ const Chatbot: React.FC = () => {
 
   return (
     <div className="chatbot-container">
-      <h1 className="chatbot-title">Donna Chatbot</h1>
-      <button className="back-button" onClick={() => navigate(-1)}>
-        <FaArrowLeft />
-      </button>
+      <div className="chatbot-header">
+        <button className="back-button" onClick={() => navigate(-1)}>
+          <FaArrowLeft />
+        </button>
+        <h1 className="chatbot-title">Donna Chatbot</h1>
+      </div>
+
       <div className="chatbot-messages">
         {messages.map((msg, index) => (
           <div key={index} className={`chat-message ${msg.sender}`}>
