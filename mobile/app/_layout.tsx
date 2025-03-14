@@ -8,6 +8,9 @@ import { StorageLogin } from "../constants/Storage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import UserContext from "../constants/Context";
 import { View } from "react-native";
+import { I18nextProvider } from "react-i18next";
+import i18n from "../locales/ii8n";
+import { useTranslation } from "react-i18next";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -27,9 +30,11 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider>
-      <RootLayoutNav />
-    </ThemeProvider>
+    <I18nextProvider i18n={i18n}>
+      <ThemeProvider>
+        <RootLayoutNav />
+      </ThemeProvider>
+    </I18nextProvider>
   );
 }
 

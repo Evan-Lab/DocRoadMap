@@ -13,8 +13,10 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useTheme } from "@/components/ThemeContext";
 import request from "@/constants/Request";
+import { useTranslation } from "react-i18next";
 
 export default function Register() {
+  const { t } = useTranslation();
   const { theme } = useTheme();
   const [firstname, setFirstname] = useState("");
   const [password, setPassword] = useState("");
@@ -55,9 +57,9 @@ export default function Register() {
       setFirstname("");
       setLastname("");
     } catch (error) {
-      setError("Erreur, veuillez vérifier vos informations");
+      setError(t("register.error"));
     }
-  }, [firstname, lastname, email, password]);
+  }, [firstname, lastname, email, password, t]);
 
   return (
     <KeyboardAvoidingView
@@ -82,7 +84,7 @@ export default function Register() {
                 color: theme.text,
               },
             ]}
-            placeholder="Prénom"
+            placeholder={t("register.firstname")}
             placeholderTextColor={theme.text}
             value={firstname}
             onChangeText={setFirstname}
@@ -106,7 +108,7 @@ export default function Register() {
                 color: theme.text,
               },
             ]}
-            placeholder="Nom de famille"
+            placeholder={t("register.lastname")}
             placeholderTextColor={theme.text}
             value={lastname}
             onChangeText={setLastname}
@@ -130,7 +132,7 @@ export default function Register() {
                 color: theme.text,
               },
             ]}
-            placeholder="Email"
+            placeholder={t("register.email")}
             placeholderTextColor={theme.text}
             value={email}
             onChangeText={setEmail}
@@ -155,7 +157,7 @@ export default function Register() {
                 color: theme.text,
               },
             ]}
-            placeholder="Mot de passe"
+            placeholder={t("register.password")}
             placeholderTextColor={theme.text}
             value={password}
             onChangeText={setPassword}
@@ -179,7 +181,7 @@ export default function Register() {
               style={[styles.buttonText, { color: theme.buttonText }]}
               allowFontScaling={true}
             >
-              Create Account
+              {t("register.create_account")}
             </Text>
           </TouchableOpacity>
         </View>
@@ -189,7 +191,7 @@ export default function Register() {
             style={[styles.customButton, { backgroundColor: theme.primary }]}
           >
             <Text style={[styles.buttonText, { color: theme.buttonText }]}>
-              Retour à l'écran d'accueil
+              {t("register.back_to_home")}
             </Text>
           </TouchableOpacity>
         </View>

@@ -14,6 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@/components/ThemeContext";
 import request from "@/constants/Request";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 
 type Step = {
   id: string;
@@ -23,6 +24,8 @@ type Step = {
 
 export default function StepForProcess() {
   const { theme } = useTheme();
+  const { t } = useTranslation();
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [processId, setProcessId] = useState<number | null>(null);
@@ -48,12 +51,12 @@ export default function StepForProcess() {
         setSteps(response.data);
       }
     } catch (error) {
-      setError("Echec de la récupération des étapes. Ressayez plus tard !");
+      setError(t("fetch_steps_error"));
     } finally {
       setIsLoading(false);
       setRefreshing(false);
     }
-  }, [processId]);
+  }, [processId, t]);
 
   useEffect(() => {
     fetchSteps();
@@ -61,10 +64,7 @@ export default function StepForProcess() {
 
   const handleCreateStep = useCallback(async () => {
     if (!name.trim() || !description.trim()) {
-      Alert.alert(
-        "Erreur de validation",
-        "Veuillez remplir à la fois le nom et la description de l étape",
-      );
+      Alert.alert(t("validation_error_title"), t("validation_error_message"));
       return;
     }
 
@@ -84,15 +84,14 @@ export default function StepForProcess() {
         setDescription("");
         setProcessId(0);
         fetchSteps();
-        Alert.alert("Succès", "L étape a été crée");
-        console.log(response);
+        Alert.alert(t("success_title"), t("step_created_success"));
       }
     } catch (error) {
-      setError("Failed to create step. Please try again.");
+      setError(t("create_step_error"));
     } finally {
       setIsLoading(false);
     }
-  }, [name, description, processId, fetchSteps]);
+  }, [name, description, processId, fetchSteps, t]);
 
   return (
     <KeyboardAvoidingView
@@ -118,7 +117,7 @@ export default function StepForProcess() {
                   borderColor: theme.text,
                 },
               ]}
-              placeholder="Nom de l'étape"
+              placeholder={t("step_name_placeholder")}
               placeholderTextColor={theme.text}
               value={name}
               onChangeText={setName}
@@ -143,7 +142,7 @@ export default function StepForProcess() {
                   borderColor: theme.text,
                 },
               ]}
-              placeholder="Description de l'étape"
+              placeholder={t("step_description_placeholder")}
               placeholderTextColor={theme.text}
               value={description}
               onChangeText={setDescription}
@@ -170,7 +169,7 @@ export default function StepForProcess() {
                   borderColor: theme.text,
                 },
               ]}
-              placeholder="Ton process id"
+              placeholder={t("process_id_placeholder")}
               placeholderTextColor={theme.text}
               value={processId !== null ? processId.toString() : ""}
               onChangeText={(text) => {
@@ -205,10 +204,10 @@ export default function StepForProcess() {
                   styles.buttonText,
                   { color: theme.buttonText, borderColor: theme.text },
                 ]}
-                accessibilityLabel="Boutton pour généer une nouvelle étape administrative"
+                accessibilityLabel={t("create_step_button_accessibility")}
                 allowFontScaling={true}
               >
-                Ajouter l'étape
+                {t("add_step_button")}
               </Text>
             )}
           </TouchableOpacity>

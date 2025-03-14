@@ -11,9 +11,12 @@ import {
   Modal,
 } from "react-native";
 import { useTheme } from "@/components/ThemeContext";
+import { useTranslation } from "react-i18next";
+import i18n from "../../locales/i18n";
 
 export default function ChatInterface() {
   const { theme } = useTheme();
+  const { t } = useTranslation();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<{ text: string; sender: string }[]>(
     [],
@@ -51,14 +54,14 @@ export default function ChatInterface() {
 
       const data = await response.json();
       const botMessage =
-        data.choices[0]?.message?.content || "Désolé, une erreur est survenue";
+        data.choices[0]?.message?.content || t("error_occurred");
 
       setMessages([...newMessages, { text: botMessage, sender: "bot" }]);
     } catch (error) {
-      console.error("Erreur lors de la communication avec l'API", error);
+      console.error(t("api_error"), error);
       setMessages([
         ...newMessages,
-        { text: "Erreur de connexion", sender: "bot" },
+        { text: t("connection_error"), sender: "bot" },
       ]);
     } finally {
       setLoading(false);
@@ -88,7 +91,7 @@ export default function ChatInterface() {
         >
           <View style={[styles.header, { borderBottomColor: theme.text }]}>
             <Text style={[styles.headerTitle, { color: theme.text }]}>
-              Donna Chatbot
+              {t("chatbot_name")}
             </Text>
             <TouchableOpacity onPress={handleClose}>
               <Text style={[styles.closeText, { color: theme.text }]}>✖</Text>
@@ -124,7 +127,7 @@ export default function ChatInterface() {
           >
             <TextInput
               style={[styles.input, { borderColor: theme.text }]}
-              placeholder="Posez votre question..."
+              placeholder={t("ask_question")}
               value={message}
               onChangeText={setMessage}
               onSubmitEditing={handleSend}

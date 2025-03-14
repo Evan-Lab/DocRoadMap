@@ -12,7 +12,8 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useTheme } from "@/components/ThemeContext"; // Assuming ThemeContext provides the theme
+import { useTheme } from "@/components/ThemeContext";
+import { useTranslation } from "react-i18next";
 import request from "@/constants/Request";
 
 type CardProcess = {
@@ -23,7 +24,8 @@ type CardProcess = {
 };
 
 export default function CreateCardProcess() {
-  const { theme } = useTheme(); // Get current theme
+  const { theme } = useTheme();
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [userId, setUserId] = useState<number | null>(null);
@@ -40,7 +42,7 @@ export default function CreateCardProcess() {
 
   const handleCreateCardProcess = useCallback(async () => {
     if (!name.trim() || !description.trim()) {
-      Alert.alert("Erreur de validation", "Veuillez remplir tous les champs");
+      Alert.alert(t("validationError"), t("fillAllFields"));
       return;
     }
     setIsLoading(true);
@@ -63,16 +65,14 @@ export default function CreateCardProcess() {
         setUserId(null);
         setStepsId(null);
         setEndedAt("");
-        Alert.alert("Réussite", "Création de la démarche!");
+        Alert.alert(t("success"), t("processCreated"));
       }
     } catch (error) {
-      setError(
-        "Echec lors de la création de la démarche administrative. Veuillez réessayer plus tard",
-      );
+      setError(t("creationFailed"));
     } finally {
       setIsLoading(false);
     }
-  }, [name, description, stepsId, endedAt, userId]);
+  }, [name, description, stepsId, endedAt, userId, t]);
 
   return (
     <KeyboardAvoidingView
@@ -94,7 +94,7 @@ export default function CreateCardProcess() {
                 styles.input,
                 { backgroundColor: theme.background, borderColor: theme.text },
               ]}
-              placeholder="Nom de la démarche administrative"
+              placeholder={t("processNamePlaceholder")}
               placeholderTextColor={theme.text}
               value={name}
               onChangeText={setName}
@@ -116,7 +116,7 @@ export default function CreateCardProcess() {
                 styles.descriptionInput,
                 { backgroundColor: theme.background, borderColor: theme.text },
               ]}
-              placeholder="Description de la démarche administrative"
+              placeholder={t("processDescriptionPlaceholder")}
               placeholderTextColor={theme.text}
               value={description}
               onChangeText={setDescription}
@@ -142,9 +142,9 @@ export default function CreateCardProcess() {
               <Text
                 style={[styles.buttonText, { color: theme.buttonText }]}
                 allowFontScaling={true}
-                accessibilityLabel="Boutton pour généer une nouvelle démarche administrative"
+                accessibilityLabel={t("createProcessButton")}
               >
-                Créer la démarche administrative
+                {t("createProcessButtonText")}
               </Text>
             )}
           </TouchableOpacity>

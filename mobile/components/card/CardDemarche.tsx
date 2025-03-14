@@ -11,6 +11,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import request from "@/constants/Request";
 import { useTheme } from "@/components/ThemeContext";
+import { useTranslation } from "react-i18next";
 
 interface CardDemarcheProps {
   name: string;
@@ -33,6 +34,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({
   id,
 }) => {
   const { theme } = useTheme();
+  const { t } = useTranslation();
   const [modalVisible, setModalVisible] = useState(false);
   const [steps, setSteps] = useState<Step[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -50,12 +52,12 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({
         setSteps(response.data);
       }
     } catch (error) {
-      setError("Echec de la récupération des étapes. Ressayez plus tard !");
+      setError(t("errorFetchingSteps"));
     } finally {
       setIsLoading(false);
       setRefreshing(false);
     }
-  }, []);
+  }, [id, t]);
 
   useEffect(() => {
     fetchSteps();
@@ -91,7 +93,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({
   );
 
   const handleChatBot = () => {
-    console.log("Ouverture chat bot...");
+    console.log(t("openingChatBot"));
   };
 
   return (
@@ -142,7 +144,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({
         <Text
           style={[styles.progressText, { color: theme.text }]}
           allowFontScaling={true}
-        >{`${progress}% completé`}</Text>
+        >{`${progress}% ${t("completed")}`}</Text>
       </View>
       <View style={styles.cardFooter}>
         <TouchableOpacity style={styles.chatButton} onPress={handleChatBot}>
@@ -151,7 +153,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({
             style={[styles.chatButtonText, { color: theme.primary }]}
             allowFontScaling={true}
           >
-            Discute avec l'Assistant
+            {t("chatWithAssistant")}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -161,7 +163,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({
           }}
         >
           <Text style={styles.continueButtonText} allowFontScaling={true}>
-            {progress < 100 ? "Continuer" : "Compléter"}
+            {progress < 100 ? t("continue") : t("complete")}
           </Text>
         </TouchableOpacity>
       </View>
@@ -178,7 +180,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({
               style={[styles.modalTitle, { color: theme.text }]}
               allowFontScaling={true}
             >
-              Plus de details
+              {t("moreDetails")}
             </Text>
             <FlatList
               data={steps}
@@ -196,7 +198,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({
                     style={[styles.emptyText, { color: theme.text }]}
                     allowFontScaling={true}
                   >
-                    Aucune étape disponible pour le moment
+                    {t("noStepsAvailable")}
                   </Text>
                 </View>
               }
@@ -206,7 +208,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({
               onPress={() => setModalVisible(false)}
             >
               <Text style={styles.closeButtonText} allowFontScaling={true}>
-                Fermer
+                {t("close")}
               </Text>
             </TouchableOpacity>
           </View>

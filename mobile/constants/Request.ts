@@ -76,7 +76,7 @@ const request = {
           };
         } else {
           return {
-            error: "rror: ${status}. Quelque chose ne va pas",
+            error: "Error: ${status}. Quelque chose ne va pas",
           };
         }
       } else {

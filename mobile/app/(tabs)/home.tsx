@@ -9,6 +9,7 @@ import {
   Alert,
   StyleSheet,
 } from "react-native";
+import { useTranslation } from "react-i18next";
 import CardDemarche from "../../components/card/CardDemarche";
 import ChatInterface from "../../components/chat/ChatInterface";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -17,6 +18,7 @@ import request from "@/constants/Request";
 import { useTheme } from "@/components/ThemeContext";
 
 export default function HomePage() {
+  const { t, i18n } = useTranslation();
   const { theme } = useTheme();
   const [cards, setCards] = useState<SwaggerProcessPerIdList[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -24,17 +26,12 @@ export default function HomePage() {
 
   const fetchCards = useCallback(async () => {
     const response = await request.processperID();
-    //console.log('API Response:', response);
     if ("data" in response && response.data) {
       setCards(response.data);
     } else {
-      Alert.alert(
-        "Erreur",
-        response.error ||
-          "Impossible de récupérer les cartes des démarches administratives. Veuillez réessayer",
-      );
+      Alert.alert(t("home.error"), response.error || t("home.error_message"));
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     fetchCards();
@@ -59,9 +56,9 @@ export default function HomePage() {
         return;
       }
     } catch (error) {
-      setError("Erreur, veuillez vérifier vos information");
+      setError(t("home.error_message"));
     }
-  }, []);
+  }, [t]);
 
   const handleMenuPress = () => {
     console.log("Menu/profile button pressed");
@@ -114,22 +111,22 @@ export default function HomePage() {
             <Text
               style={[styles.buttonText, { color: theme.buttonText }]}
               allowFontScaling={true}
-              accessibilityLabel="Boutton pour générer une nouvelle roadmap administrative"
+              accessibilityLabel={t("home.generate_roadmap")}
             >
-              Générer une nouvelle roadmap
+              {t("home.generate_roadmap")}
             </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={[styles.button, { backgroundColor: theme.primary }]}
             onPress={handleReminders}
-            accessibilityLabel="Boutton pour accéder aux rappels"
+            accessibilityLabel={t("home.my_reminders")}
           >
             <Text
               style={[styles.buttonText, { color: theme.buttonText }]}
               allowFontScaling={true}
             >
-              Mes rappels
+              {t("home.my_reminders")}
             </Text>
           </TouchableOpacity>
         </View>

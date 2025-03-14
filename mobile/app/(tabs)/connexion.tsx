@@ -12,9 +12,11 @@ import request from "@/constants/Request";
 import { useRouter } from "expo-router";
 import { Vibration } from "react-native";
 import { useTheme } from "@/components/ThemeContext";
+import { useTranslation } from "react-i18next";
 
 export default function ConnectionPage() {
   const { theme } = useTheme();
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [stayConnected, setStayConnected] = useState(false);
@@ -30,7 +32,7 @@ export default function ConnectionPage() {
     const regexpassword =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/; // au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial
     const regexemail =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; // adresse email valide genre email@test.com
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; // adresse email valide genre email@test.com
 
     /*if (!regexemail.test(email)) {
         alert("The username must be a valid email address.");
@@ -64,12 +66,14 @@ export default function ConnectionPage() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <Text style={[styles.title, { color: theme.primary }]}>Bienvenue !</Text>
+      <Text style={[styles.title, { color: theme.primary }]}>
+        {t("connexion.welcome")}
+      </Text>
       <Text
         style={[styles.welcometxt, { color: theme.text }]}
         allowFontScaling={true}
       >
-        Veuillez vous connecter.
+        {t("connexion.pleaseLogin")}
       </Text>
       <View style={styles.inputContainer}>
         <Icon
@@ -87,7 +91,7 @@ export default function ConnectionPage() {
               color: theme.text,
             },
           ]}
-          placeholder="Email"
+          placeholder={t("connexion.emailPlaceholder")}
           placeholderTextColor={theme.text}
           value={email}
           onChangeText={setEmail}
@@ -112,13 +116,13 @@ export default function ConnectionPage() {
               color: theme.text,
             },
           ]}
-          placeholder="Mot de passe"
+          placeholder={t("connexion.passwordPlaceholder")}
           placeholderTextColor={theme.text}
           value={password}
           onChangeText={setPassword}
           accessibilityLabel="Champ de texte pour saisir son mot de passe"
           allowFontScaling={true}
-          // secureTextEntry //pr cacher le mot de passe
+          secureTextEntry
         />
       </View>
       <View style={styles.checkboxContainer}>
@@ -127,7 +131,7 @@ export default function ConnectionPage() {
           onValueChange={setStayConnected}
         />
         <Text style={[styles.checkboxLabel, { color: theme.text }]}>
-          Se souvenir de moi
+          {t("connexion.rememberMe")}
         </Text>
       </View>
       <View style={styles.loginButtonContainer}>
@@ -142,19 +146,19 @@ export default function ConnectionPage() {
           accessible={true}
         >
           <Text style={[styles.loginButtonText, { color: theme.buttonText }]}>
-            Connexion
+            {t("connexion.loginButton")}
           </Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity onPress={() => router.push("/forgottenPassword")}>
         <Text style={{ color: theme.text }} allowFontScaling={true}>
-          Mot de passe oublié ?
+          {t("connexion.forgotPassword")}
         </Text>
       </TouchableOpacity>
       <View>
         <TouchableOpacity onPress={() => router.push("/register")}>
           <Text style={{ color: theme.text }} allowFontScaling={true}>
-            Création d'un compte
+            {t("connexion.createAccount")}
           </Text>
         </TouchableOpacity>
       </View>

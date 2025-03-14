@@ -9,9 +9,11 @@ import {
 import { useRouter } from "expo-router";
 import { BackHandler } from "react-native";
 import { useTheme } from "@/components/ThemeContext";
+import { useTranslation } from "react-i18next";
 
 const ForgotPassword = () => {
   const { theme } = useTheme();
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -40,14 +42,14 @@ const ForgotPassword = () => {
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
       <Text style={[styles.title, { color: theme.text }]}>
-        Mot de passe oublié
+        {t("forgotPassword")}
       </Text>
       <TextInput
         style={[
           styles.input,
           { borderColor: theme.text, backgroundColor: theme.background },
         ]}
-        placeholder="Enter your email"
+        placeholder={t("enterEmail")}
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
@@ -59,7 +61,7 @@ const ForgotPassword = () => {
           onPress={handleSend}
         >
           <Text style={[styles.buttonText, { color: theme.buttonText }]}>
-            Envoyé
+            {t("sendButton")}
           </Text>
         </TouchableOpacity>
       </View>

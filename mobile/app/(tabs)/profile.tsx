@@ -14,13 +14,13 @@ import { router } from "expo-router";
 import request from "@/constants/Request";
 import { Vibration } from "react-native";
 import { useTheme, themes } from "@/components/ThemeContext";
+import { useTranslation } from "react-i18next";
 
 const ProfileCard = () => {
+  const { t } = useTranslation();
   const MAX_DESCRIPTION_LENGTH = 150;
   const [isEditMode, setIsEditMode] = useState(false);
-  const [description, setDescription] = useState(
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget aliquam ultricies.",
-  );
+  const [description, setDescription] = useState(t("profile.description"));
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -63,7 +63,7 @@ const ProfileCard = () => {
       setFirstname(userProfile.firstName);
       setLastname(userProfile.lastName);
     } catch (error) {
-      setError("Erreur, veuillez vérifier vos information");
+      setError("Erreur, veuillez vérifier vos informations");
     }
   }, [firstname, lastname, email]);
 
@@ -125,10 +125,10 @@ const ProfileCard = () => {
               mode="contained"
               buttonColor={theme.primary}
               style={styles.saveButton}
-              accessibilityLabel="Boutton pour sauvegarder ta description"
+              accessibilityLabel={t("profile.saveDescription")}
               accessibilityRole="button"
             >
-              Sauvegarder la description actuelle
+              {t("profile.saveDescription")}
             </Button>
           </View>
         ) : (
@@ -144,7 +144,7 @@ const ProfileCard = () => {
                 handleEditClick();
                 Vibration.vibrate(100);
               }}
-              accessibilityLabel="Boutton pour accèder aux paramètres"
+              accessibilityLabel={t("profile.editDescription")}
               accessibilityRole="button"
             >
               <Ionicons name="create-outline" size={24} color={theme.text} />
