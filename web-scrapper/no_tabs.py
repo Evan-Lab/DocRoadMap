@@ -1,24 +1,16 @@
 
-import os
-import json
-import time
-import hashlib
+# import os
+# import json
+# import time
+# import hashlib
 import requests
 from bs4 import BeautifulSoup
+from utils import save_json_content
 
 url_folder_list = [
     ("https://www.service-public.fr/particuliers/vosdroits/F14128", "output/folder1"),
     ("https://www.service-public.fr/particuliers/vosdroits/F601", "output/garde_enfants"),
 ]
-
-def save_json_content(url, folder, data):
-    # crée dossier sauvegarde si nécessaire
-    os.makedirs(folder, exist_ok=True)
-    filename = os.path.join(folder, hashlib.md5(url.encode()).hexdigest() + ".json")
-    #nregistre json avec la clé "url" & les autres données (tab)
-    with open(filename, "w", encoding="utf-8") as file:
-        json.dump({"url": url, **data}, file, indent=4, ensure_ascii=False)
-    print(f"Saved content from {url} to {filename}")
 
 def scrape_article_content(url):
     try:
@@ -54,14 +46,14 @@ def scrape_article_content(url):
         print(f"Error scraping {url}: {e}")
         return None
 
-def run_script():
+def run_script_no_tabs():
     for url, folder in url_folder_list:
         print(f"Processing {url}")
         data = scrape_article_content(url)
         if data is not None:
             save_json_content(url, folder, data)
 
-if __name__ == "__main__":
-    while True:
-        run_script()
-        time.sleep(3600)
+# if __name__ == "__main__":
+#     while True:
+#         run_script()
+#         time.sleep(3600)
