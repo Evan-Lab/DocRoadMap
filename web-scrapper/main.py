@@ -1,5 +1,4 @@
 import time
-
 from no_tabs import run_script_no_tabs
 from with_tabs import run_script_with_tabs
 

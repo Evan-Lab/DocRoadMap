@@ -1,9 +1,8 @@
 # refacto le code, mettre celui que les autres fichiers ont en commun ici.
-
 import os
 import json
 import hashlib
-from bs4 import BeautifulSoup
+# from bs4 import BeautifulSoup
 
 def save_json_content(url, folder, data):
     # crée dossier sauvegarde si nécessaire
@@ -13,3 +12,4 @@ def save_json_content(url, folder, data):
     with open(filename, "w", encoding="utf-8") as file:
         json.dump({"url": url, **data}, file, indent=4, ensure_ascii=False)
     print(f"Saved content from {url} to {filename}")
+
