@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { FaArrowLeft, FaRobot } from "react-icons/fa"
+import { FaArrowLeft, FaPaperPlane, FaRobot } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
 import "./chatbot.css"
 
@@ -36,7 +36,7 @@ const Chatbot: React.FC = () => {
             Authorization: `Bearer ${API_KEY}`,
           },
           body: JSON.stringify({
-            model: "gpt-3.5-turbo",
+            model: "gpt-4o-mini",
             messages: [{ role: "user", content: input }],
             stream: true,
           }),
@@ -115,8 +115,12 @@ const Chatbot: React.FC = () => {
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === "Enter" && sendMessage()}
         />
-        <button onClick={sendMessage} disabled={loading}>
-          Envoyer
+        <button
+          onClick={sendMessage}
+          disabled={loading}
+          className="send-button"
+        >
+          <FaPaperPlane />
         </button>
       </div>
     </div>
