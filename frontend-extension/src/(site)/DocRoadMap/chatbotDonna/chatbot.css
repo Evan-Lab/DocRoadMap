@@ -23,10 +23,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 16px;
+  position: relative; /* Ajouté pour permettre un positionnement absolu du bouton */
+  padding: 12px;
   border-bottom: 1px solid #ddd;
   background: #fff;
+  height: 60px;
 }
 
 .chatbot-title {
@@ -112,20 +113,33 @@ body {
 }
 
 .back-button {
+  position: absolute;
+  top: 16px; /* Remonte le bouton */
+  left: 16px;
+  width: 40px;
+  height: 40px;
   background-color: transparent;
   border: none;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 20px;
   color: #007bff;
-  transition:
-    color 0.3s ease,
-    transform 0.2s ease;
+  transition: color 0.3s ease;
 }
 
 .back-button:hover {
   color: #0056b3;
-  transform: scale(1.1);
+}
+
+.chatbot-title-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chatbot-icon {
+  font-size: 24px;
+  color: #007bff;
 }

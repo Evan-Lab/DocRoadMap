@@ -1,4 +1,5 @@
-import { FaCog, FaEye, FaMap, FaRobot } from "react-icons/fa"
+import { FaAccessibleIcon, FaCog, FaEye, FaMap, FaRobot } from "react-icons/fa"
+
 import { useNavigate } from "react-router-dom"
 import "./docroadmapHome.css"
 
@@ -27,19 +28,23 @@ const DocroadmapHome: React.FC = () => {
   return (
     <div className="roadmap-container" style={{ backgroundColor: "white" }}>
       <div className="roadmap-buttons">
-        <button onClick={goToChatbot}>
-          <RobotIcon className="button-icon" />
-          <span className="button-text">Donna Chatbot</span>
+        <button onClick={createRoadmap}>
+          <FaAccessibleIcon className="button-icon" />
+          <span className="button-text">Accessibilité</span>
         </button>
-
         <button onClick={createRoadmap}>
           <MapIcon className="button-icon" />
-          <span className="button-text">Créer une Roadmap</span>
+          <span className="button-text">Générer une Roadmap</span>
         </button>
 
         <button onClick={viewRoadmaps}>
           <EyeIcon className="button-icon" />
           <span className="button-text">Voir mes Roadmaps</span>
+        </button>
+
+        <button onClick={goToChatbot}>
+          <RobotIcon className="button-icon" />
+          <span className="button-text">Donna Chatbot</span>
         </button>
 
         <button onClick={goToSettings}>

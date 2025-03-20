@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { FaArrowLeft } from "react-icons/fa"
+import { FaArrowLeft, FaRobot } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
 import "./chatbot.css"
 
@@ -94,7 +94,10 @@ const Chatbot: React.FC = () => {
         <button className="back-button" onClick={() => navigate(-1)}>
           <FaArrowLeft />
         </button>
-        <h1 className="chatbot-title">Donna Chatbot</h1>
+        <div className="chatbot-title-container">
+          <FaRobot className="chatbot-icon" />
+          <h1 className="chatbot-title">Donna</h1>
+        </div>
       </div>
 
       <div className="chatbot-messages">

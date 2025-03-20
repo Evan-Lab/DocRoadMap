@@ -17,7 +17,7 @@ body {
   text-align: center;
   padding: 20px;
   position: relative;
-  padding-top: 10px; /* Réduction de l'espace blanc en haut */
+  padding-top: 10px;
 }
 
 .settings-content {
@@ -29,7 +29,7 @@ body {
 .roadmap-title {
   font-size: 24px;
   color: #333333;
-  margin-bottom: 20px; /* Espacement entre le titre et les boutons */
+  margin-bottom: 20px;
   font-weight: bold;
 }
 
