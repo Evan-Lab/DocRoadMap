@@ -1,3 +1,3 @@
 export type StorageLogin = {
-    token: string;
-}
+  token: string;
+};

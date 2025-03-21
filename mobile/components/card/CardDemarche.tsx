@@ -1,8 +1,22 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, FlatList } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import request from '@/constants/Request';
+import React, { useState, useEffect, useCallback } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Modal,
+  FlatList,
+} from "react-native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import request from "@/constants/Request";
+import { useTheme } from "@/components/ThemeContext";
+import { useTranslation } from "react-i18next";
+import { ScaledSheet, moderateScale } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 interface CardDemarcheProps {
   name: string;
@@ -18,8 +32,14 @@ type Step = {
   completed?: boolean;
 };
 
-const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress, id}) => {
-  // const [progress, setProgress] = useState(30); // 3 out of 10 steps = 30% pr la petite de barre de progression, à rendre dynamique ca pourrait etre cool de le garder.
+const CardDemarche: React.FC<CardDemarcheProps> = ({
+  name,
+  description,
+  progress,
+  id,
+}) => {
+  const { theme } = useTheme();
+  const { t } = useTranslation();
   const [modalVisible, setModalVisible] = useState(false);
   const [steps, setSteps] = useState<Step[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -27,65 +47,129 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchSteps = useCallback(async () => {
-    if (typeof id !== 'number')
-      return;
+    if (typeof id !== "number") return;
     setIsLoading(true);
     try {
-      const response = await request.stepperID(id)
+      const response = await request.stepperID(id);
       if (response.error) {
         setError(response.error);
       } else {
         setSteps(response.data);
       }
     } catch (error) {
-      setError('Echec de la récupération des étapes. Ressayez plus tard !');
+      setError(t("errorFetchingSteps"));
     } finally {
       setIsLoading(false);
       setRefreshing(false);
     }
-  }, []);
+  }, [id, t]);
 
   useEffect(() => {
     fetchSteps();
   }, [fetchSteps]);
 
   const StepItem = ({ item }: { item: Step }) => (
-    <View style={styles.stepItem}>
+    <View
+      style={[
+        styles.stepItem,
+        { backgroundColor: theme.background, borderColor: theme.text },
+      ]}
+    >
       <View style={styles.stepHeader}>
-        <Ionicons name={item.completed ? "checkbox-outline" : "help-outline"} size={24} color={item.completed ? '#007AFF' : '#D3D3D3'} />
-        <Text style={styles.stepName} allowFontScaling={true}>{item.name}</Text>
+        <Ionicons
+          name={item.completed ? "checkbox-outline" : "help-outline"}
+          size={24}
+          color={item.completed ? theme.primary : "#D3D3D3"}
+        />
+        <Text
+          style={[styles.stepName, { color: theme.text }]}
+          allowFontScaling={true}
+        >
+          {item.name}
+        </Text>
       </View>
-      <Text style={styles.stepDescription} allowFontScaling={true}>{item.description}</Text>
+      <Text
+        style={[styles.stepDescription, { color: theme.text }]}
+        allowFontScaling={true}
+      >
+        {item.description}
+      </Text>
     </View>
   );
 
   const handleChatBot = () => {
-    console.log("Ouverture chat bot...");
+    console.log(t("openingChatBot"));
   };
 
   return (
-    <View style={styles.card}>
-      <View style={styles.cardHeader}>
+    <View
+      style={[
+        styles.card,
+        { backgroundColor: theme.background, borderColor: theme.text },
+      ]}
+    >
+      <View
+        style={[
+          styles.cardHeader,
+          { backgroundColor: theme.primary, borderColor: theme.text },
+        ]}
+      >
         <Icon name="credit-card" size={24} color="white" />
-        <Text style={styles.headerTitle} allowFontScaling={true}>{name}</Text>
+        <Text
+          style={[styles.headerTitle, { color: "white" }]}
+          allowFontScaling={true}
+        >
+          {name}
+        </Text>
         {id && (
-        <Text style={styles.headerTitle} allowFontScaling={true}> ({id})</Text>
-      )}
+          <Text
+            style={[styles.headerTitle, { color: "white" }]}
+            allowFontScaling={true}
+          >
+            {" "}
+            ({id})
+          </Text>
+        )}
       </View>
       <View style={styles.cardContent}>
-        <Text style={styles.contentTitle} allowFontScaling={true}>{description}</Text>
+        <Text
+          style={[styles.contentTitle, { color: theme.text }]}
+          allowFontScaling={true}
+        >
+          {description}
+        </Text>
         <View style={styles.progressBarContainer}>
-          <View style={[styles.progressBar, { width: `${progress}%` }]} />
+          <View
+            style={[
+              styles.progressBar,
+              { width: `${progress}%`, backgroundColor: theme.primary },
+            ]}
+          />
         </View>
-        <Text style={styles.progressText} allowFontScaling={true}>{`${progress}% completé`}</Text>
+        <Text
+          style={[styles.progressText, { color: theme.text }]}
+          allowFontScaling={true}
+        >{`${progress}% ${t("completed")}`}</Text>
       </View>
       <View style={styles.cardFooter}>
         <TouchableOpacity style={styles.chatButton} onPress={handleChatBot}>
-          <Icon name="message-text" size={16} color="#007AFF" />
-          <Text style={styles.chatButtonText} allowFontScaling={true}>Discute avec l'Assistant</Text>
+          <Icon name="message-text" size={16} color={theme.primary} />
+          <Text
+            style={[styles.chatButtonText, { color: theme.primary }]}
+            allowFontScaling={true}
+          >
+            {t("chatWithAssistant")}
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.continueButton} onPress={() => { setModalVisible(true) }}>
-          <Text style={styles.continueButtonText} allowFontScaling={true}>{progress < 100 ? 'Continuer' : 'Compléter'}</Text>
+        <TouchableOpacity
+          style={[styles.continueButton, { backgroundColor: theme.primary }]}
+          onPress={() => {
+            setModalVisible(true);
+          }}
+        >
+          <Text style={styles.continueButtonText} allowFontScaling={true}>
+            {progress < 100 ? t("continue") : t("complete")}
+          </Text>
         </TouchableOpacity>
       </View>
 
@@ -97,7 +181,12 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle} allowFontScaling={true}>Plus de details</Text>
+            <Text
+              style={[styles.modalTitle, { color: theme.text }]}
+              allowFontScaling={true}
+            >
+              {t("moreDetails")}
+            </Text>
             <FlatList
               data={steps}
               keyExtractor={(item) => item.id}
@@ -110,15 +199,22 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({ name, description, progress
               ListEmptyComponent={
                 <View style={styles.emptyContainer}>
                   <Ionicons name="list" size={48} color="grey" />
-                  <Text style={styles.emptyText} allowFontScaling={true}>Aucune étape disponible pour le moment</Text>
+                  <Text
+                    style={[styles.emptyText, { color: theme.text }]}
+                    allowFontScaling={true}
+                  >
+                    {t("noStepsAvailable")}
+                  </Text>
                 </View>
               }
             />
             <TouchableOpacity
-              style={styles.closeButton}
+              style={[styles.closeButton, { backgroundColor: theme.primary }]}
               onPress={() => setModalVisible(false)}
             >
-              <Text style={styles.closeButtonText} allowFontScaling={true}>Fermer</Text>
+              <Text style={styles.closeButtonText} allowFontScaling={true}>
+                {t("close")}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -131,139 +227,125 @@ export default CardDemarche;
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: 'white',
-    borderRadius: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    borderRadius: moderateScale(20),
+    borderWidth: 1,
     shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowRadius: moderateScale(4),
     elevation: 30,
-    margin: 6,
+    margin: hp("0.75%"),
+    color: "#000",
   },
   cardHeader: {
-    backgroundColor: '#007AFF',
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 16,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    padding: hp("2%"),
+    borderTopLeftRadius: moderateScale(8),
+    borderTopRightRadius: moderateScale(8),
   },
   headerTitle: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginLeft: 8,
+    fontSize: moderateScale(18),
+    fontWeight: "bold",
+    marginLeft: wp("2%"),
   },
   cardContent: {
-    padding: 16,
+    padding: hp("2%"),
   },
   contentTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 8,
+    fontSize: moderateScale(18),
+    fontWeight: "bold",
+    marginBottom: hp("1%"),
   },
   progressBarContainer: {
-    height: 8,
-    backgroundColor: '#E0E0E0',
-    borderRadius: 4,
-    marginBottom: 8,
+    height: hp("1%"),
+    backgroundColor: "#E0E0E0",
+    borderRadius: moderateScale(4),
+    marginBottom: hp("1%"),
   },
   progressBar: {
-    height: 8,
-    backgroundColor: '#007AFF',
-    borderRadius: 4,
+    height: hp("1%"),
+    borderRadius: moderateScale(4),
   },
   progressText: {
-    fontSize: 14,
-    color: '#666',
+    fontSize: moderateScale(14),
   },
   cardFooter: {
-    padding: 16,
+    padding: hp("2%"),
   },
   chatButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: hp("1%"),
   },
   chatButtonText: {
-    color: '#007AFF',
-    marginLeft: 8,
+    marginLeft: wp("2%"),
   },
   continueButton: {
-    backgroundColor: '#007AFF',
-    padding: 12,
-    borderRadius: 4,
-    alignItems: 'center',
+    padding: hp("1.5%"),
+    borderRadius: moderateScale(4),
+    alignItems: "center",
   },
   continueButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 20,
-    width: '80%',
+    backgroundColor: "white",
+    borderRadius: moderateScale(8),
+    padding: hp("2.5%"),
+    width: wp("80%"),
   },
   modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  modalDescription: {
-    marginBottom: 20,
+    fontSize: moderateScale(18),
+    fontWeight: "bold",
+    marginBottom: hp("1.5%"),
   },
   closeButton: {
-    backgroundColor: '#007AFF',
-    padding: 10,
-    borderRadius: 4,
-    alignItems: 'center',
+    padding: hp("1.2%"),
+    borderRadius: moderateScale(4),
+    alignItems: "center",
   },
   closeButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
   },
   stepItem: {
-    backgroundColor: '#FFF',
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 12,
-    shadowColor: '#000',
+    backgroundColor: "#FFF",
+    padding: hp("2%"),
+    borderRadius: moderateScale(12),
+    marginBottom: hp("1.5%"),
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
-    shadowRadius: 2,
+    shadowRadius: moderateScale(2),
     elevation: 2,
   },
   stepHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: hp("1%"),
   },
   stepName: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#000',
-    marginLeft: 12,
+    fontSize: moderateScale(18),
+    fontWeight: "600",
+    marginLeft: wp("3%"),
   },
   stepDescription: {
-    fontSize: 16,
-    color: '#D3D3D3',
-    marginLeft: 36,
+    fontSize: moderateScale(16),
+    marginLeft: wp("9%"),
   },
   emptyContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 32,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: hp("4%"),
   },
   emptyText: {
-    marginTop: 12,
-    fontSize: 16,
-    color: "grey",
+    marginTop: hp("1.5%"),
+    fontSize: moderateScale(16),
   },
 });

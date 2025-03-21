@@ -1,105 +1,114 @@
-import React, { useState, useEffect} from 'react';
-import { View, TextInput, Button, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useRouter } from 'expo-router';
-import { BackHandler } from 'react-native';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  TextInput,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import { useRouter } from "expo-router";
+import { BackHandler } from "react-native";
+import { useTheme } from "@/components/ThemeContext";
+import { useTranslation } from "react-i18next";
+import { ScaledSheet, moderateScale } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState('');
+  const { theme } = useTheme();
+  const { t } = useTranslation();
+  const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     if (error) {
-        alert(error);
+      alert(error);
     }
 
     const onBackPress = () => {
-        router.replace('/connexion');
-        return true;
+      router.replace("/connexion");
+      return true;
     };
 
-    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+    BackHandler.addEventListener("hardwareBackPress", onBackPress);
 
     return () => {
-        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      BackHandler.removeEventListener("hardwareBackPress", onBackPress);
     };
   }, [error, router]);
 
   const handleSend = () => {
-    console.log('Email:', email);
+    console.log("Email:", email);
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Mot de passe oublié</Text>
+    <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <Text style={[styles.title, { color: theme.text }]}>
+        {t("forgotPassword")}
+      </Text>
       <TextInput
-        style={styles.input}
-        placeholder="Enter your email"
+        style={[
+          styles.input,
+          { borderColor: theme.text, backgroundColor: theme.background },
+        ]}
+        placeholder={t("enterEmail")}
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
+        placeholderTextColor={theme.text}
       />
-       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.customButton} onPress={handleSend}>
-          <Text style={styles.buttonText}>Envoyé</Text>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={[styles.customButton, { backgroundColor: theme.primary }]}
+          onPress={handleSend}
+        >
+          <Text style={[styles.buttonText, { color: theme.buttonText }]}>
+            {t("sendButton")}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-const COLORS = {
-    primary: '#C49D83',
-    secondary: '#BDA18A',
-    tertiary: '#E8D5CC',
-    grey: '#D3D3D3',
-    light: '#F5EFE6',
-    white: '#FFF',
-    black: '#000000',
-    orange: '#ffa500',
-};
-
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 20,
-    backgroundColor:"#f2f2f2"
+    justifyContent: "center",
+    paddingHorizontal: wp("5%"),
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
-    color: '#3498db',
+    fontSize: moderateScale(24),
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: moderateScale(20),
   },
   input: {
-    height: 50,
-    borderColor: '#ccc',
+    height: hp("6%"),
     borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 15,
-    color: COLORS.white,
-    backgroundColor: COLORS.white,
+    borderRadius: moderateScale(5),
+    paddingHorizontal: moderateScale(10),
+    marginBottom: moderateScale(15),
+    color: "#000000",
   },
   buttonContainer: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    backgroundColor: COLORS.white,
+    position: "absolute",
+    bottom: hp("2%"),
+    right: wp("5%"),
+    backgroundColor: "transparent",
   },
   customButton: {
-    backgroundColor: '#3498db',
-    borderRadius: 5,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderRadius: moderateScale(5),
+    paddingVertical: moderateScale(12),
+    paddingHorizontal: moderateScale(20),
+    alignItems: "center",
+    justifyContent: "center",
   },
   buttonText: {
-    color: COLORS.white,
-    fontSize: 18,
+    fontSize: moderateScale(18),
   },
 });
 

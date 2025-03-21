@@ -1,16 +1,19 @@
-import { useNavigate } from "react-router-dom";
-import "./Home.css";
+import { useNavigate } from "react-router-dom"
+// import DocRoadMap from "../public/docroadmap.png";
+import "./Home.css"
 
 function Home() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <div className="home-container">
-      <h1>Bienvenue sur DocRoadMap</h1>
+      <div className="DocRoadMap-Logo">
+        {/* <img src={DocRoadMap} alt="DocRoadMap" /> */}
+      </div>
       <button onClick={() => navigate("/login")}>Se connecter</button>
       <button onClick={() => navigate("/register")}>S'inscrire</button>
     </div>
-  );
+  )
 }
 
-export default Home;
+export default Home

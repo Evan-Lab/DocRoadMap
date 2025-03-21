@@ -1,18 +1,25 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { 
-  StyleSheet, 
-  Text, 
-  View, 
-  TextInput, 
-  TouchableOpacity, 
-  KeyboardAvoidingView, 
-  Platform, 
-  ActivityIndicator, 
-  Alert 
-} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import request from '@/constants/Request';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useState, useEffect, useCallback, useContext } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  ActivityIndicator,
+  Alert,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useTheme } from "@/components/ThemeContext";
+import { useTranslation } from "react-i18next";
+import request from "@/constants/Request";
+import { ScaledSheet, moderateScale } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 type CardProcess = {
   name: string;
@@ -22,6 +29,8 @@ type CardProcess = {
 };
 
 export default function CreateCardProcess() {
+  const { theme } = useTheme();
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [userId, setUserId] = useState<number | null>(null);
@@ -38,14 +47,14 @@ export default function CreateCardProcess() {
 
   const handleCreateCardProcess = useCallback(async () => {
     if (!name.trim() || !description.trim()) {
-      Alert.alert('Erreur de validation', 'Veuillez remplir tous les champs');
+      Alert.alert(t("validationError"), t("fillAllFields"));
       return;
     }
     setIsLoading(true);
-    const cardProcessData = { 
-      name: name.trim(), 
+    const cardProcessData = {
+      name: name.trim(),
       description: description.trim(),
-      userId: userId as number, 
+      userId: userId as number,
       stepsId: stepsId!,
       endedAt: endedAt.trim(),
       status: "PENDING",
@@ -61,44 +70,61 @@ export default function CreateCardProcess() {
         setUserId(null);
         setStepsId(null);
         setEndedAt("");
-        Alert.alert('Réussite', 'Création de la démarche!');
+        Alert.alert(t("success"), t("processCreated"));
       }
     } catch (error) {
-      setError('Echec lors de la création de la démarche administrative. Veuillez réessayer plus tard');
+      setError(t("creationFailed"));
     } finally {
       setIsLoading(false);
     }
-  }, [name, description, stepsId, endedAt, userId]);
+  }, [name, description, stepsId, endedAt, userId, t]);
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={[styles.container, { backgroundColor: theme.background }]}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.OS === "ios" ? -220 : 20}>
+      keyboardVerticalOffset={Platform.OS === "ios" ? -220 : 20}
+    >
       <SafeAreaView>
         <View style={styles.container}>
-        
-          <View style={styles.inputContainer}>
-            <Ionicons name="document-text" size={24} color="grey" style={{ paddingRight: 10 }} />
-            <TextInput 
-              style={styles.input} 
-              placeholder="Nom de la démarche administrative" 
-              placeholderTextColor={COLORS.black} 
-              value={name} 
-              onChangeText={setName} 
+          <View style={[styles.inputContainer]}>
+            <Ionicons
+              name="document-text"
+              size={24}
+              color={theme.text}
+              style={{ paddingRight: 10 }}
+            />
+            <TextInput
+              style={[
+                styles.input,
+                { backgroundColor: theme.background, borderColor: theme.text },
+              ]}
+              placeholder={t("processNamePlaceholder")}
+              placeholderTextColor={theme.text}
+              value={name}
+              onChangeText={setName}
               maxLength={50}
               allowFontScaling={true}
             />
           </View>
 
-          <View style={styles.inputContainer}>
-            <Ionicons name="clipboard" size={24} color="grey" style={{ paddingRight: 10 }} />
-            <TextInput 
-              style={[styles.input, styles.descriptionInput]} 
-              placeholder="Description de la démarche administrative" 
-              placeholderTextColor={COLORS.black} 
-              value={description} 
-              onChangeText={setDescription} 
+          <View style={[styles.inputContainer]}>
+            <Ionicons
+              name="clipboard"
+              size={24}
+              color={theme.text}
+              style={{ paddingRight: 10 }}
+            />
+            <TextInput
+              style={[
+                styles.input,
+                styles.descriptionInput,
+                { backgroundColor: theme.background, borderColor: theme.text },
+              ]}
+              placeholder={t("processDescriptionPlaceholder")}
+              placeholderTextColor={theme.text}
+              value={description}
+              onChangeText={setDescription}
               multiline
               numberOfLines={3}
               maxLength={200}
@@ -106,18 +132,25 @@ export default function CreateCardProcess() {
             />
           </View>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={[
-              styles.customButton, 
-              (!name.trim() || !description.trim()) && styles.buttonDisabled
+              styles.customButton,
+              (!name.trim() || !description.trim()) && styles.buttonDisabled,
+              { backgroundColor: theme.primary },
             ]}
             onPress={handleCreateCardProcess}
             disabled={isLoading || !name.trim() || !description.trim()}
           >
             {isLoading ? (
-              <ActivityIndicator color={COLORS.white} />
+              <ActivityIndicator color={theme.text} />
             ) : (
-              <Text style={styles.buttonText} allowFontScaling={true} accessibilityLabel='Boutton pour généer une nouvelle démarche administrative'>Créer la démarche administrative</Text>
+              <Text
+                style={[styles.buttonText, { color: theme.buttonText }]}
+                allowFontScaling={true}
+                accessibilityLabel={t("createProcessButton")}
+              >
+                {t("createProcessButtonText")}
+              </Text>
             )}
           </TouchableOpacity>
         </View>
@@ -126,60 +159,43 @@ export default function CreateCardProcess() {
   );
 }
 
-const COLORS = {
-  primary: '#C49D83',
-  secondary: '#BDA18A',
-  tertiary: '#E8D5CC',
-  grey: '#D3D3D3',
-  light: '#F5EFE6',
-  white: '#FFF',
-  black: '#000000',
-  orange: '#ffa500',
-};
-
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     flex: 1,
-    backgroundColor:"#f2f2f2",
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 100,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingTop: hp(5),
   },
   input: {
-    width: '85%',
-    padding: 10,
-    marginVertical: 10,
-    backgroundColor: COLORS.grey,
-    borderRadius: 5,
-    borderColor: COLORS.black,
+    width: wp("85%"),
+    padding: moderateScale(10),
+    marginVertical: moderateScale(10),
+    borderRadius: moderateScale(5),
     borderWidth: 1,
-    color: '#000',
   },
   inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '95%',
-    position: 'relative',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: wp("95%"),
+    position: "relative",
   },
   customButton: {
-    backgroundColor: "#3498db",
-    borderRadius: 5,
-    paddingVertical: 12,
-    paddingHorizontal: 40,
-    marginVertical: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderRadius: moderateScale(5),
+    paddingVertical: moderateScale(12),
+    paddingHorizontal: moderateScale(40),
+    marginVertical: moderateScale(10),
+    alignItems: "center",
+    justifyContent: "center",
   },
   buttonText: {
-    color: COLORS.white,
-    fontSize: 18,
+    fontSize: moderateScale(18),
   },
   buttonDisabled: {
     opacity: 0.6,
   },
   descriptionInput: {
-    minHeight: 80,
-    textAlignVertical: 'top',
+    minHeight: hp(8),
+    textAlignVertical: "top",
   },
 });

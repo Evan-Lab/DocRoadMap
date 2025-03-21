@@ -53,3 +53,15 @@ body {
 .home-container button:last-child:hover {
   background-color: #0056b3;
 }
+
+.DocRoadMap-Logo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.DocRoadMap-Logo img {
+  width: 200px;
+  height: auto;
+}

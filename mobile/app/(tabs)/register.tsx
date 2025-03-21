@@ -1,185 +1,239 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ImageBackground } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import request from '@/constants/Request';
-import { useRouter } from 'expo-router';
-import { BackHandler } from 'react-native';
-import { Vibration } from 'react-native';
-
+import React, { useState, useEffect, useCallback } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  Vibration,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import { useTheme } from "@/components/ThemeContext";
+import request from "@/constants/Request";
+import { useTranslation } from "react-i18next";
+import { ScaledSheet, moderateScale } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export default function Register() {
-    const [firstname, setFirstname] = useState("");
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
-    const [lastname, setLastname] = useState("");
-    const [error, setError] = useState<string | null>(null);
-    const router = useRouter();
+  const { t } = useTranslation();
+  const { theme } = useTheme();
+  const [firstname, setFirstname] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
-    useEffect(() => {
-        if (error) {
-            alert(error);
-        }
-    
-        const onBackPress = () => {
-            router.replace('/connexion');
-            return true;
-        };
-    
-        BackHandler.addEventListener('hardwareBackPress', onBackPress);
-    
-        return () => {
-            BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-        };
-    }, [error, router]);
-    
+  const handleBackClick = () => {
+    router.replace("/connexion");
+  };
 
-    const handleSignUp = useCallback(async () => {
-        setError(null);
-        const requestBody = {
-            firstName: firstname,
-            lastName: lastname,
-            email: email,
-            password: password,
-        };
-    
-        try {
-            const registrationResponse = await request.register(requestBody);
+  useEffect(() => {
+    if (error) {
+      alert(error);
+    }
+  }, [error]);
 
-    
-            if (registrationResponse.error) {
-                setError(registrationResponse.error);
-                return;
-            }
-    
-            setEmail("");
-            setPassword("");
-            setFirstname("");
-            setLastname("");
-    
-        } catch (error) {
-            setError('Erreur, veuillez vérifier vos informations');
-        }
-    }, [firstname, lastname, email, password]);
-    
+  const handleSignUp = useCallback(async () => {
+    setError(null);
+    const requestBody = {
+      firstName: firstname,
+      lastName: lastname,
+      email: email,
+      password: password,
+    };
 
+    try {
+      const registrationResponse = await request.register(requestBody);
 
-    return (
-        <KeyboardAvoidingView
-            style={styles.container}
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={Platform.OS === "ios" ? -220 : 20}>
-            <View style={styles.container}>
+      if (registrationResponse.error) {
+        setError(registrationResponse.error);
+        return;
+      }
 
-                <View style={styles.inputContainer}>
-                    <Ionicons name="person" size={24} color="grey" style={{ paddingRight: 10 }} />
-                    <TextInput 
-                        style={styles.input} 
-                        placeholder="Prénom" 
-                        placeholderTextColor={COLORS.black} 
-                        value={firstname} 
-                        onChangeText={setFirstname}
-                        accessibilityLabel='Champ de texte pour son prénom' 
-                        allowFontScaling={true}
-                    />
-                </View>
-                <View style={styles.inputContainer}>
-                    <Ionicons name="person" size={24} color="grey" style={{ paddingRight: 10 }} />
-                    <TextInput 
-                        style={styles.input} 
-                        placeholder="Nom de famille" 
-                        placeholderTextColor={COLORS.black} 
-                        value={lastname} 
-                        onChangeText={setLastname} 
-                        accessibilityLabel='Champ de texte pour son nom de famille' 
-                        allowFontScaling={true}
-                    />
-                </View>
-                <View style={styles.inputContainer}>
-                    <Ionicons name="mail" size={24} color="grey" style={{ paddingRight: 10 }} />
-                    <TextInput 
-                        style={styles.input} 
-                        placeholder="Email" 
-                        placeholderTextColor={COLORS.black} 
-                        value={email} 
-                        onChangeText={setEmail} 
-                        accessibilityLabel='Champ de texte pour son addresse email' 
-                        allowFontScaling={true}
-                    />
-                </View>
-                <View style={styles.inputContainer}>
-                    <Ionicons name="lock-closed" size={24} color="grey" style={{ paddingRight: 10 }} />
-                    <TextInput 
-                        style={[styles.input, { paddingRight: 40 }]} 
-                        placeholder="Mot de passe" 
-                        placeholderTextColor={COLORS.black} 
-                        value={password} 
-                        onChangeText={setPassword} 
-                        secureTextEntry={true} 
-                        accessibilityLabel='Champ de texte pour son mot de passe' 
-                        allowFontScaling={true}
-                    />
-                </View>
-                <View>
-                    <TouchableOpacity style={styles.customButton} onPress={() => { Vibration.vibrate(100); handleSignUp()}}
-                            accessibilityLabel="Boutton pour créer un nouveau compte"
-                            accessibilityRole="button"
-                            accessible={true}
-                    >
-                        <Text style={styles.buttonText} allowFontScaling={true}>Create Account</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </KeyboardAvoidingView>
-    );
+      setEmail("");
+      setPassword("");
+      setFirstname("");
+      setLastname("");
+    } catch (error) {
+      setError(t("register.error"));
+    }
+  }, [firstname, lastname, email, password, t]);
+
+  return (
+    <KeyboardAvoidingView
+      style={[styles.container, { backgroundColor: theme.background }]}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? -220 : 20}
+    >
+      <View style={styles.container}>
+        <View style={styles.inputContainer}>
+          <Ionicons
+            name="person"
+            size={24}
+            color={theme.text}
+            style={{ paddingRight: 10 }}
+          />
+          <TextInput
+            style={[
+              styles.input,
+              {
+                backgroundColor: theme.background,
+                borderColor: theme.text,
+                color: theme.text,
+              },
+            ]}
+            placeholder={t("register.firstname")}
+            placeholderTextColor={theme.text}
+            value={firstname}
+            onChangeText={setFirstname}
+            accessibilityLabel="Champ de texte pour son prénom"
+            allowFontScaling={true}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Ionicons
+            name="person"
+            size={24}
+            color={theme.text}
+            style={{ paddingRight: 10 }}
+          />
+          <TextInput
+            style={[
+              styles.input,
+              {
+                backgroundColor: theme.background,
+                borderColor: theme.text,
+                color: theme.text,
+              },
+            ]}
+            placeholder={t("register.lastname")}
+            placeholderTextColor={theme.text}
+            value={lastname}
+            onChangeText={setLastname}
+            accessibilityLabel="Champ de texte pour son nom de famille"
+            allowFontScaling={true}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Ionicons
+            name="mail"
+            size={24}
+            color={theme.text}
+            style={{ paddingRight: 10 }}
+          />
+          <TextInput
+            style={[
+              styles.input,
+              {
+                backgroundColor: theme.background,
+                borderColor: theme.text,
+                color: theme.text,
+              },
+            ]}
+            placeholder={t("register.email")}
+            placeholderTextColor={theme.text}
+            value={email}
+            onChangeText={setEmail}
+            accessibilityLabel="Champ de texte pour son addresse email"
+            allowFontScaling={true}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Ionicons
+            name="lock-closed"
+            size={24}
+            color={theme.text}
+            style={{ paddingRight: 10 }}
+          />
+          <TextInput
+            style={[
+              styles.input,
+              {
+                paddingRight: 40,
+                backgroundColor: theme.background,
+                borderColor: theme.text,
+                color: theme.text,
+              },
+            ]}
+            placeholder={t("register.password")}
+            placeholderTextColor={theme.text}
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={true}
+            accessibilityLabel="Champ de texte pour son mot de passe"
+            allowFontScaling={true}
+          />
+        </View>
+        <View>
+          <TouchableOpacity
+            style={[styles.customButton, { backgroundColor: theme.primary }]}
+            onPress={() => {
+              Vibration.vibrate(100);
+              handleSignUp();
+            }}
+            accessibilityLabel="Boutton pour créer un nouveau compte"
+            accessibilityRole="button"
+            accessible={true}
+          >
+            <Text
+              style={[styles.buttonText, { color: theme.buttonText }]}
+              allowFontScaling={true}
+            >
+              {t("register.create_account")}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity
+            onPress={handleBackClick}
+            style={[styles.customButton, { backgroundColor: theme.primary }]}
+          >
+            <Text style={[styles.buttonText, { color: theme.buttonText }]}>
+              {t("register.back_to_home")}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </KeyboardAvoidingView>
+  );
 }
 
-const COLORS = {
-    primary: '#C49D83',
-    secondary: '#BDA18A',
-    tertiary: '#E8D5CC',
-    grey: '#D3D3D3',
-    light: '#F5EFE6',
-    white: '#FFF',
-    black: '#000000',
-    orange: '#ffa500',
-};
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor:"#f2f2f2",
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    input: {
-        width: '85%',
-        padding: 10,
-        marginVertical: 10,
-        backgroundColor: COLORS.grey,
-        borderRadius: 5,
-        borderColor: COLORS.black,
-        borderWidth: 1,
-        color: '#000',
-    },
-    inputContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        width: '95%',
-        position: 'relative',
-    },
-    customButton: {
-        backgroundColor: '#3498db',
-        borderRadius: 5,
-        paddingVertical: 12,
-        paddingHorizontal: 40,
-        marginVertical: 30,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    buttonText: {
-        color: COLORS.black,
-        fontSize: 18,
-    },
+const styles = ScaledSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  input: {
+    width: wp("85%"),
+    padding: moderateScale(10),
+    marginVertical: moderateScale(10),
+    borderRadius: moderateScale(5),
+    borderWidth: 1,
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: wp("95%"),
+    position: "relative",
+  },
+  customButton: {
+    borderRadius: moderateScale(5),
+    paddingVertical: moderateScale(12),
+    paddingHorizontal: moderateScale(40),
+    marginVertical: moderateScale(30),
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonText: {
+    fontSize: moderateScale(18),
+  },
 });
