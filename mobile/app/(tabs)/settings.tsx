@@ -4,6 +4,11 @@ import { useTheme } from "@/components/ThemeContext";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Picker } from "@react-native-picker/picker";
+import { ScaledSheet, moderateScale } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const Settings = () => {
   const { theme, toggleTheme } = useTheme();
@@ -76,23 +81,23 @@ const Settings = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 20,
+    padding: moderateScale(20),
   },
   button: {
-    padding: 12,
-    borderRadius: 8,
-    marginTop: 15,
-    minWidth: 180,
+    padding: moderateScale(12),
+    borderRadius: moderateScale(8),
+    marginTop: moderateScale(15),
+    minWidth: wp("45%"),
     alignItems: "center",
   },
   buttonText: {
     color: "#FFF",
-    fontSize: 16,
+    fontSize: moderateScale(16),
     fontWeight: "bold",
   },
 });

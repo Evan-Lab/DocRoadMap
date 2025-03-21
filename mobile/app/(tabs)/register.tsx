@@ -14,6 +14,11 @@ import { useRouter } from "expo-router";
 import { useTheme } from "@/components/ThemeContext";
 import request from "@/constants/Request";
 import { useTranslation } from "react-i18next";
+import { ScaledSheet, moderateScale } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export default function Register() {
   const { t } = useTranslation();
@@ -200,35 +205,35 @@ export default function Register() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
   input: {
-    width: "85%",
-    padding: 10,
-    marginVertical: 10,
-    borderRadius: 5,
+    width: wp("85%"),
+    padding: moderateScale(10),
+    marginVertical: moderateScale(10),
+    borderRadius: moderateScale(5),
     borderWidth: 1,
   },
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    width: "95%",
+    width: wp("95%"),
     position: "relative",
   },
   customButton: {
-    borderRadius: 5,
-    paddingVertical: 12,
-    paddingHorizontal: 40,
-    marginVertical: 30,
+    borderRadius: moderateScale(5),
+    paddingVertical: moderateScale(12),
+    paddingHorizontal: moderateScale(40),
+    marginVertical: moderateScale(30),
     alignItems: "center",
     justifyContent: "center",
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: moderateScale(18),
   },
 });

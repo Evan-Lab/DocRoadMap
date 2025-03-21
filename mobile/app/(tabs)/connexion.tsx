@@ -13,6 +13,11 @@ import { useRouter } from "expo-router";
 import { Vibration } from "react-native";
 import { useTheme } from "@/components/ThemeContext";
 import { useTranslation } from "react-i18next";
+import { ScaledSheet, moderateScale } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export default function ConnectionPage() {
   const { theme } = useTheme();
@@ -166,58 +171,59 @@ export default function ConnectionPage() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 40,
+    padding: wp("8%"),
   },
   title: {
-    fontSize: 40,
+    fontSize: moderateScale(24),
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: hp("2%"),
   },
   welcometxt: {
-    fontSize: 15,
-    marginBottom: 80,
+    fontSize: moderateScale(14),
+    marginBottom: hp("6%"),
   },
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
     borderRadius: 5,
-    marginBottom: 15,
-    paddingHorizontal: 15,
+    marginBottom: hp("2%"),
+    paddingHorizontal: wp("4%"),
     borderWidth: 1,
   },
   icon: {
-    marginRight: 10,
+    marginRight: wp("2%"),
   },
   input: {
     flex: 1,
-    height: 50,
+    height: hp("6%"),
   },
   checkboxContainer: {
     flexDirection: "row",
     alignItems: "center",
     alignSelf: "flex-start",
-    marginBottom: 20,
+    marginBottom: hp("2%"),
   },
   checkboxLabel: {
-    marginLeft: 8,
-  },
-  loginButtonContainer: {
-    paddingTop: 20,
-    paddingBottom: 10,
-    alignItems: "center",
+    marginLeft: wp("2%"),
+    fontSize: moderateScale(14),
   },
   loginButton: {
-    paddingVertical: 12,
-    paddingHorizontal: 60,
+    paddingVertical: hp("2%"),
+    paddingHorizontal: wp("15%"),
     borderRadius: 5,
+    marginTop: hp("2%"),
   },
   loginButtonText: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     fontWeight: "bold",
+  },
+  link: {
+    fontSize: moderateScale(14),
+    marginTop: hp("1%"),
   },
 });

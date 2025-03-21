@@ -10,6 +10,11 @@ import { useRouter } from "expo-router";
 import { BackHandler } from "react-native";
 import { useTheme } from "@/components/ThemeContext";
 import { useTranslation } from "react-i18next";
+import { ScaledSheet, moderateScale } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const ForgotPassword = () => {
   const { theme } = useTheme();
@@ -69,41 +74,41 @@ const ForgotPassword = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    paddingHorizontal: 20,
+    paddingHorizontal: wp("5%"),
   },
   title: {
-    fontSize: 24,
+    fontSize: moderateScale(24),
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 20,
+    marginBottom: moderateScale(20),
   },
   input: {
-    height: 50,
+    height: hp("6%"),
     borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 15,
+    borderRadius: moderateScale(5),
+    paddingHorizontal: moderateScale(10),
+    marginBottom: moderateScale(15),
     color: "#000000",
   },
   buttonContainer: {
     position: "absolute",
-    bottom: 20,
-    right: 20,
+    bottom: hp("2%"),
+    right: wp("5%"),
     backgroundColor: "transparent",
   },
   customButton: {
-    borderRadius: 5,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
+    borderRadius: moderateScale(5),
+    paddingVertical: moderateScale(12),
+    paddingHorizontal: moderateScale(20),
     alignItems: "center",
     justifyContent: "center",
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: moderateScale(18),
   },
 });
 

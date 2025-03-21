@@ -16,6 +16,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SwaggerProcessPerIdList } from "@/constants/Swagger";
 import request from "@/constants/Request";
 import { useTheme } from "@/components/ThemeContext";
+import { ScaledSheet, moderateScale } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export default function HomePage() {
   const { t, i18n } = useTranslation();
@@ -163,42 +168,42 @@ export default function HomePage() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
   },
   header: {
     backgroundColor: "#3498db",
-    padding: 16,
+    padding: moderateScale(16),
     flexDirection: "row",
     alignItems: "center",
   },
   menuButton: {
-    marginRight: 16,
+    marginRight: moderateScale(16),
   },
   menuButtonText: {
-    fontSize: 24,
+    fontSize: moderateScale(24),
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: moderateScale(20),
     fontWeight: "bold",
   },
   content: {
     flex: 1,
-    padding: 16,
+    padding: moderateScale(16),
   },
   buttonsArea: {
-    marginVertical: 40,
+    marginVertical: moderateScale(40),
   },
   button: {
-    padding: 16,
-    borderRadius: 8,
-    marginBottom: 16,
+    padding: moderateScale(16),
+    borderRadius: moderateScale(8),
+    marginBottom: moderateScale(16),
     alignItems: "center",
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     fontWeight: "bold",
   },
 });

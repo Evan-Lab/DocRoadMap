@@ -15,6 +15,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "@/components/ThemeContext";
 import { useTranslation } from "react-i18next";
 import request from "@/constants/Request";
+import { ScaledSheet, moderateScale } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 type CardProcess = {
   name: string;
@@ -154,43 +159,43 @@ export default function CreateCardProcess() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 50,
+    paddingTop: hp(5),
   },
   input: {
-    width: "85%",
-    padding: 10,
-    marginVertical: 10,
-    borderRadius: 5,
+    width: wp("85%"),
+    padding: moderateScale(10),
+    marginVertical: moderateScale(10),
+    borderRadius: moderateScale(5),
     borderWidth: 1,
   },
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    width: "95%",
+    width: wp("95%"),
     position: "relative",
   },
   customButton: {
-    borderRadius: 5,
-    paddingVertical: 12,
-    paddingHorizontal: 40,
-    marginVertical: 10,
+    borderRadius: moderateScale(5),
+    paddingVertical: moderateScale(12),
+    paddingHorizontal: moderateScale(40),
+    marginVertical: moderateScale(10),
     alignItems: "center",
     justifyContent: "center",
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: moderateScale(18),
   },
   buttonDisabled: {
     opacity: 0.6,
   },
   descriptionInput: {
-    minHeight: 80,
+    minHeight: hp(8),
     textAlignVertical: "top",
   },
 });

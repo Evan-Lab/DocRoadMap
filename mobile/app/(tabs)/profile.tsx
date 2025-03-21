@@ -15,6 +15,11 @@ import request from "@/constants/Request";
 import { Vibration } from "react-native";
 import { useTheme, themes } from "@/components/ThemeContext";
 import { useTranslation } from "react-i18next";
+import { ScaledSheet, moderateScale } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const ProfileCard = () => {
   const { t } = useTranslation();
@@ -164,52 +169,52 @@ const ProfileCard = () => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
-    padding: 20,
-    paddingTop: 100,
+    padding: moderateScale(20),
+    paddingTop: hp(10),
     flex: 1,
   },
   imageContainer: {
     alignItems: "center",
-    marginBottom: 20,
+    marginBottom: moderateScale(20),
   },
   cardContent: {
     alignItems: "center",
-    marginBottom: 15,
+    marginBottom: moderateScale(15),
   },
   image: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
+    width: moderateScale(150),
+    height: moderateScale(150),
+    borderRadius: moderateScale(75),
     overflow: "hidden",
-    borderWidth: 3,
+    borderWidth: moderateScale(3),
     borderColor: "black",
   },
   nameText: {
-    fontSize: 20,
-    marginBottom: 5,
+    fontSize: moderateScale(20),
+    marginBottom: moderateScale(5),
   },
   infoText: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
   },
   editDescriptionContainer: {
     flexDirection: "column",
     alignItems: "center",
-    marginBottom: 15,
+    marginBottom: moderateScale(15),
   },
   editDescriptionInput: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    marginTop: 10,
-    maxHeight: 100,
+    borderRadius: moderateScale(8),
+    paddingHorizontal: moderateScale(10),
+    paddingVertical: moderateScale(5),
+    marginTop: moderateScale(10),
+    maxHeight: hp(10),
     width: "100%",
   },
   saveButton: {
-    marginTop: 10,
+    marginTop: moderateScale(10),
   },
   descriptionContainer: {
     flexDirection: "row",
@@ -217,14 +222,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   descriptionText: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     flex: 1,
-    marginRight: 10,
+    marginRight: moderateScale(10),
   },
   iconRow: {
     flexDirection: "row",
     justifyContent: "space-around",
-    marginTop: 20,
+    marginTop: moderateScale(20),
   },
 });
 

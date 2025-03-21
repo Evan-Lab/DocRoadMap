@@ -15,6 +15,11 @@ import { useTheme } from "@/components/ThemeContext";
 import request from "@/constants/Request";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
+import { ScaledSheet, moderateScale } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 type Step = {
   id: string;
@@ -217,18 +222,18 @@ export default function StepForProcess() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 10,
+    paddingTop: hp("2%"),
   },
   input: {
-    width: "85%",
-    padding: 10,
-    marginVertical: 10,
-    borderRadius: 5,
+    width: wp("85%"),
+    padding: moderateScale(10),
+    marginVertical: moderateScale(10),
+    borderRadius: moderateScale(5),
     borderWidth: 1,
     color: "#000",
   },
@@ -236,32 +241,32 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    width: "95%",
+    width: wp("95%"),
     position: "relative",
   },
   customButton: {
-    borderRadius: 5,
-    paddingVertical: 12,
-    paddingHorizontal: 40,
-    marginVertical: 10,
+    borderRadius: moderateScale(5),
+    paddingVertical: moderateScale(12),
+    paddingHorizontal: moderateScale(40),
+    marginVertical: moderateScale(10),
     alignItems: "center",
     justifyContent: "center",
   },
   buttonText: {
-    fontSize: 18,
+    fontSize: moderateScale(18),
   },
   buttonDisabled: {
     opacity: 0.6,
   },
   descriptionInput: {
-    minHeight: 80,
+    minHeight: hp("10%"),
     textAlignVertical: "top",
   },
   stepItem: {
     backgroundColor: "#fff",
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 12,
+    padding: moderateScale(16),
+    borderRadius: moderateScale(12),
+    marginBottom: moderateScale(12),
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
@@ -271,27 +276,27 @@ const styles = StyleSheet.create({
   stepHeader: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 8,
+    marginBottom: moderateScale(8),
   },
   stepName: {
-    fontSize: 18,
+    fontSize: moderateScale(18),
     fontWeight: "600",
     color: "#000",
-    marginLeft: 12,
+    marginLeft: moderateScale(12),
   },
   stepDescription: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     color: "#999",
-    marginLeft: 36,
+    marginLeft: moderateScale(36),
   },
   emptyContainer: {
     alignItems: "center",
     justifyContent: "center",
-    padding: 32,
+    padding: moderateScale(32),
   },
   emptyText: {
-    marginTop: 12,
-    fontSize: 16,
+    marginTop: moderateScale(12),
+    fontSize: moderateScale(16),
     color: "grey",
   },
 });
