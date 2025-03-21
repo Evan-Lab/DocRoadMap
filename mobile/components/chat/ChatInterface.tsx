@@ -12,7 +12,11 @@ import {
 } from "react-native";
 import { useTheme } from "@/components/ThemeContext";
 import { useTranslation } from "react-i18next";
-import i18n from "../../locales/i18n";
+import { ScaledSheet, moderateScale } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export default function ChatInterface() {
   const { theme } = useTheme();
@@ -156,69 +160,69 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 15,
+    padding: hp("2%"),
     borderBottomWidth: 1,
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: moderateScale(18),
     fontWeight: "bold",
   },
   closeText: {
-    fontSize: 20,
+    fontSize: moderateScale(20),
   },
   chatContainer: {
     flex: 1,
-    padding: 15,
+    padding: hp("2%"),
   },
   userMessage: {
     alignSelf: "flex-end",
-    padding: 10,
-    borderRadius: 20,
-    marginBottom: 10,
+    padding: hp("1.5%"),
+    borderRadius: moderateScale(20),
+    marginBottom: hp("1.5%"),
   },
   botMessage: {
     alignSelf: "flex-start",
-    padding: 10,
-    borderRadius: 20,
-    marginBottom: 10,
+    padding: hp("1.5%"),
+    borderRadius: moderateScale(20),
+    marginBottom: hp("1.5%"),
   },
   messageText: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
   },
   inputContainer: {
     flexDirection: "row",
-    padding: 10,
+    padding: hp("1.5%"),
     borderTopWidth: 1,
   },
   input: {
     flex: 1,
     borderWidth: 1,
-    borderRadius: 20,
-    padding: 10,
-    fontSize: 16,
+    borderRadius: moderateScale(20),
+    padding: hp("1.5%"),
+    fontSize: moderateScale(16),
   },
   sendButton: {
-    borderRadius: 20,
-    padding: 10,
-    marginLeft: 10,
+    borderRadius: moderateScale(20),
+    padding: hp("1.5%"),
+    marginLeft: wp("2%"),
     justifyContent: "center",
     alignItems: "center",
   },
   sendButtonText: {
-    fontSize: 20,
+    fontSize: moderateScale(20),
   },
   floatingButton: {
     position: "absolute",
-    right: 20,
-    bottom: 20,
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    right: wp("5%"),
+    bottom: hp("3%"),
+    width: moderateScale(60),
+    height: moderateScale(60),
+    borderRadius: moderateScale(30),
     justifyContent: "center",
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
-    shadowRadius: 4,
+    shadowRadius: moderateScale(4),
   },
 });

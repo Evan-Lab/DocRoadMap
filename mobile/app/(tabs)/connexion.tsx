@@ -212,6 +212,13 @@ const styles = ScaledSheet.create({
     marginLeft: wp("2%"),
     fontSize: moderateScale(14),
   },
+  loginButtonContainer: {
+    paddingTop: hp("2.5%"),
+    paddingBottom: hp("1.5%"),
+    alignItems: "center",
+    marginLeft: wp("2%"),
+    fontSize: moderateScale(14),
+  },
   loginButton: {
     paddingVertical: hp("2%"),
     paddingHorizontal: wp("15%"),

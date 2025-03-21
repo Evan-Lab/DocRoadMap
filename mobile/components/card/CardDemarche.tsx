@@ -12,6 +12,11 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import request from "@/constants/Request";
 import { useTheme } from "@/components/ThemeContext";
 import { useTranslation } from "react-i18next";
+import { ScaledSheet, moderateScale } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 interface CardDemarcheProps {
   name: string;
@@ -222,61 +227,61 @@ export default CardDemarche;
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 20,
+    borderRadius: moderateScale(20),
     borderWidth: 1,
     shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowRadius: moderateScale(4),
     elevation: 30,
-    margin: 6,
+    margin: hp("0.75%"),
     color: "#000",
   },
   cardHeader: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 16,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
+    padding: hp("2%"),
+    borderTopLeftRadius: moderateScale(8),
+    borderTopRightRadius: moderateScale(8),
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: moderateScale(18),
     fontWeight: "bold",
-    marginLeft: 8,
+    marginLeft: wp("2%"),
   },
   cardContent: {
-    padding: 16,
+    padding: hp("2%"),
   },
   contentTitle: {
-    fontSize: 18,
+    fontSize: moderateScale(18),
     fontWeight: "bold",
-    marginBottom: 8,
+    marginBottom: hp("1%"),
   },
   progressBarContainer: {
-    height: 8,
+    height: hp("1%"),
     backgroundColor: "#E0E0E0",
-    borderRadius: 4,
-    marginBottom: 8,
+    borderRadius: moderateScale(4),
+    marginBottom: hp("1%"),
   },
   progressBar: {
-    height: 8,
-    borderRadius: 4,
+    height: hp("1%"),
+    borderRadius: moderateScale(4),
   },
   progressText: {
-    fontSize: 14,
+    fontSize: moderateScale(14),
   },
   cardFooter: {
-    padding: 16,
+    padding: hp("2%"),
   },
   chatButton: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 8,
+    marginBottom: hp("1%"),
   },
   chatButtonText: {
-    marginLeft: 8,
+    marginLeft: wp("2%"),
   },
   continueButton: {
-    padding: 12,
-    borderRadius: 4,
+    padding: hp("1.5%"),
+    borderRadius: moderateScale(4),
     alignItems: "center",
   },
   continueButtonText: {
@@ -291,18 +296,18 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: "white",
-    borderRadius: 8,
-    padding: 20,
-    width: "80%",
+    borderRadius: moderateScale(8),
+    padding: hp("2.5%"),
+    width: wp("80%"),
   },
   modalTitle: {
-    fontSize: 18,
+    fontSize: moderateScale(18),
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: hp("1.5%"),
   },
   closeButton: {
-    padding: 10,
-    borderRadius: 4,
+    padding: hp("1.2%"),
+    borderRadius: moderateScale(4),
     alignItems: "center",
   },
   closeButtonText: {
@@ -311,36 +316,36 @@ const styles = StyleSheet.create({
   },
   stepItem: {
     backgroundColor: "#FFF",
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 12,
+    padding: hp("2%"),
+    borderRadius: moderateScale(12),
+    marginBottom: hp("1.5%"),
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
-    shadowRadius: 2,
+    shadowRadius: moderateScale(2),
     elevation: 2,
   },
   stepHeader: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 8,
+    marginBottom: hp("1%"),
   },
   stepName: {
-    fontSize: 18,
+    fontSize: moderateScale(18),
     fontWeight: "600",
-    marginLeft: 12,
+    marginLeft: wp("3%"),
   },
   stepDescription: {
-    fontSize: 16,
-    marginLeft: 36,
+    fontSize: moderateScale(16),
+    marginLeft: wp("9%"),
   },
   emptyContainer: {
     alignItems: "center",
     justifyContent: "center",
-    padding: 32,
+    padding: hp("4%"),
   },
   emptyText: {
-    marginTop: 12,
-    fontSize: 16,
+    marginTop: hp("1.5%"),
+    fontSize: moderateScale(16),
   },
 });
