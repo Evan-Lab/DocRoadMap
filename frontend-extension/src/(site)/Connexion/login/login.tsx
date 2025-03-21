@@ -1,46 +1,45 @@
-import axios from "axios";
-import { useState } from "react";
-import { FaArrowLeft } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import "./login.css";
+import axios from "axios"
+import { useState } from "react"
+import { FaArrowLeft } from "react-icons/fa"
+import { useNavigate } from "react-router-dom"
+// import DocRoadMap from "../../../public/docroadmap.png";
+import "./login.css"
 
-const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
+const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>
 
 function Login() {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [isResetMode, setIsResetMode] = useState(false);
-  const [resetEmail, setResetEmail] = useState("");
-  const [resetMessage, setResetMessage] = useState("");
+  const navigate = useNavigate()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
+  const [isResetMode, setIsResetMode] = useState(false)
+  const [resetEmail, setResetEmail] = useState("")
+  const [resetMessage, setResetMessage] = useState("")
 
   const handleLogin = () => {
     axios
       .post("http://localhost:8082/auth/login", { email, password })
-      .then((response) => {
-        localStorage.setItem("token", response.data.accessToken);
-
+      .then(response => {
+        localStorage.setItem("token", response.data.accessToken)
         if (localStorage.getItem("token") != null) {
-          navigate("/roadmap");
-          console.log("i am connected, token: ", localStorage.getItem("token"));
+          navigate("/roadmap")
+          console.log("i am connected, token: ", localStorage.getItem("token"))
         }
       })
       .catch(() => {
-        setError("Email ou mot de passe incorrect");
-        console.log("NOT connected, token: ", localStorage.getItem("token"));
-      });
-  };
+        setError("Email ou mot de passe incorrect")
+        console.log("NOT connected, token: ", localStorage.getItem("token"))
+      })
+  }
 
   const handlePasswordReset = () => {
     setResetMessage(
       "Si un compte est associé à cet email, un lien de réinitialisation a été envoyé."
-    );
-
+    )
     setTimeout(() => {
-      setResetMessage("");
-    }, 5000);
-  };
+      setResetMessage("")
+    }, 5000)
+  }
 
   return (
     <div className="login-page">
@@ -51,24 +50,29 @@ function Login() {
 
         {!isResetMode ? (
           <>
-            <h1>Connexion</h1>
+            <div className="login-header">
+              <div className="DocRoadMap-Logo login">
+                {/* <img src={DocRoadMap} alt="DocRoadMap" /> */}
+              </div>
+              <h1>Connexion</h1>
+            </div>
             {error && <p className="error-message">{error}</p>}
             <div className="input-group">
               <label>Email</label>
               <input
                 type="email"
-                placeholder="Entrez votre email"
+                placeholder="Email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
               />
             </div>
             <div className="input-group">
               <label>Mot de passe</label>
               <input
                 type="password"
-                placeholder="Entrez votre mot de passe"
+                placeholder=""
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={e => setPassword(e.target.value)}
               />
             </div>
             <button className="login-button" onClick={handleLogin}>
@@ -83,15 +87,15 @@ function Login() {
           </>
         ) : (
           <>
-            <h1>Réinitialisation du mot de passe</h1>
+            <h2>Réinitialisation du mot de passe</h2>
             {resetMessage && <p className="success-message">{resetMessage}</p>}
             <div className="input-group">
               <label>Email</label>
               <input
                 type="email"
-                placeholder="Entrez votre email"
+                placeholder="Email"
                 value={resetEmail}
-                onChange={(e) => setResetEmail(e.target.value)}
+                onChange={e => setResetEmail(e.target.value)}
               />
             </div>
             <button className="login-button" onClick={handlePasswordReset}>
@@ -104,7 +108,7 @@ function Login() {
         )}
       </div>
     </div>
-  );
+  )
 }
 
-export default Login;
+export default Login

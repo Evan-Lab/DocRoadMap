@@ -1,17 +1,17 @@
-import axios from "axios";
-import { FaArrowLeft } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import "./roadmapCreation.css";
+import axios from "axios"
+import { FaArrowLeft } from "react-icons/fa"
+import { useNavigate } from "react-router-dom"
+import "./roadmapCreation.css"
 
-const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
+const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>
 
-const CreateRoadmap: React.FC = () => {
-  const navigate = useNavigate();
-  const token = localStorage.getItem("token");
+const RoadmapCreation: React.FC = () => {
+  const navigate = useNavigate()
+  const token = localStorage.getItem("token")
 
   const handleButtonClick = () => {
-    console.log("Button clicked! Feature coming soon.");
-  };
+    console.log("Button clicked! Feature coming soon.")
+  }
 
   const handleCreateCard = async () => {
     try {
@@ -32,12 +32,12 @@ const CreateRoadmap: React.FC = () => {
             Authorization: `Bearer ${token}`,
           },
         }
-      );
-      console.log("Process created successfully:", response.data);
+      )
+      console.log("Process created successfully:", response.data)
     } catch (error) {
-      console.error("Error creating process:", error);
+      console.error("Error creating process:", error)
     }
-  };
+  }
 
   return (
     <div className="roadmap-container">
@@ -49,15 +49,15 @@ const CreateRoadmap: React.FC = () => {
         <button
           className="feature-button"
           onClick={() => {
-            handleButtonClick();
-            handleCreateCard();
+            handleButtonClick()
+            handleCreateCard()
           }}
         >
           Click Me
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CreateRoadmap;
+export default RoadmapCreation

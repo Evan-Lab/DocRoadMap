@@ -1,24 +1,25 @@
-import axios from "axios";
-import { useState } from "react";
-import { FaArrowLeft } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import "./register.css";
+import axios from "axios"
+import { useState } from "react"
+import { FaArrowLeft } from "react-icons/fa"
+import { useNavigate } from "react-router-dom"
+// import DocRoadMap from "../../../public/docroadmap.png";
+import "./register.css"
 
-const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
+const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>
 
 function Register() {
-  const navigate = useNavigate();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  const navigate = useNavigate()
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [error, setError] = useState("")
 
   const handleRegister = () => {
     if (password !== confirmPassword) {
-      setError("Les mots de passe ne correspondent pas");
-      return;
+      setError("Les mots de passe ne correspondent pas")
+      return
     }
 
     axios
@@ -29,12 +30,12 @@ function Register() {
         password,
       })
       .then(() => {
-        navigate("/account-confirmation");
+        navigate("/account-confirmation")
       })
       .catch(() => {
-        setError("Une erreur s'est produite lors de l'inscription");
-      });
-  };
+        setError("Une erreur s'est produite lors de l'inscription")
+      })
+  }
 
   return (
     <div className="register-page">
@@ -42,51 +43,56 @@ function Register() {
         <button className="back-button" onClick={() => navigate(-1)}>
           <ArrowLeftIcon />
         </button>
-        <h1>Inscription</h1>
+        <div className="register-header">
+          <div className="DocRoadMap-Logo register">
+            {/* <img src={DocRoadMap} alt="DocRoadMap" /> */}
+          </div>
+          <h1>Inscription</h1>
+        </div>
         {error && <p className="error-message">{error}</p>}
         <div className="input-group">
           <label>Prénom</label>
           <input
             type="text"
-            placeholder="Entrez votre prénom"
+            placeholder="Prénom"
             value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            onChange={e => setFirstName(e.target.value)}
           />
         </div>
         <div className="input-group">
           <label>Nom de famille</label>
           <input
             type="text"
-            placeholder="Entrez votre nom"
+            placeholder="Nom"
             value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
+            onChange={e => setLastName(e.target.value)}
           />
         </div>
         <div className="input-group">
           <label>Adresse e-mail</label>
           <input
             type="email"
-            placeholder="Entrez votre email"
+            placeholder="Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
           />
         </div>
         <div className="input-group">
           <label>Mot de passe</label>
           <input
             type="password"
-            placeholder="Choisissez un mot de passe"
+            placeholder=""
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
           />
         </div>
         <div className="input-group">
           <label>Confirmation du mot de passe</label>
           <input
             type="password"
-            placeholder="Confirmez votre mot de passe"
+            placeholder=""
             value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={e => setConfirmPassword(e.target.value)}
           />
         </div>
         <button className="register-button" onClick={handleRegister}>
@@ -97,7 +103,7 @@ function Register() {
         </p>
       </div>
     </div>
-  );
+  )
 }
 
-export default Register;
+export default Register

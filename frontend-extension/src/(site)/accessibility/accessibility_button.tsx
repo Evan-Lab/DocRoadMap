@@ -1,25 +1,25 @@
 //might need to deleate it later
 
-import React, { useEffect } from "react";
+import React, { useEffect } from "react"
 
 const generateAltText = (img: HTMLImageElement) => {
-  return "Descriptive image content"; // a remplacer par un txt generé par une IA
-};
+  return "Descriptive image content" // a remplacer par un txt generé par une IA
+}
 
 const modifyPageForAccessibility = () => {
-  document.querySelectorAll("img").forEach((img) => {
+  document.querySelectorAll("img").forEach(img => {
     if (!img.hasAttribute("alt") || img.getAttribute("alt") === "") {
-      img.setAttribute("alt", generateAltText(img));
+      img.setAttribute("alt", generateAltText(img))
     }
-  });
-};
+  })
+}
 
 const AccessibilityButton = () => {
   useEffect(() => {
     window.onload = () => {
-      modifyPageForAccessibility();
-    };
-  }, []);
+      modifyPageForAccessibility()
+    }
+  }, [])
 
   return (
     <button
@@ -33,13 +33,13 @@ const AccessibilityButton = () => {
         borderRadius: "5px",
       }}
       onClick={() => {
-        console.log("Button clicked");
-        modifyPageForAccessibility();
+        console.log("Button clicked")
+        modifyPageForAccessibility()
       }}
     >
       Improve Accessibility
     </button>
-  );
-};
+  )
+}
 
-export default AccessibilityButton;
+export default AccessibilityButton

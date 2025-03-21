@@ -31,7 +31,9 @@
   cursor: pointer;
   font-size: 24px;
   color: #007bff;
-  transition: color 0.3s ease, transform 0.2s ease;
+  transition:
+    color 0.3s ease,
+    transform 0.2s ease;
 }
 
 .back-button:hover {
@@ -86,7 +88,9 @@
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
-  transition: background-color 0.3s ease, transform 0.2s;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s;
 }
 
 .register-button:hover {
@@ -114,4 +118,25 @@
 
 .login-text a:hover {
   text-decoration: underline;
+}
+
+.register-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.DocRoadMap-Logo.register img {
+  width: 150px;
+  max-width: 150px;
+  height: auto;
+}
+
+.register-header h1 {
+  font-size: 22px;
+  margin: 0;
+  font-weight: 600;
+  transform: translateX(-40px);
 }

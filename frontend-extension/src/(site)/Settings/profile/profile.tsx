@@ -1,33 +1,33 @@
-import { useEffect, useState } from "react";
-import { FaArrowLeft, FaEnvelope, FaLock, FaUser } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import "./profile.css";
+import { useEffect, useState } from "react"
+import { FaArrowLeft, FaEnvelope, FaLock, FaUser } from "react-icons/fa"
+import { useNavigate } from "react-router-dom"
+import "./profile.css"
 
-const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
-const UserIcon = FaUser as unknown as React.FC<any>;
-const EnvelopeIcon = FaEnvelope as unknown as React.FC<any>;
-const LockIcon = FaLock as unknown as React.FC<any>;
+const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>
+const UserIcon = FaUser as unknown as React.FC<any>
+const EnvelopeIcon = FaEnvelope as unknown as React.FC<any>
+const LockIcon = FaLock as unknown as React.FC<any>
 
 function Profile() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "********",
     profilePicture: "/user.png",
-  });
+  })
 
-  const [error, setError] = useState<string>("");
-  const [editingField, setEditingField] = useState<string | null>(null);
-  const [tempValue, setTempValue] = useState("");
+  const [error, setError] = useState<string>("")
+  const [editingField, setEditingField] = useState<string | null>(null)
+  const [tempValue, setTempValue] = useState("")
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token")
         if (!token) {
-          throw new Error("Token non disponible. Veuillez vous connecter.");
+          throw new Error("Token non disponible. Veuillez vous connecter.")
         }
 
         const response = await fetch("http://localhost:8082/users/me", {
@@ -36,47 +36,47 @@ function Profile() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        });
+        })
 
         if (!response.ok) {
-          throw new Error("Échec de la récupération des données utilisateur");
+          throw new Error("Échec de la récupération des données utilisateur")
         }
 
-        const data = await response.json();
+        const data = await response.json()
         setUser({
           firstName: data.firstName || "Non spécifié",
           lastName: data.lastName || "Non spécifié",
           email: data.email || "Non spécifié",
           password: "********",
           profilePicture: data.profilePicture || "/user.png",
-        });
+        })
       } catch (error) {
         setError(
           "Une erreur s'est produite lors de la récupération des données."
-        );
-        console.error(error);
+        )
+        console.error(error)
       }
-    };
+    }
 
-    fetchUserProfile();
-  }, []);
+    fetchUserProfile()
+  }, [])
 
   const handleEditClick = (field: string, value: string) => {
-    setEditingField(field);
-    setTempValue(value);
-  };
+    setEditingField(field)
+    setTempValue(value)
+  }
 
   const handleConfirmEdit = () => {
-    setUser((prevUser) => ({
+    setUser(prevUser => ({
       ...prevUser,
       [editingField as string]: tempValue,
-    }));
-    setEditingField(null);
-  };
+    }))
+    setEditingField(null)
+  }
 
   const handleCancelEdit = () => {
-    setEditingField(null);
-  };
+    setEditingField(null)
+  }
 
   return (
     <div className="profile-container">
@@ -89,7 +89,7 @@ function Profile() {
         <img src={user.profilePicture} alt="Profil" />
       </div>
       <div className="profile-info">
-        {["firstName", "lastName", "email", "password"].map((field) => (
+        {["firstName", "lastName", "email", "password"].map(field => (
           <div className="profile-item" key={field}>
             <span className="profile-label">
               {field === "firstName" || field === "lastName" ? (
@@ -105,7 +105,7 @@ function Profile() {
                 <input
                   type={field === "password" ? "password" : "text"}
                   value={tempValue}
-                  onChange={(e) => setTempValue(e.target.value)}
+                  onChange={e => setTempValue(e.target.value)}
                   className="edit-input"
                 />
                 <button className="confirm-button" onClick={handleConfirmEdit}>
@@ -134,7 +134,7 @@ function Profile() {
         ))}
       </div>
     </div>
-  );
+  )
 }
 
-export default Profile;
+export default Profile

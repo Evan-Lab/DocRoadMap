@@ -1,6 +1,6 @@
-const path = require("path");
-const HTMLPlugin = require("html-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
+const path = require("path")
+const HTMLPlugin = require("html-webpack-plugin")
+const CopyPlugin = require("copy-webpack-plugin")
 
 module.exports = {
   entry: {
@@ -11,6 +11,7 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
+        // type: "asset/resource",
         use: [
           {
             loader: "ts-loader",
@@ -49,15 +50,15 @@ module.exports = {
     maxAssetSize: 512000,
     maxEntrypointSize: 512000,
   },
-};
+}
 
 function getHtmlPlugins(chunks) {
   return chunks.map(
-    (chunk) =>
+    chunk =>
       new HTMLPlugin({
         title: "React extension",
         filename: `${chunk}.html`,
         chunks: [chunk],
       })
-  );
+  )
 }
