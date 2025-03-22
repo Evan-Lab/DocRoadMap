@@ -5,9 +5,7 @@ import { useNavigate } from "react-router-dom"
 import "./roadmapView.css"
 
 const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>
-const token = localStorage.getItem("token")
 
-// Define TypeScript interface for cards
 interface Card {
   id: number
   name: string
@@ -16,43 +14,51 @@ interface Card {
   createdAt: string
   updatedAt: string
   endedAt?: string
-  steps: any[] // Adjust type if necessary
-}
-
-const fetchProcesses = async (): Promise<Card[]> => {
-  try {
-    const response = await axios.get("http://localhost:8082/users/me", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    console.log(response.data)
-    return response.data.processes || []
-  } catch (error) {
-    console.error("Unauthorized access. You do not have permission.")
-    return []
-  }
+  steps: any[]
 }
 
 const RoadmapView: React.FC = () => {
   const navigate = useNavigate()
-  const [cards, setCards] = useState<Card[]>([]) // Explicitly setting type
+  const [cards, setCards] = useState<Card[]>([])
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    const getProcesses = async () => {
-      const processes = await fetchProcesses()
-      setCards(processes)
+    const fetchUserProcesses = async () => {
+      const token = localStorage.getItem("token")
+      if (!token) {
+        setError("Token manquant. Veuillez vous connecter.")
+        return
+      }
+
+      try {
+        const response = await axios.get("http://localhost:8082/users/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+
+        const processes = response.data.processes || []
+        setCards(processes)
+      } catch (error) {
+        console.error("Erreur lors de la récupération des roadmaps :", error)
+        setError("Impossible de récupérer les roadmaps.")
+      }
     }
-    getProcesses()
+
+    fetchUserProcesses()
   }, [])
 
   return (
     <div className="roadmap-container">
-      <button className="back-button" onClick={() => navigate(-1)}>
-        <ArrowLeftIcon />
-      </button>
-      <h1 className="roadmap-title">Mes Roadmaps </h1>
-      {/* <button className="fetch-process-button" onClick={() => console.log(cards)}>click me</button> */}
+      <div className="roadmap-header">
+        <button className="back-button" onClick={() => navigate(-1)}>
+          <ArrowLeftIcon />
+        </button>
+        <h1 className="roadmap-title">Mes démarches en cours</h1>
+      </div>
+
+      {error && <p className="error-message">{error}</p>}
+
       <div className="carousel-container">
         {cards.map(card => (
           <div className="card" key={card.id}>
@@ -62,8 +68,14 @@ const RoadmapView: React.FC = () => {
             <div className="card-body">
               <p className="process">{card.description}</p>
               <p>Status: {card.status}</p>
-              <button className="chat-button">Chat with Assistant</button>
-              <button className="continue-button"> Continue </button>
+              <button
+                className="chat-button"
+                onClick={() => navigate("/chatbot")}
+              >
+                Discuter avec un assistant ?
+              </button>
+
+              <button className="continue-button">Continuer</button>
             </div>
           </div>
         ))}
