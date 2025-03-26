@@ -10,4 +10,13 @@ export class SendQueryDTO {
     @IsString()
     @IsNotEmpty()
     public query: string;
+
+    @ApiProperty({
+        description: 'The knowledge to send to the model AI',
+        type: 'string',
+        required: true
+    })
+    @IsString()
+    @IsNotEmpty()
+    public text_to_add: string
 }
