@@ -12,11 +12,11 @@ export class SendQueryDTO {
     public query: string;
 
     @ApiProperty({
-        description: 'The knowledge to send to the model AI',
+        description: 'The collection name to get infromation from the vectorial database',
         type: 'string',
         required: true
     })
     @IsString()
     @IsNotEmpty()
-    public text_to_add: string
+    public collection_name: string
 }
