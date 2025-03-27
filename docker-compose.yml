@@ -4,7 +4,7 @@ version: '3.8'
 services:
   postgres:
     container_name: DocRoadMapDatabase
-    image: postgres
+    image: postgres:14
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
@@ -18,9 +18,56 @@ services:
       - postgres
     restart: unless-stopped
 
+  scrapper:
+    build:
+      context: web-scrapper
+    container_name: DocRoadMapScrapper
+    environment:
+      - FLASK_HOST=DocRoadMapApiIA
+    restart: unless-stopped
+    networks:
+      - ia
+    depends_on:
+      - flask_app
+      - chromadb
+    volumes:
+      - scraper_data:/app/dataset/
+
+  flask_app:
+    container_name: DocRoadMapApiIA
+    build: 'ia/'
+    ports:
+      - "8083:8083"
+    environment:
+      - FLASK_ENV=development
+      - CHROMA_HOST=DocRoadMapDbVector
+    networks:
+      - ia
+    depends_on:
+      - chromadb
+    volumes:
+      - scraper_data:/app/dataset/
+      - ./ia/models/:/app/models
+  
+  chromadb:
+    container_name: DocRoadMapDbVector
+    image: ghcr.io/chroma-core/chroma:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - chromadb-data:/chroma
+    networks:
+      - ia
+    environment:
+      - IS_PERSISTENT=TRUE
+
 networks:
   postgres:
+    driver: bridge
+  ia:
     driver: bridge
 
 volumes:
     postgres:
+    chromadb-data:
+    scraper_data:
