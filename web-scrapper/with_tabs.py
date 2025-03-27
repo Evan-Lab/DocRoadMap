@@ -4,10 +4,10 @@ from utils import save_json_content
 
 # une liste a compléter avec les url des pages a scrapper et le dossier dans lequel on met son contenu quand on a fini.
 url_folder_list = [
-    ("https://www.service-public.fr/particuliers/vosdroits/F15913", "output/jachete_un_logement"),
-    ("https://www.service-public.fr/particuliers/vosdroits/F34635", "output/je_pars_de_chez_mes_parents"),
-    ("https://www.service-public.fr/particuliers/vosdroits/F17556", "output/recherche-emploi"),
-    ("https://www.service-public.fr/particuliers/vosdroits/F1427", "output/acte_naissance")
+    ("https://www.service-public.fr/particuliers/vosdroits/F15913", "jachete_un_logement"),
+    ("https://www.service-public.fr/particuliers/vosdroits/F34635", "je_pars_de_chez_mes_parents"),
+    ("https://www.service-public.fr/particuliers/vosdroits/F17556", "recherche-emploi"),
+    ("https://www.service-public.fr/particuliers/vosdroits/F1427", "acte_naissance")
 ]
 
 def scrape_article_content(url):

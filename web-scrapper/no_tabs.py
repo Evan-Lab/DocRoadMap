@@ -1,10 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 from utils import save_json_content
-
 url_folder_list = [
-    ("https://www.service-public.fr/particuliers/vosdroits/F14128", "output/demenagement_en_france"),
-    ("https://www.service-public.fr/particuliers/vosdroits/F601", "output/garde_enfants"),
+    ("https://www.service-public.fr/particuliers/vosdroits/F14128", "demenagement_en_france"),
+    ("https://www.service-public.fr/particuliers/vosdroits/F601", "garde_enfants"),
 ]
 
 def scrape_article_content(url):
