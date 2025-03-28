@@ -48,6 +48,27 @@ const RoadmapView: React.FC = () => {
     fetchUserProcesses()
   }, [])
 
+  const getImageForCardName = (name: string) => {
+    const lower = name.toLowerCase()
+    if (lower.includes("passport")) return "passport_roadmap.png"
+    if (lower.includes("Carte d'identité")) return "id_roadmap.png"
+    if (lower.includes("Déménagement")) return "moving_roadmap.png"
+    return "no_know_roadmap.png"
+  }
+
+  const getValidatedStepsCount = (status: string) => {
+    switch (status) {
+      case "PENDING":
+        return 0
+      case "IN_PROGRESS":
+        return 1
+      case "COMPLETED":
+        return 3
+      default:
+        return 0
+    }
+  }
+
   return (
     <div className="roadmap-container">
       <div className="roadmap-header">
@@ -62,19 +83,27 @@ const RoadmapView: React.FC = () => {
       <div className="carousel-container">
         {cards.map(card => (
           <div className="card" key={card.id}>
+            <img
+              className="card-image"
+              src={getImageForCardName(card.name)}
+              alt="Illustration démarche"
+            />
             <div className="card-header">
               <h3>{card.name}</h3>
             </div>
             <div className="card-body">
               <p className="process">{card.description}</p>
-              <p>Status: {card.status}</p>
+              <p>
+                {getValidatedStepsCount(card.status)} étape
+                {getValidatedStepsCount(card.status) > 1 ? "s" : ""} validée sur
+                3
+              </p>
               <button
                 className="chat-button"
                 onClick={() => navigate("/chatbot")}
               >
                 Discuter avec un assistant ?
               </button>
-
               <button className="continue-button">Continuer</button>
             </div>
           </div>
