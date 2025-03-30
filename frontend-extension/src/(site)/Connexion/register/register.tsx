@@ -2,8 +2,14 @@ import axios from "axios"
 import { useState } from "react"
 import { FaArrowLeft } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
-import DocRoadMap from "../../../assets/docroadmap.png"
 import "./register.css"
+
+const isDev = process.env.NODE_ENV !== "production"
+
+const docroadmapImg = isDev
+  ? "/assets/docroadmap.png"
+  : "../images/docroadmap.png"
+
 
 const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>
 
@@ -45,7 +51,7 @@ function Register() {
         </button>
         <div className="register-header">
           <div className="DocRoadMap-Logo register">
-            <img src={DocRoadMap} alt="DocRoadMap" />
+            <img src={docroadmapImg} alt="DocRoadMap" />
           </div>
           <h1>Inscription</h1>
         </div>

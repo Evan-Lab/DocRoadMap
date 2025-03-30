@@ -15,7 +15,6 @@ function Profile() {
     lastName: "",
     email: "",
     password: "********",
-    profilePicture: "/user.png",
   })
 
   const [error, setError] = useState<string>("")
@@ -48,7 +47,6 @@ function Profile() {
           lastName: data.lastName || "Non spécifié",
           email: data.email || "Non spécifié",
           password: "********",
-          profilePicture: data.profilePicture || "/user.png",
         })
       } catch (error) {
         setError(
@@ -86,7 +84,7 @@ function Profile() {
       <h1 className="profile-title">Profil</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <div className="profile-picture">
-        <img src={user.profilePicture} alt="Profil" />
+        <FaUser size={80} />
       </div>
       <div className="profile-info">
         {["firstName", "lastName", "email", "password"].map(field => (

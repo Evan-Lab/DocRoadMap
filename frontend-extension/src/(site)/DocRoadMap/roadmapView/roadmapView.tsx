@@ -4,10 +4,19 @@ import { FaArrowLeft } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
 import "./roadmapView.css"
 
-import idImg from "../../../assets/id_roadmap.png"
-import movingImg from "../../../assets/moving_roadmap.png"
-// import unknownImg from "../../../assets/
-import passportImg from "../../../assets/passport_roadmap.png"
+const isDev = process.env.NODE_ENV !== "production"
+
+const passportImg = isDev
+  ? "/assets/passport_roadmap.png"
+  : "../images/passport_roadmap.png"
+
+const idImg = isDev ? "/assets/id_roadmap.png" : "../images/id_roadmap.png"
+
+const movingImg = isDev
+  ? "/assets/moving_roadmap.png"
+  : "../images/moving_roadmap.png"
+
+const unknownImg = isDev ? "/assets/docroadmap.png" : "../images/docroadmap.png"
 
 const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>
 
@@ -65,7 +74,7 @@ const RoadmapView: React.FC = () => {
     if (lower.includes("passport")) return passportImg
     if (lower.includes("carte") && lower.includes("identite")) return idImg
     if (lower.includes("demenagement")) return movingImg
-    return
+    return unknownImg
   }
 
   const getValidatedStepsCount = (status: string) => {
