@@ -10,22 +10,20 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        // type: "asset/resource",
-        use: [
-          {
-            loader: "ts-loader",
-            options: {
-              compilerOptions: { noEmit: false },
-            },
-          },
-        ],
+        test: /\.(js|ts|tsx)$/,
         exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+        },
       },
       {
-        exclude: /node_modules/,
         test: /\.css$/i,
+        exclude: /node_modules/,
         use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        type: "asset/resource",
       },
     ],
   },
