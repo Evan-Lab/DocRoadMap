@@ -5,3 +5,4 @@ llama-index-embeddings-huggingface
 chromadb
 pysqlite3-binary
 flask
+platformdirs

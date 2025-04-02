@@ -28,8 +28,8 @@ services:
     networks:
       - ia
     depends_on:
-      - flask_app
-      - chromadb
+      flask_app:
+          condition: service_healthy
     volumes:
       - scraper_data:/app/dataset/
 
@@ -41,25 +41,40 @@ services:
     environment:
       - FLASK_ENV=development
       - CHROMA_HOST=DocRoadMapDbVector
+      - PYTHONUNBUFFERED=1
     networks:
       - ia
     depends_on:
-      - chromadb
+      chromadb:
+          condition: service_healthy
     volumes:
       - scraper_data:/app/dataset/
       - ./ia/models/:/app/models
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/health"]
+      interval: 120s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
   
   chromadb:
     container_name: DocRoadMapDbVector
-    image: ghcr.io/chroma-core/chroma:latest
+    image: ghcr.io/chroma-core/chroma:0.6.3
     ports:
       - "8000:8000"
     volumes:
-      - chromadb-data:/chroma
+      - chroma-data:/chroma/chroma
     networks:
       - ia
     environment:
       - IS_PERSISTENT=TRUE
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat"]
+      interval: 120s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
 
 networks:
   postgres:
@@ -69,5 +84,5 @@ networks:
 
 volumes:
     postgres:
-    chromadb-data:
+    chroma-data:
     scraper_data:
