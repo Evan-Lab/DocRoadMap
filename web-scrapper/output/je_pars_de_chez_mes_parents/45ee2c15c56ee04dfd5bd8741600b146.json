@@ -1,0 +1,200 @@
+{
+    "url": "https://www.service-public.fr/particuliers/vosdroits/F34635",
+    "tab": [
+        {
+            "tab-title": "Étudiant (y compris apprenti ou alternant)",
+            "chapitres": [
+                {
+                    "chapter-title": "Type de logement",
+                    "chapter-description": {
+                        "possibilities": [
+                            {
+                                "possibility-title": "Logement du Crous (logement social)",
+                                "possibility-content": "Je peux demander un logement étudiant auprès du Crous : titleContent . Je dois utiliser ce téléservice : Mes services étudiant Ce logement, situé en résidence universitaire ou dans une autre résidence affectée au logement des étudiants, est attribué sous conditions de ressources. Je suis prioritaire pour obtenir ce type de logement lorsque je perçois une bourse sur critères sociaux . Lors de mon installation dans le logement, je devrai : Fournir un dépôt de garantie. Si nécessaire, je peux demander l'avance loca-pass (prêt sans intérêt) Présenter une caution qui s'engage à payer le loyer et les charges si je suis dans l'incapacité de le faire. Il peut s'agir d'une personne physique (parent, ami...) ou d'une personne morale ( garantie Visale notamment)."
+                            },
+                            {
+                                "possibility-title": "Logement d'un propriétaire",
+                                "possibility-content": "Je peux devenir locataire : Soit d'un logement loué vide, avec un bail d'habitation Soit d'un logement loué meublé, avec un bail d'habitation classique ou un bail mobilité (sous certaines conditions) À savoir Je peux être le seul locataire du logement, ou le louer avec d'autres personnes en colocation , ou le louer pour mon couple (si je suis marié , pacsé , concubin ). Pour trouver le logement , je peux : Consulter les offres de logement sur sur Lokaviz Faire appel à un agence immobilière, mais je devrai payer des frais de visite, de dossier, d'état des lieux ... Utiliser DossierFacile.fr pour signaler au propriétaire le sérieux de mon dossier Avant la signature du bail , le propriétaire du logement peut m'imposer d'avoir une caution . La caution est une personne physique (parent, ami ...) ou une personne morale (exemple : garantie Visale ) qui s'engage à payer le loyer et les charges si je suis dans l'incapacité de le faire. En outre, je peux : Demander l'avance loca-pass (prêt sans intérêt) pour financer le dépôt de garantie , réclamé par le propriétaire lors de la signature du bail Demander l'aide du fonds de solidarité pour le logement (FSL) pour m'aider à financer mon installation dans le logement. Lors de la remise des clés , je dois faire avec le propriétaire ou son représentant (notamment agent immobilier) un état des lieux d'entrée ."
+                            },
+                            {
+                                "possibility-title": "Chambre meublée chez l'habitant",
+                                "possibility-content": "Je peux louer une chambre meublée chez l'habitant. La chambre doit faire 9 m 2 minimum , avoir une fenêtre, être chauffée et contenir un minimum de meubles (literie, table, siège, rangements, luminaires). Si la chambre n'a pas de coin cuisine, ni d'équipements sanitaires privatifs, il est obligatoire de rédiger un bail avec une annexe indiquant que le propriétaire partage ceux de son logement avec le locataire de la chambre. Dans tous les cas, il est recommandé de signer un bail d'habitation classique pour un logement meublé ou un bail mobilité . Pour trouver ce logement, je peux consulter les offres de location sur Lokaviz"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "chapter-title": "Chauffage, eau, électricité et internet",
+                    "chapter-description": {
+                        "possibilities": [
+                            {
+                                "possibility-title": "Logement du Crous",
+                                "possibility-content": "Le prix des consommations d'eau et d'électricité est inclus dans le loyer. La connexion internet est disponible dans la chambre et éventuellement dans une pièce commune de la résidence. Son coût est compris dans le loyer."
+                            },
+                            {
+                                "possibility-title": "Logement d'un propriétaire",
+                                "possibility-content": "Je souscris une offre auprès d'un opérateur de téléphone, télévision, internet . Le coût de ces communications électroniques est à ma charge. Je dois payer les dépenses relatives aux consommations d'eau, de gaz et d'électricité qui font partie des charges locatives . À noter Les éventuelles réparations locatives sont à ma charge pendant toute la durée de la location."
+                            },
+                            {
+                                "possibility-title": "Chambre meublée chez l'habitant",
+                                "possibility-content": "Le plus souvent, le propriétaire ne demande pas à l'étudiant de participer au paiement de la connexion internet. En revanche, il lui fait payer un forfait charges pour l'électricité, le gaz et l'eau. Ce forfait doit être mentionné dans le contrat de location."
+                            }
+                        ]
+                    }
+                },
+                {
+                    "chapter-title": "Aide au logement (APL, ALS, ALF)",
+                    "chapter-description": {
+                        "possibilities": [
+                            {
+                                "possibility-title": "Logement du Crous",
+                                "possibility-content": "Je peux demander une aide au logement à la Caf . Pour en faire la demande, j'utilise ce téléservice : Demande d'allocation logement en ligne Pour savoir si j'ai droit à ces aides et quel montant je peux obtenir, j'utilise ce simulateur : Caf : estimer son droit aux allocations logement et calculer son montant À noter Si je suis en contrat d'alternance dans une entreprise du secteur privé agricole , je peux obtenir l'aide Agri-Mobili-Jeune, dans certains cas. Je peux tester mon éligibilité et faire ma demande à l'aide d'un téléservice . Si je suis en contrat d'alternance dans une autre entreprise du secteur privé , je peux aussi obtenir l'aide Mobili-Jeune, dans certains cas . Je peux tester mon éligibilité et faire ma demande à l'aide d'un téléservice ."
+                            },
+                            {
+                                "possibility-title": "Logement d'un propriétaire",
+                                "possibility-content": "Je peux bénéficier d'une aide au logement de la Caf sous certaines conditions. Pour en faire la demande, j'utilise ce téléservice : Demande d'allocation logement en ligne Pour savoir si j'ai droit à ces aides et quel montant je peux obtenir, j'utilise ce simulateur : Caf : estimer son droit aux allocations logement et calculer son montant À noter Si je suis en contrat d'alternance dans une entreprise privée agricole , je peux obtenir l'aide Agri-Mobili-Jeune, dans certains cas. Je peux tester mon éligibilité et faire ma demande à l'aide d'un téléservice . Si je suis en contrat d'alternance dans une autre entreprise du secteur privé , je peux aussi obtenir l'aide Mobili-Jeune, dans certains cas . Je peux tester mon éligibilité et faire ma demande à l'aide d'un téléservice ."
+                            },
+                            {
+                                "possibility-title": "Chambre meublée chez l'habitant",
+                                "possibility-content": "Je peux demander une aide au logement de la Caf à la condition d'avoir bien signé un bail . Pour cela, j'utilise ce téléservice : Demande d'allocation logement en ligne Pour savoir si j'ai droit à ces aides et quel montant je peux obtenir, j'utilise ce simulateur : Caf : estimer son droit aux allocations logement et calculer son montant À noter Si je suis en contrat d'alternance dans une entreprise du secteur privé agricole , je peux obtenir l'aide Agri-Mobili-Jeune, dans certains cas. Je peux tester mon éligibilité et faire ma demande à l'aide d'un téléservice . Si je suis en contrat d'alternance dans une autre entreprise du secteur privé , je peux aussi obtenir l'aide Mobili-Jeune, dans certains cas . Je peux tester mon éligibilité et faire ma demande à l'aide d'un téléservice ."
+                            }
+                        ]
+                    }
+                },
+                {
+                    "chapter-title": "Assurance habitation",
+                    "chapter-description": "Si je suis locataire, je dois signer un contrat d'assurance couvrant les risques locatifs . Je peux également souscrire des garanties supplémentaires pour être mieux couvert en cas de sinistres. Mais si je suis locataire d'une chambre meublée chez l'habitant, et que le propriétaire a déjà souscrit une assurance complète, je ne suis pas obligé de souscrire de contrat d'assurance. Si je suis colocataire, les règles de souscription d'un contrat d'assurance habitation dépendent du type de la colocation (avec un seul ou avec plusieurs contrat de location)"
+                },
+                {
+                    "chapter-title": "Transfert du courrier",
+                    "chapter-description": "Je dois prévenir mon établissement scolaire de mon changement d'adresse. Je peux faire réexpédier mon courrier à ma nouvelle adresse en utilisant le service proposé par la Poste : Faire suivre son courrier en cas de déménagement"
+                },
+                {
+                    "chapter-title": "Journée défense et citoyenneté (JDC)",
+                    "chapter-description": "Après avoir fait mon recensement citoyen à 16 ans, je dois participer à une JDC : titleContent . Si je veux faire ma JDC à proximité de ma nouvelle adresse, je dois la déclarer à mon centre du service national . À savoir Jusqu'à mon 25 e anniversaire, je dois déclarer à mon centre du service national chaque changement de situation (familiale, professionnelle, déménagement) qui me concerne."
+                },
+                {
+                    "chapter-title": "Aides pour utiliser les transports en commun",
+                    "chapter-description": "Je me renseigne sur les aides que je peux obtenir ."
+                },
+                {
+                    "chapter-title": "Impôts",
+                    "chapter-description": "Si je suis locataire d'un logement appartenant à un propriétaire privé, je dois payer une taxe ou redevance d'enlèvement des ordures ménagères , dans certaines communes."
+                },
+                {
+                    "chapter-title": "Santé",
+                    "chapter-description": "Je peux choisir un nouveau médecin traitant , parce que son cabinet se situe à proximité de ma nouvelle adresse, par exemple. Je m'informe des règles en vigueur s'agissant de l'affiliation d'un étudiant à la sécurité sociale ."
+                },
+                {
+                    "chapter-title": "Si mon emménagement est définitif",
+                    "chapter-description": {
+                        "possibilities": [
+                            {
+                                "possibility-title": "Je suis français",
+                                "possibility-content": "Si je suis majeur, je dois m'inscrire sur les listes électorales de ma nouvelle commune (ou du nouvel arrondissement, à Paris, Lyon et Marseille). À savoir Si je n'ai pas le temps de faire cette démarche, et que je suis encore inscrit dans mon ancienne commune , je peux y voter, notamment en faisant une procuration avant le jour de l'élection ou en me rendant dans mon bureau de vote le jour de l'élection. Si j'ai plus de 16 ans, et jusqu'à mon 25 e anniversaire, je dois prévenir mon centre du service national de mon changement d'adresse. À noter Je ne suis pas obligé de demander la modification de l'adresse qui figure sur ma carte d'identité et mon passeport."
+                            },
+                            {
+                                "possibility-title": "Je suis européen",
+                                "possibility-content": "Si je suis citoyen d'un autre État membre de l'Union européenne : titleContent : Je peux m'inscrire sur les listes électorales de ma nouvelle commune pour participer aux élections municipales et/ou aux élections européennes 2024 (pour y élire les représentants français au Parlement européen) Si j'ai une carte de séjour UE (non obligatoire), je dois la faire modifier."
+                            },
+                            {
+                                "possibility-title": "Autre situation",
+                                "possibility-content": "Je dois faire modifier mon titre de séjour ."
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "tab-title": "Autre situation",
+            "chapitres": [
+                {
+                    "chapter-title": "Type de logement",
+                    "chapter-description": {
+                        "possibilities": [
+                            {
+                                "possibility-title": "Logement social",
+                                "possibility-content": "Je fais une demande de logement social , qui est attribué sous conditions de ressources . Je peux consulter le site Bienvéo pour connaître les logements sociaux disponibles : Demande de logement social en ligne (et renouvellement de demande) Si je suis agent de l'État affecté en Île-de-France : J'ai aussi accès à la Bourse au logement des agents de l'État (BALAE) recensant les logements sociaux interministériels disponibles. Je peux aussi recourir à une solution de logement temporaire . Je peux demander l'avance Loca-pass (prêt sans intérêt) pour financer le dépôt de garantie demandé par le bailleur lors de la signature du bail. Pour en faire la demande, je dois utiliser ce téléservice : Demander une avance Loca-Pass Attention Je ne néglige pas l'état des lieux . Il est obligatoire et doit être effectué avec le bailleur au moment de la remise des clés."
+                            },
+                            {
+                                "possibility-title": "Logement d'un propriétaire",
+                                "possibility-content": "Je peux devenir locataire : Soit d'un logement loué vide, avec un bail d'habitation Soit d'un logement loué meublé, avec un bail d'habitation classique ou un bail mobilité (sous certaines conditions) À savoir Je peux être le seul locataire du logement, ou le louer avec d'autres personnes en colocation , ou le louer pour mon couple (si je suis marié , pacsé , concubin ). Pour trouver le logement , je peux : Faire appel à une agence immobilière. Mais je devrai payer des frais de visite, de dossier, d'état des lieux ... Utiliser DossierFacile pour signaler au propriétaire le sérieux de mon dossier. Avant la signature du bail , le propriétaire du logement peut m'imposer d'avoir une caution qui s'engage à payer le loyer et les charges si je suis dans l'incapacité de le faire. Il peut s'agir d'une personne physique (parent, ami, ...) ou d'une personne morale (exemple : garantie Visale ). En outre, je peux : Demander l'avance loca-pass (prêt sans intérêt) pour financer le dépôt de garantie réclamé par le propriétaire lors de la signature du bail. Demander l'aide du fonds de solidarité pour le logement (FSL) pour m'installer dans le logement. Lors de la remise des clés, je fais avec le propriétaire du logement ou son représentant (notamment agent immobilier) l'état des lieux d'entrée ."
+                            }
+                        ]
+                    }
+                },
+                {
+                    "chapter-title": "Choisir le mode de déménagement",
+                    "chapter-description": "Lorsque je fais appel à un déménageur professionnel , le déménageur est responsable en cas de perte ou de casse d'un objet et je peux donc en demander le remboursement. En outre, je peux : Être indemnisé en cas de retard Obtenir un devis gratuit Vérifier si le déménageur est bien inscrit au registre des transporteurs Si je ne fais pas appel à un professionnel : Je n'ai pas de recours si mes objets sont détériorés ou volés Ma responsabilité est engagée en cas de dommages matériels (à l'immeuble) ou d'accidents corporels (aux personnes) Je peux être poursuivi pour recours au travail illégal (si c'est le cas)"
+                },
+                {
+                    "chapter-title": "Aides financières au déménagement",
+                    "chapter-description": {
+                        "possibilities": [
+                            {
+                                "possibility-title": "Salarié",
+                                "possibility-content": "Je consulte la convention collective dont je relève pour savoir si mon entreprise peut prendre en charge mes frais de déménagement."
+                            },
+                            {
+                                "possibility-title": "Agent public (fonctionnaire ou contractuel)",
+                                "possibility-content": "Si je viens d'intégrer la fonction publique de l’État , je peux obtenir l'aide à l'installation des personnels de l'État (AIP) , sous certaines conditions."
+                            }
+                        ]
+                    }
+                },
+                {
+                    "chapter-title": "Chauffage, eau, électricité et internet",
+                    "chapter-description": "Je souscris une offre auprès d'un opérateur de téléphone, télévision, internet . Le coût de ces communications électroniques est à ma charge. Je dois payer les dépenses liées aux consommations d'eau, de gaz et d'électricité qui font partie des charges locatives . À noter Les éventuelles réparations locatives sont à ma charge pendant toute la durée de la location."
+                },
+                {
+                    "chapter-title": "Aide au logement (APL, ALS, ALF)",
+                    "chapter-description": "Je peux bénéficier d'une aide au logement de la Caf , sous certaines conditions. Je dois en faire la demande à l'aide de ce téléservice : Demande d'allocation logement en ligne Pour savoir si j'ai droit à ces aides et quel montant je peux obtenir, j'utilise ce simulateur : Caf : estimer son droit aux allocations logement et calculer son montant"
+                },
+                {
+                    "chapter-title": "Assurance habitation",
+                    "chapter-description": "Si je suis locataire, je dois signer un contrat d'assurance couvrant les risques locatifs . Je peux également souscrire des garanties supplémentaires pour être mieux couvert en cas de sinistres. Je peux également souscrire des garanties supplémentaires pour être mieux couvert en cas de sinistres. Mais si je suis locataire d'une chambre meublée chez l'habitant, et que le propriétaire a déjà souscrit une assurance complète, je ne suis pas obligé de souscrire de contrat d'assurance. Si je suis colocataire, les règles de souscription d'un contrat d'assurance habitation dépendent du type de la colocation (avec un seul ou avec plusieurs contrat de location)."
+                },
+                {
+                    "chapter-title": "Assurance du logement",
+                    "chapter-description": "En tant que locataire, je dois souscrire une assurance pour le logement loué."
+                },
+                {
+                    "chapter-title": "Transfert du courrier",
+                    "chapter-description": "Je peux faire réexpédier mon courrier à ma nouvelle adresse en utilisant le service proposé par la Poste : Faire suivre son courrier en cas de déménagement"
+                },
+                {
+                    "chapter-title": "Aides pour utiliser les transports en commun",
+                    "chapter-description": "Je me renseigne sur les aides que je peux obtenir ."
+                },
+                {
+                    "chapter-title": "Impôts",
+                    "chapter-description": "Dans certaines communes, je dois payer une taxe ou redevance d'enlèvement des ordures ménagères pour financer la collecte des déchets ménagers. Rappel Dès 18 ans, si je ne suis pas rattaché au foyer fiscal de mes parents, je dois remplir une déclaration de revenus ."
+                },
+                {
+                    "chapter-title": "Santé",
+                    "chapter-description": "Je peux choisir un nouveau médecin traitant , parce que son cabinet se situe à proximité de ma nouvelle adresse, par exemple."
+                },
+                {
+                    "chapter-title": "Si mon emménagement est définitif",
+                    "chapter-description": {
+                        "possibilities": [
+                            {
+                                "possibility-title": "Je suis français",
+                                "possibility-content": "Si je suis majeur, je dois m'inscrire sur les listes électorales de ma nouvelle commune (ou du nouvel arrondissement, à Paris, Lyon et Marseille). À savoir Si je n'ai pas le temps de faire cette démarche, et que je suis encore inscrit dans mon ancienne commune , je peux y voter, notamment en faisant une procuration avant le jour de l'élection ou en me rendant dans mon bureau de vote le jour de l'élection. Si j'ai plus de 16 ans, et jusqu'à mon 25 e anniversaire, je dois prévenir mon centre du service national de mon changement d'adresse. À noter Je ne suis pas obligé de demander la modification de l'adresse qui figure sur ma carte d'identité et mon passeport."
+                            },
+                            {
+                                "possibility-title": "Je suis européen",
+                                "possibility-content": "Si je suis citoyen d'un autre État membre de l'Union européenne : titleContent : Je peux m'inscrire sur les listes électorales de ma nouvelle commune pour participer aux élections municipales et/ou aux élections européennes 2024 (pour y élire les représentants français au Parlement européen) Si j'ai une carte de séjour UE (non obligatoire), je dois la faire modifier."
+                            },
+                            {
+                                "possibility-title": "Autre situation",
+                                "possibility-content": "Je dois faire modifier mon titre de séjour ."
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

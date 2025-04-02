@@ -1,0 +1,99 @@
+{
+    "url": "https://www.service-public.fr/particuliers/vosdroits/F1427",
+    "tab": [
+        {
+            "tab-title": "Né en France",
+            "chapitres": [
+                {
+                    "chapter-title": "La demande d'acte de naissance est-elle gratuite ?",
+                    "chapter-description": "La démarche est gratuite. À savoir Il n'y a pas lieu de faire votre demande sur des sites internet qui vous demandent une contrepartie financière."
+                },
+                {
+                    "chapter-title": "Quelles sont les différences entre les types d'acte de naissance ?",
+                    "chapter-description": {
+                        "possibilities": [
+                            {
+                                "possibility-title": "Copie intégrale",
+                                "possibility-content": "La copie intégrale reproduit l'ensemble des informations figurant dans l'acte de naissance inscrit sur le registre d'état civil. Elle comporte notamment vos informations personnelles (nom, prénoms, date et lieu de naissance), et également celles de vos parents (noms, prénoms, âges, professions et domiciles). Elle indique les mentions marginales lorsqu'elles existent."
+                            },
+                            {
+                                "possibility-title": "Extrait avec filiation",
+                                "possibility-content": "L'extrait avec filiation : titleContent est une synthèse des informations figurant dans l'acte de naissance inscrit sur le registre d'état civil. Il comporte vos informations personnelles (nom, prénoms, date et lieu de naissance) et également celles de vos parents (noms, prénoms, âges, professions et domiciles). Il indique les mentions marginales lorsqu'elles existent."
+                            },
+                            {
+                                "possibility-title": "Extrait sans filiation",
+                                "possibility-content": "L'extrait sans filiation : titleContent est une synthèse des informations figurant dans l'acte de naissance inscrit sur le registre d'état civil. Il comporte vos informations personnelles (nom, prénoms, date et lieu de naissance). Il indique les mentions marginales lorsqu'elles existent."
+                            }
+                        ]
+                    }
+                },
+                {
+                    "chapter-title": "Qui peut demander un acte de naissance ?",
+                    "chapter-description": {
+                        "possibilities": [
+                            {
+                                "possibility-title": "Copie intégrale",
+                                "possibility-content": "Vous pouvez obtenir une copie intégrale d'un acte de naissance si vous êtes une des personnes suivantes : Personne concernée par l'acte (à condition d'être majeure) ou son représentant légal : titleContent Époux, épouse ou partenaire de Pacs : titleContent Ascendant de la personne concernée (parent, grand-parent...) Descendant de la personne concernée (enfant, petit-enfant) Professionnel autorisé par la loi (exemple : un avocat pour le compte d'un client). Si vous figurez dans cette liste, vous pouvez obtenir la transmission d'une copie d'un acte de naissance ou de mariage par les archives publiques, à tout moment et sans limitation dans le temps. En revanche, toute autre personne (par exemple, un oncle, une tante) ne pourra pas demander la communication de ces documents avant les délais suivants : 75 ans à compter de la date du document ou du document le plus récent inclus dans le dossier, si la personne est vivante Ou 25 ans à compter de la date du décès de la personne si ce dernier délai est plus bref. Attention Si la personne est mineure, les délais sont différents : 100 ans à compter de la date du document ou du document le plus récent inclus dans le dossier si la personne est vivante Ou 25 ans à compter de la date du décès de la personne si ce dernier délai est plus bref."
+                            },
+                            {
+                                "possibility-title": "Extrait avec filiation",
+                                "possibility-content": "Vous pouvez obtenir un extrait d'un acte de naissance avec filiation si vous êtes une des personnes suivantes : Personne concernée par l'acte (à condition d'être majeure) ou son représentant légal : titleContent Époux, épouse ou partenaire de Pacs : titleContent Ascendant de la personne concernée (parent, grand-parent...) Descendant de la personne concernée (enfant, petit-enfant) Professionnel autorisé par la loi (exemple : un avocat pour le compte d'un client) Si vous figurez dans cette liste, vous pouvez obtenir la transmission d'une copie d'un acte de naissance ou de mariage par les archives publiques, à tout moment et sans limitation dans le temps. En revanche, toute autre personne (par exemple, un oncle, une tante) ne pourra pas demander la communication de ces documents avant les délais suivants : 75 ans à compter de la date du document ou du document le plus récent inclus dans le dossier, si la personne est vivante Ou 25 ans à compter de la date du décès de la personne si ce dernier délai est plus bref. Attention Si la personne est mineure, les délais sont différents : 100 ans à compter de la date du document ou du document le plus récent inclus dans le dossier si la personne est vivante Ou 25 ans à compter de la date du décès de la personne si ce dernier délai est plus bref."
+                            },
+                            {
+                                "possibility-title": "Extrait sans filiation",
+                                "possibility-content": "Toute personne peut obtenir un extrait d'acte de naissance sans filiation, sans avoir à justifier sa demande."
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "tab-title": "Né à l'étranger",
+            "chapitres": [
+                {
+                    "chapter-title": "La demande d'acte de naissance est-elle gratuite ?",
+                    "chapter-description": "La demande est gratuite . Attention il n'y a pas lieu de faire votre demande sur des sites internet qui vous demandent une contrepartie financière."
+                },
+                {
+                    "chapter-title": "Quelles sont les différences entre les types d'acte de naissance ?",
+                    "chapter-description": {
+                        "possibilities": [
+                            {
+                                "possibility-title": "Copie intégrale",
+                                "possibility-content": "La copie intégrale reproduit l'ensemble des informations figurant dans l'acte de naissance inscrit sur le registre d'état civil. Elle comporte notamment vos informations personnelles (nom, prénoms, date et lieu de naissance), et également celles de vos parents (noms, prénoms, âges, professions et domiciles). Elle indique les mentions marginales lorsqu'elles existent."
+                            },
+                            {
+                                "possibility-title": "Extrait avec filiation",
+                                "possibility-content": "L'extrait avec filiation : titleContent est une synthèse des informations figurant dans l'acte de naissance inscrit sur le registre d'état civil. Il comporte vos informations personnelles (nom, prénoms, date et lieu de naissance) et également celles de vos parents (noms, prénoms, âges, professions et domiciles). Il indique les mentions marginales lorsqu'elles existent."
+                            },
+                            {
+                                "possibility-title": "Extrait sans filiation",
+                                "possibility-content": "L'extrait sans filiation : titleContent est une synthèse des informations figurant dans l'acte de naissance inscrit sur le registre d'état civil. Il comporte vos informations personnelles (nom, prénoms, date et lieu de naissance). Il indique les mentions marginales lorsqu'elles existent."
+                            }
+                        ]
+                    }
+                },
+                {
+                    "chapter-title": "Qui peut demander un acte de naissance ?",
+                    "chapter-description": {
+                        "possibilities": [
+                            {
+                                "possibility-title": "Copie intégrale",
+                                "possibility-content": "Vous pouvez obtenir une copie intégrale d'un acte de naissance si vous êtes une des personnes suivantes : Personne concernée par l'acte (à condition d'être majeure) ou son représentant légal : titleContent Époux, épouse ou partenaire de Pacs : titleContent Ascendant de la personne concernée (parent, grand-parent...) Descendant de la personne concernée (enfant, petit-enfant) Professionnel autorisé par la loi (exemple : un avocat pour le compte d'un client). Si vous figurez dans cette liste, vous pouvez obtenir la transmission d'une copie d'un acte de naissance ou de mariage par les archives publiques, à tout moment et sans limitation dans le temps. En revanche, toute autre personne (par exemple, un oncle, une tante) ne pourra pas demander la communication de ces documents avant les délais suivants : 75 ans à compter de la date du document ou du document le plus récent inclus dans le dossier, si la personne est vivante Ou 25 ans à compter de la date du décès de la personne si ce dernier délai est plus bref. Attention Si la personne est mineure, les délais sont différents : 100 ans à compter de la date du document ou du document le plus récent inclus dans le dossier si la personne est vivante Ou 25 ans à compter de la date du décès de la personne si ce dernier délai est plus bref."
+                            },
+                            {
+                                "possibility-title": "Extrait avec filiation",
+                                "possibility-content": "Vous pouvez obtenir un extrait d'un acte de naissance avec filiation si vous êtes une des personnes suivantes : Personne concernée par l'acte (à condition d'être majeure) ou son représentant légal : titleContent Époux, épouse ou partenaire de Pacs : titleContent Ascendant de la personne concernée (parent, grand-parent...) Descendant de la personne concernée (enfant, petit-enfant) Professionnel autorisé par la loi (exemple : un avocat pour le compte d'un client) Si vous figurez dans cette liste, vous pouvez obtenir la transmission d'une copie d'un acte de naissance ou de mariage par les archives publiques, à tout moment et sans limitation dans le temps. En revanche, toute autre personne (par exemple, un oncle, une tante) ne pourra pas demander la communication de ces documents avant les délais suivants : 75 ans à compter de la date du document ou du document le plus récent inclus dans le dossier, si la personne est vivante Ou 25 ans à compter de la date du décès de la personne si ce dernier délai est plus bref. Attention Si la personne est mineure, les délais sont différents : 100 ans à compter de la date du document ou du document le plus récent inclus dans le dossier si la personne est vivante Ou 25 ans à compter de la date du décès de la personne si ce dernier délai est plus bref."
+                            },
+                            {
+                                "possibility-title": "Extrait sans filiation",
+                                "possibility-content": "Toute personne peut obtenir un extrait d'acte de naissance sans filiation, sans avoir à justifier sa demande."
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

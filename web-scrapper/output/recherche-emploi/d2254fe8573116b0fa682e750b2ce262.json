@@ -1,0 +1,63 @@
+{
+    "url": "https://www.service-public.fr/particuliers/vosdroits/F17556",
+    "tab": [
+        {
+            "tab-title": "Je recherche un 1er emploi",
+            "chapitres": [
+                {
+                    "chapter-title": "Je m'inscris à France Travail",
+                    "chapter-description": "Je m'inscris auprès de France Travail en tant que demandeur d'emploi . Je me rends à mon rendez-vous avec mon agence France Travail pour bénéficier d'un suivi personnalisé et réaliser mon projet personnalisé d'accès à l'emploi (PPAE) . Attention J'ai l'obligation d'actualiser ma situation par internet, par téléphone ou sur place dans mon agence France Travail pour confirmer que je suis toujours en recherche d'emploi. En cas d'oubli, je risque d'être radié(e) de la liste des demandeurs d'emploi ."
+                },
+                {
+                    "chapter-title": "Je recherche un emploi",
+                    "chapter-description": "J'utilise la bonne boîte pour connaître les entreprises qui embauchent sans passer d'offres d'emploi Je consulte les offres d'emploi sur le site de France Travail et je gère mes candidatures avec Memo Je consulte les offres d'emploi sur le site du Centre d'information et de documentation jeunesse (CIDJ) Je consulte les offres d'emploi sur le site de l'Association pour l'emploi des cadres (Apec) Je consulte les offres d'emploi sur le site Choisir le service public Je m'informe sur la possibilité de rechercher un CCD d'usage ou de recourir à l'intérim Je demande à conclure un contrat d'aide à l'insertion , selon ma situation (jeune, senior, ...) J'élargis ma recherche d'emploi aux autres pays de l'Union européenne ou du reste du monde"
+                },
+                {
+                    "chapter-title": "Je peux bénéficier d'aides financières",
+                    "chapter-description": "Le fait de m'inscrire à France Travail me permet de m'informer sur les aides financières disponibles. Je m'informe sur les autres aides auxquelles je peux avoir droit : Revenu de solidarité active (RSA) , sous certaines conditions Aide à la mobilité (notamment bons de transport et de réservation SNCF) Aide au permis B Allocation de solidarité spécifique (ASS) , sous certaines conditions Aide à la reprise ou à la création d'entreprise (Arce) , sous certaines conditions Aide à la garde d'enfant , sous certaines conditions"
+                },
+                {
+                    "chapter-title": "Je peux obtenir une formation",
+                    "chapter-description": "Je peux demander à France Travail de réaliser un bilan de compétences Je peux chercher une formation sur le site de France Travail et du Centre pour le développement de l'information sur la formation (Centre Inffo) Je peux aussi m'engager dans une mission de volontariat , formatrice et indemnisée"
+                },
+                {
+                    "chapter-title": "J'ai trouvé mon 1er emploi",
+                    "chapter-description": "Je dois prévenir de mon changement de situation : Mon agence France Travail Ma caisse d'allocations familiales Mon centre de service national si j'ai moins de 25 ans"
+                },
+                {
+                    "chapter-title": "Je peux bénéficier d'une aide financière liée à mon 1er emploi",
+                    "chapter-description": "Sous certaines conditions, je peux bénéficier de la prime d'activité ."
+                }
+            ]
+        },
+        {
+            "tab-title": "J'ai déjà travaillé (avec contrat de travail)",
+            "chapitres": [
+                {
+                    "chapter-title": "Je m'inscris à France Travail",
+                    "chapter-description": "Je m'inscris auprès de France Travail en tant que demandeur d'emploi . Je me rends à mon rendez-vous avec mon agence France Travail pour bénéficier d'un suivi personnalisé et réaliser mon projet personnalisé d'accès à l'emploi (PPAE) . Je dois actualiser votre situation pour confirmer que je suis toujours en recherche d'emploi. En cas d'oubli, je risque ma radiation de la liste des demandeurs d'emploi . À noter pour certains salariés touchés par une procédure de licenciement économique, l'accompagnement de France Travail peut être prévu dans un contrat de sécurisation professionnelle (CSP) ."
+                },
+                {
+                    "chapter-title": "Je recherche un emploi",
+                    "chapter-description": "J'utilise la bonne boîte pour connaître les entreprises qui embauchent sans passer d'offres d'emploi Je consulte les offres d'emploi sur le site de France Travail et je gère mes candidatures avec Memo (de France Travail) Je consulte le site de l'Association pour l'emploi des cadres (Apec) Je consulte le site site Choisir le service public Je m'informe sur la possibilité de rechercher un CCD d'usage ou de recourir à l'intérim Je demande à conclure un contrat d'aide à l'insertion , selon ma situation (jeune, senior, ...) J'élargis ma recherche d'emploi aux autres pays de l'Union européenne ou du reste du monde À savoir lorsque je suis en situation de préavis de licenciement, il arrive que l'employeur m'accorde la possibilité de s'absenter quelques heures pour rechercher un emploi ."
+                },
+                {
+                    "chapter-title": "Je peux bénéficier d'aides financières",
+                    "chapter-description": "Le fait de m'inscrire à France Travail me permet de demander l'allocation d'aide au retour à l'emploi (ARE) . Cette allocation chômage est accordée, sous certaines conditions (y compris en cas de démission ). Un simulateur permet d'estimer vos droits à l'allocation chômage : Guide des simulateurs d'allocations et aides de France Travail (anciennement Pôle emploi) Le fait de m'inscrire à France Travail me permet de m'informer sur les aides financières disponibles. Je m'informe sur les autres aides auxquelles je peux avoir droit : Revenu de solidarité active (RSA) , sous certaines conditions Aide à la mobilité (notamment bons de transport et de réservation SNCF) Aide au permis B Allocation de solidarité spécifique (ASS) , sous certaines conditions Aide à la reprise ou à la création d'entreprise (Arce) , sous certaines conditions Aide à la garde d'enfants pour parent isolé (Agepi) , sous certaines conditions À la suite de la baisse de mes revenus : Je peux, dans certains cas, obtenir la prime d'activité Si je suis locataire d'un logement social, j'informe mon bailleur du changement de ma situation. Je peux bénéficier, dans certains cas, d'une réduction de mon supplément de loyer de solidarité (SLS) , si je le paie."
+                },
+                {
+                    "chapter-title": "Je peux obtenir une formation",
+                    "chapter-description": "Je demande à France Travail de réaliser un bilan de compétences Je cherche une formation sur le site de France Travail et du Centre pour le développement de l'information sur la formation (Centre Inffo) Je peux aussi m'engager dans une mission de volontariat , formatrice et indemnisée Je peux demander à réaliser une validation des acquis de l'expérience (VAE)"
+                },
+                {
+                    "chapter-title": "J'ai un nouvel emploi",
+                    "chapter-description": "Je dois prévenir de mon changement de situation : Mon agence France Travail Ma caisse d'allocations familiales Mon centre de service national si j'ai moins de 25 ans Mon assureur ou ma banque (en cas de crédit assuré contre la perte d'emploi )"
+                },
+                {
+                    "chapter-title": "Je peux bénéficier d'une aide financière liée à mon nouvel emploi",
+                    "chapter-description": "Sous certaines conditions, je peux bénéficier de la prime d'activité ."
+                }
+            ]
+        }
+    ]
+}

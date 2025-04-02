@@ -1,0 +1,8 @@
+numpy
+requests
+llama-cpp-python
+llama-index-embeddings-huggingface
+chromadb
+pysqlite3-binary
+flask
+platformdirs

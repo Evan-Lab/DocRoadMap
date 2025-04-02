@@ -10,4 +10,13 @@ export class SendQueryDTO {
     @IsString()
     @IsNotEmpty()
     public query: string;
+
+    @ApiProperty({
+        description: 'The collection name to get infromation from the vectorial database',
+        type: 'string',
+        required: true
+    })
+    @IsString()
+    @IsNotEmpty()
+    public collection_name: string
 }
