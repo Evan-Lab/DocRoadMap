@@ -1,1 +1,6 @@
 models/
+.env
+__pycache__/
+chroma.log
+db-vector/
+old/

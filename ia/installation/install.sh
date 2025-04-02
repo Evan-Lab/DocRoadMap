@@ -32,4 +32,4 @@ mkdir -p "models"
 cd "models"
 wget --header="Authorization: Bearer ${bearer_token}" -O mistral-7b-instruct-v0.3.Q6_K.gguf https://huggingface.co/bartowski/Mistral-7B-Instruct-v0.3-GGUF/resolve/main/Mistral-7B-Instruct-v0.3-Q6_K.gguf
 cd ../
-pip install llama-cpp-python
+pip install llama-cpp-python llama-index-embeddings-huggingface faiss-cpu

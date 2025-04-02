@@ -1,29 +1,19 @@
 import { Injectable } from "@nestjs/common";
-import { spawn } from "child_process";
+import axios from "axios"
 
 @Injectable()
 export class AiService {
-    async sendQuery(prompt: string): Promise<any> {
-        return new Promise((resolve, reject) => {
-            const process = spawn('python3', ['../ia/request.py', prompt]);
+    async sendQuery(prompt: string, collection_name: string) {
+        try {
+            const response = await axios.post("http://127.0.0.1:8083/ia/request", {
+                "user_input": prompt,
+                "collection_name": collection_name
+            });
 
-            let result = '';
-            process.stdout.on('data', (data) => {
-                result += data.toString();
-            })
-
-            process.stderr.on('data', (data) => {
-                console.error(`Erreur Python: ${data.toString()}`)
-                reject(`Error: ${data}`)
-            })
-
-            process.on('close', () => {
-                try {
-                    resolve(JSON.parse(result))
-                } catch (e) {
-                    reject('Invalid JSON')
-                }
-            })
-        })
+            return response.data;
+        } catch (error) {
+            console.error("Erreur lors de l'appel API:", error);
+            throw new Error("Erreur de communication avec le service IA");
+        }
     }
 }
