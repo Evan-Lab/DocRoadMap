@@ -1,4 +1,5 @@
 from embedding import EmbeddingFunction
+import chromadb.utils.embedding_functions as embedding_functions
 import chromadb
 import uuid
 import os
@@ -12,7 +13,11 @@ class RAG:
         self.distance_search = distance_search
 
         self.chroma_client = chromadb.HttpClient(host=CHROMA_HOST, port=8000)
-    
+
+        self.embedding_function = embedding_functions.SentenceTransformerEmbeddingFunction(
+            model_name="paraphrase-multilingual-MiniLM-L12-v2"
+        )
+
     def split_text(self, text):
         try:
             chunks = [text[i:i + self.chunk_size] for i in range(0, len(text), self.chunk_size)]
@@ -24,7 +29,7 @@ class RAG:
     def get_collection(self):
         try:
             embedding = EmbeddingFunction()
-            collection = self.chroma_client.get_or_create_collection(name=self.collection_name)
+            collection = self.chroma_client.get_or_create_collection(name=self.collection_name, embedding_function=self.embedding_function)
             print(f"[LOGS RAG] Success {self.collection_name} collection recovery")
             return collection
         except Exception as e:
@@ -62,6 +67,7 @@ class RAG:
                 query_texts=splitted_query,
                 n_results=self.distance_search
             )
+            print("[LOGS - QUERY] Retrieved chunks: ", result_query["documents"])
             return result_query['documents']
         except Exception as e:
             print(f"[ERROR RAG] Error during execution of request to {self.collection_name} collection: {e}")

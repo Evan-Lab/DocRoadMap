@@ -2,12 +2,14 @@ from flask import Flask, request, jsonify
 from llama_cpp import Llama
 from json import loads, dumps
 import os
+import sys
 from rag import RAG
 
 app = Flask("DocRoadMap_IA")
 app.config["DEBUG"] = True
 
 def send_request_to_model(question, collection_name):
+    print("[LOGS] start send requets to model")
     try:
         os.environ["LLAMA_CPP_LOG"] = "0"
 
@@ -47,17 +49,25 @@ def send_request_to_model(question, collection_name):
             {"role": "user", "content": question}
         ]
 
+        print("[LOGS - API] Prompt: ", messages)
+        print("[LOGS - API] Collection_name: ", collection_name)
         if collection_name is not None:
-           rag = RAG(collection_name)
-           query = rag.query(question)
+            print(f"[LOGS - API FLASK] RAG in the collection: {collection_name}")
+            try:
+                rag = RAG(collection_name)
+                query = rag.query(question)
 
-           msg_to_add = {"role": "user", "content": f"""
-    Given information from inout documents:
-    -------------------
-    {query}
-    -------------------
-        """}
-           messages.append(msg_to_add)
+                print("[LOGS - QUERY] Len query: ", len(query))
+                msg_to_add = {"role": "user", "content": f"""
+        Given information from inout documents:
+        -------------------
+        {query}
+        -------------------
+            """}
+                messages.append(msg_to_add)
+            except Exception as e:
+                print(f"[ERROR - FLASK API] Error during get RAG in the collection: {e}")
+                raise
 
         output = llm.create_chat_completion(
             messages=messages,
@@ -130,16 +140,22 @@ def delete_all():
 
 @app.route('/ia/request', methods=["POST"])
 def send_request():
-   try:
-    request_data = request.get_json()
+    print("[LOGS - API FLASK] START Request /ia/request")
+    try:
+        request_data = request.get_json()
 
-    collection_name = request_data.get('collection_name', None)
-    user_input = request_data['user_input']
+        collection_name = request_data.get('collection_name', None)
+        user_input = request_data['user_input']
 
-    res = send_request_to_model(user_input, collection_name)
-    return jsonify({"status": 'SUCESS', 'result': dumps(res, indent=4)})
-   except Exception as e:
-     raise
+        res = send_request_to_model(user_input, collection_name)
+        return jsonify({"status": 'SUCCESS', 'result': dumps(res, indent=4)})
+    except Exception as e:
+        raise
+
+@app.route("/health", methods=["GET"])
+def health_check():
+    return jsonify({"status": "OK"}), 200
 
 if __name__ == '__main__':
+   sys.stdout.reconfigure(line_buffering=True)
    app.run(host="0.0.0.0", port=8083, debug=True)

@@ -12,4 +12,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 8083
 
-CMD ["python", "api_ia.py"]
+CMD ["python", "-u", "api_ia.py"]
