@@ -119,12 +119,6 @@ const RoadmapView: React.FC = () => {
                 {getValidatedStepsCount(card.status) > 1 ? "s" : ""} validée sur
                 3
               </p>
-              <button
-                className="chat-button"
-                onClick={() => navigate("/chatbot")}
-              >
-                Discuter avec un assistant ?
-              </button>
               <button className="continue-button">Continuer</button>
             </div>
           </div>
