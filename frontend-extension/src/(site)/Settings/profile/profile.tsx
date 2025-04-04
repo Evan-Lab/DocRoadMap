@@ -23,8 +23,19 @@ function Profile() {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
+      const getToken = (): Promise<string | null> => {
+        return new Promise(resolve => {
+          if (typeof chrome !== "undefined" && chrome.storage?.local) {
+            chrome.storage.local.get("token", result => {
+              resolve(result.token ?? null)
+            })
+          } else {
+            resolve(localStorage.getItem("token"))
+          }
+        })
+      }
       try {
-        const token = localStorage.getItem("token")
+        const token = await getToken()
         if (!token) {
           throw new Error("Token non disponible. Veuillez vous connecter.")
         }

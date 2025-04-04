@@ -10,7 +10,6 @@ const docroadmapImg = isDev
   ? "/assets/docroadmap.png"
   : "../images/docroadmap.png"
 
-
 const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>
 
 function Register() {
@@ -87,7 +86,7 @@ function Register() {
           <label>Mot de passe</label>
           <input
             type="password"
-            placeholder=""
+            placeholder="Mot de passe"
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
@@ -96,7 +95,7 @@ function Register() {
           <label>Confirmation du mot de passe</label>
           <input
             type="password"
-            placeholder=""
+            placeholder="Mot de passe"
             value={confirmPassword}
             onChange={e => setConfirmPassword(e.target.value)}
           />

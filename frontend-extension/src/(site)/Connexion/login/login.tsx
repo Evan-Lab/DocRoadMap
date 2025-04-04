@@ -25,15 +25,22 @@ function Login() {
     axios
       .post("http://localhost:8082/auth/login", { email, password })
       .then(response => {
-        localStorage.setItem("token", response.data.accessToken)
-        if (localStorage.getItem("token") != null) {
+        const token = response.data.accessToken
+
+        localStorage.setItem("token", token)
+        if (typeof chrome !== "undefined" && chrome.storage) {
+          chrome.storage.local.set({ token }, () => {
+            console.log("Token saved in chrome.storage :", token)
+          })
+        }
+        if (token) {
+          console.log("Connected, token: ", token)
           navigate("/roadmap")
-          console.log("i am connected, token: ", localStorage.getItem("token"))
         }
       })
       .catch(() => {
         setError("Email ou mot de passe incorrect")
-        console.log("NOT connected, token: ", localStorage.getItem("token"))
+        console.log("Not connected, token: ", localStorage.getItem("token"))
       })
   }
 
@@ -75,7 +82,7 @@ function Login() {
               <label>Mot de passe</label>
               <input
                 type="password"
-                placeholder=""
+                placeholder="Mot de passe"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
               />

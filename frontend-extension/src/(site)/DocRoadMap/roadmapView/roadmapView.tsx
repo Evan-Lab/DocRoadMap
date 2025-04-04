@@ -38,7 +38,20 @@ const RoadmapView: React.FC = () => {
 
   useEffect(() => {
     const fetchUserProcesses = async () => {
-      const token = localStorage.getItem("token")
+      const getToken = (): Promise<string | null> => {
+        return new Promise(resolve => {
+          if (typeof chrome !== "undefined" && chrome.storage?.local) {
+            chrome.storage.local.get("token", result => {
+              resolve(result.token ?? null)
+            })
+          } else {
+            resolve(localStorage.getItem("token"))
+          }
+        })
+      }
+
+      const token = await getToken()
+
       if (!token) {
         setError("Token manquant. Veuillez vous connecter.")
         return
