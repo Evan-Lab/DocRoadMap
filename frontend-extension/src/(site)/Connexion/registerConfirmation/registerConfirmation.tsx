@@ -1,6 +1,11 @@
 import { useNavigate } from "react-router-dom"
-// import DocRoadMap from "../../../public/docroadmap.png";
 import "./registerConfirmation.css"
+
+const isDev = process.env.NODE_ENV !== "production"
+
+const docroadmapImg = isDev
+  ? "/assets/docroadmap.png"
+  : "../images/docroadmap.png"
 
 function RegisterConfirmation() {
   const navigate = useNavigate()
@@ -18,7 +23,7 @@ function RegisterConfirmation() {
       <div className="confirmation-container">
         <div className="confirmation-header">
           <div className="DocRoadMap-Logo confirmation">
-            {/* <img src={DocRoadMap} alt="DocRoadMap" /> */}
+            <img src={docroadmapImg} alt="DocRoadMap" />
           </div>
           <h1>Compte créé avec succès !</h1>
         </div>
