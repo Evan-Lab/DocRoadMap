@@ -60,18 +60,20 @@ const Chatbot: React.FC = () => {
 
         for (const line of lines) {
           const data = line.replace("data: ", "").trim()
-          if (data === "[DONE]") {
-            break
-          }
+          if (data === "[DONE]") break
 
           try {
             const parsedData = JSON.parse(data)
             const text = parsedData.choices?.[0]?.delta?.content || ""
             botMessage += text
 
+            const currentBotMessage = botMessage
+
             setMessages(prev =>
               prev.map((msg, index) =>
-                index === prev.length - 1 ? { ...msg, text: botMessage } : msg
+                index === prev.length - 1
+                  ? { ...msg, text: currentBotMessage }
+                  : msg
               )
             )
           } catch (error) {
