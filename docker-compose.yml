@@ -31,7 +31,7 @@ services:
       flask_app:
           condition: service_healthy
     volumes:
-      - scraper_data:/app/dataset/
+      - scrapper_data:/app/dataset/
 
   flask_app:
     container_name: DocRoadMapApiIA
@@ -48,7 +48,7 @@ services:
       chromadb:
           condition: service_healthy
     volumes:
-      - scraper_data:/app/dataset/
+      - scrapper_data:/app/dataset/
       - ./ia/models/:/app/models
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8083/health"]
@@ -59,7 +59,7 @@ services:
   
   chromadb:
     container_name: DocRoadMapDbVector
-    image: ghcr.io/chroma-core/chroma:0.6.3
+    image: chromadb/chroma:1.0.3
     ports:
       - "8000:8000"
     volumes:
@@ -68,9 +68,10 @@ services:
       - ia
     environment:
       - IS_PERSISTENT=TRUE
+      - PERSIST_DIRECTORY=/chroma/chroma
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat"]
+      test: [ "CMD", "/bin/bash", "-c", "cat < /dev/null > /dev/tcp/localhost/8000" ]
       interval: 120s
       timeout: 10s
       retries: 3
@@ -85,4 +86,4 @@ networks:
 volumes:
     postgres:
     chroma-data:
-    scraper_data:
+    scrapper_data:
