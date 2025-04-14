@@ -30,6 +30,7 @@ class RAG:
         try:
             embedding = EmbeddingFunction()
             collection = self.chroma_client.get_or_create_collection(name=self.collection_name, embedding_function=self.embedding_function)
+            # collection = self.chroma_client.get_or_create_collection(name=self.collection_name)
             print(f"[LOGS RAG] Success {self.collection_name} collection recovery")
             return collection
         except Exception as e:
