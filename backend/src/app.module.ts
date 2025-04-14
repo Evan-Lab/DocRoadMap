@@ -7,13 +7,15 @@ import { ProcessModule } from './process/process.module';
 import { StepsModule } from './steps/steps.module';
 import { AuthModule } from './auth/auth.module';
 import { AiModule } from './ai/ai.module';
+import { ListAdministrativeProcessModule } from './list_administrative_process/list_administrative_process.module';
+import { AiHistoryModule } from './ai_history/ai_history.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
-      port: 5432,
+      port: 5433,
       username: 'postgres',
       password: '1234',
       database: 'DocRoadMapDatabase',
@@ -25,7 +27,9 @@ import { AiModule } from './ai/ai.module';
     ProcessModule,
     StepsModule,
     AuthModule,
-    AiModule
+    AiModule,
+    ListAdministrativeProcessModule,
+    AiHistoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
