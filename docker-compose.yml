@@ -13,7 +13,7 @@ services:
     volumes:
        - postgres:/data/postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     networks:
       - postgres
     restart: unless-stopped
@@ -42,6 +42,7 @@ services:
       - FLASK_ENV=development
       - CHROMA_HOST=DocRoadMapDbVector
       - PYTHONUNBUFFERED=1
+      - NUM_THREADS=8
     networks:
       - ia
     depends_on:
@@ -56,6 +57,11 @@ services:
       timeout: 10s
       retries: 3
       start_period: 120s
+    deploy:
+      resources:
+        limits:
+          cpus: '6.0'
+          memory: 12g
   
   chromadb:
     container_name: DocRoadMapDbVector
