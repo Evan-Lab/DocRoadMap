@@ -21,6 +21,12 @@ const SettingsMenu: React.FC = () => {
   const logout = () => {
     localStorage.removeItem("token")
     sessionStorage.clear()
+
+    if (typeof chrome !== "undefined" && chrome.storage?.local) {
+      chrome.storage.local.remove("token", () => {
+        console.log("Token supprimé de chrome.storage")
+      })
+    }
     navigate("/")
   }
 
@@ -39,7 +45,8 @@ const SettingsMenu: React.FC = () => {
 
           <button onClick={changeLanguage}>
             <GlobeIcon className="button-icon" />
-            <span className="button-text">Langue</span>
+            <span className="button-text">Langues</span>
+            <span className="button-text">(Non fonctionnel)</span>
           </button>
 
           <button onClick={logout}>

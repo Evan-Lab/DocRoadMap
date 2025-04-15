@@ -2,8 +2,13 @@ import axios from "axios"
 import { useState } from "react"
 import { FaArrowLeft } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
-// import DocRoadMap from "../../../public/docroadmap.png";
 import "./login.css"
+
+const isDev = process.env.NODE_ENV !== "production"
+
+const docroadmapImg = isDev
+  ? "/assets/docroadmap.png"
+  : "../images/docroadmap.png"
 
 const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>
 
@@ -20,15 +25,22 @@ function Login() {
     axios
       .post("http://localhost:8082/auth/login", { email, password })
       .then(response => {
-        localStorage.setItem("token", response.data.accessToken)
-        if (localStorage.getItem("token") != null) {
+        const token = response.data.accessToken
+
+        localStorage.setItem("token", token)
+        if (typeof chrome !== "undefined" && chrome.storage) {
+          chrome.storage.local.set({ token }, () => {
+            console.log("Token saved in chrome.storage :", token)
+          })
+        }
+        if (token) {
+          console.log("Connected, token: ", token)
           navigate("/roadmap")
-          console.log("i am connected, token: ", localStorage.getItem("token"))
         }
       })
       .catch(() => {
         setError("Email ou mot de passe incorrect")
-        console.log("NOT connected, token: ", localStorage.getItem("token"))
+        console.log("Not connected, token: ", localStorage.getItem("token"))
       })
   }
 
@@ -52,7 +64,7 @@ function Login() {
           <>
             <div className="login-header">
               <div className="DocRoadMap-Logo login">
-                {/* <img src={DocRoadMap} alt="DocRoadMap" /> */}
+                <img src={docroadmapImg} alt="DocRoadMap" />
               </div>
               <h1>Connexion</h1>
             </div>
@@ -70,7 +82,7 @@ function Login() {
               <label>Mot de passe</label>
               <input
                 type="password"
-                placeholder=""
+                placeholder="Mot de passe"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
               />

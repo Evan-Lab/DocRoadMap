@@ -12,6 +12,6 @@ export class AiController {
     @ApiTags('AI')
     @ApiOkResponse()
     queryAi(@Body() SendQueryDTO: SendQueryDTO) {
-        return this.aiService.sendQuery(SendQueryDTO.query);
+        return this.aiService.sendQuery(SendQueryDTO.query, SendQueryDTO.collection_name);
     }
 }
