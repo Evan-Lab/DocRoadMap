@@ -23,7 +23,7 @@ const stepsData = [
   {
     name: "Demande de passport",
     title: "Demande de passeport",
-    description: "Cr\u00e9er une demande de passeport en quelques clics.",
+    description: "Proc\u00e9dure pour faire demande de passeport en quelques clics.",
     image: passportImg,
   },
   {
