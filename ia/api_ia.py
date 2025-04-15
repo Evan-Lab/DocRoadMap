@@ -1,92 +1,16 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from llama_cpp import Llama
+import json
 from json import loads, dumps
 import os
 import sys
-from rag import RAG
+from rag.rag import RAG
 
 app = Flask("DocRoadMap_IA")
 app.config["DEBUG"] = True
 
 n_threads = int(os.getenv("NUM_THREADS", os.cpu_count()))
 print(f"[LOGS] Number of threads: {n_threads}")
-
-# def send_request_to_model(question, collection_name):
-#     print("[LOGS] start send requets to model")
-#     try:
-#         os.environ["LLAMA_CPP_LOG"] = "0"
-
-#         llm = Llama(
-#             model_path="models/llama-3.2-1B-Instruct-f16.gguf",
-#             verbose=False,
-#             n_ctx=131072, # LLAMA
-#             n_gpu_layers=0,
-#         )
-
-#         response_format = {
-#             "type": "json_object",
-#             "schema": {
-#                 "type": "object",
-#                 "properties": {
-#                     "name": {"type": "string"},
-#                     "description": {"type": "string"},
-#                     "steps": {
-#                         "type": "array",
-#                         "items": {
-#                             "type": "object",
-#                             "properties": {
-#                                 "name": {"type": "string"},
-#                                 "description": {"type": "string"},
-#                             },
-#                             "required": ["name", "description", "status", "userId", "endedAt", "sub_steps"]
-#                         }
-#                     }
-#                 },
-#                 "required": ["name", "description", "steps"]
-#             }
-#         }
-
-#         messages = [
-#             {"role": "system", "content": "You are a helpful assistant that strictly outputs valid JSON following the provided schema."},
-#             {"role": "user", "content": question}
-#         ]
-
-#         print("[LOGS - API] Prompt: ", messages)
-#         print("[LOGS - API] Collection_name: ", collection_name)
-#         if collection_name is not None:
-#             print(f"[LOGS - API FLASK] RAG in the collection: {collection_name}")
-#             try:
-#                 rag = RAG(collection_name)
-#                 query = rag.query(question)
-
-#                 print("[LOGS - QUERY] Len query: ", len(query))
-#                 msg_to_add = {"role": "user", "content": f"""
-#         Given information from inout documents:
-#         -------------------
-#         {query}
-#         -------------------
-#             """}
-#                 messages.append(msg_to_add)
-#             except Exception as e:
-#                 print(f"[ERROR - FLASK API] Error during get RAG in the collection: {e}")
-#                 raise
-
-#         output = llm.create_chat_completion(
-#             messages=messages,
-#             response_format=response_format,
-#         )
-
-#         response = output['choices'][0]['message']['content'].strip()
-#     except Exception as e:
-#         return {"response": f"[ERROR] {e}"}
-
-#     try:
-#         response_data = loads(response)
-#     except Exception as e:
-#         print(f"Error parsing response: {e}")
-#         return {"response": "Error: Invalid response format."}
-
-#     return response
 
 def read_all_file(folder_path):
     text = ""
@@ -107,15 +31,15 @@ def read_all_file(folder_path):
 
 def generate_roadmap(user_input, collection_name):
     try:
-        
 
         llm = Llama(
-            # model_path="models/llama-3.2-1B-Instruct-f16.gguf",
-            model_path="models/llama-3.2-1B-Instruct-IQ3_M.gguf",
-            verbose=True,
-            n_ctx=131072, # LLAMA
-            # n_gpu_layers=0,
-            n_threads = n_threads
+            model_path="models/llama-3.2-1B-Instruct-Q4_K_M.gguf",
+            n_ctx=4096,
+            n_threads=n_threads,
+            use_mlock=True,
+            temperature=0.7,
+            # max_tokens=2048,
+            repeat_penalty=1.2,
         )
 
         response_format = {
@@ -145,26 +69,38 @@ def generate_roadmap(user_input, collection_name):
             {
                 "role": "system", 
                 "content": """
-You are a conversational agent designed to assist users in completing administrative procedures.
-Your role is to generate a detailed and precise roadmap, in French, that outlines all the necessary steps the user must follow to complete the administrative procedure.
+                    You are a conversational agent designed to assist users in completing administrative procedures.
+                    Your role is to generate a detailed and precise roadmap, in French, that outlines all the necessary steps the user must follow to complete the administrative procedure.
 
-You have access to:
+                    You have access to:
+                        The history of the conversation to understand the user's personal situation.
 
-The history of the conversation to understand the user's personal situation.
+                        The documents and information related to the procedure.
 
-The documents and information related to the procedure.
+                    Your roadmap must be:
 
-Your roadmap must be:
+                        Written entirely in French.
 
-Written entirely in French.
+                        Clear, precise, and actionable, adapted to the user's situation.
 
-Clear, precise, and actionable, adapted to the user's situation.
+                        As complete as possible: do not hesitate to add extra steps if you believe they are necessary (e.g., gathering documents, contacting institutions, preparing for deadlines).
 
-As complete as possible: do not hesitate to add extra steps if you believe they are necessary (e.g., gathering documents, contacting institutions, preparing for deadlines).
+                    Your response must be a valid, closed JSON string that exactly follows this schema:
+                    {
+                        "name": "string",
+                        "description": "string",
+                        "steps": [
+                            {
+                            "name": "string",
+                            "description": "string"
+                            }
+                        ]
+                    }
+                    Do not include any extra text or commentary. Make sure the entire JSON object is present and correctly formatted.
                 """
             },
             {
-                "role": "user",
+                "role": "system",
                 "content": f"""This is the history of the conversation with the user:
                 --------------------
                 {user_input}
@@ -177,21 +113,21 @@ As complete as possible: do not hesitate to add extra steps if you believe they 
             print(f"[LOGS - API FLASK] RAG in the collection: {collection_name}")
             try:
                 rag = RAG(collection_name)
-                query = rag.query("""
+                query = rag.query(f"""
                     You are an expert assistant specialized in administrative procedures.
                     Given a specific procedure identified as {collection_name}, retrieve all relevant information needed to complete it.
 
                     Specifically, extract:
 
-                    The step-by-step process to complete the procedure
+                        The step-by-step process to complete the procedure
 
-                    The documents required at each step
+                        The documents required at each step
 
-                    The recipients or institutions to which documents must be sent
+                        The recipients or institutions to which documents must be sent
 
-                    The people or entities the user should contact or request information from
+                        The people or entities the user should contact or request information from
 
-                    The websites or online platforms where forms or services must be accessed
+                        The websites or online platforms where forms or services must be accessed
 
                     Return the information in clear, structured English, focusing on precision and completeness. Do not include generic advice — only information that is directly related to the specific procedure.
                 """)
@@ -212,6 +148,7 @@ As complete as possible: do not hesitate to add extra steps if you believe they 
                 print(f"[ERROR - FLASK API] Error during get RAG in the collection: {e}")
                 raise
     
+        print("[LOGS - API] GENERATE ROADMAP")
         output = llm.create_chat_completion(
                 messages=messages,
                 response_format=response_format,
@@ -226,23 +163,26 @@ As complete as possible: do not hesitate to add extra steps if you believe they 
         response_data = loads(response)
         print("[LOGS - API] Response: ", response_data)
         return response_data
+    except json.JSONDecodeError as e:
+        print(f"JSON decode error: {e}")
+        print("Raw response (start):", response[:500])
+        return {"response": "Le format de réponse est invalide. Le modèle a peut-être trop répété ou généré une sortie incomplète."}
     except Exception as e:
         print(f"Error parsing response: {e}")
         return {"response": "Error: Invalid response format."}
 
 def send_request_to_model(user_input, history, collection_name):
     try:
-        
-
         llm = Llama(
-            # model_path="models/llama-3.2-1B-Instruct-f16.gguf",
-            model_path="models/llama-3.2-1B-Instruct-IQ3_M.gguf",
-            verbose=True,
-            n_ctx=131072, # LLAMA
-            # n_gpu_layers=0,
-            n_threads = n_threads
+            model_path="models/llama-3.2-1B-Instruct-Q4_K_M.gguf",
+            n_ctx=4096,
+            n_threads=n_threads,
+            use_mlock=True,
+            temperature=0.7,
+            # max_tokens=2048,
+            repeat_penalty=1.2
         )
-        
+
         response_format = {
             "type": "json_object",
             "schema": {
@@ -258,13 +198,29 @@ def send_request_to_model(user_input, history, collection_name):
             {
                 "role": "system",
                 "content": """
-                    You are a conversational agent designed to assist users in completing administrative procedures. Your goal is to ask relevant questions, one at a time, to understand the user's personal situation and determine all the necessary steps to complete the procedure.
-                    You have access to the history of messages exchanged with the user as well as documents related to the procedure. You must never ask the same question twice, and all your questions must be contextually appropriate.
-                    When you believe you have collected enough information to generate the necessary steps, you must stop asking questions and generate a detailed action plan. All your interactions must be in French.
+                    You are an administrative assistant. Your goal is to ask the user a series of questions to fully understand their personal situation in order to determine the appropriate administrative steps they need to take.
+                    At each step:
+                        Ask only one clear and concise question.
+
+                        Wait for the user's answer before asking the next question.
+
+                        Continue asking questions until you have enough information.
+
+                        Once you have enough details to build a personalized administrative roadmap, set "is_roadmap": true.
+
+                        Until then, keep "is_roadmap": false.
+
+                    Your response must always be a valid, closed JSON string that strictly follows this schema:
+
+                    {
+                        "is_roadmap": "True if you have enough information to build a roadmap, otherwise False",
+                        "question": "string"
+                    }
+                    Do not include any extra text or commentary. Only return the complete JSON object.
                 """
             },
             {
-                "role": "user",
+                "role": "system",
                 "content": f"""This is the history of the conversation with the user:
                 --------------------
                 {history}
@@ -273,7 +229,7 @@ def send_request_to_model(user_input, history, collection_name):
                 """
             },
             {
-                "role": "user",
+                "role": "system",
                 "content": f"""Here is the user's answer to the last question asked
                 --------------------
                 Answer: {user_input}
@@ -282,6 +238,8 @@ def send_request_to_model(user_input, history, collection_name):
             }
 
         ]
+
+        print("[LOGS - API] Prompt: ", messages)
 
         if collection_name is not None:
             print(f"[LOGS - API FLASK] RAG in the collection: {collection_name}")
@@ -344,23 +302,34 @@ def send_request_to_model(user_input, history, collection_name):
 def start_conversation_model(collection_name):
     try:
         llm = Llama(
-            # model_path="models/llama-3.2-1B-Instruct-f16.gguf",
-            model_path="models/llama-3.2-1B-Instruct-IQ3_M.gguf",
-            verbose=True,
-            n_ctx=131072, # LLAMA
-            # n_gpu_layers=0,
-            n_threads = n_threads
+            model_path="models/llama-3.2-1B-Instruct-Q4_K_M.gguf",
+            n_ctx=4096,
+            n_threads=n_threads,
+            use_mlock=True,
+            temperature=0.7,
+            # max_tokens=2048,
+            repeat_penalty=1.2
         )
 
         messages = [
             {
                 "role": "system", 
                 "content": """
-You are a helpful conversational agent. When the conversation begins, your first task is to politely introduce yourself to the user in one or two short sentences.
+                    You are a helpful conversational agent.
 
-Then, based on the information the user provides, identify the purpose of their request and ask one single, precise question that will help clarify their situation or guide them in their process.
+                    Then, based on the information the user provides, identify the purpose of their request and ask one single, precise question that will help clarify their situation or guide them in their process.
 
-Do not ask multiple questions. Keep your tone friendly, professional, and concise. The question must be in french"""
+                    Do not ask multiple questions. Keep your tone friendly, professional, and concise. The question must be in french.
+
+                    Question must be not generic, but specific to the user's situation. YOU NEED TO UNDERSTAND THE USER'S SITUATION.
+
+                    Your response must be a valid, closed JSON string that exactly follows this schema:
+                    {
+                        "question": "string"
+                    }
+                    Do not include any extra text or commentary. Make sure the entire JSON object is present and correctly formatted.
+
+                """
             },
         ]
 
@@ -377,12 +346,14 @@ Instead, return a concise list (bullet points or short phrases) of the standard 
 Focus only on what is commonly needed, not on edge cases.""")
 
                 print("[LOGS - QUERY] Len query: ", len(query))
-                msg_to_add = {"role": "user", "content": f"""
-        Given information from input documents:
+                msg_to_add = {
+                    "role": "system", 
+                    "content": f"""
+        Use the information below to understand what is usually required:
         -------------------
         {query}
         -------------------
-            """}
+                    """}
                 messages.append(msg_to_add)
             except Exception as e:
                 print(f"[ERROR - FLASK API] Error during get RAG in the collection: {e}")
@@ -393,13 +364,14 @@ Focus only on what is commonly needed, not on edge cases.""")
             "schema": {
             "type": "object",
             "properties": {
-                "message": {"type": "string"},
                 "question": {"type": "string"}
             },
-            "required": ["message", "question"]
+            "required": ["question"]
             }
         }
 
+
+        print("[LOGS - API] Prompt: ", messages)
         output = llm.create_chat_completion(
             messages=messages,
             response_format=response_format)
@@ -462,11 +434,14 @@ def send_request():
         history = request_data.get('history', None)
 
         res = send_request_to_model(user_input, history, collection_name)
-        if res.get("is_roadmap") == True:
-            return jsonify({"is_roadmap": True, "roadmap": res['roadmap']})
+        res_json = res if isinstance(res, dict) else (res.get_json() if isinstance(res, Response) else res)
+        if res_json.get("is_roadmap") == True:
+            print("[LOGS - API FLASK] Response: ", res_json['roadmap'])
+            return jsonify({"is_roadmap": True, "roadmap": res_json["roadmap"]})
         else:
-            return jsonify({"is_roadmap": False, 'question': res['question']})
+            return jsonify({"is_roadmap": False, 'question': res_json['question']})
     except Exception as e:
+        print(f"[ERROR - FLASK API] Error during request: {e}")
         raise
 
 @app.route('/ia/start-conversation', methods=["POST"])
@@ -478,8 +453,10 @@ def start_conversation():
         collection_name = request_data.get('collection_name', None)
 
         res = start_conversation_model(collection_name)
-        return jsonify({"message": res['message'], 'question': res['question']})
+        print("[LOGS - API FLASK] Response: ", res)
+        return jsonify({'question': res['question']})
     except Exception as e:
+        print(f"[ERROR - FLASK API] Error during start conversation: {e}")
         raise
 
 @app.route("/health", methods=["GET"])
