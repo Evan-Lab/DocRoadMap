@@ -114,7 +114,7 @@ const RoadmapView: React.FC = () => {
 
       {error && <p className="error-message">{error}</p>}
 
-      <div className="carousel-container">
+      <div className="view-container">
         {cards.map(card => (
           <div className="card" key={card.id}>
             <img
