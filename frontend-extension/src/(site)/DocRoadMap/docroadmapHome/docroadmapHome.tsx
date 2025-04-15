@@ -23,13 +23,18 @@ const DocroadmapHome: React.FC = () => {
     navigate("/settings")
   }
 
+  const accessibility = () => {
+    console.log("Work in progress")
+  }
+
   return (
     <div className="roadmap-container">
       <div className="roadmap-inner">
         <div className="roadmap-buttons">
-          <button onClick={createRoadmap}>
+          <button onClick={accessibility}>
             <FaAccessibleIcon className="button-icon" />
             <span className="button-text">Accessibilité</span>
+            <span className="button-text">(Non fonctionnel)</span>
           </button>
 
           <button onClick={createRoadmap}>

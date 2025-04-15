@@ -44,21 +44,28 @@ body {
   padding: 0;
 }
 
-.carousel-container {
+.view-container {
   display: flex;
-  gap: 20px;
-  padding-bottom: 10px;
+  flex-direction: row;
+  flex-wrap: nowrap;
   overflow-x: auto;
+  overflow-y: hidden;
+  gap: 16px;
+  padding: 8px 0;
+  scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .card {
+  flex: 0 0 auto;
+  width: 210px;
+  min-width: 210px;
   background-color: #ffffff;
   font-family: Arial, sans-serif;
   border-radius: 15px;
-  border-color: grey;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 210px;
-  min-width: 210px;
 }
 
 .card-header h3 {
