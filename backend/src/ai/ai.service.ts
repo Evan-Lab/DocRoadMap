@@ -6,6 +6,8 @@ import { Repository } from "typeorm";
 import { AiHistory } from "src/ai_history/entities/ai_history.entity";
 import { User } from "src/users/entities/user.entity";
 import { AiHistoryService } from "src/ai_history/ai_history.service";
+import { Process } from "src/process/entities/process.entity";
+import { Step } from "src/steps/entities/step.entity";
 
 @Injectable()
 export class AiService {
@@ -16,7 +18,13 @@ export class AiService {
         @InjectRepository(User)
         private userRepository: Repository<User>,
 
-        private readonly aiHistoryService: AiHistoryService
+        private readonly aiHistoryService: AiHistoryService,
+
+        @InjectRepository(Process)
+        private processRepository: Repository<Process>,
+
+        @InjectRepository(Step)
+        private stepRepository: Repository<Step>,
     ) {}
 
     async sendQuery(prompt: string, collection_name: string, user_id: number): Promise<SendQueryResponseDTO> {
@@ -61,8 +69,25 @@ export class AiService {
 
             if (responseData.is_roadmap) {
                 await this.aiHistoryRepository.delete({ user: { id: user_id } });
-            }
+        
+                const roadmap = response.data.roadmap;
 
+                const process = this.processRepository.create({
+                    name: roadmap.name,
+                    description: roadmap.description,
+                    user: { id: user_id },
+                });
+                await this.processRepository.save(process);
+
+                for (const step of roadmap.steps) {
+                    const stepEntity = this.stepRepository.create({
+                        name: step.name,
+                        description: step.description,
+                        process: process,
+                    });
+                    await this.stepRepository.save(stepEntity);
+                }
+            }
             return responseData;
         } catch (error) {
             console.error("Erreur lors de l'appel API:", error);
@@ -91,7 +116,7 @@ export class AiService {
                 await this.aiHistoryRepository.save(ai_history);
             }
     
-            return { is_roadmap: false, collection_name: collection_name, response: response.data.message + "\n" + response.data.question };
+            return { is_roadmap: false, collection_name: collection_name, response: response.data.question };
         } catch (error) {
             console.error("Erreur lors de l'appel API:", error);
             throw new Error("Erreur de communication avec le service IA");
