@@ -4,7 +4,7 @@ version: '3.8'
 services:
   postgres:
     container_name: DocRoadMapDatabase
-    image: postgres
+    image: postgres:14
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
@@ -13,14 +13,83 @@ services:
     volumes:
        - postgres:/data/postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     networks:
       - postgres
     restart: unless-stopped
 
+  scrapper:
+    build:
+      context: web-scrapper
+    container_name: DocRoadMapScrapper
+    environment:
+      - FLASK_HOST=DocRoadMapApiIA
+    restart: unless-stopped
+    networks:
+      - ia
+    depends_on:
+      flask_app:
+          condition: service_healthy
+    volumes:
+      - scrapper_data:/app/dataset/
+
+  flask_app:
+    container_name: DocRoadMapApiIA
+    build: 'ia/'
+    ports:
+      - "8083:8083"
+    environment:
+      - FLASK_ENV=development
+      - CHROMA_HOST=DocRoadMapDbVector
+      - PYTHONUNBUFFERED=1
+      - NUM_THREADS=8
+    networks:
+      - ia
+    depends_on:
+      chromadb:
+          condition: service_healthy
+    volumes:
+      - scrapper_data:/app/dataset/
+      - ./ia/models/:/app/models
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/health"]
+      interval: 120s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    deploy:
+      resources:
+        limits:
+          cpus: '6.0'
+          memory: 12g
+  
+  chromadb:
+    container_name: DocRoadMapDbVector
+    image: chromadb/chroma:1.0.3
+    ports:
+      - "8000:8000"
+    volumes:
+      - chroma-data:/chroma/chroma
+    networks:
+      - ia
+    environment:
+      - IS_PERSISTENT=TRUE
+      - PERSIST_DIRECTORY=/chroma/chroma
+    restart: always
+    healthcheck:
+      test: [ "CMD", "/bin/bash", "-c", "cat < /dev/null > /dev/tcp/localhost/8000" ]
+      interval: 120s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+
 networks:
   postgres:
+    driver: bridge
+  ia:
     driver: bridge
 
 volumes:
     postgres:
+    chroma-data:
+    scrapper_data:

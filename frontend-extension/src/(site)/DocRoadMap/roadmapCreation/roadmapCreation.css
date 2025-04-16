@@ -1,0 +1,87 @@
+.roadmap-container {
+  width: 100%;
+  background: #f5f6fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 20px;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.roadmap-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 10px;
+  color: #222;
+}
+
+.creation-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.carousel-arrow {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  transition: background 0.2s ease;
+}
+
+.carousel-arrow:hover {
+  background: #f0f0f0;
+}
+
+.carousel-card {
+  width: 260px;
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.carousel-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.carousel-card h2 {
+  font-size: 18px;
+  margin: 10px 0 8px;
+  color: #333;
+}
+
+.carousel-card p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.carousel-card button {
+  padding: 8px 14px;
+  background-color: #2e86de;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.carousel-card button:hover {
+  background-color: #1e6fce;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  font-size: 14px;
+}

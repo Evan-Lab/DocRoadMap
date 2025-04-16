@@ -1,6 +1,6 @@
-const path = require("path");
-const HTMLPlugin = require("html-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
+const path = require("path")
+const HTMLPlugin = require("html-webpack-plugin")
+const CopyPlugin = require("copy-webpack-plugin")
 
 module.exports = {
   entry: {
@@ -10,27 +10,29 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        use: [
-          {
-            loader: "ts-loader",
-            options: {
-              compilerOptions: { noEmit: false },
-            },
-          },
-        ],
+        test: /\.(js|ts|tsx)$/,
         exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+        },
       },
       {
-        exclude: /node_modules/,
         test: /\.css$/i,
+        exclude: /node_modules/,
         use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        type: "asset/resource",
       },
     ],
   },
   plugins: [
     new CopyPlugin({
-      patterns: [{ from: "manifest.json", to: "../manifest.json" }],
+      patterns: [
+        { from: "manifest.json", to: "../manifest.json" },
+        { from: "content.js", to: "../content.js" },
+      ],
     }),
     ...getHtmlPlugins(["index"]),
   ],
@@ -41,15 +43,20 @@ module.exports = {
     path: path.join(__dirname, "dist/js"),
     filename: "[name].js",
   },
-};
+  performance: {
+    hints: false,
+    maxAssetSize: 512000,
+    maxEntrypointSize: 512000,
+  },
+}
 
 function getHtmlPlugins(chunks) {
   return chunks.map(
-    (chunk) =>
+    chunk =>
       new HTMLPlugin({
         title: "React extension",
         filename: `${chunk}.html`,
         chunks: [chunk],
       })
-  );
+  )
 }

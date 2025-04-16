@@ -3,17 +3,20 @@ import {
   Route,
   BrowserRouter as Router,
   Routes,
-} from "react-router-dom";
-import AccountConfirmation from "./(site)/accountConfirmation/accountConfirmation";
-import Chatbot from "./(site)/chatbot/chatbot";
-import Docroadmap from "./(site)/docroadmap/docroadmap";
-import Login from "./(site)/login/login";
-import Profile from "./(site)/profile/profile";
-import Register from "./(site)/register/register";
-import CreateRoadmap from "./(site)/roadmapCreation/roadmapCreation";
-import RoadmapView from "./(site)/roadmapView/roadmapView";
-import Settings from "./(site)/settings/settings";
-import Home from "./Home";
+} from "react-router-dom"
+import Home from "./Home"
+
+import Login from "./(site)/Connexion/login/login"
+import Register from "./(site)/Connexion/register/register"
+import RegisterConfirmation from "./(site)/Connexion/registerConfirmation/registerConfirmation"
+
+import Chatbot from "./(site)/DocRoadMap/chatbotDonna/chatbot"
+import DocroadmapHome from "./(site)/DocRoadMap/docroadmapHome/docroadmapHome"
+import RoadmapCreation from "./(site)/DocRoadMap/roadmapCreation/roadmapCreation"
+import RoadmapView from "./(site)/DocRoadMap/roadmapView/roadmapView"
+
+import SettingsMenu from "./(site)/Settings/Menu/settingsMenu"
+import Profile from "./(site)/Settings/profile/profile"
 
 function App() {
   return (
@@ -25,20 +28,20 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route
             path="/account-confirmation"
-            element={<AccountConfirmation />}
+            element={<RegisterConfirmation />}
           />
-          <Route path="/roadmap-view" element={<RoadmapView />} />
           <Route path="/chatbot" element={<Chatbot />} />
-          <Route path="/create-roadmap" element={<CreateRoadmap />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/roadmap-view" element={<RoadmapView />} />
+          <Route path="/create-roadmap" element={<RoadmapCreation />} />
+          <Route path="/roadmap" element={<DocroadmapHome />} />
 
           <Route path="/profile" element={<Profile />} />
-          <Route path="/roadmap" element={<Docroadmap />} />
+          <Route path="/settings" element={<SettingsMenu />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
