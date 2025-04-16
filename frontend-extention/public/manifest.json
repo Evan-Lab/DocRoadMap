@@ -1,0 +1,26 @@
+{
+    "manifest_version": 3,
+    "version": "1.0.0",
+    "name": "react extension",
+    "description": "This is the Extension for Browser",
+    "icons": {
+        "128": "icon128.png"
+    },
+    "action": {
+        "default_icon": {
+            "128": "icon128.png"
+        },
+        "default_title": "test",
+        "default_popup": "index.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["src/content.tsx"]
+        }
+    ],
+    "permissions": [
+        "scripting"
+    ],
+    "host_permissions": ["<all_urls>"]
+}
