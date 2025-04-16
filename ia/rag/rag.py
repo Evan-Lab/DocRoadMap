@@ -1,4 +1,4 @@
-from embedding import EmbeddingFunction
+# from embedding import EmbeddingFunction
 import chromadb.utils.embedding_functions as embedding_functions
 import chromadb
 import uuid
@@ -28,8 +28,9 @@ class RAG:
     
     def get_collection(self):
         try:
-            embedding = EmbeddingFunction()
+            # embedding = EmbeddingFunction()
             collection = self.chroma_client.get_or_create_collection(name=self.collection_name, embedding_function=self.embedding_function)
+            # collection = self.chroma_client.get_or_create_collection(name=self.collection_name)
             print(f"[LOGS RAG] Success {self.collection_name} collection recovery")
             return collection
         except Exception as e:

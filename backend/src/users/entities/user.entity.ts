@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { Process } from '../../process/entities/process.entity';
+import { AiHistory } from '../../ai_history/entities/ai_history.entity';
 
 @Entity()
 export class User {
@@ -30,4 +31,7 @@ export class User {
 
     @OneToMany(() => Process, process => process.user)
     processes: Process[];
+
+    @OneToMany(() => AiHistory, aiHistory => aiHistory.user)
+    aiHistories: AiHistory[];
 }
