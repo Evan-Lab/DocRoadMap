@@ -411,7 +411,7 @@ const request = {
         `${url}/ai/query`,
         {
           collection_name: collectionName,
-          user_response: query,
+          query: query,
         },
         { headers },
       );

@@ -9,7 +9,7 @@ import {
   ScrollView,
   Image,
   Modal,
-  ActivityIndicator, // Ajouté ici
+  ActivityIndicator,
 } from "react-native";
 import { useTheme } from "@/components/ThemeContext";
 import { useTranslation } from "react-i18next";

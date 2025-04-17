@@ -86,7 +86,7 @@ export default function HomePage() {
     console.log("API Response:", response);
 
     if (response.data) {
-      setAdministrativeList(response.data); // Assurer que response.data est bien un tableau
+      setAdministrativeList(response.data);
     } else {
       setErrorAdministrative(response.error || t("home.error_message"));
     }

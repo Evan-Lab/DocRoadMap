@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Modal,
   FlatList,
+  ScrollView
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -116,7 +117,7 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({
       >
         <Icon name="credit-card" size={24} color="white" />
         <Text
-          style={[styles.headerTitle, { color: "white" }]}
+          style={[styles.headerTitle, { color: "white", maxWidth: wp("50%") }]}
           allowFontScaling={true}
         >
           {name}
@@ -132,12 +133,14 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({
         )}
       </View>
       <View style={styles.cardContent}>
+      <ScrollView style={styles.scrollContainer}>
         <Text
-          style={[styles.contentTitle, { color: theme.text }]}
+          style={[styles.contentTitle, { color: theme.text, maxWidth: wp("50%") }]}
           allowFontScaling={true}
         >
           {description}
         </Text>
+        </ScrollView>
         <View style={styles.progressBarContainer}>
           <View
             style={[
@@ -225,6 +228,7 @@ const styles = StyleSheet.create({
     elevation: 30,
     margin: hp("0.75%"),
     color: "#000",
+    flex: 1,
   },
   cardHeader: {
     flexDirection: "row",
@@ -240,6 +244,10 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     padding: hp("2%"),
+    height: hp("15%"),
+    overflow: "hidden",
+    flex: 1,
+    justifyContent: "space-between",
   },
   contentTitle: {
     fontSize: moderateScale(18),
@@ -338,5 +346,8 @@ const styles = StyleSheet.create({
   emptyText: {
     marginTop: hp("1.5%"),
     fontSize: moderateScale(16),
+  },
+  scrollContainer: {
+    flex: 1,
   },
 });
