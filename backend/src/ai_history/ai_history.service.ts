@@ -58,8 +58,11 @@ export class AiHistoryService {
   }
 
   async remove(id: number): Promise<void> {
-    const history = await this.findOne(id);
-    await this.aiHistoryRepo.remove(history);
+    const findAiHistory = await this.aiHistoryRepo.findOne({ where: { id: id } });
+    if (!findAiHistory) {
+      throw new NotFoundException('AiHistory Not Found');
+    }
+    await this.aiHistoryRepo.delete(id);
   }
 
   async appendToHistory(createAiHistoryDto: CreateAiHistoryDto): Promise<AiHistory> {
