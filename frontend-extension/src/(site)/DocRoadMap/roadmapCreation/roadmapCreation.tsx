@@ -9,36 +9,33 @@ const ArrowRightIcon = FaArrowRight as unknown as React.FC<any>
 
 const isDev = process.env.NODE_ENV !== "production"
 
-const passportImg = isDev
-  ? "/assets/passport_roadmap.png"
-  : "../images/passport_roadmap.png"
+const getImageForStep = (collectionName: string): string => {
+  const basePath = isDev ? "/assets" : "../images"
 
-const idImg = isDev ? "/assets/id_roadmap.png" : "../images/id_roadmap.png"
+  switch (collectionName) {
+    case "acte_naissance":
+      return `${basePath}/born_roadmap.png`
+    case "demenagement_en_france":
+      return `${basePath}/moving_roadmap.png`
+    case "garde_enfants":
+      return `${basePath}/keep_children.png`
+    case "je_pars_de_chez_mes_parents":
+      return `${basePath}/move_from_parents_roadmap.png`
+    case "jachete_un_logement":
+      return `${basePath}/buy_roadmap.png`
+    case "recherche-emploi":
+      return `${basePath}/find_job_roadmap.png`
+    default:
+      return `${basePath}/default.png`
+  }
+}
 
-const movingImg = isDev
-  ? "/assets/moving_roadmap.png"
-  : "../images/moving_roadmap.png"
-
-const stepsData = [
-  {
-    name: "Demande de passport",
-    title: "Demande de passeport",
-    description: "Proc\u00e9dure pour faire demande de passeport en quelques clics.",
-    image: passportImg,
-  },
-  {
-    name: "Demande de carte d'identité",
-    title: "Demande de carte d'identit\u00e9",
-    description: "Proc\u00e9dure rapide pour votre carte d'identit\u00e9.",
-    image: idImg,
-  },
-  {
-    name: "Déménagement",
-    title: "D\u00e9m\u00e9nagement",
-    description: "G\u00e9rez facilement votre changement d'adresse.",
-    image: movingImg,
-  },
-]
+interface Step {
+  id: number
+  name: string
+  collection_name: string
+  image: string
+}
 
 const RoadmapCreation: React.FC = () => {
   const navigate = useNavigate()
@@ -48,6 +45,7 @@ const RoadmapCreation: React.FC = () => {
   const [error, setError] = useState<string | null>(null)
   const [usedStepsIds, setUsedStepsIds] = useState<number[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [stepsData, setStepsData] = useState<Step[]>([])
 
   const current = stepsData[currentIndex]
 
@@ -67,14 +65,37 @@ const RoadmapCreation: React.FC = () => {
         const data = await response.json()
         setUser({ id: data.id })
       } catch (error) {
-        setError(
-          "Une erreur s'est produite lors de la récupération des données."
+        setError("Erreur lors de la récupération des données utilisateur.")
+        console.error(error)
+      }
+    }
+
+    const fetchStepsData = async () => {
+      try {
+        if (!token) throw new Error("Token non disponible.")
+        const response = await axios.get(
+          "http://localhost:8082/list-administrative-process",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         )
+
+        const enrichedSteps = response.data.map((step: any) => ({
+          ...step,
+          image: getImageForStep(step.collection_name),
+        }))
+
+        setStepsData(enrichedSteps)
+      } catch (error) {
+        setError("Erreur lors de la récupération des démarches.")
         console.error(error)
       }
     }
 
     fetchUserProfile()
+    fetchStepsData()
   }, [token])
 
   const generateUniqueStepsId = (): number => {
@@ -86,8 +107,14 @@ const RoadmapCreation: React.FC = () => {
     return id
   }
 
+  const normalize = (str: string): string =>
+    str
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+
   const handleCreateCard = async () => {
-    if (!user?.id) return
+    if (!user?.id || !current) return
     const stepsId = generateUniqueStepsId()
 
     try {
@@ -95,7 +122,7 @@ const RoadmapCreation: React.FC = () => {
         "http://localhost:8082/process/create",
         {
           name: current.name,
-          description: current.description,
+          description: current.collection_name,
           status: "PENDING",
           userId: user.id,
           stepsId,
@@ -112,8 +139,8 @@ const RoadmapCreation: React.FC = () => {
       console.error("Erreur lors de la création :", error)
     }
   }
-
   const next = () => setCurrentIndex(prev => (prev + 1) % stepsData.length)
+
   const prev = () =>
     setCurrentIndex(prev => (prev - 1 + stepsData.length) % stepsData.length)
 
@@ -124,22 +151,26 @@ const RoadmapCreation: React.FC = () => {
       </button>
       <h1 className="roadmap-title">Création d'une Roadmap</h1>
 
-      <div className="creation-container {">
-        <button className="carousel-arrow" onClick={prev}>
-          <ArrowLeftIcon />
-        </button>
+      {stepsData.length > 0 ? (
+        <div className="creation-container">
+          <button className="carousel-arrow" onClick={prev}>
+            <ArrowLeftIcon />
+          </button>
 
-        <div className="carousel-card">
-          <img src={current.image} alt={current.title} />
-          <h2>{current.title}</h2>
-          <p>{current.description}</p>
-          <button onClick={handleCreateCard}>Créer cette démarche</button>
+          <div className="carousel-card">
+            <img src={current.image} alt={current.name} />
+            <h2>{current.name}</h2>
+            <p>{current.collection_name}</p>
+            <button onClick={handleCreateCard}>Créer cette démarche</button>
+          </div>
+
+          <button className="carousel-arrow" onClick={next}>
+            <ArrowRightIcon />
+          </button>
         </div>
-
-        <button className="carousel-arrow" onClick={next}>
-          <ArrowRightIcon />
-        </button>
-      </div>
+      ) : (
+        <p>Chargement des démarches...</p>
+      )}
 
       {error && <p className="error-message">{error}</p>}
     </div>
