@@ -7,7 +7,9 @@ import {
   SwaggerRegister,
   SwaggerStepList,
   SwaggerProcessPerIdList,
-  SwaggerStepPerIdList,
+  SwaggerProcessListAdministrative,
+  SwaggerAIquery,
+  SwaggerAIconversation,
 } from "./Swagger";
 import axios, { AxiosError } from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -367,6 +369,88 @@ const request = {
       console.error(error);
       return {
         error: "Vous n’avez pas la permission",
+      };
+    }
+  },
+  listProcessAdministrative: async (): Promise<
+    SwaggerRequest<SwaggerProcessListAdministrative>
+  > => {
+    const accessToken = await getAccessToken();
+    try {
+      const headers = {
+        Authorization: `Bearer ${accessToken}`,
+      };
+
+      const response = await axios.get(`${url}/list-administrative-process`, {
+        headers,
+      });
+
+      return {
+        data: response.data,
+        error: null,
+      };
+    } catch (error) {
+      console.error(error);
+      return {
+        error: "Impossible de récupérer les processus administratifs",
+      };
+    }
+  },
+
+  aiQuery: async (
+    collectionName: string,
+    query: string,
+  ): Promise<SwaggerRequest<SwaggerAIquery>> => {
+    const accessToken = await getAccessToken();
+    try {
+      const headers = {
+        Authorization: `Bearer ${accessToken}`,
+      };
+
+      const response = await axios.post(
+        `${url}/ai/query`,
+        {
+          collection_name: collectionName,
+          user_response: query,
+        },
+        { headers },
+      );
+
+      return {
+        data: response.data,
+        error: null,
+      };
+    } catch (error) {
+      console.error(error);
+      return {
+        error: "Impossible de récupérer le collection name",
+      };
+    }
+  },
+
+  aiConversation: async (
+    collectionName: string,
+  ): Promise<SwaggerRequest<SwaggerAIconversation>> => {
+    const accessToken = await getAccessToken();
+    try {
+      const headers = {
+        Authorization: `Bearer ${accessToken}`,
+      };
+
+      const response = await axios.post(
+        `${url}/ai/start-conversation`,
+        { collection_name: collectionName },
+        { headers },
+      );
+
+      return {
+        data: response.data,
+        error: null,
+      };
+    } catch (error) {
+      console.error(error);
+      return {
+        error: "Impossible de démarrer la conversation",
       };
     }
   },

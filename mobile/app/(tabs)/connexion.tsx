@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Image,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import CustomCheckbox from "../../components/reusable/CustomCheckbox";
@@ -71,6 +72,11 @@ export default function ConnectionPage() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
+      <Image
+        source={require("@/assets/images/docroadmap_logo.png")}
+        style={styles.logo}
+        resizeMode="contain"
+      />
       <Text style={[styles.title, { color: theme.primary }]}>
         {t("connexion.welcome")}
       </Text>
@@ -232,5 +238,10 @@ const styles = ScaledSheet.create({
   link: {
     fontSize: moderateScale(14),
     marginTop: hp("1%"),
+  },
+  logo: {
+    width: wp("50%"),
+    height: hp("30%"),
+    marginBottom: hp("3%"),
   },
 });

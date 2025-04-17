@@ -152,15 +152,6 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({
         >{`${progress}% ${t("completed")}`}</Text>
       </View>
       <View style={styles.cardFooter}>
-        <TouchableOpacity style={styles.chatButton} onPress={handleChatBot}>
-          <Icon name="message-text" size={16} color={theme.primary} />
-          <Text
-            style={[styles.chatButtonText, { color: theme.primary }]}
-            allowFontScaling={true}
-          >
-            {t("chatWithAssistant")}
-          </Text>
-        </TouchableOpacity>
         <TouchableOpacity
           style={[styles.continueButton, { backgroundColor: theme.primary }]}
           onPress={() => {
