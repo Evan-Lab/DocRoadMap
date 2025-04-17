@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Modal,
   FlatList,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -133,13 +133,16 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({
         )}
       </View>
       <View style={styles.cardContent}>
-      <ScrollView style={styles.scrollContainer}>
-        <Text
-          style={[styles.contentTitle, { color: theme.text, maxWidth: wp("50%") }]}
-          allowFontScaling={true}
-        >
-          {description}
-        </Text>
+        <ScrollView style={styles.scrollContainer}>
+          <Text
+            style={[
+              styles.contentTitle,
+              { color: theme.text, maxWidth: wp("50%") },
+            ]}
+            allowFontScaling={true}
+          >
+            {description}
+          </Text>
         </ScrollView>
         <View style={styles.progressBarContainer}>
           <View
