@@ -53,3 +53,18 @@ export type SwaggerProcessPerIdList = {
   description: string;
   steps: SwaggerStepPerIdList[];
 };
+
+export type SwaggerProcessListAdministrative = {
+  id: number;
+  name: string;
+  collection_name: string;
+};
+
+export type SwaggerAIquery = {
+  query: string;
+  collection_name: string;
+};
+
+export type SwaggerAIconversation = {
+  collection_name: string;
+};
