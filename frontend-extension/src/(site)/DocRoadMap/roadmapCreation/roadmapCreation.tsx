@@ -107,12 +107,6 @@ const RoadmapCreation: React.FC = () => {
     return id
   }
 
-  const normalize = (str: string): string =>
-    str
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-
   const handleCreateCard = async () => {
     if (!user?.id || !current) return
     const stepsId = generateUniqueStepsId()
@@ -135,12 +129,17 @@ const RoadmapCreation: React.FC = () => {
           },
         }
       )
+
+      navigate("/chatbot-roadmap-creation", {
+        state: { collectionName: current.collection_name },
+      })
     } catch (error) {
-      console.error("Erreur lors de la création :", error)
+      console.error("Erreur lors de la création ou redirection :", error)
+      setError("Erreur lors de la création de la démarche.")
     }
   }
-  const next = () => setCurrentIndex(prev => (prev + 1) % stepsData.length)
 
+  const next = () => setCurrentIndex(prev => (prev + 1) % stepsData.length)
   const prev = () =>
     setCurrentIndex(prev => (prev - 1 + stepsData.length) % stepsData.length)
 
