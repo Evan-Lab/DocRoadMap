@@ -1,19 +1,34 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+// import { FaArrowLeft } from "react-icons/fa"
+// import { useNavigate } from "react-router-dom"
+
 
 const isDev = process.env.NODE_ENV !== "production"
+const basePath = isDev ? "./assets/" : "./assets/"
 
-const passportImg = isDev
-  ? "/assets/passport_roadmap.png"
-  : "../images/passport_roadmap.png"
+// const ArrowLeftIcon = FaArrowLeft as React.FC<React.SVGProps<SVGSVGElement>>
 
-const idImg = isDev ? "/assets/id_roadmap.png" : "../images/id_roadmap.png"
+const normalize = (str: string): string =>
+  str
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
 
-const movingImg = isDev
-  ? "/assets/moving_roadmap.png"
-  : "../images/moving_roadmap.png"
+const getImageForCardName = (name: string): string => {
+  const lower = normalize(name)
 
-const unknownImg = isDev ? "/assets/docroadmap.png" : "../images/docroadmap.png"
+  if (lower.includes("naissance")) return chrome.runtime.getURL(`${basePath}born_roadmap.png`)
+  if (lower.includes("demenagement")) return chrome.runtime.getURL(`${basePath}moving_roadmap.png`)
+  if (lower.includes("enfant")) return chrome.runtime.getURL(`${basePath}keep_children.png`)
+  if (lower.includes("parent")) return chrome.runtime.getURL(`${basePath}move_from_parents_roadmap.png`)
+  if (lower.includes("logement") || lower.includes("acheter")) return chrome.runtime.getURL(`${basePath}buy_roadmap.png`)
+  if (lower.includes("emploi") || lower.includes("travail")) return chrome.runtime.getURL(`${basePath}find_job_roadmap.png`)
+  if (lower.includes("passeport") || lower.includes("passport")) return chrome.runtime.getURL(`${basePath}passport_roadmap.png`)
+  if (lower.includes("carte") && lower.includes("identite")) return chrome.runtime.getURL(`${basePath}id_roadmap.png`)
+
+  return chrome.runtime.getURL(`${basePath}docroadmap.png`)
+}
 
 interface Card {
   id: number
@@ -27,6 +42,7 @@ interface Card {
 }
 
 const RoadmapView: React.FC = () => {
+  // const navigate = useNavigate()
   const [cards, setCards] = useState<Card[]>([])
   const [error, setError] = useState<string | null>(null)
 
@@ -34,18 +50,10 @@ const RoadmapView: React.FC = () => {
     const fetchUserProcesses = async () => {
       const getToken = (): Promise<string | null> => {
         return new Promise(resolve => {
-          if (typeof chrome !== "undefined") {
-            if (chrome.storage?.local) {
-              chrome.storage.local.get("token", result => {
-                resolve(result.token ?? null)
-              })
-            } else if (chrome.runtime?.sendMessage) {
-              chrome.runtime.sendMessage({ type: "GET_TOKEN" }, response => {
-                resolve(response?.token ?? null)
-              })
-            } else {
-              resolve(localStorage.getItem("token"))
-            }
+          if (typeof chrome !== "undefined" && chrome.storage?.local) {
+            chrome.storage.local.get("token", result => {
+              resolve(result.token ?? null)
+            })
           } else {
             resolve(localStorage.getItem("token"))
           }
@@ -77,21 +85,6 @@ const RoadmapView: React.FC = () => {
     fetchUserProcesses()
   }, [])
 
-  const normalize = (str: string) =>
-    str
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-
-  const getImageForCardName = (name: string) => {
-    const lower = normalize(name)
-
-    if (lower.includes("passport")) return passportImg
-    if (lower.includes("carte") && lower.includes("identite")) return idImg
-    if (lower.includes("demenagement")) return movingImg
-    return unknownImg
-  }
-
   const getValidatedStepsCount = (status: string) => {
     switch (status) {
       case "PENDING":
@@ -107,7 +100,6 @@ const RoadmapView: React.FC = () => {
 
   return (
     <div className="roadmap-panel-container">
-      {/* Panel-specific CSS */}
       <style>{`
         .roadmap-panel-container {
           width: 100%;
@@ -123,12 +115,14 @@ const RoadmapView: React.FC = () => {
           align-items: center;
           margin-bottom: 0.5rem;
           padding-bottom: 0.25rem;
+          flex-direction: row;
           border-bottom: 1px solid #e0e0e0;
         }
         .roadmap-title {
           font-size: 1.1rem;
           font-weight: bold;
           color: #2d3748;
+          flex-direction: row;
           margin: 0;
         }
         .error-message {
@@ -155,7 +149,6 @@ const RoadmapView: React.FC = () => {
           box-shadow: 0 2px 8px rgba(44,62,80,0.08);
           width: 100%;
           max-width: 100%;
-          display: flex;
           flex-direction: row;
           align-items: flex-start;
           padding: 0.75rem 0.5rem;
@@ -167,19 +160,18 @@ const RoadmapView: React.FC = () => {
           box-shadow: 0 4px 16px rgba(44,62,80,0.14);
         }
         .card-image {
-          width: 48px;
-          height: 48px;
-          object-fit: contain;
-          margin-right: 0.75rem;
-          flex-shrink: 0;
+          width:100%;
+
         }
         .card-header {
           margin-bottom: 0.2rem;
+          background: #3182ce;
         }
         .card-header h3 {
           font-size: 1rem;
           font-weight: 600;
-          color: #2b6cb0;
+          background: #3182ce;
+          color:black;
           margin: 0;
           text-align: left;
           word-break: break-word;
@@ -188,6 +180,7 @@ const RoadmapView: React.FC = () => {
           flex: 1 1 auto;
           display: flex;
           flex-direction: column;
+          justify-content: center;
           align-items: flex-start;
         }
         .process {
@@ -203,6 +196,7 @@ const RoadmapView: React.FC = () => {
         .continue-button {
           margin-top: 0.5rem;
           padding: 0.25rem 0.8rem;
+          width: 100%;
           background: #3182ce;
           color: #fff;
           border: none;
@@ -231,6 +225,9 @@ const RoadmapView: React.FC = () => {
         }
       `}</style>
       <div className="roadmap-header">
+        {/* <button className="back-button" onClick={() => navigate(-1)}>
+          <ArrowLeftIcon />
+        </button> */}
         <h1 className="roadmap-title">Mes démarches en cours</h1>
       </div>
 
@@ -244,19 +241,16 @@ const RoadmapView: React.FC = () => {
               src={getImageForCardName(card.name)}
               alt="Illustration démarche"
             />
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div className="card-header">
-                <h3>{card.name}</h3>
-              </div>
-              <div className="card-body">
-                <p className="process">{card.description}</p>
-                <p>
-                  {getValidatedStepsCount(card.status)} étape
-                  {getValidatedStepsCount(card.status) > 1 ? "s" : ""} validée sur
-                  3
-                </p>
-                <button className="continue-button">Continuer</button>
-              </div>
+            <div className="card-header">
+              <h3>{card.name}</h3>
+            </div>
+            <div className="card-body">
+              <p>
+                {getValidatedStepsCount(card.status)} étape
+                {getValidatedStepsCount(card.status) > 1 ? "s" : ""} validée sur
+                3
+              </p>
+              <button className="continue-button">Continuer</button>
             </div>
           </div>
         ))}

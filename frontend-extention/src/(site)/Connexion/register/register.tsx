@@ -8,7 +8,7 @@ const isDev = process.env.NODE_ENV !== "production"
 
 const docroadmapImg = isDev
   ? "/assets/docroadmap.png"
-  : "../images/docroadmap.png"
+  : "../assets/docroadmap.png"
 
 const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>
 

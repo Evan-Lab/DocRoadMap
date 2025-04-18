@@ -133,6 +133,7 @@ const Chatbot: React.FC = () => {
           overflow-y: auto;
           padding: 16px;
           background-color:rgb(250, 250, 250);
+          color: black;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
@@ -142,6 +143,7 @@ const Chatbot: React.FC = () => {
           margin-bottom: 8px;
           max-width: 65%;
           word-wrap: break-word;
+          color: black;
           overflow-wrap: break-word;
           white-space: pre-wrap;
           font-size: 16px;
@@ -152,6 +154,7 @@ const Chatbot: React.FC = () => {
         .user {
           align-self: flex-end;
           background-color: #d9f0ff;
+          color: black;
           text-align: left;
           max-width: 65%;
           margin-left: auto;
@@ -160,6 +163,7 @@ const Chatbot: React.FC = () => {
         .bot {
           align-self: flex-start;
           background-color:rgb(234, 223, 167);
+          color: black;
           text-align: left;
           max-width: 65%;
           margin-right: auto;
@@ -167,7 +171,8 @@ const Chatbot: React.FC = () => {
         .chatbot-input {
           display: flex;
           align-items: center;
-          
+          color: black;
+          background-color:rgb(250, 250, 250);
           border-top: 1px solid #ddd;
           background: #fff;
 
@@ -176,7 +181,9 @@ const Chatbot: React.FC = () => {
           padding: 10px;
           border: 1px solid #ccc;
           font-size: 16px;
+          background-color:rgb(250, 250, 250);
           border-radius: 6px;
+          color: black;
           outline: none;
           transition: 0.2s;
           width: 90%;
@@ -199,6 +206,7 @@ const Chatbot: React.FC = () => {
         }
         .chatbot-input button:disabled {
           background: #aaa;
+          color: black;
           cursor: not-allowed;
         }
         .send-button {

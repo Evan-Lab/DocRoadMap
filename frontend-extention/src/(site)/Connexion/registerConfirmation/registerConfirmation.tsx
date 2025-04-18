@@ -5,7 +5,7 @@ const isDev = process.env.NODE_ENV !== "production"
 
 const docroadmapImg = isDev
   ? "/assets/docroadmap.png"
-  : "../images/docroadmap.png"
+  : "../assets/docroadmap.png"
 
 function RegisterConfirmation() {
   const navigate = useNavigate()

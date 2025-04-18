@@ -8,7 +8,7 @@ const isDev = process.env.NODE_ENV !== "production"
 
 const docroadmapImg = isDev
   ? "/assets/docroadmap.png"
-  : "../images/docroadmap.png"
+  : "../assets/docroadmap.png"
 
 const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<React.SVGProps<SVGSVGElement>>
 
@@ -27,9 +27,6 @@ function Login() {
       .then(response => {
         const token = response.data.accessToken
 
-        // chrome.storage.local.set({ token }, () => {
-        //   console.log("Token saved")
-        // })
         localStorage.setItem("token", token)
         if (typeof chrome !== "undefined" && chrome.storage) {
           chrome.storage.local.set({ token }, () => {
@@ -54,7 +51,6 @@ function Login() {
     setTimeout(() => {
       setResetMessage("")
     }, 5000)
-  navigate("/roadmap")
   }
 
   return (

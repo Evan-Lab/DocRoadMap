@@ -5,20 +5,35 @@ import { useNavigate } from "react-router-dom"
 import "./roadmapView.css"
 
 const isDev = process.env.NODE_ENV !== "production"
-
-const passportImg = isDev
-  ? "/assets/passport_roadmap.png"
-  : "../images/passport_roadmap.png"
-
-const idImg = isDev ? "/assets/id_roadmap.png" : "../images/id_roadmap.png"
-
-const movingImg = isDev
-  ? "/assets/moving_roadmap.png"
-  : "../images/moving_roadmap.png"
-
-const unknownImg = isDev ? "/assets/docroadmap.png" : "../images/docroadmap.png"
+const basePath = isDev ? "../assets/" : "../assets/"
 
 const ArrowLeftIcon = FaArrowLeft as React.FC<React.SVGProps<SVGSVGElement>>
+
+const normalize = (str: string): string =>
+  str
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+
+const getImageForCardName = (name: string): string => {
+  const lower = normalize(name)
+
+  if (lower.includes("naissance")) return `${basePath}/born_roadmap.png`
+  if (lower.includes("demenagement")) return `${basePath}/moving_roadmap.png`
+  if (lower.includes("enfant")) return `${basePath}/keep_children.png`
+  if (lower.includes("parent"))
+    return `${basePath}/move_from_parents_roadmap.png`
+  if (lower.includes("logement") || lower.includes("acheter"))
+    return `${basePath}/buy_roadmap.png`
+  if (lower.includes("emploi") || lower.includes("travail"))
+    return `${basePath}/find_job_roadmap.png`
+  if (lower.includes("passeport") || lower.includes("passport"))
+    return `${basePath}/passport_roadmap.png`
+  if (lower.includes("carte") && lower.includes("identite"))
+    return `${basePath}/id_roadmap.png`
+
+  return `${basePath}/docroadmap.png`
+}
 
 interface Card {
   id: number
@@ -28,7 +43,7 @@ interface Card {
   createdAt: string
   updatedAt: string
   endedAt?: string
-  steps: any[]
+  steps: unknown[]
 }
 
 const RoadmapView: React.FC = () => {
@@ -75,21 +90,6 @@ const RoadmapView: React.FC = () => {
     fetchUserProcesses()
   }, [])
 
-  const normalize = (str: string) =>
-    str
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-
-  const getImageForCardName = (name: string) => {
-    const lower = normalize(name)
-
-    if (lower.includes("passport")) return passportImg
-    if (lower.includes("carte") && lower.includes("identite")) return idImg
-    if (lower.includes("demenagement")) return movingImg
-    return unknownImg
-  }
-
   const getValidatedStepsCount = (status: string) => {
     switch (status) {
       case "PENDING":
@@ -114,7 +114,7 @@ const RoadmapView: React.FC = () => {
 
       {error && <p className="error-message">{error}</p>}
 
-      <div className="carousel-container">
+      <div className="view-container">
         {cards.map(card => (
           <div className="card" key={card.id}>
             <img
@@ -126,7 +126,6 @@ const RoadmapView: React.FC = () => {
               <h3>{card.name}</h3>
             </div>
             <div className="card-body">
-              <p className="process">{card.description}</p>
               <p>
                 {getValidatedStepsCount(card.status)} étape
                 {getValidatedStepsCount(card.status) > 1 ? "s" : ""} validée sur

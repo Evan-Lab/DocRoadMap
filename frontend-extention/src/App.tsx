@@ -4,7 +4,7 @@ import {
   BrowserRouter as Router,
   Routes,
 } from "react-router-dom"
-import Home from "./Home.tsx"
+import Home from "./Home"
 
 import Login from "./(site)/Connexion/login/login"
 import Register from "./(site)/Connexion/register/register"
@@ -12,6 +12,7 @@ import RegisterConfirmation from "./(site)/Connexion/registerConfirmation/regist
 
 import Chatbot from "./(site)/DocRoadMap/chatbotDonna/chatbot"
 import DocroadmapHome from "./(site)/DocRoadMap/docroadmapHome/docroadmapHome"
+import ChatbotRoadmapCreation from "./(site)/DocRoadMap/roadmapCreation/chatbotRoadmapCreation"
 import RoadmapCreation from "./(site)/DocRoadMap/roadmapCreation/roadmapCreation"
 import RoadmapView from "./(site)/DocRoadMap/roadmapView/roadmapView"
 
@@ -21,7 +22,7 @@ import Profile from "./(site)/Settings/profile/profile"
 function App() {
   return (
     <Router>
-      <div className="App popup-container">
+      <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -38,6 +39,8 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<SettingsMenu />} />
           <Route path="*" element={<Navigate to="/" />} />
+          <Route path="/chatbot-roadmap-creation" element={<ChatbotRoadmapCreation />}
+          />
         </Routes>
       </div>
     </Router>
