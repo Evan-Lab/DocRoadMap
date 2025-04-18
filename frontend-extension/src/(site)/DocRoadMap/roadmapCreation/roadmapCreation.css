@@ -67,6 +67,7 @@
 }
 
 .carousel-card button {
+  margin-top: 10px;
   padding: 8px 14px;
   background-color: #2e86de;
   color: white;

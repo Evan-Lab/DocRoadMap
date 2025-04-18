@@ -12,6 +12,7 @@ import RegisterConfirmation from "./(site)/Connexion/registerConfirmation/regist
 
 import Chatbot from "./(site)/DocRoadMap/chatbotDonna/chatbot"
 import DocroadmapHome from "./(site)/DocRoadMap/docroadmapHome/docroadmapHome"
+import ChatbotRoadmapCreation from "./(site)/DocRoadMap/roadmapCreation/chatbotRoadmapCreation"
 import RoadmapCreation from "./(site)/DocRoadMap/roadmapCreation/roadmapCreation"
 import RoadmapView from "./(site)/DocRoadMap/roadmapView/roadmapView"
 
@@ -38,6 +39,11 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<SettingsMenu />} />
           <Route path="*" element={<Navigate to="/" />} />
+
+          <Route
+            path="/chatbot-roadmap-creation"
+            element={<ChatbotRoadmapCreation />}
+          />
         </Routes>
       </div>
     </Router>
