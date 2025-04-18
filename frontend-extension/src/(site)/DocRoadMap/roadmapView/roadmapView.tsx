@@ -126,7 +126,6 @@ const RoadmapView: React.FC = () => {
               <h3>{card.name}</h3>
             </div>
             <div className="card-body">
-              <p className="process">{card.description}</p>
               <p>
                 {getValidatedStepsCount(card.status)} étape
                 {getValidatedStepsCount(card.status) > 1 ? "s" : ""} validée sur
