@@ -27,6 +27,9 @@ function Login() {
       .then(response => {
         const token = response.data.accessToken
 
+        // chrome.storage.local.set({ token }, () => {
+        //   console.log("Token saved")
+        // })
         localStorage.setItem("token", token)
         if (typeof chrome !== "undefined" && chrome.storage) {
           chrome.storage.local.set({ token }, () => {

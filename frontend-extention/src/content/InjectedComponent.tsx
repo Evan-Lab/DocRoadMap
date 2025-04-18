@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { FaRegFileAlt, FaUniversalAccess, FaRoad, FaEye, FaRobot, FaCog } from 'react-icons/fa';
 // Import your components, these are place holders for te cpmponents we will use
 import Chatbot from './components/Chatbot/chatbot';
+import RoadmapView from './components/ViewRoadmap/roadmapView';
 //import GenerateRM from './GenerateRM';
 // import RoadmapComponent from './RoadmapComponent';
-// import ChatbotComponent from './ChatbotComponent';
 // import SettingsComponent from './SettingsComponent';
 
 const buttonData = [
@@ -36,8 +36,8 @@ const Panel: React.FC<PanelProps> = ({ activePanel }) => (
     }}
   >
     {/* {activePanel === 'Accessibilité' && <AccessibilityPanel />}
-    {activePanel === 'Générer Roadmap' && <GenerateRM />}
-    {activePanel === 'Voir Roadmap' && <RoadmapComponent />} */}
+    {activePanel === 'Générer Roadmap' && <GenerateRM />*/}
+    {activePanel === 'Voir Roadmap' && <RoadmapView />} 
     {activePanel === 'Chatbot' && <Chatbot />}
     {/* {{activePanel === 'Paramètres' && <SettingsComponent />}} */}
   </div>

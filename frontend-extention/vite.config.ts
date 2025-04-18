@@ -22,7 +22,8 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         // newtab: resolve(__dirname, 'newtab.html'),
-        content: resolve(__dirname, 'src/content/content.tsx')
+        content: resolve(__dirname, 'src/content/content.tsx'),
+        background: resolve(__dirname, 'public/background.js')
       },
       output: {
         entryFileNames: (chunkInfo) => {
