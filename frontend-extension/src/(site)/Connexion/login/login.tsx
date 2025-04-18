@@ -1,4 +1,4 @@
-// import axios from "axios"
+import axios from "axios"
 import { useState } from "react"
 import { FaArrowLeft } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
@@ -16,33 +16,32 @@ function Login() {
   const navigate = useNavigate()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  // const [error, setError] = useState("")
+  const [error, setError] = useState("")
   const [isResetMode, setIsResetMode] = useState(false)
   const [resetEmail, setResetEmail] = useState("")
   const [resetMessage, setResetMessage] = useState("")
 
   const handleLogin = () => {
-  //   axios
-  //     .post("http://localhost:8082/auth/login", { email, password })
-  //     .then(response => {
-  //       const token = response.data.accessToken
+    axios
+      .post("http://localhost:8082/auth/login", { email, password })
+      .then(response => {
+        const token = response.data.accessToken
 
-  //       localStorage.setItem("token", token)
-  //       if (typeof chrome !== "undefined" && chrome.storage) {
-  //         chrome.storage.local.set({ token }, () => {
-  //           console.log("Token saved in chrome.storage :", token)
-  //         })
-  //       }
-  //       if (token) {
-  //         console.log("Connected, token: ", token)
-  //         navigate("/roadmap")
-  //       }
-  //     })
-  //     .catch(() => {
-  //       setError("Email ou mot de passe incorrect")
-  //       console.log("Not connected, token: ", localStorage.getItem("token"))
-  //     })
-    navigate("/roadmap")
+        localStorage.setItem("token", token)
+        if (typeof chrome !== "undefined" && chrome.storage) {
+          chrome.storage.local.set({ token }, () => {
+            console.log("Token saved in chrome.storage :", token)
+          })
+        }
+        if (token) {
+          console.log("Connected, token: ", token)
+          navigate("/roadmap")
+        }
+      })
+      .catch(() => {
+        setError("Email ou mot de passe incorrect")
+        console.log("Not connected, token: ", localStorage.getItem("token"))
+      })
   }
 
   const handlePasswordReset = () => {
@@ -70,7 +69,7 @@ function Login() {
               </div>
               <h1>Connexion</h1>
             </div>
-            {/* {error && <p className="error-message">{error}</p>} */}
+            {error && <p className="error-message">{error}</p>}
             <div className="input-group">
               <label>Email</label>
               <input

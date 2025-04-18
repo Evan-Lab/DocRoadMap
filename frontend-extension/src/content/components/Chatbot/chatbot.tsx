@@ -1,12 +1,12 @@
 import { useState } from "react"
-import { FaArrowLeft, FaPaperPlane, FaRobot } from "react-icons/fa"
-import { useNavigate } from "react-router-dom"
+import { FaPaperPlane, FaRobot } from "react-icons/fa"
+// import { useNavigate } from "react-router-dom"
 import "./chatbot.css"
 
-const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<React.SVGProps<SVGSVGElement>>
+// const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<React.SVGProps<SVGSVGElement>>
 
 const Chatbot: React.FC = () => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const [messages, setMessages] = useState<
     { text: string; sender: "user" | "bot" }[]
   >([])
@@ -95,9 +95,9 @@ const Chatbot: React.FC = () => {
   return (
     <div className="chatbot-container">
       <div className="chatbot-header">
-        <button className="back-button" onClick={() => navigate(-1)}>
-          <ArrowLeftIcon />
-        </button>
+        {/* <button className="back-button" onClick={() => navigate(-1)}> 
+        <ArrowLeftIcon />
+        </button> */}
         <div className="chatbot-title-container">
           <FaRobot className="chatbot-icon" />
           <h1 className="chatbot-title">Donna</h1>
