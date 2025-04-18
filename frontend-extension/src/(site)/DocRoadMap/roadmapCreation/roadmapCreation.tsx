@@ -159,7 +159,6 @@ const RoadmapCreation: React.FC = () => {
           <div className="carousel-card">
             <img src={current.image} alt={current.name} />
             <h2>{current.name}</h2>
-            <p>{current.collection_name}</p>
             <button onClick={handleCreateCard}>Créer cette démarche</button>
           </div>
 
