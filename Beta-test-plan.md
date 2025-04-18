@@ -11,7 +11,7 @@
 
 ## 1. Contexte
 
-DocRoadMap est une solution composée d'une application mobile et d'une extension web, toutes deux faciles, claires et intuitives, assistées par un chatbot basé sur **Mistral AI**. Pour garantir la fiabilité, les données proviennent exclusivement de sources gouvernementales. L'application mobile et l'extension web peuvent être utilisées indépendamment ou conjointement pour tirer pleinement parti des avantages de la solution.
+DocRoadMap est une solution composée d'une application mobile et d'une extension web, toutes deux faciles, claires et intuitives, assistées par un chatbot basé sur **Llama 3.2**. Pour garantir la fiabilité, les données proviennent exclusivement de sources gouvernementales. L'application mobile et l'extension web peuvent être utilisées indépendamment ou conjointement pour tirer pleinement parti des avantages de la solution.
 
 Notre solution inclut également :
 
@@ -27,7 +27,7 @@ Le guide visuel, interactif et détaillé assiste l’utilisateur étape par ét
 
 Un des chatbots sera également présent afin d'assister les utilisateurs dans leurs questions sur les étapes de la procédure ou pour toute incompréhension liée aux démarches.
 
-L’étape actuelle marque le passage à la **version bêta**, où l’objectif est de tester et valider les fonctionnalités essentielles avant un déploiement plus large axé vers l’intégration de Mistral AI.
+L’étape actuelle marque le passage à la **version bêta**, où l’objectif est de tester et valider les fonctionnalités essentielles avant un déploiement plus large axé vers l’intégration de Llama 3.2.
 
 ---
 
@@ -40,7 +40,7 @@ Le Beta Test Plan a pour but de :
 ✅ S’assurer que l’**expérience utilisateur** est fluide et
 intuitive.
 
-✅ Tester l’**intégration et la pertinence** du chatbot avec l’intégration de Mistral AI.
+✅ Tester l’**intégration et la pertinence** du chatbot avec l’intégration de Llama 3.2.
 
 ✅ Identifier les **bugs et points d’amélioration** avant le passage en production.
 
@@ -53,9 +53,11 @@ Les tests porteront sur les fonctionnalités suivantes :
 - **Authentification** : Connexion et déconnexion sécurisées.
 - **Gestion du profil** : Accès et modification des informations personnelles.
 - **Navigation en carrousel** : Présentation des étapes sous forme de cartes interactives.
+- **Carte démarche individuelle** : Vision globale de toutes les étapes de la démarche, où chaque étape est cliquable pour accéder à ses détails spécifiques, avec une barre de progression permettant de visualiser l'avancement dans le parcours.
 - **Chatbot IA (Mistral)** : Assistance pour répondre aux questions des utilisateurs sur les démarches.
 - **Création et gestion des démarches** : Utilisation de l’intelligence artificielle pour permettre la création de démarches administratives personnalisées.
 - **Accessibilité** : Vérification du respect des standards **WCAG/RGAA**.
+- **Rappel**: Notification de deadlines pour les démarches en cours de l’utilisateur
 
 ---
 
@@ -99,7 +101,20 @@ Les tests porteront sur les fonctionnalités suivantes :
   3. Vérifier l’ajout de supports visuels (illustrations, icônes).
 - ✅ **Résultat attendu** : Affichage fluide, pas de latence ni de crash.
 
-### 4.4 Chatbot IA Mistral
+### 4.4 Carte démarche individuelle
+
+- **Utilisateur** : Utilisateur connecté
+- **Objectif** : Vérifier la visualisation et l'interactivité de la carte de démarche
+- **Priorité** : Medium
+- **Étapes** :
+  1. Accéder à la section affichant la carte de démarche individuelle
+  2. Observer la présentation visuelle des différentes étapes de la démarche
+  3. Cliquer sur chaque étape pour vérifier l'affichage des détails correspondants
+  4. L’utilisateur peut valider les démarches et programmer ses propres deadlines/rappel
+  5. Vérifier que la barre d'avancement reflète correctement la progression dans le parcours
+     ✅ **Résultat attendu** : Affichage clair de toutes les étapes, fonctionnalité cliquable opérationnelle, barre de progression précise
+
+### 4.5 Chatbot AI Llama 3.2
 
 - **Utilisateur** : Utilisateur connecté
 - **Objectif** : Tester la fiabilité de Mistral sur les démarches administratives
@@ -109,7 +124,7 @@ Les tests porteront sur les fonctionnalités suivantes :
   2. Vérifier la qualité et la clarté de la réponse.
 - ✅ **Résultat attendu** : Réponse précise et adaptée à la demande.
 
-### 4.5 Accessibilité sur des pages web
+### 4.6 Accessibilité sur des pages web
 
 - **Utilisateur** : Utilisateur connecté
 - **Objectif** : Vérifier que les pages web sont modifiées pour respecter la WCAG et la RGAA à partir de l’extension web
@@ -122,7 +137,7 @@ Les tests porteront sur les fonctionnalités suivantes :
   5. Vérifier que le texte présent sur la page a été adapté : taille, espacement.
 - ✅ **Résultat attendu** : La page web doit être modifiée, avec des textes plus gros, des descriptions ajoutées aux images et des descriptions pouvant être lues par les appareils audio.
 
-### 4.6 Accessibilité sur l’application mobile
+### 4.7 Accessibilité sur l’application mobile
 
 - **Utilisateur** : Utilisateur connecté
 - **Objectif** : Vérifier que l’application mobile respecte les normes WCAG et RGAA, et s’adapte aux paramètres d’accessibilité personnels de l’utilisateur
@@ -138,25 +153,37 @@ Les tests porteront sur les fonctionnalités suivantes :
      - La possibilité de changer de thème d’écran (mode clair/sombre) fonctionne sans altérer la lisibilité ou dégrader l’expérience utilisateur.
 - ✅ **Résultat attendu** : L’application s’adapte aux paramètres d’accessibilité sans perte de fonctionnalités ou d’informations.
 
+## 4.8 Rappel / Notification de deadlines
+
+- **Utilisateur** : Utilisateur connecté
+- **Objectif** : Vérifier le système de notification pour les échéances des démarches
+- Priorité\*\* : Low
+- **Étapes** :
+  1. Accéder à la section des démarches en cours
+  2. Pouvoir voir les notifications pour les deadlines approchantes
+  3. Vérifier la présence et la clarté des rappels pour les démarches ayant des échéances
+  4. Tester la réception des notifications à différents moments (J-7, J-3, J-1, etc.)
+     ✅ Résultat attendu : Notifications claires et opportunes des deadlines, alerte visible pour l'utilisateur, information précise sur les délais restants.
+
 ---
 
 ## 5. Problèmes connus et limitations
 
 ### 🖥️ Environnement partagé pour l’IA
 
-- Une **VM** est nécessaire pour tester l’IA Mistral.
-- Un ticket **Zendesk** a été soumis pour obtenir une VM plus performante.
+- Une **VM** plus puissante est nécessaire pour disposer d’un environnement partagé permettant de lancer et tester l’IA Llama 3.2. Actuellement les tests avec Llama 3.2 semblent concluants mais prennent trop de temps en environnement de développement local.
 
 ### ❓ Fiabilité de l’IA
 
-- Risque d’**hallucinations**.
-- Dépendance à la **qualité des sources** pour des réponses adaptées.
+- Malgré le RAG ou les prompts une IA générative peut faire des hallucinations (des erreurs) et ne pas répondre correctement aux différentes situations rencontrées.
+- Question sur des démarches
+- Génération des roadmaps
+- Adapté les questions à la situation personnelles
+- La récupération des bonnes sources de connaissance est aussi nécessaires dépendant de notre configuration du RAG pour permettre les réponses les plus adaptées possible de notre IA.
 
 ### ♿ Accessibilité
 
-- Fonctionnalités partiellement opérationnelles.
-- Besoin d’ajuster la mise en page et d’**optimiser le bouton d’accessibilité**.
-- Nécessité d’**outils IA** pour améliorer les descriptions d’images (ALT).
+- Nos Informations sont encore incomplètes vis-à-vis de la mise en oeuvre des solutions d’accessibilité (recours possible à des logiciels de repérage d’erreurs d’accessibilité, usage d’IA pour modifier les ALT aux descriptions incomplètes sur les images des sites webs, etc.)
 
 ---
 
@@ -192,6 +219,6 @@ Une fonctionnalité est validée si :
 
 ✅ Établir une **base de référence** pour le suivi du projet.
 
-✅ Valider **l’intégration de Mistral AI** et la pertinence des réponses générées.
+✅ Valider **l’intégration de Llama 3.2** et la pertinence des réponses générées.
 
 ✅ Préparer la **transition vers la phase de test élargie** et l’optimisation finale.

@@ -8,6 +8,7 @@ import {
   RefreshControl,
   Alert,
   StyleSheet,
+  Modal,
 } from "react-native";
 import { useTranslation } from "react-i18next";
 import CardDemarche from "../../components/card/CardDemarche";
@@ -28,6 +29,12 @@ export default function HomePage() {
   const [cards, setCards] = useState<SwaggerProcessPerIdList[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [loadingAdministrative, setLoadingAdministrative] = useState(false);
+  const [administrativeList, setAdministrativeList] = useState<any[]>([]);
+  const [errorAdministrative, setErrorAdministrative] = useState<string | null>(
+    null,
+  );
 
   const fetchCards = useCallback(async () => {
     const response = await request.processperID();
@@ -69,9 +76,22 @@ export default function HomePage() {
     console.log("Menu/profile button pressed");
   };
 
-  const handleGenerateRoadmap = () => {
-    createCard();
+  const handleGenerateRoadmap = async () => {
     console.log("Generate new roadmap pressed");
+    setModalVisible(true);
+    setLoadingAdministrative(true);
+    setErrorAdministrative(null);
+
+    const response = await request.listProcessAdministrative();
+    console.log("API Response:", response);
+
+    if (response.data) {
+      setAdministrativeList(response.data);
+    } else {
+      setErrorAdministrative(response.error || t("home.error_message"));
+    }
+
+    setLoadingAdministrative(false);
   };
 
   const handleReminders = () => {
@@ -163,6 +183,39 @@ export default function HomePage() {
           ))}
         </ScrollView>
       </ScrollView>
+      <Modal visible={modalVisible} animationType="slide" transparent={false}>
+        <SafeAreaView style={{ flex: 1, padding: 20 }}>
+          <TouchableOpacity onPress={() => setModalVisible(false)}>
+            <Text style={{ fontSize: 18, color: "blue", textAlign: "right" }}>
+              Fermer
+            </Text>
+          </TouchableOpacity>
+
+          {loadingAdministrative ? (
+            <Text style={{ marginTop: 20 }}>{t("Chargement...")}</Text>
+          ) : errorAdministrative ? (
+            <Text style={{ marginTop: 20, color: "red" }}>
+              {errorAdministrative}
+            </Text>
+          ) : (
+            <ScrollView style={{ marginTop: 20 }}>
+              {Array.isArray(administrativeList) &&
+              administrativeList.length > 0 ? (
+                administrativeList.map((item: any) => (
+                  <View key={item.id} style={{ marginBottom: 16 }}>
+                    <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+                      {item.name}
+                    </Text>
+                  </View>
+                ))
+              ) : (
+                <Text>{t("home.no_data")}</Text>
+              )}
+            </ScrollView>
+          )}
+        </SafeAreaView>
+      </Modal>
+
       <ChatInterface />
     </SafeAreaView>
   );

@@ -9,6 +9,7 @@ import {
   ScrollView,
   Image,
   Modal,
+  ActivityIndicator,
 } from "react-native";
 import { useTheme } from "@/components/ThemeContext";
 import { useTranslation } from "react-i18next";
@@ -17,23 +18,76 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import request from "@/constants/Request";
 
 export default function ChatInterface() {
   const { theme } = useTheme();
   const { t } = useTranslation();
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<{ text: string; sender: string }[]>(
     [],
   );
-  const [modalVisible, setModalVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const API_KEY = process.env.EXPO_PUBLIC_GPT_KEY;
+  const [demandes, setDemandes] = useState<
+    { name: string; collection_name: string }[]
+  >([]);
+  const [selectedCollection, setSelectedCollection] = useState<string | null>(
+    null,
+  );
+  const [choixVisible, setChoixVisible] = useState(false);
 
-  const handleFloatingButton = () => setModalVisible(true);
-  const handleClose = () => setModalVisible(false);
+  const handleCollection = async () => {
+    setChoixVisible(true);
+    console.log("Ouverture de la liste des démarches administratives...");
+    try {
+      const res = await request.listProcessAdministrative();
+      console.log("Réponse de la liste des démarches : ", res);
+      if (res?.data) {
+        setDemandes(res.data);
+      }
+    } catch (err) {
+      console.error("Erreur chargement démarches", err);
+    }
+  };
+
+  const handleClose = () => {
+    console.log("Fermeture du modal du chatbot");
+    setModalVisible(false);
+    setMessages([]);
+    setSelectedCollection(null);
+  };
+
+  const handleProcess = async (collectionName: string) => {
+    console.log("Collection choisie : ", collectionName);
+    setSelectedCollection(collectionName);
+    setChoixVisible(false);
+    setModalVisible(true);
+    setLoading(true);
+
+    try {
+      const res = await request.aiConversation(collectionName);
+      console.log("Réponse de l'API lors du choix de la démarche : ", res);
+      if (res?.data?.response) {
+        console.log("Réponse initiale du bot : ", res.data.response);
+        setMessages([{ text: res.data.response, sender: "bot" }]);
+      } else {
+        console.log("Pas de réponse dans la réponse de l'API.");
+        setMessages([{ text: t("error_occurred"), sender: "bot" }]);
+      }
+    } catch (error) {
+      console.error("Erreur lors du choix de la démarche", error);
+      setMessages([{ text: t("server_error"), sender: "bot" }]);
+    } finally {
+      setLoading(false);
+      console.log("Chargement terminé pour la démarche choisie");
+    }
+  };
 
   const handleSend = async () => {
-    if (!message.trim()) return;
+    console.log("Message envoyé par l'utilisateur : ", message);
+    if (!message.trim() || !selectedCollection) return;
 
     const newMessages = [...messages, { text: message, sender: "user" }];
     setMessages(newMessages);
@@ -41,34 +95,26 @@ export default function ChatInterface() {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        "https://api.openai.com/v1/chat/completions",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${API_KEY}`,
-          },
-          body: JSON.stringify({
-            model: "gpt-3.5-turbo",
-            messages: [{ role: "user", content: message }],
-          }),
-        },
-      );
-
-      const data = await response.json();
-      const botMessage =
-        data.choices[0]?.message?.content || t("error_occurred");
-
-      setMessages([...newMessages, { text: botMessage, sender: "bot" }]);
+      const res = await request.aiQuery(selectedCollection, message);
+      console.log("Réponse de l'API IA : ", res);
+      if (res?.data) {
+        const { is_roadmap, response } = res.data;
+        const reply = is_roadmap ? t("roadmap_generated") : response;
+        console.log("Réponse du bot : ", reply);
+        setMessages([...newMessages, { text: reply, sender: "bot" }]);
+      } else {
+        console.log("Pas de données dans la réponse de l'API.");
+        setMessages([
+          ...newMessages,
+          { text: t("connection_error"), sender: "bot" },
+        ]);
+      }
     } catch (error) {
-      console.error(t("api_error"), error);
-      setMessages([
-        ...newMessages,
-        { text: t("connection_error"), sender: "bot" },
-      ]);
+      console.error("Erreur IA", error);
+      setMessages([...newMessages, { text: t("server_error"), sender: "bot" }]);
     } finally {
       setLoading(false);
+      console.log("Chargement terminé après l'envoi du message");
     }
   };
 
@@ -76,13 +122,41 @@ export default function ChatInterface() {
     <View>
       <TouchableOpacity
         style={[styles.floatingButton, { backgroundColor: theme.primary }]}
-        onPress={handleFloatingButton}
+        onPress={handleCollection}
       >
         <Image
           source={require("../../assets/images/chatbot.png")}
           style={{ width: 45, height: 45 }}
         />
       </TouchableOpacity>
+
+      <Modal visible={choixVisible} transparent animationType="slide">
+        <View
+          style={[styles.modalOverlay, { backgroundColor: theme.background }]}
+        >
+          <Text
+            style={[
+              styles.headerTitle,
+              { color: theme.text, marginBottom: 20 },
+            ]}
+          >
+            {t("Choisie la procédure que tu souhaites commencer")}
+          </Text>
+          {demandes.map((d, idx) => (
+            <TouchableOpacity
+              key={idx}
+              onPress={() => handleProcess(d.collection_name)}
+            >
+              <Text style={[styles.demarcheItem, { color: theme.primary }]}>
+                {d.name}
+              </Text>
+            </TouchableOpacity>
+          ))}
+          <TouchableOpacity onPress={() => setChoixVisible(false)}>
+            <Text style={[styles.closeText, { color: theme.text }]}>✖</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
 
       <Modal
         animationType="slide"
@@ -110,10 +184,7 @@ export default function ChatInterface() {
                   msg.sender === "user"
                     ? styles.userMessage
                     : styles.botMessage,
-                  {
-                    backgroundColor:
-                      msg.sender === "user" ? theme.primary : theme.primary,
-                  },
+                  { backgroundColor: theme.primary },
                 ]}
               >
                 <Text style={[styles.messageText, { color: theme.text }]}>
@@ -142,9 +213,13 @@ export default function ChatInterface() {
               onPress={handleSend}
               disabled={loading}
             >
-              <Text style={[styles.sendButtonText, { color: theme.text }]}>
-                {loading ? "..." : "→"}
-              </Text>
+              {loading ? (
+                <ActivityIndicator color={theme.text} />
+              ) : (
+                <Text style={[styles.sendButtonText, { color: theme.text }]}>
+                  →
+                </Text>
+              )}
             </TouchableOpacity>
           </View>
         </SafeAreaView>
@@ -154,9 +229,7 @@ export default function ChatInterface() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+  container: { flex: 1 },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -224,5 +297,15 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: moderateScale(4),
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: hp("3%"),
+  },
+  demarcheItem: {
+    fontSize: moderateScale(18),
+    marginVertical: hp("1%"),
   },
 });

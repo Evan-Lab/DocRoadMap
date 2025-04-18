@@ -6,3 +6,4 @@ chromadb
 pysqlite3-binary
 flask
 platformdirs
+hf_xet
