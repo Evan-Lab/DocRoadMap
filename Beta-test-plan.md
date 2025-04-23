@@ -52,15 +52,15 @@ The purpose of the Beta Test Plan is to:
 
 The tests will focus on the following features:
 
-- Authentication: Secure login and logout.
-- Profile management: Access and modification of personal information.
-- User Dashboard/Home Page: An overview of guides tailored to common scenarios, the user's ongoing personal processes, and a clickable calendar for easy navigation.
-- Individual Approach: A comprehensive overview of all the steps in the process, where each step is clickable for more specific details. There’s also a progress bar to help visualize how far along you are in the journey. Users can manually confirm each step to keep better track of their progress.
-- AI Chatbot: Help users with their inquiries about procedures and add personalized steps if needed.
-- Chatbot Guide: This chatbot helps create a tailored approach by offering a selection of guides based on predefined questions and answers with the user.
-- Web extension: The ability to enhance certain accessibility features of a webpage on predefined websites to better comply with WCAG/RGAA standards.
-- Mobile: The app may be able to adjust to certain personal accessibility settings of the user.
-- Reminder: Notifications for deadlines related to ongoing tasks set by the user, along with an integrated calendar to provide an overview of important dates.
+- **Authentication**: Secure login and logout.
+- **Profile management**: Access and modification of personal information.
+- **User Dashboard/Home Page**: An overview of guides tailored to common scenarios, the user's ongoing personal processes, and a clickable calendar for easy navigation.
+- **Individual Process**: A comprehensive overview of all the steps in the process, where each step is clickable for more specific details. There’s also a progress bar to help visualize how far along you are in the journey. Users can manually confirm each step to keep better track of their progress.
+- **AI Chatbot**: Help users with their inquiries about procedures and add personalized steps if needed.
+- **Chatbot Guide**: This chatbot helps create a tailored approach by offering a selection of guides based on predefined questions and answers with the user.
+- **Web extension**: The ability to enhance certain accessibility features of a webpage on predefined websites to better comply with WCAG/RGAA standards.
+- **Mobile**: The app may be able to adjust intern accessibility settings of the user.
+- **Reminder**: Notifications for deadlines related to ongoing steps set by the user, along with an integrated calendar to provide an overview of important dates.
 
 ---
 
@@ -84,14 +84,14 @@ The tests will focus on the following features:
 
 ---
 
-### 4.2 Generation of a Roadmap Related to the Approach
+### 4.2 Generation of a Roadmap Related to the Process
 
 - **User**: Connected user
 - **Goal**: To ensure that the chatbot can create a process without any errors.
 - **Priority**: Very High
 - **Steps**:
 
-1. Select the type of case you want to create.
+1. Select the type of case process you want to create.
 2. Access the case type creation interface (chatbot)
 3. Answer the chatbot's questions and ensure they reflect the user's situation.
 4. Once done, go to the procedures page.
@@ -116,7 +116,7 @@ The tests will focus on the following features:
 
 ---
 
-### 4.4 Individual Approach
+### 4.4 Individual Process
 
 - **User**: Connected user
 - **Goal**: Check the visualization and interactivity of the process map
@@ -124,7 +124,7 @@ The tests will focus on the following features:
 - **Steps**:
 
 1. Go to the individual process section
-2. Review how steps are displayed
+2. Review how each steps are displayed
 3. Click each step to view details
 4. Validate steps and schedule reminders
 5. Verify progress bar updates correctly
@@ -157,7 +157,7 @@ The tests will focus on the following features:
 1. Open an ongoing process
 2. Describe missing step to chatbot
 3. Answer clarifying questions if needed
-4. Verify step is added
+4. Verify if step is added
 5. Confirm clarity and completeness
 
 - ✅ **Expected outcome**: Step added dynamically and accurately.
@@ -174,7 +174,7 @@ The tests will focus on the following features:
 1. Visit a webpage
 2. Activate extension
 3. Click accessibility button, then "Make page accessible"
-4. Confirm changes are WCAG/RGAA-compliant
+4. Confirm that certains elements changes are WCAG/RGAA-compliant
 
 - ✅ **Expected result**: Updated, compliant webpage.
 
@@ -192,25 +192,25 @@ The tests will focus on the following features:
 3. Ensure:
    - Text scales correctly
    - TalkBack (Android) works
-   - Theme changes don’t affect usability
+   - Other parameter like theme changes don’t affect usability and user experience
 
-- ✅ **Expected outcome**: Full accessibility support without loss of functionality.
+- ✅ **Expected outcome**: The application adapts to accessibility settings without any loss of functionality or information.
 
 ---
 
 ### 4.9 Deadline Notifications – Calendar
 
 - **User**: Connected user
-- **Goal**: Test task deadline reminders
+- **Goal**: Test task deadline reminders for process
 - **Priority**: Low
 - **Steps**:
 
 1. Access calendar or a process
 2. Verify presence of user-defined dates
-3. Check scheduling and timing (D-7, D-3, D-1)
-4. Confirm clarity and accuracy of notifications
+3. Check the calendar to see if the process is linked to a specific date.
+4. Confirm the clarity and accuracy of notifications related to processes with deadlines.
 
-- ✅ **Expected outcome**: Clear, timely alerts with visible reminders.
+- ✅ **Expected outcome**: Clear and timely deadline notifications, with visible alerts for the user and accurate information on remaining time.
 
 ---
 
@@ -255,5 +255,5 @@ By following this Beta Test Plan, we aim to:
 - ✅ Confirm that the essential features are stable and functioning properly.
 - ✅ Identify and fix any bugs or UX/UI inconsistencies.
 - ✅ Enhance the user experience based on feedback from testers and our point of contact, Flavien.
-- ✅ Establish a benchmark to measure the project's progress for the final jury.
+- ✅ Establish a baseline to measure the project's progress for the final jury.
 - ✅ Prepare for the transition to the expanded testing phase and the final optimization of the product.
