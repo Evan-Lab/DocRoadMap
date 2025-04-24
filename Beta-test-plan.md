@@ -1,224 +1,257 @@
 # Beta Test Plan – DocRoadMap
 
-## Équipe
+### Team
 
-- **Baptiste Perard**
-- **Evan Labourdette**
-- **Julia Tran**
-- **Nadia Moulouad**
-
----
-
-## 1. Contexte
-
-DocRoadMap est une solution composée d'une application mobile et d'une extension web, toutes deux faciles, claires et intuitives, assistées par un chatbot basé sur **Llama 3.2**. Pour garantir la fiabilité, les données proviennent exclusivement de sources gouvernementales. L'application mobile et l'extension web peuvent être utilisées indépendamment ou conjointement pour tirer pleinement parti des avantages de la solution.
-
-Notre solution inclut également :
-
-- Un guide personnalisé pour effectuer vos démarches en fonction de votre situation personnelle.
-- Des illustrations.
-- Des rappels de dates critiques.
-- Une interface multilingue.
-- Deux chatbots uniques.
-- Un respect rigoureux des critères d’accessibilité (**WCAG** et **RGAA**).
-- D’autres fonctionnalités détaillées plus loin dans le document.
-
-Le guide visuel, interactif et détaillé assiste l’utilisateur étape par étape dans toutes ses démarches. Il est généré et adapté à la démarche entreprise et à la situation personnelle via une série de questions/réponses.
-
-Un des chatbots sera également présent afin d'assister les utilisateurs dans leurs questions sur les étapes de la procédure ou pour toute incompréhension liée aux démarches.
-
-L’étape actuelle marque le passage à la **version bêta**, où l’objectif est de tester et valider les fonctionnalités essentielles avant un déploiement plus large axé vers l’intégration de Llama 3.2.
+- Baptiste Perard
+- Evan Labourdette
+- Julia Tran
+- Nadia Moulouad
 
 ---
 
-## 2. Objectifs
+## 1. Context
 
-Le Beta Test Plan a pour but de :
+DocRoadMap is a solution that includes a mobile app and a web extension, both designed to be user-friendly, straightforward, and intuitive. To ensure reliability, all data is sourced exclusively from government sources. You can use the mobile app and the web extension either separately or together to fully benefit from the solution.
 
-✅ Vérifier la **stabilité et l’efficacité** des fonctionnalités critiques.
+### Why offer both a web extension and a mobile application?
 
-✅ S’assurer que l’**expérience utilisateur** est fluide et
-intuitive.
+The two tools are complementary and meet distinct but often simultaneous uses:
 
-✅ Tester l’**intégration et la pertinence** du chatbot avec l’intégration de Llama 3.2.
+- Generally, users handle their administrative tasks on a computer through official government websites. Our web extension seamlessly integrates into these sites to assist them, so users don’t have to switch pages or open a new site. Our solution is available right where they are completing their tasks.
+- Keeping track of tasks, managing reminders, and quickly accessing information anytime (even while on the go) is easy with the mobile app.
 
-✅ Identifier les **bugs et points d’amélioration** avant le passage en production.
+### Our solution also includes:
 
----
+- A list of guides for the various situations and processes they may encounter as they start their professional journey.
+- Reminders of critical dates and integrated calendar for an overview.
+- A multilingual interface (French, English, Spanish for the moment)
+- Two unique chatbots
+- An extension that allows users to modify certain accessibility criteria (WCAG and RGAA) on an active web page.
+- Plus additional features that we will explain later in the document.
 
-## 3. Fonctionnalités Clés pour la Bêta
+The guide should be visual, interactive, and detailed, helping users step by step through all their processes. It will be tailored to both business needs and personal situations through a series of questions and answers.
 
-Les tests porteront sur les fonctionnalités suivantes :
+One of the chatbots will be available to assist users with any questions they have about the steps in the process or to clarify any confusion regarding the procedures. If a step is missing, users will be able to provide that information to add it.
 
-- **Authentification** : Connexion et déconnexion sécurisées.
-- **Gestion du profil** : Accès et modification des informations personnelles.
-- **Navigation en carrousel** : Présentation des étapes sous forme de cartes interactives.
-- **Carte démarche individuelle** : Vision globale de toutes les étapes de la démarche, où chaque étape est cliquable pour accéder à ses détails spécifiques, avec une barre de progression permettant de visualiser l'avancement dans le parcours.
-- **Chatbot IA (Mistral)** : Assistance pour répondre aux questions des utilisateurs sur les démarches.
-- **Création et gestion des démarches** : Utilisation de l’intelligence artificielle pour permettre la création de démarches administratives personnalisées.
-- **Accessibilité** : Vérification du respect des standards **WCAG/RGAA**.
-- **Rappel**: Notification de deadlines pour les démarches en cours de l’utilisateur
+The current phase marks the transition to the beta version, where the goal is to test and validate the key features mentioned earlier before a wider rollout that focuses on user feedback.
 
 ---
 
-## 4. Scénarios de Test
+## 2. Objectives
 
-### 4.1 Connexion et Déconnexion
+The purpose of the Beta Test Plan is to:
 
-- **Utilisateur** : Tout utilisateur
-- **Objectif** : Vérifier que l’authentification fonctionne correctement
-- **Priorité** : Medium
-- **Étapes** :
-  1. Accéder à la page de connexion.
-  2. Saisir un email et un mot de passe valides.
-  3. Recevoir un mail de vérification.
-  4. Cliquer sur le lien pour valider le profil.
-  5. Se connecter et accéder au profil.
-  6. Se déconnecter et vérifier le retour à l’écran d’accueil.
-- ✅ **Résultat attendu** : Connexion/déconnexion sans bug, messages d’erreur clairs si les identifiants sont incorrects.
-
-### 4.2 Création d’une démarche administrative
-
-- **Utilisateur** : Utilisateur connecté
-- **Objectif** : Vérifier que Mistral peut créer une démarche sans erreur
-- **Priorité** : Very High
-- **Étapes** :
-  1. Accéder à l’interface de création de démarche (chatbot).
-  2. Renseigner la démarche souhaitée (ex: Déclaration de Revenue).
-  3. Répondre aux questions posées par l’IA et vérifier qu’elle cible bien la situation personnelle.
-  4. Aller sur la page des démarches.
-  5. Vérifier que la démarche a bien été ajoutée ainsi que ses étapes.
-- ✅ **Résultat attendu** : La démarche est bien enregistrée et affichée dans l’application et correspond à la situation de l’utilisateur.
-
-### 4.3 Navigation dans le Carrousel de Cartes
-
-- **Utilisateur** : Utilisateur connecté
-- **Objectif** : Vérifier l’affichage et la fluidité du carrousel
-- **Priorité** : Medium
-- **Étapes** :
-  1. Ouvrir le menu home pour observer le carrousel.
-  2. Naviguer entre les différentes procédures via le carrousel.
-  3. Vérifier l’ajout de supports visuels (illustrations, icônes).
-- ✅ **Résultat attendu** : Affichage fluide, pas de latence ni de crash.
-
-### 4.4 Carte démarche individuelle
-
-- **Utilisateur** : Utilisateur connecté
-- **Objectif** : Vérifier la visualisation et l'interactivité de la carte de démarche
-- **Priorité** : Medium
-- **Étapes** :
-  1. Accéder à la section affichant la carte de démarche individuelle
-  2. Observer la présentation visuelle des différentes étapes de la démarche
-  3. Cliquer sur chaque étape pour vérifier l'affichage des détails correspondants
-  4. L’utilisateur peut valider les démarches et programmer ses propres deadlines/rappel
-  5. Vérifier que la barre d'avancement reflète correctement la progression dans le parcours
-     ✅ **Résultat attendu** : Affichage clair de toutes les étapes, fonctionnalité cliquable opérationnelle, barre de progression précise
-
-### 4.5 Chatbot AI Llama 3.2
-
-- **Utilisateur** : Utilisateur connecté
-- **Objectif** : Tester la fiabilité de Mistral sur les démarches administratives
-- **Priorité** : High
-- **Étapes** :
-  1. Poser une question sur une démarche administrative.
-  2. Vérifier la qualité et la clarté de la réponse.
-- ✅ **Résultat attendu** : Réponse précise et adaptée à la demande.
-
-### 4.6 Accessibilité sur des pages web
-
-- **Utilisateur** : Utilisateur connecté
-- **Objectif** : Vérifier que les pages web sont modifiées pour respecter la WCAG et la RGAA à partir de l’extension web
-- **Priorité** : High
-- **Étapes** :
-  1. Se rendre sur une page web et activer l’extension web.
-  2. Cliquer sur le bouton accessibilité.
-  3. Cliquer ensuite sur le bouton “Rendre accessible la page web”.
-  4. Vérifier que la page est compatible avec les appareils audio.
-  5. Vérifier que le texte présent sur la page a été adapté : taille, espacement.
-- ✅ **Résultat attendu** : La page web doit être modifiée, avec des textes plus gros, des descriptions ajoutées aux images et des descriptions pouvant être lues par les appareils audio.
-
-### 4.7 Accessibilité sur l’application mobile
-
-- **Utilisateur** : Utilisateur connecté
-- **Objectif** : Vérifier que l’application mobile respecte les normes WCAG et RGAA, et s’adapte aux paramètres d’accessibilité personnels de l’utilisateur
-- **Priorité** : High
-- **Étapes** :
-  1. Accéder aux paramètres d’accessibilité du téléphone (taille de police).
-  2. Ouvrir l’application mobile DocRoadMap.
-  3. Vérifier que :
-     - La taille du texte s’ajuste correctement sans casser la mise en page.
-     - Le contraste des couleurs respecte les standards WCAG (niveau AA minimum).
-     - La compatibilité avec VoiceOver (iOS) ou TalkBack (Android) est assurée.
-     - La navigation est claire et intuitive grâce aux assistances vocales.
-     - La possibilité de changer de thème d’écran (mode clair/sombre) fonctionne sans altérer la lisibilité ou dégrader l’expérience utilisateur.
-- ✅ **Résultat attendu** : L’application s’adapte aux paramètres d’accessibilité sans perte de fonctionnalités ou d’informations.
-
-## 4.8 Rappel / Notification de deadlines
-
-- **Utilisateur** : Utilisateur connecté
-- **Objectif** : Vérifier le système de notification pour les échéances des démarches
-- Priorité\*\* : Low
-- **Étapes** :
-  1. Accéder à la section des démarches en cours
-  2. Pouvoir voir les notifications pour les deadlines approchantes
-  3. Vérifier la présence et la clarté des rappels pour les démarches ayant des échéances
-  4. Tester la réception des notifications à différents moments (J-7, J-3, J-1, etc.)
-     ✅ Résultat attendu : Notifications claires et opportunes des deadlines, alerte visible pour l'utilisateur, information précise sur les délais restants.
+- ✅ Check the stability and effectiveness of critical features.
+- ✅ Ensure that the user experience is smooth, intuitive, and as simple as possible.
+- ✅ Test the integration and relevance of the guide and support chatbot.
+- ✅ Identify bugs and areas for improvement before focusing on features requested by users.
 
 ---
 
-## 5. Problèmes connus et limitations
+## 3. Key Features for the Beta
 
-### 🖥️ Environnement partagé pour l’IA
+The tests will focus on the following features:
 
-- Une **VM** plus puissante est nécessaire pour disposer d’un environnement partagé permettant de lancer et tester l’IA Llama 3.2. Actuellement les tests avec Llama 3.2 semblent concluants mais prennent trop de temps en environnement de développement local.
-
-### ❓ Fiabilité de l’IA
-
-- Malgré le RAG ou les prompts une IA générative peut faire des hallucinations (des erreurs) et ne pas répondre correctement aux différentes situations rencontrées.
-- Question sur des démarches
-- Génération des roadmaps
-- Adapté les questions à la situation personnelles
-- La récupération des bonnes sources de connaissance est aussi nécessaires dépendant de notre configuration du RAG pour permettre les réponses les plus adaptées possible de notre IA.
-
-### ♿ Accessibilité
-
-- Nos Informations sont encore incomplètes vis-à-vis de la mise en oeuvre des solutions d’accessibilité (recours possible à des logiciels de repérage d’erreurs d’accessibilité, usage d’IA pour modifier les ALT aux descriptions incomplètes sur les images des sites webs, etc.)
+- **Authentication**: Secure login and logout.
+- **Profile management**: Access and modification of personal information.
+- **User Dashboard/Home Page**: An overview of guides tailored to common scenarios, the user's ongoing personal processes, and a clickable calendar for easy navigation.
+- **Individual Process**: A comprehensive overview of all the steps in the process, where each step is clickable for more specific details. There’s also a progress bar to help visualize how far along you are in the journey. Users can manually confirm each step to keep better track of their progress.
+- **AI Chatbot**: Help users with their inquiries about procedures and add personalized steps if needed.
+- **Chatbot Guide**: This chatbot helps create a tailored approach by offering a selection of guides based on predefined questions and answers with the user.
+- **Web extension**: The ability to enhance certain accessibility features of a webpage on predefined websites to better comply with WCAG/RGAA standards.
+- **Mobile**: The app may be able to adjust certain intern accessibility settings of the user.
+- **Reminder**: Notifications for deadlines related to ongoing steps set by the user, along with an integrated calendar to provide an overview of important dates.
 
 ---
 
-## 6. Critères de Validation
+## 4. Test Scenarios
 
-Une fonctionnalité est validée si :
+### 4.1 Connection and Disconnection
 
-✅ Elle fonctionne **sans crash ni bug critique**.
+- **User**: Any user
+- **Goal**: To ensure that the authentication is working properly.
+- **Priority**: Medium
+- **Steps**:
 
-✅ L’**expérience utilisateur** est fluide et intuitive.
+1. Access the login page
+2. Enter a valid email and password.
+3. Receive a verification email
+4. Click on the link to validate the profile.
+5. Log in and access the profile.
+6. Log out and check the return to the home screen.
 
-✅ Les tests de **performance et d’accessibilité** sont concluants.
+- ✅ **Expected result**: Smooth login/logout process without any bugs, and clear error messages if the credentials are incorrect.
 
-✅ Les **retours des testeurs** confirment l’utilisabilité du service.
+---
+
+### 4.2 Generation of a Roadmap Related to the Process
+
+- **User**: Connected user
+- **Goal**: To ensure that the chatbot can create a process without any errors.
+- **Priority**: Very High
+- **Steps**:
+
+1. Select the type of case process you want to create.
+2. Access the case type creation interface (chatbot)
+3. Answer the chatbot's questions and ensure they reflect the user's situation.
+4. Once done, go to the procedures page.
+5. Verify the process has been added with all necessary steps.
+
+- ✅ **Expected outcome**: Process is recorded and displayed correctly.
+
+---
+
+### 4.3 Navigation in the Dashboard
+
+- **User**: Connected user
+- **Objective**: Check the display and fluidity of the dashboard
+- **Priority**: Medium
+- **Steps**:
+
+1. Open the home menu.
+2. View all dashboard functionalities (guides, processes, calendar).
+3. Check for visual aids like illustrations and icons.
+
+- ✅ **Expected outcome**: Smooth display, no lag or crashes.
+
+---
+
+### 4.4 Individual Process
+
+- **User**: Connected user
+- **Goal**: Check the visualization and interactivity of the process map
+- **Priority**: Medium
+- **Steps**:
+
+1. Go to the individual process section
+2. Review how each steps are displayed
+3. Click each step to view details
+4. Validate steps and schedule reminders
+5. Verify progress bar updates correctly
+
+- ✅ **Expected outcome**: Clear, interactive display with working features.
+
+---
+
+### 4.5 Q&A on an Ongoing Process
+
+- **User**: Connected user
+- **Goal**: Test the AI chatbot's reliability on administrative queries
+- **Priority**: Medium
+- **Steps**:
+
+1. Ask a question about an administrative process
+2. Assess clarity and relevance of the answer
+
+- ✅ **Expected outcome**: Precise, helpful responses.
+
+---
+
+### 4.6 Adding a Custom Step
+
+- **User**: Connected user
+- **Goal**: Ensure a missing step is added with full detail
+- **Priority**: Medium
+- **Steps**:
+
+1. Open an ongoing process
+2. Describe missing step to chatbot
+3. Answer clarifying questions if needed
+4. Verify if step is added
+5. Confirm clarity and completeness
+
+- ✅ **Expected outcome**: Step added dynamically and accurately.
+
+---
+
+### 4.7 Accessibility on Web Pages
+
+- **User**: Connected user
+- **Goal**: Validate accessibility updates via extension
+- **Priority**: High
+- **Steps**:
+
+1. Visit a webpage
+2. Activate extension
+3. Click accessibility button, then "Make page accessible"
+4. Confirm that certain elements changes are WCAG/RGAA-compliant
+- ✅ **Expected result**: Updated, compliant webpage.
+
+---
+
+### 4.8 Mobile App Accessibility
+
+- **User**: Connected user
+- **Goal**: Check app’s response to system accessibility settings
+- **Priority**: High
+- **Steps**:
+
+1. Configure phone accessibility
+2. Open DocRoadMap app
+3. Ensure:
+   - TalkBack (Android) works
+   - Other parameter like text scales don’t affect usability and user experience
+
+- ✅ **Expected outcome**: The application adapts to accessibility settings without any loss of functionality or information.
+
+---
+
+### 4.9 Deadline Notifications – Calendar
+
+- **User**: Connected user
+- **Goal**: Test task deadline reminders for process
+- **Priority**: Low
+- **Steps**:
+
+1. Access calendar or a process
+2. Verify presence of user-defined dates
+3. Check the calendar to see if the process is linked to a specific date.
+4. Confirm the clarity and accuracy of notifications related to processes with deadlines.
+
+- ✅ **Expected outcome**: Clear and timely deadline notifications, with visible alerts for the user and accurate information on remaining time.
+
+---
+
+## 5. Known issues and limitations
+
+### Reliability of AI:
+
+- Despite using RAG or prompts, a generative AI can still experience hallucinations (errors) and may not respond accurately to various situations it encounters.
+  - Question about ongoing procedures
+  - Adapt the questions to the personal situation.
+  - Addition of a step to an ongoing process
+- Gathering the right sources of knowledge is essential, depending on how we set up our RAG, to ensure that our AI can provide the most suitable responses.
+
+### ♿ Accessibility:
+
+- Our information is still incomplete regarding the implementation of accessibility solutions, such as the use of error detection software and AI to improve ALT text for images on websites.
+
+---
+
+## 6. Validation Criteria
+
+A feature is considered validated if:
+
+- ✅ It operates without crashes or critical bugs.
+- ✅ The user experience is smooth and intuitive.
+- ✅ Performance and accessibility tests yield positive results.
+- ✅ Feedback from testers confirms the service's usability.
 
 ---
 
 ## 7. Deliverables & Format
 
-📄 **Documentation** : Rapport de test détaillé.
-
-📊 **Suivi du projet** : **Linear** sera utilisé pour le suivi des features, tests et bugs.
+- 📄 Documentation: A detailed test report will be created.
+- 📊 Project Progress Tracking: We will use Linear to monitor the status of features, tests, and bugs.
 
 ---
 
-## 8. Résultats Attendus
+## 8. Expected Results
 
-✅ Confirmer la stabilité des fonctionnalités essentielles.
+By following this Beta Test Plan, we aim to:
 
-✅ Détecter et corriger les **bugs et incohérences UX/UI**.
-
-✅ Améliorer l’**expérience utilisateur** grâce aux retours des testeurs.
-
-✅ Établir une **base de référence** pour le suivi du projet.
-
-✅ Valider **l’intégration de Llama 3.2** et la pertinence des réponses générées.
-
-✅ Préparer la **transition vers la phase de test élargie** et l’optimisation finale.
+- ✅ Confirm that the essential features are stable and functioning properly.
+- ✅ Identify and fix any bugs or UX/UI inconsistencies.
+- ✅ Enhance the user experience based on feedback from testers and our point of contact, Flavien.
+- ✅ Establish a baseline to measure the project's progress for the final jury.
+- ✅ Prepare for the transition to the expanded testing phase and the final optimization of the product.
