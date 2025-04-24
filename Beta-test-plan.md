@@ -59,7 +59,7 @@ The tests will focus on the following features:
 - **AI Chatbot**: Help users with their inquiries about procedures and add personalized steps if needed.
 - **Chatbot Guide**: This chatbot helps create a tailored approach by offering a selection of guides based on predefined questions and answers with the user.
 - **Web extension**: The ability to enhance certain accessibility features of a webpage on predefined websites to better comply with WCAG/RGAA standards.
-- **Mobile**: The app may be able to adjust intern accessibility settings of the user.
+- **Mobile**: The app may be able to adjust certain intern accessibility settings of the user.
 - **Reminder**: Notifications for deadlines related to ongoing steps set by the user, along with an integrated calendar to provide an overview of important dates.
 
 ---
@@ -190,9 +190,8 @@ The tests will focus on the following features:
 1. Configure phone accessibility
 2. Open DocRoadMap app
 3. Ensure:
-   - Text scales correctly
    - TalkBack (Android) works
-   - Other parameter like theme changes don’t affect usability and user experience
+   - Other parameter like text scales don’t affect usability and user experience
 
 - ✅ **Expected outcome**: The application adapts to accessibility settings without any loss of functionality or information.
 
