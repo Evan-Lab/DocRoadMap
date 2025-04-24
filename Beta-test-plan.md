@@ -174,8 +174,7 @@ The tests will focus on the following features:
 1. Visit a webpage
 2. Activate extension
 3. Click accessibility button, then "Make page accessible"
-4. Confirm that certains elements changes are WCAG/RGAA-compliant
-
+4. Confirm that certain elements changes are WCAG/RGAA-compliant
 - ✅ **Expected result**: Updated, compliant webpage.
 
 ---
