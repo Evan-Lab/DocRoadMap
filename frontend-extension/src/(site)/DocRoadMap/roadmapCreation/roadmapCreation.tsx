@@ -129,10 +129,6 @@ const RoadmapCreation: React.FC = () => {
           },
         }
       )
-
-      navigate("/chatbot-roadmap-creation", {
-        state: { collectionName: current.collection_name },
-      })
     } catch (error) {
       console.error("Erreur lors de la création ou redirection :", error)
       setError("Erreur lors de la création de la démarche.")

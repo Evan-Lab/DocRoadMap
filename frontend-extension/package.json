@@ -53,6 +53,7 @@
     "@babel/preset-env": "^7.26.9",
     "@babel/preset-react": "^7.26.3",
     "@babel/preset-typescript": "^7.27.0",
+    "@types/chrome": "^0.0.317",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@types/webextension-polyfill": "^0.12.1",
