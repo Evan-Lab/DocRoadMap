@@ -121,7 +121,8 @@ const RoadmapView: React.FC = () => {
         .roadmap-title {
           font-size: 1.1rem;
           font-weight: bold;
-          color: #2d3748;
+          padding: 0.5rem 0;
+          color:black;
           flex-direction: row;
           margin: 0;
         }
@@ -144,14 +145,13 @@ const RoadmapView: React.FC = () => {
           padding-bottom: 0.5rem;
         }
         .card {
-          background: #fff;
+           background: #fff;
           border-radius: 10px;
           box-shadow: 0 2px 8px rgba(44,62,80,0.08);
           width: 100%;
           max-width: 100%;
           flex-direction: row;
           align-items: flex-start;
-          padding: 0.75rem 0.5rem;
           transition: box-shadow 0.2s;
           position: relative;
           box-sizing: border-box;
@@ -161,52 +161,55 @@ const RoadmapView: React.FC = () => {
         }
         .card-image {
           width:100%;
+          border-radius: 10px 10px 0 0;
 
         }
         .card-header {
           margin-bottom: 0.2rem;
-          background: #3182ce;
+          background: #007bff;
+          padding: 0.5rem 0.75rem;
         }
         .card-header h3 {
           font-size: 1rem;
           font-weight: 600;
-          background: #3182ce;
-          color:black;
+          background: #007bff;
+          color:white;
           margin: 0;
-          text-align: left;
+          text-align: center;
           word-break: break-word;
         }
         .card-body {
           flex: 1 1 auto;
+          padding: 0.5rem 0.75rem;
           display: flex;
           flex-direction: column;
           justify-content: center;
-          align-items: flex-start;
+          align-items: center;
         }
         .process {
           font-size: 0.95rem;
-          color: #4a5568;
+          color: black;
           margin-bottom: 0.3rem;
-          text-align: left;
+          text-align: center;
           word-break: break-word;
         }
         .card-body p {
           margin: 0;
+          color: black;
+          font-size: 0.9rem;
+          
         }
         .continue-button {
           margin-top: 0.5rem;
-          padding: 0.25rem 0.8rem;
-          width: 100%;
-          background: #3182ce;
-          color: #fff;
+          width: 90%;
+          background: #007bff;
+          color: white;
           border: none;
           border-radius: 6px;
-          font-size: 0.95rem;
-          font-weight: 500;
           cursor: pointer;
           transition: background 0.18s;
-          align-self: flex-start;
-        }
+          padding: 0.5rem 0.75rem;
+          }
         .continue-button:hover {
           background: #225ea8;
         }

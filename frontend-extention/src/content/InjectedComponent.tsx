@@ -3,6 +3,7 @@ import { FaRegFileAlt, FaUniversalAccess, FaRoad, FaEye, FaRobot, FaCog } from '
 // Import your components, these are place holders for te cpmponents we will use
 import Chatbot from './components/Chatbot/chatbot';
 import RoadmapView from './components/ViewRoadmap/roadmapView';
+import RoadmapCreation from './components/roadmapCreation/roadmapCreation';
 //import GenerateRM from './GenerateRM';
 // import RoadmapComponent from './RoadmapComponent';
 // import SettingsComponent from './SettingsComponent';
@@ -26,7 +27,7 @@ const Panel: React.FC<PanelProps> = ({ activePanel }) => (
       bottom: '90px',
       right: '80px',
       width: '250px',
-      height: '500px',
+      height: '400px',
       background: '#fff',
       border: '1px solid #1976d2',
       borderRadius: '8px',
@@ -35,8 +36,8 @@ const Panel: React.FC<PanelProps> = ({ activePanel }) => (
       padding: '16px',
     }}
   >
-    {/* {activePanel === 'Accessibilité' && <AccessibilityPanel />}
-    {activePanel === 'Générer Roadmap' && <GenerateRM />*/}
+    {/* {activePanel === 'Accessibilité' && <AccessibilityPanel />*/}
+    {activePanel === 'Générer Roadmap' && < RoadmapCreation />}
     {activePanel === 'Voir Roadmap' && <RoadmapView />} 
     {activePanel === 'Chatbot' && <Chatbot />}
     {/* {{activePanel === 'Paramètres' && <SettingsComponent />}} */}
