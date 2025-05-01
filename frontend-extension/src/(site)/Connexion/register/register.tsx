@@ -1,30 +1,30 @@
-import axios from "axios"
-import { useState } from "react"
-import { FaArrowLeft } from "react-icons/fa"
-import { useNavigate } from "react-router-dom"
-import "./register.css"
+import axios from "axios";
+import { useState } from "react";
+import { FaArrowLeft } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import "./register.css";
 
-const isDev = process.env.NODE_ENV !== "production"
+const isDev = process.env.NODE_ENV !== "production";
 
 const docroadmapImg = isDev
   ? "/assets/docroadmap.png"
-  : "../images/docroadmap.png"
+  : "../assets/docroadmap.png";
 
-const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>
+const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
 
 function Register() {
-  const navigate = useNavigate()
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [error, setError] = useState("")
+  const navigate = useNavigate();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleRegister = () => {
     if (password !== confirmPassword) {
-      setError("Les mots de passe ne correspondent pas")
-      return
+      setError("Les mots de passe ne correspondent pas");
+      return;
     }
 
     axios
@@ -35,12 +35,12 @@ function Register() {
         password,
       })
       .then(() => {
-        navigate("/account-confirmation")
+        navigate("/account-confirmation");
       })
       .catch(() => {
-        setError("Une erreur s'est produite lors de l'inscription")
-      })
-  }
+        setError("Une erreur s'est produite lors de l'inscription");
+      });
+  };
 
   return (
     <div className="register-page">
@@ -61,7 +61,7 @@ function Register() {
             type="text"
             placeholder="Prénom"
             value={firstName}
-            onChange={e => setFirstName(e.target.value)}
+            onChange={(e) => setFirstName(e.target.value)}
           />
         </div>
         <div className="input-group">
@@ -70,7 +70,7 @@ function Register() {
             type="text"
             placeholder="Nom"
             value={lastName}
-            onChange={e => setLastName(e.target.value)}
+            onChange={(e) => setLastName(e.target.value)}
           />
         </div>
         <div className="input-group">
@@ -79,7 +79,7 @@ function Register() {
             type="email"
             placeholder="Email"
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="input-group">
@@ -88,7 +88,7 @@ function Register() {
             type="password"
             placeholder="Mot de passe"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div className="input-group">
@@ -97,7 +97,7 @@ function Register() {
             type="password"
             placeholder="Mot de passe"
             value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
         <button className="register-button" onClick={handleRegister}>
@@ -108,7 +108,7 @@ function Register() {
         </p>
       </div>
     </div>
-  )
+  );
 }
 
-export default Register
+export default Register;
