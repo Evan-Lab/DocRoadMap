@@ -52,7 +52,6 @@ body {
   margin-bottom: 10px;
 }
 
-<<<<<<< HEAD
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -60,58 +59,4 @@ body {
   100% {
     transform: rotate(360deg);
   }
-=======
-.carousel-arrow:hover {
-  background: #f0f0f0;
-}
-
-.carousel-card {
-  width: 260px;
-  background: white;
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.carousel-card img {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 12px;
-}
-
-.carousel-card h2 {
-  font-size: 18px;
-  margin: 10px 0 8px;
-  color: #333;
-}
-
-.carousel-card p {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 12px;
-}
-
-.carousel-card button {
-  margin-top: 10px;
-  padding: 8px 14px;
-  background-color: #2e86de;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.carousel-card button:hover {
-  background-color: #1e6fce;
-}
-
-.error-message {
-  color: red;
-  margin-top: 10px;
-  font-size: 14px;
->>>>>>> origin/frontend-extension
 }
