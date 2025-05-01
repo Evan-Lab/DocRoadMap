@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  FaCog,
   FaEye,
   FaRegFileAlt,
   FaRoad,
@@ -16,7 +15,6 @@ const buttonData = [
   { icon: <FaRoad />, label: "Générer Roadmap" },
   { icon: <FaEye />, label: "Voir Roadmap" },
   { icon: <FaRobot />, label: "Chatbot" },
-  { icon: <FaCog />, label: "Paramètres" },
 ];
 
 interface PanelProps {
@@ -95,7 +93,7 @@ const DocRoadmapBar: React.FC = () => {
             flexDirection: "row",
             transition: "width 0.3s",
             overflow: "hidden",
-            width: open ? 300 : 0,
+            width: open ? 260 : 0,
           }}
         >
           {open &&
