@@ -1,31 +1,31 @@
-import { FaAccessibleIcon, FaCog, FaEye, FaMap, FaRobot } from "react-icons/fa"
-import { useNavigate } from "react-router-dom"
-import "./docroadmapHome.css"
+import { FaAccessibleIcon, FaCog, FaEye, FaMap, FaRobot } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import "./docroadmapHome.css";
 
-const RobotIcon = FaRobot as unknown as React.FC<any>
-const MapIcon = FaMap as unknown as React.FC<any>
-const EyeIcon = FaEye as unknown as React.FC<any>
-const CogIcon = FaCog as unknown as React.FC<any>
+const RobotIcon = FaRobot as unknown as React.FC<any>;
+const MapIcon = FaMap as unknown as React.FC<any>;
+const EyeIcon = FaEye as unknown as React.FC<any>;
+const CogIcon = FaCog as unknown as React.FC<any>;
 
 const DocroadmapHome: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const createRoadmap = () => {
-    navigate("/create-roadmap")
-  }
+    navigate("/create-roadmap");
+  };
   const viewRoadmaps = () => {
-    navigate("/roadmap-view")
-  }
+    navigate("/roadmap-view");
+  };
   const goToChatbot = () => {
-    navigate("/chatbot")
-  }
+    navigate("/chatbot");
+  };
   const goToSettings = () => {
-    navigate("/settings")
-  }
+    navigate("/settings");
+  };
 
   const accessibility = () => {
-    console.log("Work in progress")
-  }
+    console.log("Work in progress");
+  };
 
   return (
     <div className="roadmap-container">
@@ -59,7 +59,7 @@ const DocroadmapHome: React.FC = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DocroadmapHome
+export default DocroadmapHome;

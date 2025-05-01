@@ -1,22 +1,22 @@
-import { useNavigate } from "react-router-dom"
-import "./registerConfirmation.css"
+import { useNavigate } from "react-router-dom";
+import "./registerConfirmation.css";
 
-const isDev = process.env.NODE_ENV !== "production"
+const isDev = process.env.NODE_ENV !== "production";
 
 const docroadmapImg = isDev
   ? "/assets/docroadmap.png"
-  : "../images/docroadmap.png"
+  : "../assets/docroadmap.png";
 
 function RegisterConfirmation() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleLoginRedirect = () => {
-    navigate("/login")
-  }
+    navigate("/login");
+  };
 
   const handleResendEmail = () => {
-    alert("Email de confirmation renvoyé !")
-  }
+    alert("Email de confirmation renvoyé !");
+  };
 
   return (
     <div className="confirmation-page">
@@ -41,7 +41,7 @@ function RegisterConfirmation() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default RegisterConfirmation
+export default RegisterConfirmation;

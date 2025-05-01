@@ -1,34 +1,34 @@
-import { FaArrowLeft, FaGlobe, FaSignOutAlt, FaUser } from "react-icons/fa"
-import { useNavigate } from "react-router-dom"
-import "./settingsMenu.css"
+import { FaArrowLeft, FaGlobe, FaSignOutAlt, FaUser } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import "./settingsMenu.css";
 
-const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>
-const UserIcon = FaUser as unknown as React.FC<any>
-const GlobeIcon = FaGlobe as unknown as React.FC<any>
-const SignOutIcon = FaSignOutAlt as unknown as React.FC<any>
+const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
+const UserIcon = FaUser as unknown as React.FC<any>;
+const GlobeIcon = FaGlobe as unknown as React.FC<any>;
+const SignOutIcon = FaSignOutAlt as unknown as React.FC<any>;
 
 const SettingsMenu: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const goToProfile = () => {
-    navigate("/profile")
-  }
+    navigate("/profile");
+  };
 
   const changeLanguage = () => {
-    console.log("Work in progress")
-  }
+    console.log("Work in progress");
+  };
 
   const logout = () => {
-    localStorage.removeItem("token")
-    sessionStorage.clear()
+    localStorage.removeItem("token");
+    sessionStorage.clear();
 
     if (typeof chrome !== "undefined" && chrome.storage?.local) {
       chrome.storage.local.remove("token", () => {
-        console.log("Token supprimé de chrome.storage")
-      })
+        console.log("Token supprimé de chrome.storage");
+      });
     }
-    navigate("/")
-  }
+    navigate("/");
+  };
 
   return (
     <div className="roadmap-container">
@@ -45,8 +45,7 @@ const SettingsMenu: React.FC = () => {
 
           <button onClick={changeLanguage}>
             <GlobeIcon className="button-icon" />
-            <span className="button-text">Langues</span>
-            <span className="button-text">(Non fonctionnel)</span>
+            <span className="button-text">Langue</span>
           </button>
 
           <button onClick={logout}>
@@ -56,7 +55,7 @@ const SettingsMenu: React.FC = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SettingsMenu
+export default SettingsMenu;

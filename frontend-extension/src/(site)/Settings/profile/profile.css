@@ -23,9 +23,7 @@ body {
   font-size: 28px;
   font-weight: bold;
   color: #007bff;
-  transition:
-    transform 0.2s ease-in-out,
-    color 0.3s;
+  transition: transform 0.2s ease-in-out, color 0.3s;
 }
 
 .back-button:hover {
@@ -135,9 +133,7 @@ body {
   border: none;
   font-size: 14px;
   cursor: pointer;
-  transition:
-    background 0.3s ease-in-out,
-    transform 0.2s ease-in-out;
+  transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
   width: 25px;
   height: 25px;
   border-radius: 6px;

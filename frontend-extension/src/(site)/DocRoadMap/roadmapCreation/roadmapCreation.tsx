@@ -1,78 +1,84 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
-import { useNavigate } from "react-router-dom"
-import "./roadmapCreation.css"
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import "./roadmapCreation.css";
 
-const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>
-const ArrowRightIcon = FaArrowRight as unknown as React.FC<any>
+const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
+const ArrowRightIcon = FaArrowRight as unknown as React.FC<any>;
 
-const isDev = process.env.NODE_ENV !== "production"
+const isDev = process.env.NODE_ENV !== "production";
+const basePath = isDev ? "../assets/" : "../assets/";
 
-const getImageForStep = (collectionName: string): string => {
-  const basePath = isDev ? "/assets" : "../images"
+const normalize = (str: string): string =>
+  str
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
 
-  switch (collectionName) {
-    case "acte_naissance":
-      return `${basePath}/born_roadmap.png`
-    case "demenagement_en_france":
-      return `${basePath}/moving_roadmap.png`
-    case "garde_enfants":
-      return `${basePath}/keep_children.png`
-    case "je_pars_de_chez_mes_parents":
-      return `${basePath}/move_from_parents_roadmap.png`
-    case "jachete_un_logement":
-      return `${basePath}/buy_roadmap.png`
-    case "recherche-emploi":
-      return `${basePath}/find_job_roadmap.png`
-    default:
-      return `${basePath}/default.png`
-  }
-}
+const getImageForStep = (name: string): string => {
+  const lower = normalize(name);
+
+  if (lower.includes("naissance")) return `${basePath}/born_roadmap.png`;
+  if (lower.includes("demenagement")) return `${basePath}/moving_roadmap.png`;
+  if (lower.includes("enfant")) return `${basePath}/keep_children.png`;
+  if (lower.includes("parent"))
+    return `${basePath}/move_from_parents_roadmap.png`;
+  if (lower.includes("logement") || lower.includes("acheter"))
+    return `${basePath}/buy_roadmap.png`;
+  if (lower.includes("emploi") || lower.includes("travail"))
+    return `${basePath}/find_job_roadmap.png`;
+  if (lower.includes("passeport") || lower.includes("passport"))
+    return `${basePath}/passport_roadmap.png`;
+  if (lower.includes("carte") && lower.includes("identite"))
+    return `${basePath}/id_roadmap.png`;
+
+  return `${basePath}/docroadmap.png`;
+};
 
 interface Step {
-  id: number
-  name: string
-  collection_name: string
-  image: string
+  id: number;
+  name: string;
+  collection_name: string;
+  image: string;
 }
 
 const RoadmapCreation: React.FC = () => {
-  const navigate = useNavigate()
-  const token = localStorage.getItem("token")
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
-  const [user, setUser] = useState<any>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [usedStepsIds, setUsedStepsIds] = useState<number[]>([])
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [stepsData, setStepsData] = useState<Step[]>([])
+  const [user, setUser] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [usedStepsIds, setUsedStepsIds] = useState<number[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [stepsData, setStepsData] = useState<Step[]>([]);
 
-  const current = stepsData[currentIndex]
+  const current = stepsData[currentIndex];
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        if (!token) throw new Error("Token non disponible.")
+        if (!token) throw new Error("Token non disponible.");
         const response = await fetch("http://localhost:8082/users/me", {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        })
+        });
 
         if (!response.ok)
-          throw new Error("Échec de la récupération de l'utilisateur")
-        const data = await response.json()
-        setUser({ id: data.id })
+          throw new Error("Échec de la récupération de l'utilisateur");
+        const data = await response.json();
+        setUser({ id: data.id });
       } catch (error) {
-        setError("Erreur lors de la récupération des données utilisateur.")
-        console.error(error)
+        setError("Erreur lors de la récupération des données utilisateur.");
+        console.error(error);
       }
-    }
+    };
 
     const fetchStepsData = async () => {
       try {
-        if (!token) throw new Error("Token non disponible.")
+        if (!token) throw new Error("Token non disponible.");
         const response = await axios.get(
           "http://localhost:8082/list-administrative-process",
           {
@@ -80,36 +86,36 @@ const RoadmapCreation: React.FC = () => {
               Authorization: `Bearer ${token}`,
             },
           }
-        )
+        );
 
         const enrichedSteps = response.data.map((step: any) => ({
           ...step,
           image: getImageForStep(step.collection_name),
-        }))
+        }));
 
-        setStepsData(enrichedSteps)
+        setStepsData(enrichedSteps);
       } catch (error) {
-        setError("Erreur lors de la récupération des démarches.")
-        console.error(error)
+        setError("Erreur lors de la récupération des démarches.");
+        console.error(error);
       }
-    }
+    };
 
-    fetchUserProfile()
-    fetchStepsData()
-  }, [token])
+    fetchUserProfile();
+    fetchStepsData();
+  }, [token]);
 
   const generateUniqueStepsId = (): number => {
-    let id: number
+    let id: number;
     do {
-      id = Math.floor(Math.random() * 900) + 101
-    } while (usedStepsIds.includes(id))
-    setUsedStepsIds(prev => [...prev, id])
-    return id
-  }
+      id = Math.floor(Math.random() * 900) + 101;
+    } while (usedStepsIds.includes(id));
+    setUsedStepsIds((prev) => [...prev, id]);
+    return id;
+  };
 
   const handleCreateCard = async () => {
-    if (!user?.id || !current) return
-    const stepsId = generateUniqueStepsId()
+    if (!user?.id || !current) return;
+    const stepsId = generateUniqueStepsId();
 
     try {
       await axios.post(
@@ -128,16 +134,16 @@ const RoadmapCreation: React.FC = () => {
             Authorization: `Bearer ${token}`,
           },
         }
-      )
+      );
     } catch (error) {
-      console.error("Erreur lors de la création ou redirection :", error)
-      setError("Erreur lors de la création de la démarche.")
+      console.error("Erreur lors de la création ou redirection :", error);
+      setError("Erreur lors de la création de la démarche.");
     }
-  }
+  };
 
-  const next = () => setCurrentIndex(prev => (prev + 1) % stepsData.length)
+  const next = () => setCurrentIndex((prev) => (prev + 1) % stepsData.length);
   const prev = () =>
-    setCurrentIndex(prev => (prev - 1 + stepsData.length) % stepsData.length)
+    setCurrentIndex((prev) => (prev - 1 + stepsData.length) % stepsData.length);
 
   return (
     <div className="roadmap-container">
@@ -168,7 +174,7 @@ const RoadmapCreation: React.FC = () => {
 
       {error && <p className="error-message">{error}</p>}
     </div>
-  )
-}
+  );
+};
 
-export default RoadmapCreation
+export default RoadmapCreation;

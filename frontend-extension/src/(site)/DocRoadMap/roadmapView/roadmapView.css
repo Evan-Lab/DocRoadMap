@@ -9,20 +9,23 @@ body {
 }
 
 .roadmap-container {
-  width: 100%;
-  max-width: 800px;
+  max-width: 500px;
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
+  flex-direction: column;
   padding: 20px;
   position: relative;
 }
 
 .roadmap-header {
   display: flex;
-  flex-direction: row;
   align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
   gap: 10px;
   margin-bottom: 20px;
 }
@@ -31,7 +34,8 @@ body {
   font-size: 1.8rem;
   font-weight: bold;
   margin: 0;
-  text-align: left;
+  text-align: center;
+  width: 100%;
 }
 
 .back-button {

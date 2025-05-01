@@ -1,75 +1,75 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
-import { FaArrowLeft } from "react-icons/fa"
-import { useNavigate } from "react-router-dom"
-import "./roadmapView.css"
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { FaArrowLeft } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import "./roadmapView.css";
 
-const isDev = process.env.NODE_ENV !== "production"
-const basePath = isDev ? "/assets" : "../images"
+const isDev = process.env.NODE_ENV !== "production";
+const basePath = isDev ? "../assets/" : "../assets/";
 
-const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>
+const ArrowLeftIcon = FaArrowLeft as React.FC<React.SVGProps<SVGSVGElement>>;
 
 const normalize = (str: string): string =>
   str
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[\u0300-\u036f]/g, "");
 
 const getImageForCardName = (name: string): string => {
-  const lower = normalize(name)
+  const lower = normalize(name);
 
-  if (lower.includes("naissance")) return `${basePath}/born_roadmap.png`
-  if (lower.includes("demenagement")) return `${basePath}/moving_roadmap.png`
-  if (lower.includes("enfant")) return `${basePath}/keep_children.png`
+  if (lower.includes("naissance")) return `${basePath}/born_roadmap.png`;
+  if (lower.includes("demenagement")) return `${basePath}/moving_roadmap.png`;
+  if (lower.includes("enfant")) return `${basePath}/keep_children.png`;
   if (lower.includes("parent"))
-    return `${basePath}/move_from_parents_roadmap.png`
+    return `${basePath}/move_from_parents_roadmap.png`;
   if (lower.includes("logement") || lower.includes("acheter"))
-    return `${basePath}/buy_roadmap.png`
+    return `${basePath}/buy_roadmap.png`;
   if (lower.includes("emploi") || lower.includes("travail"))
-    return `${basePath}/find_job_roadmap.png`
+    return `${basePath}/find_job_roadmap.png`;
   if (lower.includes("passeport") || lower.includes("passport"))
-    return `${basePath}/passport_roadmap.png`
+    return `${basePath}/passport_roadmap.png`;
   if (lower.includes("carte") && lower.includes("identite"))
-    return `${basePath}/id_roadmap.png`
+    return `${basePath}/id_roadmap.png`;
 
-  return `${basePath}/docroadmap.png`
-}
+  return `${basePath}/docroadmap.png`;
+};
 
 interface Card {
-  id: number
-  name: string
-  description: string
-  status: string
-  createdAt: string
-  updatedAt: string
-  endedAt?: string
-  steps: any[]
+  id: number;
+  name: string;
+  description: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  endedAt?: string;
+  steps: unknown[];
 }
 
 const RoadmapView: React.FC = () => {
-  const navigate = useNavigate()
-  const [cards, setCards] = useState<Card[]>([])
-  const [error, setError] = useState<string | null>(null)
+  const navigate = useNavigate();
+  const [cards, setCards] = useState<Card[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUserProcesses = async () => {
       const getToken = (): Promise<string | null> => {
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
           if (typeof chrome !== "undefined" && chrome.storage?.local) {
-            chrome.storage.local.get("token", result => {
-              resolve(result.token ?? null)
-            })
+            chrome.storage.local.get("token", (result) => {
+              resolve(result.token ?? null);
+            });
           } else {
-            resolve(localStorage.getItem("token"))
+            resolve(localStorage.getItem("token"));
           }
-        })
-      }
+        });
+      };
 
-      const token = await getToken()
+      const token = await getToken();
 
       if (!token) {
-        setError("Token manquant. Veuillez vous connecter.")
-        return
+        setError("Token manquant. Veuillez vous connecter.");
+        return;
       }
 
       try {
@@ -77,31 +77,31 @@ const RoadmapView: React.FC = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        })
+        });
 
-        const processes = response.data.processes || []
-        setCards(processes)
+        const processes = response.data.processes || [];
+        setCards(processes);
       } catch (error) {
-        console.error("Erreur lors de la récupération des roadmaps :", error)
-        setError("Impossible de récupérer les roadmaps.")
+        console.error("Erreur lors de la récupération des roadmaps :", error);
+        setError("Impossible de récupérer les roadmaps.");
       }
-    }
+    };
 
-    fetchUserProcesses()
-  }, [])
+    fetchUserProcesses();
+  }, []);
 
   const getValidatedStepsCount = (status: string) => {
     switch (status) {
       case "PENDING":
-        return 0
+        return 0;
       case "IN_PROGRESS":
-        return 1
+        return 1;
       case "COMPLETED":
-        return 3
+        return 3;
       default:
-        return 0
+        return 0;
     }
-  }
+  };
 
   return (
     <div className="roadmap-container">
@@ -115,7 +115,7 @@ const RoadmapView: React.FC = () => {
       {error && <p className="error-message">{error}</p>}
 
       <div className="view-container">
-        {cards.map(card => (
+        {cards.map((card) => (
           <div className="card" key={card.id}>
             <img
               className="card-image"
@@ -137,7 +137,7 @@ const RoadmapView: React.FC = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default RoadmapView
+export default RoadmapView;
