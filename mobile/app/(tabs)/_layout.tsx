@@ -103,6 +103,11 @@ export default function TabLayout() {
               color={color}
             />
           ),
+          href: null,
+          headerShown: false,
+          tabBarStyle: {
+            display: "none",
+          },
         }}
       />
       <Tabs.Screen
@@ -115,6 +120,11 @@ export default function TabLayout() {
               color={color}
             />
           ),
+          href: null,
+          headerShown: false,
+          tabBarStyle: {
+            display: "none",
+          },
         }}
       />
       <Tabs.Screen
