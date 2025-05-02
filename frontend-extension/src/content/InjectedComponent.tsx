@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FaEye,
   FaRegFileAlt,
@@ -9,6 +9,18 @@ import {
 import Chatbot from "./components/Chatbot/chatbot";
 import RoadmapView from "./components/ViewRoadmap/roadmapView";
 import RoadmapCreation from "./components/roadmapCreation/roadmapCreation";
+
+const getToken = (): Promise<string | null> => {
+  return new Promise((resolve) => {
+    if (typeof chrome !== "undefined" && chrome.storage?.local) {
+      chrome.storage.local.get("token", (result) => {
+        resolve(result.token ?? null);
+      });
+    } else {
+      resolve(localStorage.getItem("token"));
+    }
+  });
+};
 
 const buttonData = [
   { icon: <FaUniversalAccess />, label: "Accessibilité" },
@@ -37,7 +49,6 @@ const Panel: React.FC<PanelProps> = ({ activePanel }) => (
       padding: "16px",
     }}
   >
-    {/* {activePanel === 'Accessibilité' && <AccessibilityPanel />*/}
     {activePanel === "Générer Roadmap" && <RoadmapCreation />}
     {activePanel === "Voir Roadmap" && <RoadmapView />}
     {activePanel === "Chatbot" && <Chatbot />}
@@ -47,6 +58,15 @@ const Panel: React.FC<PanelProps> = ({ activePanel }) => (
 const DocRoadmapBar: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [activePanel, setActivePanel] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    getToken().then((t) => setToken(t));
+  }, []);
+
+  if (!token) {
+    return null;
+  }
 
   const handleButtonClick = (label: string) => {
     setActivePanel((current) => (current === label ? null : label));
@@ -54,7 +74,6 @@ const DocRoadmapBar: React.FC = () => {
 
   return (
     <>
-      {/* Main Panel */}
       {activePanel && <Panel activePanel={activePanel} />}
 
       <div
@@ -68,9 +87,11 @@ const DocRoadmapBar: React.FC = () => {
           alignItems: "center",
         }}
       >
-        {/* Main Button */}
         <button
-          onClick={() => {setOpen(!open); setActivePanel(null);}}
+          onClick={() => {
+            setOpen(!open);
+            setActivePanel(null);
+          }}
           style={{
             width: 56,
             height: 56,
@@ -87,7 +108,6 @@ const DocRoadmapBar: React.FC = () => {
           <FaRegFileAlt />
         </button>
 
-        {/* Expandable Bar */}
         <div
           style={{
             display: "flex",
@@ -126,6 +146,6 @@ const DocRoadmapBar: React.FC = () => {
       </div>
     </>
   );
-};
+}
 
 export default DocRoadmapBar;
