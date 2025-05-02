@@ -54,6 +54,7 @@ const DocRoadmapBar: React.FC = () => {
 
   return (
     <>
+      {/* Main Panel */}
       {activePanel && <Panel activePanel={activePanel} />}
 
       <div
@@ -69,7 +70,7 @@ const DocRoadmapBar: React.FC = () => {
       >
         {/* Main Button */}
         <button
-          onClick={() => setOpen(!open)}
+          onClick={() => {setOpen(!open); setActivePanel(null);}}
           style={{
             width: 56,
             height: 56,
