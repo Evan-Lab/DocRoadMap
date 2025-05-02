@@ -10,17 +10,16 @@ import Chatbot from "./components/Chatbot/chatbot";
 import RoadmapView from "./components/ViewRoadmap/roadmapView";
 import RoadmapCreation from "./components/roadmapCreation/roadmapCreation";
 
-const getToken = (): Promise<string | null> => {
-  return new Promise((resolve) => {
+const getToken = (): Promise<string | null> =>
+  new Promise((resolve) => {
     if (typeof chrome !== "undefined" && chrome.storage?.local) {
-      chrome.storage.local.get("token", (result) => {
-        resolve(result.token ?? null);
+      chrome.storage.local.get("token", (res) => {
+        resolve(res.token ?? null);
       });
     } else {
       resolve(localStorage.getItem("token"));
     }
   });
-};
 
 const buttonData = [
   { icon: <FaUniversalAccess />, label: "Accessibilité" },
@@ -43,10 +42,10 @@ const Panel: React.FC<PanelProps> = ({ activePanel }) => (
       height: "400px",
       background: "#fff",
       border: "1px solid #1976d2",
-      borderRadius: "8px",
+      borderRadius: 8,
       boxShadow: "0 2px 16px rgba(0,0,0,0.2)",
       zIndex: 10000,
-      padding: "16px",
+      padding: 16,
     }}
   >
     {activePanel === "Générer Roadmap" && <RoadmapCreation />}
@@ -61,7 +60,35 @@ const DocRoadmapBar: React.FC = () => {
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    getToken().then((t) => setToken(t));
+    getToken().then(setToken); // get the token whent the component mounts
+    // here we add a listener to asynchrounously check wne the user is logged in or not (token is set or not)
+    // if token is set, we set the token state to the value of the token and we display the button at bottom right of screen
+    // if there is no token, we set the token state to null and nothong gets displayed at bottom right of  screen
+
+    if (typeof chrome !== "undefined" && chrome.storage?.local) {
+      const onChanged = (
+        changes: { [key: string]: chrome.storage.StorageChange },
+        area: string
+      ) => {
+        if (area === "local" && changes.token) {
+          setToken(changes.token.newValue ?? null);
+        }
+      };
+      chrome.storage.onChanged.addListener(onChanged);
+      return () => {
+        chrome.storage.onChanged.removeListener(onChanged);
+      };
+    } else {
+      const onStorage = (e: StorageEvent) => {
+        if (e.key === "token") {
+          setToken(e.newValue);
+        }
+      };
+      window.addEventListener("storage", onStorage);
+      return () => {
+        window.removeEventListener("storage", onStorage);
+      };
+    }
   }, []);
 
   if (!token) {
@@ -69,7 +96,7 @@ const DocRoadmapBar: React.FC = () => {
   }
 
   const handleButtonClick = (label: string) => {
-    setActivePanel((current) => (current === label ? null : label));
+    setActivePanel((cur) => (cur === label ? null : label));
   };
 
   return (
@@ -79,8 +106,8 @@ const DocRoadmapBar: React.FC = () => {
       <div
         style={{
           position: "fixed",
-          bottom: "24px",
-          right: "24px",
+          bottom: 24,
+          right: 24,
           zIndex: 9999,
           display: "flex",
           flexDirection: "row-reverse",
@@ -89,7 +116,7 @@ const DocRoadmapBar: React.FC = () => {
       >
         <button
           onClick={() => {
-            setOpen(!open);
+            setOpen((o) => !o);
             setActivePanel(null);
           }}
           style={{
@@ -127,8 +154,10 @@ const DocRoadmapBar: React.FC = () => {
                   width: 48,
                   height: 48,
                   borderRadius: "50%",
-                  background: activePanel === btn.label ? "#1976d2" : "#fff",
-                  color: activePanel === btn.label ? "white" : "#1976d2",
+                  background:
+                    activePanel === btn.label ? "#1976d2" : "#fff",
+                  color:
+                    activePanel === btn.label ? "#fff" : "#1976d2",
                   border: "1px solid #1976d2",
                   fontSize: 22,
                   display: "flex",
@@ -146,6 +175,5 @@ const DocRoadmapBar: React.FC = () => {
       </div>
     </>
   );
-}
-
+} 
 export default DocRoadmapBar;
