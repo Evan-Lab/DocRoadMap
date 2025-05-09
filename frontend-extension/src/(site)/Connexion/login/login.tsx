@@ -37,6 +37,20 @@ function Login() {
         }
         if (token) {
           console.log("Connected, token: ", token);
+          if (token) {
+            // send token to content script (web page so that it can be displayed in the console in build mode)
+            // we do it by sending a message to active tab (the one that is currently open in the browser)
+            if (chrome && chrome.tabs && chrome.tabs.query && chrome.tabs.sendMessage) {
+              chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+                if (tabs[0]?.id) {
+                  chrome.tabs.sendMessage(tabs[0].id, { type: "logToken", token });
+                }
+              });
+            }
+            console.log("Connected, token: ", token);
+            navigate("/roadmap");
+          }
+          
           navigate("/roadmap");
         }
       })
