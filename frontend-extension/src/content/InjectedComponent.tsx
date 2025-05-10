@@ -154,10 +154,8 @@ const DocRoadmapBar: React.FC = () => {
                   width: 48,
                   height: 48,
                   borderRadius: "50%",
-                  background:
-                    activePanel === btn.label ? "#1976d2" : "#fff",
-                  color:
-                    activePanel === btn.label ? "#fff" : "#1976d2",
+                  background: activePanel === btn.label ? "#1976d2" : "#fff",
+                  color: activePanel === btn.label ? "#fff" : "#1976d2",
                   border: "1px solid #1976d2",
                   fontSize: 22,
                   display: "flex",
@@ -175,5 +173,5 @@ const DocRoadmapBar: React.FC = () => {
       </div>
     </>
   );
-} 
+};
 export default DocRoadmapBar;
