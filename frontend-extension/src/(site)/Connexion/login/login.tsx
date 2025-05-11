@@ -27,6 +27,7 @@ function Login() {
     axios
       .post("http://localhost:8082/auth/login", { email, password })
       .then((response) => {
+
         const token = response.data.accessToken;
 
         localStorage.setItem("token", token);
@@ -35,22 +36,17 @@ function Login() {
             console.log("Token saved in chrome.storage :", token);
           });
         }
+
         if (token) {
-          console.log("Connected, token: ", token);
-          if (token) {
-            // send token to content script (web page so that it can be displayed in the console in build mode)
-            // we do it by sending a message to active tab (the one that is currently open in the browser)
-            if (chrome && chrome.tabs && chrome.tabs.query && chrome.tabs.sendMessage) {
-              chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-                if (tabs[0]?.id) {
-                  chrome.tabs.sendMessage(tabs[0].id, { type: "logToken", token });
-                }
-              });
-            }
-            console.log("Connected, token: ", token);
-            navigate("/roadmap");
+          // send token to "content" script (so that it can be displayed in the console of the active tab in build mode)
+          if (chrome && chrome.tabs && chrome.tabs.query && chrome.tabs.sendMessage) {
+            chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+              if (tabs[0]?.id) {
+                chrome.tabs.sendMessage(tabs[0].id, { type: "logToken", token });
+              }
+            });
           }
-          
+          console.log("Connected, token: ", token);
           navigate("/roadmap");
         }
       })

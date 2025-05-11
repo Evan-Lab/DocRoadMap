@@ -60,11 +60,10 @@ const DocRoadmapBar: React.FC = () => {
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    getToken().then(setToken); // get the token whent the component mounts
+    getToken().then(setToken);
     // here we add a listener to asynchrounously check wne the user is logged in or not (token is set or not)
     // if token is set, we set the token state to the value of the token and we display the button at bottom right of screen
     // if there is no token, we set the token state to null and nothong gets displayed at bottom right of  screen
-
     if (typeof chrome !== "undefined" && chrome.storage?.local) {
       const onChanged = (
         changes: { [key: string]: chrome.storage.StorageChange },

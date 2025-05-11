@@ -106,7 +106,6 @@ const RoadmapView: React.FC = () => {
     }
   };
 
-  // Fetch steps for a given process id
   const getSteps = async (id: number, name: string) => {
     try {
       const response = await axios.get(`http://localhost:8082/process/${id}`, {
@@ -122,7 +121,6 @@ const RoadmapView: React.FC = () => {
     }
   };
 
-  // Close the steps card
   const closeSteps = () => {
     setShowSteps(false);
     setSteps([]);
