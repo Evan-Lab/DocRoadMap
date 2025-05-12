@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaArrowLeft } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./register.css";
 
 const isDev = process.env.NODE_ENV !== "production";
@@ -107,7 +107,7 @@ function Register() {
           {t("submit")}
         </button>
         <p className="login-text">
-          {t("hasAccount")} <a href="/login">{t("login")}</a>
+          {t("hasAccount")} <Link to="/login">{t("login")}</Link>
         </p>
       </div>
     </div>

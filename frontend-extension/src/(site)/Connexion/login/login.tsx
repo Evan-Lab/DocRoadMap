@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaArrowLeft } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./login.css";
 
 const isDev = process.env.NODE_ENV !== "production";
@@ -113,7 +113,7 @@ function Login() {
               {t("forgot")}
             </p>
             <p className="signup-text">
-              {t("noAccount")} <a href="/register">{t("register")}</a>
+              {t("noAccount")} <Link to="/register">{t("register")}</Link>
             </p>
           </>
         ) : (
