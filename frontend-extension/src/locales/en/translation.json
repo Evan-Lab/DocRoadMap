@@ -1,0 +1,18 @@
+{
+  "login": {
+    "title": "Login",
+    "error": "Incorrect email or password",
+    "email": "Email",
+    "emailPlaceholder": "Your email",
+    "password": "Password",
+    "passwordPlaceholder": "Your password",
+    "submit": "Log in",
+    "forgot": "Forgot password?",
+    "noAccount": "Don't have an account yet?",
+    "signup": "Sign up",
+    "resetTitle": "Password Reset",
+    "resetSuccess": "If an account is associated with this email, a reset link has been sent.",
+    "back": "Back to login",
+    "sendReset": "Send link"
+  }
+}

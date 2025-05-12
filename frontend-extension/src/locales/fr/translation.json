@@ -1,0 +1,25 @@
+{
+  "login": {
+    "login": "Se connecter",
+    "signup": "S'inscrire",
+    "errorLogin": "Email ou mot de passe incorrect",
+    "email": "Email",
+    "emailPlaceholder": "Votre email",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Votre mot de passe",
+    "forgot": "Mot de passe oublié ?",
+    "noAccount": "Pas encore de compte ?",
+    "resetTitle": "Réinitialisation du mot de passe",
+    "resetSuccess": "Si un compte est associé à cet email, un lien de réinitialisation a été envoyé.",
+    "back": "Retour à la connexion",
+    "sendReset": "Envoyer le lien",
+    "title": "Profil",
+    "firstName": "Prénom",
+    "lastName": "Nom de famille",
+    "confirmPassword": "Confirmation du mot de passe",
+    "submit": "S'inscrire",
+    "hasAccount": "Vous avez déjà un compte ?",
+    "passwordMismatch": "Les mots de passe ne correspondent pas",
+    "error": "Une erreur s'est produite lors de l'inscription"
+  }
+}

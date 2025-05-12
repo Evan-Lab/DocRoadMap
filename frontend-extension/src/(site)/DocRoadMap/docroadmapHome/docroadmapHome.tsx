@@ -14,7 +14,7 @@ const DocroadmapHome: React.FC = () => {
   };
 
   const changeLanguage = () => {
-    console.log("Work in progress");
+    navigate("/language");
   };
 
   const logout = () => {

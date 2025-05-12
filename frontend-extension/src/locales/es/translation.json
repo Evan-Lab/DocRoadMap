@@ -1,0 +1,18 @@
+{
+  "login": {
+    "title": "Iniciar sesión",
+    "error": "Correo electrónico o contraseña incorrectos",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "Tu correo electrónico",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Tu contraseña",
+    "submit": "Iniciar sesión",
+    "forgot": "¿Olvidaste tu contraseña?",
+    "noAccount": "¿Aún no tienes una cuenta?",
+    "signup": "Regístrate",
+    "resetTitle": "Restablecer contraseña",
+    "resetSuccess": "Si existe una cuenta asociada a este correo, se ha enviado un enlace de restablecimiento.",
+    "back": "Volver al inicio de sesión",
+    "sendReset": "Enviar enlace"
+  }
+}

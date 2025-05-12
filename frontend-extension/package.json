@@ -14,8 +14,11 @@
   },
   "dependencies": {
     "frontend-extention": "file:",
+    "i18next": "^25.1.2",
+    "i18next-browser-languagedetector": "^8.1.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-i18next": "^15.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",
