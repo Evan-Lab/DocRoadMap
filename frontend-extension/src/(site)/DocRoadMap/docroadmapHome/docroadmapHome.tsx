@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { FaGlobe, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./docroadmapHome.css";
@@ -8,6 +9,7 @@ const SignOutIcon = FaSignOutAlt as unknown as React.FC<any>;
 
 const DocroadmapHome: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const goToProfile = () => {
     navigate("/profile");
@@ -32,21 +34,21 @@ const DocroadmapHome: React.FC = () => {
   return (
     <div className="roadmap-container">
       <div className="settings-content">
-        <h1 className="roadmap-title">Paramètres</h1>
+        <h1 className="roadmap-title">{t("login.settings")}</h1>
         <div className="roadmap-buttons">
           <button onClick={goToProfile}>
             <UserIcon className="button-icon" />
-            <span className="button-text">Profil</span>
+            <span className="button-text">{t("login.profile")}</span>
           </button>
 
           <button onClick={changeLanguage}>
             <GlobeIcon className="button-icon" />
-            <span className="button-text">Langue</span>
+            <span className="button-text">{t("login.language")}</span>
           </button>
 
           <button onClick={logout}>
             <SignOutIcon className="button-icon" />
-            <span className="button-text">Déconnexion</span>
+            <span className="button-text">{t("login.logout")}</span>
           </button>
         </div>
       </div>

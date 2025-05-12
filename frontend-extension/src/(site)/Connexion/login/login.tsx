@@ -107,7 +107,7 @@ function Login() {
               />
             </div>
             <button className="login-button" onClick={handleLogin}>
-              {t("login.submit")}
+              {t("login.login")}
             </button>
             <p className="forgot-password" onClick={() => setIsResetMode(true)}>
               {t("login.forgot")}

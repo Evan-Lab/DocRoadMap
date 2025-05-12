@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import "./registerConfirmation.css";
 
@@ -9,13 +10,14 @@ const docroadmapImg = isDev
 
 function RegisterConfirmation() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleLoginRedirect = () => {
     navigate("/login");
   };
 
   const handleResendEmail = () => {
-    alert("Email de confirmation renvoyé !");
+    alert(t("login.resent"));
   };
 
   return (
@@ -25,18 +27,15 @@ function RegisterConfirmation() {
           <div className="DocRoadMap-Logo confirmation">
             <img src={docroadmapImg} alt="DocRoadMap" />
           </div>
-          <h1>Compte créé avec succès !</h1>
+          <h1>{t("login.createwithsuccess")}</h1>
         </div>
-        <p>
-          Un email de confirmation a été envoyé à votre adresse email. Veuillez
-          cliquer sur le lien de confirmation pour activer votre compte.
-        </p>
+        <p>{t("login.instruction")}</p>
         <div className="button-group">
           <button className="login-button" onClick={handleLoginRedirect}>
-            Se connecter
+            {t("login.login")}
           </button>
           <button className="resend-button" onClick={handleResendEmail}>
-            Renvoyer l'email
+            {t("login.resend")}
           </button>
         </div>
       </div>

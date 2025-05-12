@@ -20,16 +20,16 @@ const LanguageSelector: React.FC = () => {
         <button className="back-button" onClick={() => navigate(-1)}>
           <ArrowLeftIcon />
         </button>
-        <h1 className="roadmap-title">{t("settings.languageTitle")}</h1>
+        <h1 className="roadmap-title">{t("login.languageTitle")}</h1>
         <div className="roadmap-buttons">
           <button onClick={() => handleLanguageChange("fr")}>
-            🇫🇷 <span className="button-text">Français</span>
+            🇫🇷 <span className="button-text">{t("login.french")}</span>
           </button>
           <button onClick={() => handleLanguageChange("en")}>
-            🇬🇧 <span className="button-text">English</span>
+            🇬🇧 <span className="button-text">{t("login.english")}</span>
           </button>
           <button onClick={() => handleLanguageChange("es")}>
-            🇪🇸 <span className="button-text">Español</span>
+            🇪🇸 <span className="button-text">{t("login.spanish")}</span>
           </button>
         </div>
       </div>
