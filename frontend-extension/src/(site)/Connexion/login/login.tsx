@@ -113,7 +113,8 @@ function Login() {
               {t("login.forgot")}
             </p>
             <p className="signup-text">
-              {t("login.noAccount")} <a href="/register">{t("login.signup")}</a>
+              {t("login.noAccount")}{" "}
+              <a href="/register">{t("login.register")}</a>
             </p>
           </>
         ) : (

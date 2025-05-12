@@ -26,7 +26,7 @@ function Register() {
 
   const handleRegister = () => {
     if (password !== confirmPassword) {
-      setError("register.passwordMismatch");
+      setError("login.passwordMismatch");
       return;
     }
 
@@ -41,7 +41,7 @@ function Register() {
         navigate("/account-confirmation");
       })
       .catch(() => {
-        setError("register.error");
+        setError("login.error");
       });
   };
 
@@ -55,59 +55,59 @@ function Register() {
           <div className="DocRoadMap-Logo register">
             <img src={docroadmapImg} alt="DocRoadMap" />
           </div>
-          <h1>{t("register.title")}</h1>
+          <h1>{t("login.register")}</h1>
         </div>
         {error && <p className="error-message">{t(error)}</p>}
         <div className="input-group">
-          <label>{t("register.firstName")}</label>
+          <label>{t("login.firstName")}</label>
           <input
             type="text"
-            placeholder={t("register.firstName")}
+            placeholder={t("login.firstName")}
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
           />
         </div>
         <div className="input-group">
-          <label>{t("register.lastName")}</label>
+          <label>{t("login.lastName")}</label>
           <input
             type="text"
-            placeholder={t("register.lastName")}
+            placeholder={t("login.lastName")}
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
           />
         </div>
         <div className="input-group">
-          <label>{t("register.email")}</label>
+          <label>{t("login.email")}</label>
           <input
             type="email"
-            placeholder={t("register.email")}
+            placeholder={t("login.email")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="input-group">
-          <label>{t("register.password")}</label>
+          <label>{t("login.password")}</label>
           <input
             type="password"
-            placeholder={t("register.password")}
+            placeholder={t("login.password")}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div className="input-group">
-          <label>{t("register.confirmPassword")}</label>
+          <label>{t("login.confirmPassword")}</label>
           <input
             type="password"
-            placeholder={t("register.password")}
+            placeholder={t("login.password")}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
         <button className="register-button" onClick={handleRegister}>
-          {t("register.submit")}
+          {t("login.submit")}
         </button>
         <p className="login-text">
-          {t("register.hasAccount")} <a href="/login">{t("register.login")}</a>
+          {t("login.hasAccount")} <a href="/login">{t("login.login")}</a>
         </p>
       </div>
     </div>

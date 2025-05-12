@@ -20,6 +20,7 @@
     "confirmPassword": "Confirmation du mot de passe",
     "submit": "S'inscrire",
     "hasAccount": "Vous avez déjà un compte ?",
+    "register": "S'inscrire",
     "passwordMismatch": "Les mots de passe ne correspondent pas",
     "error": "Une erreur s'est produite"
   }
