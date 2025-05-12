@@ -27,7 +27,6 @@ function Login() {
     axios
       .post("http://localhost:8082/auth/login", { email, password })
       .then((response) => {
-
         const token = response.data.accessToken;
 
         localStorage.setItem("token", token);
@@ -39,10 +38,18 @@ function Login() {
 
         if (token) {
           // send token to "content" script (so that it can be displayed in the console of the active tab in build mode)
-          if (chrome && chrome.tabs && chrome.tabs.query && chrome.tabs.sendMessage) {
+          if (
+            chrome &&
+            chrome.tabs &&
+            chrome.tabs.query &&
+            chrome.tabs.sendMessage
+          ) {
             chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
               if (tabs[0]?.id) {
-                chrome.tabs.sendMessage(tabs[0].id, { type: "logToken", token });
+                chrome.tabs.sendMessage(tabs[0].id, {
+                  type: "logToken",
+                  token,
+                });
               }
             });
           }

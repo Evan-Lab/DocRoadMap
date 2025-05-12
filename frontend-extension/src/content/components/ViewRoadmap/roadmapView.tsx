@@ -386,71 +386,76 @@ const RoadmapView: React.FC = () => {
       }
 
     `}</style>
-    <div className="roadmap-header">
-      <h1 className="roadmap-title">Mes démarches en cours</h1>
-    </div>
-    {error && <p className="error-message">{error}</p>}
+      <div className="roadmap-header">
+        <h1 className="roadmap-title">Mes démarches en cours</h1>
+      </div>
+      {error && <p className="error-message">{error}</p>}
 
-    {!showSteps ? (
-      <div className="carousel-container">
-        {cards.map((card) => (
-          <div className="card" key={card.id}>
-            <img
-              className="card-image"
-              src={getImageForCardName(card.name)}
-              alt="Illustration démarche"
-            />
-            <div className="card-header">
-              <h3>{card.name}</h3>
-            </div>
-            <div className="card-body">
-              <p>
-                {getValidatedStepsCount(card.status)} étape
-                {getValidatedStepsCount(card.status) > 1 ? "s" : ""} validée sur 3
-              </p>
-              <button
-                className="continue-button"
-                onClick={() => getSteps(card.id, card.name)}
-              >
-                Continuer
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-    ) : (
-      <div className="card steps-card">
-        <button
-          className="close-button"
-          onClick={closeSteps}
-          aria-label="Fermer"
-        >
-          &#x2715;
-        </button>
-        <div className="card-header">
-          <h3>{selectedProcessName}</h3>
-        </div>
-        <div className="steps-list">
-          {steps.length > 0 ? (
-            steps.map((step) => (
-              <div key={step.id} className="step-item">
-                <h4>{step.name}</h4>
-                <p>{step.description}</p>
-                <div className="status-row">
-                  <span className={`status-switch ${step.status === "VALIDATED" ? "on" : ""}`}></span>
-                  <span className="status-label">
-                    {step.status === "VALIDATED" ? "Validée" : "En attente"}
-                  </span>
-                </div>
+      {!showSteps ? (
+        <div className="carousel-container">
+          {cards.map((card) => (
+            <div className="card" key={card.id}>
+              <img
+                className="card-image"
+                src={getImageForCardName(card.name)}
+                alt="Illustration démarche"
+              />
+              <div className="card-header">
+                <h3>{card.name}</h3>
               </div>
-            ))
-          ) : (
-            <p>Aucune étape disponible.</p>
-          )}
+              <div className="card-body">
+                <p>
+                  {getValidatedStepsCount(card.status)} étape
+                  {getValidatedStepsCount(card.status) > 1 ? "s" : ""} validée
+                  sur 3
+                </p>
+                <button
+                  className="continue-button"
+                  onClick={() => getSteps(card.id, card.name)}
+                >
+                  Continuer
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-    )}
-  </div>
-);
-}
+      ) : (
+        <div className="card steps-card">
+          <button
+            className="close-button"
+            onClick={closeSteps}
+            aria-label="Fermer"
+          >
+            &#x2715;
+          </button>
+          <div className="card-header">
+            <h3>{selectedProcessName}</h3>
+          </div>
+          <div className="steps-list">
+            {steps.length > 0 ? (
+              steps.map((step) => (
+                <div key={step.id} className="step-item">
+                  <h4>{step.name}</h4>
+                  <p>{step.description}</p>
+                  <div className="status-row">
+                    <span
+                      className={`status-switch ${
+                        step.status === "VALIDATED" ? "on" : ""
+                      }`}
+                    ></span>
+                    <span className="status-label">
+                      {step.status === "VALIDATED" ? "Validée" : "En attente"}
+                    </span>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>Aucune étape disponible.</p>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 export default RoadmapView;
