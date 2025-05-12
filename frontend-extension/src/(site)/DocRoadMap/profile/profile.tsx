@@ -36,7 +36,7 @@ function Profile() {
       try {
         const token = await getToken();
         if (!token) {
-          throw new Error(t("login.tokenError"));
+          throw new Error(t("tokenError"));
         }
 
         const response = await fetch("http://localhost:8082/users/me", {
@@ -48,17 +48,17 @@ function Profile() {
         });
 
         if (!response.ok) {
-          throw new Error(t("login.fetchError"));
+          throw new Error(t("fetchError"));
         }
 
         const data = await response.json();
         setUser({
-          firstName: data.firstName || t("login.notSpecified"),
-          lastName: data.lastName || t("login.notSpecified"),
-          email: data.email || t("login.notSpecified"),
+          firstName: data.firstName || t("notSpecified"),
+          lastName: data.lastName || t("notSpecified"),
+          email: data.email || t("notSpecified"),
         });
       } catch (err) {
-        setError(t("login.genericError"));
+        setError(t("genericError"));
         console.error(err);
       }
     };
@@ -71,7 +71,7 @@ function Profile() {
       <button className="back-button" onClick={() => navigate(-1)}>
         <ArrowLeftIcon />
       </button>
-      <h1 className="profile-title">{t("login.profil")}</h1>
+      <h1 className="profile-title">{t("profil")}</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <div className="profile-picture">
         <FaUser size={80} />

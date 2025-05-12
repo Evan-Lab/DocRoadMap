@@ -60,13 +60,13 @@ function Login() {
         }
       })
       .catch(() => {
-        setError(t("login.error"));
+        setError(t("error"));
         console.log("Not connected, token: ", localStorage.getItem("token"));
       });
   };
 
   const handlePasswordReset = () => {
-    setResetMessage(t("login.resetSuccess"));
+    setResetMessage(t("resetSuccess"));
     setTimeout(() => {
       setResetMessage("");
     }, 5000);
@@ -85,56 +85,55 @@ function Login() {
               <div className="DocRoadMap-Logo login">
                 <img src={docroadmapImg} alt="DocRoadMap" />
               </div>
-              <h1>{t("login.Connexion")}</h1>
+              <h1>{t("Connexion")}</h1>
             </div>
             {error && <p className="error-message">{error}</p>}
             <div className="input-group">
-              <label>{t("login.email")}</label>
+              <label>{t("email")}</label>
               <input
                 type="email"
-                placeholder={t("login.emailPlaceholder")}
+                placeholder={t("emailPlaceholder")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="input-group">
-              <label>{t("login.password")}</label>
+              <label>{t("password")}</label>
               <input
                 type="password"
-                placeholder={t("login.passwordPlaceholder")}
+                placeholder={t("passwordPlaceholder")}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <button className="login-button" onClick={handleLogin}>
-              {t("login.login")}
+              {t("login")}
             </button>
             <p className="forgot-password" onClick={() => setIsResetMode(true)}>
-              {t("login.forgot")}
+              {t("forgot")}
             </p>
             <p className="signup-text">
-              {t("login.noAccount")}{" "}
-              <a href="/register">{t("login.register")}</a>
+              {t("noAccount")} <a href="/register">{t("register")}</a>
             </p>
           </>
         ) : (
           <>
-            <h2>{t("login.reset")}</h2>
+            <h2>{t("reset")}</h2>
             {resetMessage && <p className="success-message">{resetMessage}</p>}
             <div className="input-group">
-              <label>{t("login.email")}</label>
+              <label>{t("email")}</label>
               <input
                 type="email"
-                placeholder={t("login.emailPlaceholder")}
+                placeholder={t("emailPlaceholder")}
                 value={resetEmail}
                 onChange={(e) => setResetEmail(e.target.value)}
               />
             </div>
             <button className="login-button" onClick={handlePasswordReset}>
-              {t("login.sendReset")}
+              {t("sendReset")}
             </button>
             <p className="back-to-login" onClick={() => setIsResetMode(false)}>
-              {t("login.back")}
+              {t("back")}
             </p>
           </>
         )}

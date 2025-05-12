@@ -17,7 +17,7 @@ function RegisterConfirmation() {
   };
 
   const handleResendEmail = () => {
-    alert(t("login.resent"));
+    alert(t("resent"));
   };
 
   return (
@@ -27,15 +27,15 @@ function RegisterConfirmation() {
           <div className="DocRoadMap-Logo confirmation">
             <img src={docroadmapImg} alt="DocRoadMap" />
           </div>
-          <h1>{t("login.createwithsuccess")}</h1>
+          <h1>{t("createwithsuccess")}</h1>
         </div>
-        <p>{t("login.instruction")}</p>
+        <p>{t("instruction")}</p>
         <div className="button-group">
           <button className="login-button" onClick={handleLoginRedirect}>
-            {t("login.login")}
+            {t("login")}
           </button>
           <button className="resend-button" onClick={handleResendEmail}>
-            {t("login.resend")}
+            {t("resend")}
           </button>
         </div>
       </div>

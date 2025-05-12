@@ -39,10 +39,10 @@ function Home() {
       <div className="DocRoadMap-Logo">
         <img src={docroadmapImg} alt="DocRoadMap" />
       </div>
-      <button onClick={() => navigate("/login")}>{t("login.login")}</button>
+      <button onClick={() => navigate("/login")}>{t("login")}</button>
 
       <button onClick={() => navigate("/register")}>
-        {t("login.register")}
+        {t("register")}
       </button>
     </div>
   );

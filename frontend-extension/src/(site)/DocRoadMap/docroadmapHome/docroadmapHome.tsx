@@ -34,21 +34,21 @@ const DocroadmapHome: React.FC = () => {
   return (
     <div className="roadmap-container">
       <div className="settings-content">
-        <h1 className="roadmap-title">{t("login.settings")}</h1>
+        <h1 className="roadmap-title">{t("settings")}</h1>
         <div className="roadmap-buttons">
           <button onClick={goToProfile}>
             <UserIcon className="button-icon" />
-            <span className="button-text">{t("login.profile")}</span>
+            <span className="button-text">{t("profile")}</span>
           </button>
 
           <button onClick={changeLanguage}>
             <GlobeIcon className="button-icon" />
-            <span className="button-text">{t("login.language")}</span>
+            <span className="button-text">{t("language")}</span>
           </button>
 
           <button onClick={logout}>
             <SignOutIcon className="button-icon" />
-            <span className="button-text">{t("login.logout")}</span>
+            <span className="button-text">{t("logout")}</span>
           </button>
         </div>
       </div>
