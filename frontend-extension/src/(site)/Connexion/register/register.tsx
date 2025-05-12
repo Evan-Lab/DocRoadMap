@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./register.css";
@@ -14,6 +15,8 @@ const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
 
 function Register() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,7 +26,7 @@ function Register() {
 
   const handleRegister = () => {
     if (password !== confirmPassword) {
-      setError("Les mots de passe ne correspondent pas");
+      setError("register.passwordMismatch");
       return;
     }
 
@@ -38,7 +41,7 @@ function Register() {
         navigate("/account-confirmation");
       })
       .catch(() => {
-        setError("Une erreur s'est produite lors de l'inscription");
+        setError("register.error");
       });
   };
 
@@ -52,59 +55,59 @@ function Register() {
           <div className="DocRoadMap-Logo register">
             <img src={docroadmapImg} alt="DocRoadMap" />
           </div>
-          <h1>Inscription</h1>
+          <h1>{t("register.title")}</h1>
         </div>
-        {error && <p className="error-message">{error}</p>}
+        {error && <p className="error-message">{t(error)}</p>}
         <div className="input-group">
-          <label>Prénom</label>
+          <label>{t("register.firstName")}</label>
           <input
             type="text"
-            placeholder="Prénom"
+            placeholder={t("register.firstName")}
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
           />
         </div>
         <div className="input-group">
-          <label>Nom de famille</label>
+          <label>{t("register.lastName")}</label>
           <input
             type="text"
-            placeholder="Nom"
+            placeholder={t("register.lastName")}
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
           />
         </div>
         <div className="input-group">
-          <label>Adresse e-mail</label>
+          <label>{t("register.email")}</label>
           <input
             type="email"
-            placeholder="Email"
+            placeholder={t("register.email")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="input-group">
-          <label>Mot de passe</label>
+          <label>{t("register.password")}</label>
           <input
             type="password"
-            placeholder="Mot de passe"
+            placeholder={t("register.password")}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div className="input-group">
-          <label>Confirmation du mot de passe</label>
+          <label>{t("register.confirmPassword")}</label>
           <input
             type="password"
-            placeholder="Mot de passe"
+            placeholder={t("register.password")}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
         <button className="register-button" onClick={handleRegister}>
-          S'inscrire
+          {t("register.submit")}
         </button>
         <p className="login-text">
-          Vous avez déjà un compte ? <a href="/login">Connectez-vous</a>
+          {t("register.hasAccount")} <a href="/login">{t("register.login")}</a>
         </p>
       </div>
     </div>

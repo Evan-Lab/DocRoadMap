@@ -85,7 +85,7 @@ function Login() {
               <div className="DocRoadMap-Logo login">
                 <img src={docroadmapImg} alt="DocRoadMap" />
               </div>
-              <h1>{t("login.title")}</h1>
+              <h1>{t("login.Connexion")}</h1>
             </div>
             {error && <p className="error-message">{error}</p>}
             <div className="input-group">
@@ -118,7 +118,7 @@ function Login() {
           </>
         ) : (
           <>
-            <h2>{t("login.resetTitle")}</h2>
+            <h2>{t("login.reset")}</h2>
             {resetMessage && <p className="success-message">{resetMessage}</p>}
             <div className="input-group">
               <label>{t("login.email")}</label>
