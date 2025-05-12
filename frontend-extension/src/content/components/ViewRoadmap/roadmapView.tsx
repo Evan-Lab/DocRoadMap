@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const isDev = process.env.NODE_ENV !== "production";
 const basePath = isDev ? "./assets/" : "./assets/";
@@ -45,10 +46,10 @@ interface Card {
 }
 
 const RoadmapView: React.FC = () => {
+  const { t } = useTranslation();
   const [cards, setCards] = useState<Card[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [showSteps, setShowSteps] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [steps, setSteps] = useState<any[]>([]);
   const [selectedProcessName, setSelectedProcessName] = useState<string>("");
   const [token, setToken] = useState<string | null>(null);
@@ -71,7 +72,7 @@ const RoadmapView: React.FC = () => {
       setToken(token);
 
       if (!token) {
-        setError("Token manquant. Veuillez vous connecter.");
+        setError(t("missingToken"));
         return;
       }
 
@@ -86,12 +87,12 @@ const RoadmapView: React.FC = () => {
         setCards(processes);
       } catch (error) {
         console.error("Erreur lors de la récupération des roadmaps :", error);
-        setError("Impossible de récupérer les roadmaps.");
+        setError(t("fetchError"));
       }
     };
 
     fetchUserProcesses();
-  }, []);
+  }, [t]);
 
   const getValidatedStepsCount = (status: string) => {
     switch (status) {
@@ -117,7 +118,7 @@ const RoadmapView: React.FC = () => {
       setSelectedProcessName(name);
       setShowSteps(true);
     } catch {
-      setError("Erreur lors de la récupération des étapes.");
+      setError(t("fetchStepsError"));
     }
   };
 
@@ -126,6 +127,7 @@ const RoadmapView: React.FC = () => {
     setSteps([]);
     setSelectedProcessName("");
   };
+
   return (
     <div className="roadmap-panel-container">
       <style>{`
@@ -387,7 +389,7 @@ const RoadmapView: React.FC = () => {
 
     `}</style>
       <div className="roadmap-header">
-        <h1 className="roadmap-title">Mes démarches en cours</h1>
+        <h1 className="roadmap-title">{t("currentRoadmaps")}</h1>
       </div>
       {error && <p className="error-message">{error}</p>}
 
@@ -398,22 +400,22 @@ const RoadmapView: React.FC = () => {
               <img
                 className="card-image"
                 src={getImageForCardName(card.name)}
-                alt="Illustration démarche"
+                alt={t("imageAlt")}
               />
               <div className="card-header">
                 <h3>{card.name}</h3>
               </div>
               <div className="card-body">
                 <p>
-                  {getValidatedStepsCount(card.status)} étape
-                  {getValidatedStepsCount(card.status) > 1 ? "s" : ""} validée
-                  sur 3
+                  {getValidatedStepsCount(card.status)} {t("step")}
+                  {getValidatedStepsCount(card.status) > 1 ? "s" : ""}{" "}
+                  {t("validated")} 3
                 </p>
                 <button
                   className="continue-button"
                   onClick={() => getSteps(card.id, card.name)}
                 >
-                  Continuer
+                  {t("continue")}
                 </button>
               </div>
             </div>
@@ -424,7 +426,7 @@ const RoadmapView: React.FC = () => {
           <button
             className="close-button"
             onClick={closeSteps}
-            aria-label="Fermer"
+            aria-label={t("close")}
           >
             &#x2715;
           </button>
@@ -444,13 +446,15 @@ const RoadmapView: React.FC = () => {
                       }`}
                     ></span>
                     <span className="status-label">
-                      {step.status === "VALIDATED" ? "Validée" : "En attente"}
+                      {step.status === "VALIDATED"
+                        ? t("validatedLabel")
+                        : t("pendingLabel")}
                     </span>
                   </div>
                 </div>
               ))
             ) : (
-              <p>Aucune étape disponible.</p>
+              <p>{t("noSteps")}</p>
             )}
           </div>
         </div>
@@ -458,4 +462,5 @@ const RoadmapView: React.FC = () => {
     </div>
   );
 };
+
 export default RoadmapView;
