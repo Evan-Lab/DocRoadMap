@@ -62,7 +62,7 @@ const DocRoadmapBar: React.FC = () => {
     if (typeof chrome !== "undefined" && chrome.storage?.local) {
       const onChanged = (
         changes: { [key: string]: chrome.storage.StorageChange },
-        area: string
+        area: string,
       ) => {
         if (area === "local" && changes.token) {
           setToken(changes.token.newValue ?? null);

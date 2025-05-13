@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { getToken } from "../../utils/utils";
 
 const basePath = "./assets/";
@@ -42,6 +42,7 @@ interface Step {
 }
 
 const RoadmapCreation: React.FC = () => {
+  const { t } = useTranslation();
   const [user, setUser] = useState<any>(null);
   const [stepsData, setStepsData] = useState<Step[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -52,7 +53,7 @@ const RoadmapCreation: React.FC = () => {
       const token = await getToken();
 
       if (!token) {
-        setError("Token non disponible. Veuillez vous connecter.");
+        setError(t("tokenUnavailable"));
         return;
       }
       try {
@@ -65,7 +66,7 @@ const RoadmapCreation: React.FC = () => {
           "http://localhost:8082/list-administrative-process",
           {
             headers: { Authorization: `Bearer ${token}` },
-          }
+          },
         );
 
         const enrichedSteps = stepsRes.data.map((step: any) => ({
@@ -76,12 +77,12 @@ const RoadmapCreation: React.FC = () => {
         setStepsData(enrichedSteps);
       } catch (error) {
         console.error("Erreur lors du chargement :", error);
-        setError("Impossible de charger les démarches.");
+        setError(t("loadError"));
       }
     };
 
     fetchData();
-  }, []);
+  }, [t]);
 
   const generateUniqueStepsId = (): number => {
     let id: number;
@@ -114,11 +115,11 @@ const RoadmapCreation: React.FC = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
     } catch (error) {
       console.error("Erreur lors de la création :", error);
-      setError("Erreur lors de la création de la démarche.");
+      setError(t("createError"));
     }
   };
 
@@ -236,7 +237,7 @@ const RoadmapCreation: React.FC = () => {
       `}</style>
 
       <div className="roadmap-header">
-        <h1 className="roadmap-title">Créer une nouvelle démarche</h1>
+        <h1 className="roadmap-title">{t("createRoadmap")}</h1>
       </div>
 
       {error && <p className="error-message">{error}</p>}
@@ -244,17 +245,13 @@ const RoadmapCreation: React.FC = () => {
       <div className="carousel-container">
         {stepsData.map((step) => (
           <div className="card" key={step.id}>
-            <img
-              className="card-image"
-              src={step.image}
-              alt="Illustration démarche"
-            />
+            <img className="card-image" src={step.image} alt={t("imageAlt")} />
             <div className="card-header">
               <h3>{step.name}</h3>
             </div>
             <div className="card-body">
               <button onClick={() => handleCreateCard(step)}>
-                Créer cette démarche
+                {t("createThis")}
               </button>
             </div>
           </div>
