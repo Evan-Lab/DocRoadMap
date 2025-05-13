@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { getToken } from "../../utils/utils";
 
 const isDev = process.env.NODE_ENV !== "production";
 const basePath = isDev ? "./assets/" : "./assets/";
@@ -55,18 +56,6 @@ const RoadmapView: React.FC = () => {
 
   useEffect(() => {
     const fetchUserProcesses = async () => {
-      const getToken = (): Promise<string | null> => {
-        return new Promise((resolve) => {
-          if (typeof chrome !== "undefined" && chrome.storage?.local) {
-            chrome.storage.local.get("token", (result) => {
-              resolve(result.token ?? null);
-            });
-          } else {
-            resolve(localStorage.getItem("token"));
-          }
-        });
-      };
-
       const token = await getToken();
       setToken(token);
 
@@ -74,7 +63,6 @@ const RoadmapView: React.FC = () => {
         setError("Token manquant. Veuillez vous connecter.");
         return;
       }
-
       try {
         const response = await axios.get("http://localhost:8082/users/me", {
           headers: {
@@ -126,9 +114,11 @@ const RoadmapView: React.FC = () => {
     setSteps([]);
     setSelectedProcessName("");
   };
+
   return (
     <div className="roadmap-panel-container">
-      <style>{`
+      <style>
+        {`
         .roadmap-panel-container {
           width: 100%;
           height: 100%;
@@ -172,7 +162,7 @@ const RoadmapView: React.FC = () => {
           padding-bottom: 0.5rem;
         }
         .card {
-           background: #fff;
+          background: #fff;
           border-radius: 10px;
           box-shadow: 0 2px 8px rgba(44,62,80,0.08);
           width: 100%;
@@ -189,7 +179,6 @@ const RoadmapView: React.FC = () => {
         .card-image {
           width:100%;
           border-radius: 10px 10px 0 0;
-
         }
         .card-header {
           margin-bottom: 0.2rem;
@@ -224,7 +213,6 @@ const RoadmapView: React.FC = () => {
           margin: 0;
           color: black;
           font-size: 0.9rem;
-          
         }
         .continue-button {
           margin-top: 0.5rem;
@@ -240,7 +228,6 @@ const RoadmapView: React.FC = () => {
         .continue-button:hover {
           background: #225ea8;
         }
-        /* hide the scrollbars for Chrome, Safari and Opera */
         .carousel-container::-webkit-scrollbar {
           width: 6px;
         }
@@ -248,16 +235,46 @@ const RoadmapView: React.FC = () => {
           background: #e0e0e0;
           border-radius: 3px;
         }
-        /* hides scrollbars for internetexplorer, Edge and Firefox */
         .carousel-container {
           scrollbar-width: thin;
           scrollbar-color: #e0e0e0 #f7f8fa;
         }
         .steps-card {
+          width: 100%;
+          height: 420px;
+          border-radius: 16px;
           box-shadow: 0 8px 32px rgba(44,62,80,0.13);
           position: relative;
+          background: #fff;
           border: 1px solid #e3e6ef;
           overflow: hidden;
+          display: flex;
+          flex-direction: column;
+        }
+        .steps-card .card-header {
+          width: 100%;
+          position: sticky;
+          top: 0;
+          background: #007bff;
+          padding: 1.1rem 2.5rem 1.1rem 1.3rem;
+          border-radius: 16px 16px 0 0;
+          z-index: 1;
+          display: flex;
+          align-items: center;
+          min-height: 35px;
+          flex: 0 0 auto;
+        }
+        .steps-card .steps-list {
+          width: 85%;
+          flex: 1 1 auto;
+          overflow-y: auto;
+          padding: 1.2rem 1.3rem 1.3rem 1.3rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1.1rem;
+          background: #fff;
+          scrollbar-width: thin;
+          scrollbar-color: #e0e0e0 #f7f8fa;
         }
         .steps-card .close-button {
           position: absolute;
@@ -265,6 +282,7 @@ const RoadmapView: React.FC = () => {
           top: 18px;
           background: white;
           border: none;
+          border-radius: 50%;
           font-size: 1.35rem;
           color: #888;
           cursor: pointer;
@@ -276,33 +294,15 @@ const RoadmapView: React.FC = () => {
         .steps-card .close-button:hover {
           color: #e53e3e;
         }
-        .steps-card .card-header {
-          position: sticky;
-          background: #007bff;
-          padding: 1.1rem 2.5rem 1.1rem 1.3rem;   
-          display: flex;
-        }
         .steps-card .card-header h3 {
           color: #fff;
           font-size: 1.15rem;
           font-weight: 700;
           margin: 0;
           flex: 1;
+          flex-direction: row;
           text-align: left;
           letter-spacing: 0.01em;
-        }
-        .steps-card .steps-list {
-          flex: 1 1 auto;
-          overflow-y: auto;
-          max-height: 340px;
-          padding: 1.2rem 1.3rem 1.3rem 1.3rem;
-          display: flex;
-          flex-direction: column;
-          gap: 1.1rem;
-          background: #fff;
-          min-height: 180px;
-          scrollbar-width: thin;
-          scrollbar-color: #e0e0e0 #f7f8fa
         }
         .steps-card .steps-list::-webkit-scrollbar {
           width: 7px;
@@ -321,85 +321,85 @@ const RoadmapView: React.FC = () => {
           font-weight: 500;
           letter-spacing: 0.01em;
         }
-      .steps-card .step-item {
-        background: #F0F5FF;
-        border-radius: 6px;
-        color: #20498A;
-        font-size: 0.9em;
-        border-left: 3px solid #4A88C5;
-        transition: transform 0.2s ease, background 0.18s;
-        padding: 10px 12px;
-        margin: 6px 0;
-        box-shadow: none;
-        display: block;
-      }
-      .steps-card .step-item:hover {
-        transform: translateX(2px);
-        background: #E8F1FF;
-      }
-      .steps-card .step-item h4 {
-        color: #20498A;
-        font-size: 1em;
-        font-weight: 600;
-        margin: 0 0 2px 0;
-      }
-      .steps-card .step-item p {
-        color: #20498A;
-        font-size: 0.95em;
-        margin: 0;
-      }
-      .steps-card .steps-list::-webkit-scrollbar {
-        width: 7px;
-      }
-      .steps-card .steps-list::-webkit-scrollbar-thumb {
-        background: #e0e0e0;
-        border-radius: 3px;
-      }
-      .steps-card .steps-list {
-        scrollbar-width: thin;
-        scrollbar-color: #e0e0e0 #f7f8fa;
-      }
-      .status-row {
-        display: flex;
-        align-items: center;
-        margin-top: 0.4rem;
-        gap: 0.5rem;
-      }
-      .status-switch {
-        width: 34px;
-        height: 20px;
-        border-radius: 12px;
-        background: #ccc;
-        position: relative;
-        transition: background 0.2s;
-        display: inline-block;
-      }
-      .status-switch::before {
-        content: '';
-        position: absolute;
-        left: 3px;
-        top: 3px;
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        background: #fff;
-        transition: left 0.2s, background 0.2s;
-        box-shadow: 0 1px 4px rgba(44,62,80,0.13);
-      }
-      .status-switch.on {
-        background: #30c36b;
-      }
-      .status-switch.on::before {
-        left: 17px;
-        background: #fff;
-      }
-      .status-label {
-        font-size: 0.97rem;
-        color: #444;
-        font-weight: 500;
-        letter-spacing: 0.01em;
-      }
-    `}</style>
+        .steps-card .step-item {
+          background: #F0F5FF;
+          border-radius: 6px;
+          color: #20498A;
+          font-size: 0.9em;
+          border-left: 3px solid #4A88C5;
+          transition: transform 0.2s ease, background 0.18s;
+          padding: 10px 12px;
+          margin: 6px 0;
+          box-shadow: none;
+          display: block;
+        }
+        .steps-card .step-item:hover {
+          transform: translateX(2px);
+          background: #E8F1FF;
+        }
+        .steps-card .step-item h4 {
+          color: #20498A;
+          font-size: 1em;
+          font-weight: 600;
+          margin: 0 0 2px 0;
+        }
+        .steps-card .step-item p {
+          color: #20498A;
+          font-size: 0.95em;
+          margin: 0;
+        }
+        .steps-card .steps-list::-webkit-scrollbar {
+          width: 7px;
+        }
+        .steps-card .steps-list::-webkit-scrollbar-thumb {
+          background: #e0e0e0;
+          border-radius: 3px;
+        }
+        .steps-card .steps-list {
+          scrollbar-width: thin;
+          scrollbar-color: #e0e0e0 #f7f8fa;
+        }
+        .status-row {
+          display: flex;
+          align-items: center;
+          margin-top: 0.4rem;
+          gap: 0.5rem;
+        }
+        .status-switch {
+          width: 34px;
+          height: 20px;
+          border-radius: 12px;
+          background: #ccc;
+          position: relative;
+          transition: background 0.2s;
+          display: inline-block;
+        }
+        .status-switch::before {
+          content: '';
+          position: absolute;
+          left: 3px;
+          top: 3px;
+          width: 14px;
+          height: 14px;
+          border-radius: 50%;
+          background: #fff;
+          transition: left 0.2s, background 0.2s;
+          box-shadow: 0 1px 4px rgba(44,62,80,0.13);
+        }
+        .status-switch.on {
+          background: #30c36b;
+        }
+        .status-switch.on::before {
+          left: 17px;
+          background: #fff;
+        }
+        .status-label {
+          font-size: 0.97rem;
+          color: #444;
+          font-weight: 500;
+          letter-spacing: 0.01em;
+        }`}
+      </style>
       <div className="roadmap-header">
         <h1 className="roadmap-title">Mes démarches en cours</h1>
       </div>
@@ -407,31 +407,33 @@ const RoadmapView: React.FC = () => {
 
       {!showSteps ? (
         <div className="carousel-container">
-          {cards.map((card) => (
-            <div className="card" key={card.id}>
-              <img
-                className="card-image"
-                src={getImageForCardName(card.name)}
-                alt="Illustration démarche"
-              />
-              <div className="card-header">
-                <h3>{card.name}</h3>
+          {cards
+            .sort((a, b) => b.id - a.id)
+            .map((card) => (
+              <div className="card" key={card.id}>
+                <img
+                  className="card-image"
+                  src={getImageForCardName(card.name)}
+                  alt="Illustration démarche"
+                />
+                <div className="card-header">
+                  <h3>{card.name}</h3>
+                </div>
+                <div className="card-body">
+                  <p>
+                    {getValidatedStepsCount(card.status)} étape
+                    {getValidatedStepsCount(card.status) > 1 ? "s" : ""} validée
+                    sur 3
+                  </p>
+                  <button
+                    className="continue-button"
+                    onClick={() => getSteps(card.id, card.name)}
+                  >
+                    Continuer
+                  </button>
+                </div>
               </div>
-              <div className="card-body">
-                <p>
-                  {getValidatedStepsCount(card.status)} étape
-                  {getValidatedStepsCount(card.status) > 1 ? "s" : ""} validée
-                  sur 3
-                </p>
-                <button
-                  className="continue-button"
-                  onClick={() => getSteps(card.id, card.name)}
-                >
-                  Continuer
-                </button>
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
       ) : (
         <div className="card steps-card">
@@ -447,22 +449,24 @@ const RoadmapView: React.FC = () => {
           </div>
           <div className="steps-list">
             {steps.length > 0 ? (
-              steps.map((step) => (
-                <div key={step.id} className="step-item">
-                  <h4>{step.name}</h4>
-                  <p>{step.description}</p>
-                  <div className="status-row">
-                    <span
-                      className={`status-switch ${
-                        step.status === "VALIDATED" ? "on" : ""
-                      }`}
-                    ></span>
-                    <span className="status-label">
-                      {step.status === "VALIDATED" ? "Validée" : "En attente"}
-                    </span>
+              steps
+                .sort((a, b) => b.id - a.id)
+                .map((step) => (
+                  <div key={step.id} className="step-item">
+                    <h4>{step.name}</h4>
+                    <p>{step.description}</p>
+                    <div className="status-row">
+                      <span
+                        className={`status-switch ${
+                          step.status === "VALIDATED" ? "on" : ""
+                        }`}
+                      ></span>
+                      <span className="status-label">
+                        {step.status === "VALIDATED" ? "Validée" : "En attente"}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              ))
+                ))
             ) : (
               <p>Aucune étape disponible.</p>
             )}
@@ -472,4 +476,5 @@ const RoadmapView: React.FC = () => {
     </div>
   );
 };
+
 export default RoadmapView;
