@@ -28,7 +28,6 @@ function Home() {
 
     getToken().then((token) => {
       if (token) {
-        console.log("Redirection /roadmap");
         navigate("/roadmap");
       }
     });

@@ -23,12 +23,15 @@ const mockGet = jest.fn();
 describe("RoadmapView", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.spyOn(console, "error").mockImplementation(() => {});
   });
 
   it("renders the header", async () => {
     mockGet.mockImplementation((_key, cb) => cb({ token: "abc123" }));
     mockedAxios.get.mockResolvedValueOnce({ data: { processes: [] } });
+
     render(<RoadmapView />);
+
     expect(screen.getByText(/Mes démarches en cours/i)).toBeInTheDocument();
     await waitFor(() => expect(mockedAxios.get).toHaveBeenCalled());
   });
@@ -42,7 +45,9 @@ describe("RoadmapView", () => {
   it("shows error if axios fails", async () => {
     mockGet.mockImplementation((_key, cb) => cb({ token: "abc123" }));
     mockedAxios.get.mockRejectedValueOnce(new Error("Network Error"));
+
     render(<RoadmapView />);
+
     expect(
       await screen.findByText(/Impossible de récupérer les roadmaps/i)
     ).toBeInTheDocument();
@@ -60,7 +65,7 @@ describe("RoadmapView", () => {
             status: "COMPLETED",
             createdAt: "",
             updatedAt: "",
-            steps: [],
+            steps: [{ status: "DONE" }, { status: "DONE" }, { status: "DONE" }],
           },
           {
             id: 2,
@@ -69,18 +74,18 @@ describe("RoadmapView", () => {
             status: "IN_PROGRESS",
             createdAt: "",
             updatedAt: "",
-            steps: [],
+            steps: [{ status: "DONE" }, { status: "PENDING" }],
           },
         ],
       },
     });
+
     render(<RoadmapView />);
+
     expect(await screen.findByText("Naissance")).toBeInTheDocument();
     expect(screen.getByText("Emploi")).toBeInTheDocument();
-
     expect(screen.getByText(/3 étapes validée/)).toBeInTheDocument();
     expect(screen.getByText(/1 étape validée/)).toBeInTheDocument();
-
     expect(screen.getAllByText("Continuer").length).toBe(2);
   });
 
@@ -101,6 +106,7 @@ describe("RoadmapView", () => {
         ],
       },
     });
+
     render(<RoadmapView />);
     const img = await screen.findByAltText(/Illustration démarche/i);
     expect(img).toHaveAttribute(
