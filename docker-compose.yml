@@ -16,7 +16,35 @@ services:
       - "5433:5432"
     networks:
       - postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     restart: unless-stopped
+  
+  backend:
+    container_name: DocRoadMapBackend
+    build:
+      context: backend
+    ports:
+      - "8082:8082"
+    environment:
+      - POSTGRES_HOST=DocRoadMapDatabase
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=DocRoadMapDatabase
+      - AI_URL=http://DocRoadMapApiIA:8083
+    networks:
+      - postgres
+      - ia
+    depends_on:
+      postgres:
+          condition: service_healthy
+      flask_app:
+          condition: service_healthy
+    restart: always
 
   scrapper:
     build:
