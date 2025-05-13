@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 
@@ -10,6 +11,7 @@ const docroadmapImg = isDev
 
 function Home() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const getToken = (): Promise<string | null> => {
@@ -37,8 +39,9 @@ function Home() {
       <div className="DocRoadMap-Logo">
         <img src={docroadmapImg} alt="DocRoadMap" />
       </div>
-      <button onClick={() => navigate("/login")}>Se connecter</button>
-      <button onClick={() => navigate("/register")}>S'inscrire</button>
+      <button onClick={() => navigate("/login")}>{t("login")}</button>
+
+      <button onClick={() => navigate("/register")}>{t("register")}</button>
     </div>
   );
 }

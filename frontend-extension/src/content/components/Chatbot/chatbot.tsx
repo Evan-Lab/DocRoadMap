@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FaPaperPlane, FaRobot } from "react-icons/fa";
 
 const Chatbot: React.FC = () => {
+  const { t } = useTranslation();
   const [messages, setMessages] = useState<
     { text: string; sender: "user" | "bot" }[]
   >([]);
@@ -40,7 +42,7 @@ const Chatbot: React.FC = () => {
         }
       );
 
-      if (!response.body) throw new Error("Pas de réponse du serveur.");
+      if (!response.body) throw new Error(t("noServerResponse"));
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
@@ -80,10 +82,7 @@ const Chatbot: React.FC = () => {
       }
     } catch (error) {
       console.error("Erreur lors de la requête OpenAI", error);
-      setMessages([
-        ...newMessages,
-        { text: "Erreur lors de la communication avec l'API.", sender: "bot" },
-      ]);
+      setMessages([...newMessages, { text: t("apiError"), sender: "bot" }]);
     } finally {
       setLoading(false);
     }
@@ -236,7 +235,7 @@ const Chatbot: React.FC = () => {
       <div className="chatbot-header">
         <div className="chatbot-title-container">
           <FaRobot className="chatbot-icon" />
-          <h1 className="chatbot-title">Donna</h1>
+          <h1 className="chatbot-title">{t("Donna")}</h1>
         </div>
       </div>
 
@@ -247,10 +246,11 @@ const Chatbot: React.FC = () => {
           </div>
         ))}
       </div>
+
       <div className="chatbot-input">
         <input
           type="text"
-          placeholder="Posez votre question..."
+          placeholder={t("questionchatbot")}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}

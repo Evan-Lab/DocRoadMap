@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const isDev = process.env.NODE_ENV !== "production";
 const basePath = isDev ? "./assets/" : "./assets/";
@@ -45,8 +46,13 @@ interface Card {
 }
 
 const RoadmapView: React.FC = () => {
+  const { t } = useTranslation();
   const [cards, setCards] = useState<Card[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [showSteps, setShowSteps] = useState(false);
+  const [steps, setSteps] = useState<any[]>([]);
+  const [selectedProcessName, setSelectedProcessName] = useState<string>("");
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUserProcesses = async () => {
@@ -63,9 +69,10 @@ const RoadmapView: React.FC = () => {
       };
 
       const token = await getToken();
+      setToken(token);
 
       if (!token) {
-        setError("Token manquant. Veuillez vous connecter.");
+        setError(t("missingToken"));
         return;
       }
 
@@ -80,12 +87,12 @@ const RoadmapView: React.FC = () => {
         setCards(processes);
       } catch (error) {
         console.error("Erreur lors de la récupération des roadmaps :", error);
-        setError("Impossible de récupérer les roadmaps.");
+        setError(t("fetchError"));
       }
     };
 
     fetchUserProcesses();
-  }, []);
+  }, [t]);
 
   const getValidatedStepsCount = (status: string) => {
     switch (status) {
@@ -98,6 +105,27 @@ const RoadmapView: React.FC = () => {
       default:
         return 0;
     }
+  };
+
+  const getSteps = async (id: number, name: string) => {
+    try {
+      const response = await axios.get(`http://localhost:8082/process/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setSteps(response.data.steps);
+      setSelectedProcessName(name);
+      setShowSteps(true);
+    } catch {
+      setError(t("fetchStepsError"));
+    }
+  };
+
+  const closeSteps = () => {
+    setShowSteps(false);
+    setSteps([]);
+    setSelectedProcessName("");
   };
 
   return (
@@ -228,35 +256,209 @@ const RoadmapView: React.FC = () => {
           scrollbar-width: thin;
           scrollbar-color: #e0e0e0 #f7f8fa;
         }
-      `}</style>
-      <div className="roadmap-header">
-        <h1 className="roadmap-title">Mes démarches en cours</h1>
-      </div>
+        
+        .steps-card {
+        max-width: 500px;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(44,62,80,0.13);
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        background: #fff;
+        min-height: 320px;
+      }
+      .steps-card .close-button {
+        position: absolute;
+        right: 18px;
+        background: transparent;
+        border: none;
+        font-size: 1.35rem;
+        color: #888;
+        cursor: pointer;
+        z-index: 2;
+        transition: color 0.15s;
+      }
+      .steps-card .close-button:hover {
+        color: #e53e3e;
+      }
+      .steps-card .card-header {
+        position: sticky;
+        top: 0;
+        background: #007bff;
+        padding: 1rem 2.5rem 1rem 1.2rem;
+        border-radius: 16px 16px 0 0;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        min-height: 56px;
+      }
+      .steps-card .card-header h3 {
+        color: #fff;
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin: 0;
+        flex: 1;
+        text-align: left;
+      }
+      .steps-card .steps-list {
+        flex: 1 1 auto;
+        overflow-y: auto;
+        max-height: 340px;
+        padding: 1rem 1.2rem 1.2rem 1.2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.1rem;
+      }
+      .steps-card .step-item {
+        background: #f7f8fa;
+        border-radius: 8px;
+        box-shadow: 0 1px 4px rgba(44,62,80,0.06);
+        padding: 0.8rem 1rem;
+        transition: box-shadow 0.18s, background 0.18s;
+        border-left: 4px solid #007bff;
+        display: flex;
+        flex-direction: column;
+      }
+      .steps-card .step-item h4 {
+        margin: 0 0 0.2rem 0;
+        font-size: 1.03rem;
+        color: #225ea8;
+        font-weight: 600;
+      }
+      .steps-card .step-item p {
+        margin: 0.1rem 0 0 0;
+        color: #444;
+        font-size: 0.97rem;
+      }
+      .steps-card .step-item:not(:last-child) {
+        margin-bottom: 0.3rem;
+      }
+      .steps-card .steps-list::-webkit-scrollbar {
+        width: 7px;
+      }
+      .steps-card .steps-list::-webkit-scrollbar-thumb {
+        background: #e0e0e0;
+        border-radius: 3px;
+      }
+      .steps-card .steps-list {
+        scrollbar-width: thin;
+        scrollbar-color: #e0e0e0 #f7f8fa;
+      }
+      .status-row {
+        display: flex;
+        align-items: center;
+        margin-top: 0.4rem;
+        gap: 0.5rem;
+      }
 
+      .status-switch {
+        width: 34px;
+        height: 20px;
+        border-radius: 12px;
+        background: #ccc;
+        position: relative;
+        transition: background 0.2s;
+        display: inline-block;
+      }
+      .status-switch::before {
+        content: '';
+        position: absolute;
+        left: 3px;
+        top: 3px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #fff;
+        transition: left 0.2s, background 0.2s;
+        box-shadow: 0 1px 4px rgba(44,62,80,0.13);
+      }
+      .status-switch.on {
+        background: #30c36b;
+      }
+      .status-switch.on::before {
+        left: 17px;
+        background: #fff;
+      }
+      .status-label {
+        font-size: 0.97rem;
+        color: #444;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+      }
+
+    `}</style>
+      <div className="roadmap-header">
+        <h1 className="roadmap-title">{t("currentRoadmaps")}</h1>
+      </div>
       {error && <p className="error-message">{error}</p>}
 
-      <div className="carousel-container">
-        {cards.map((card) => (
-          <div className="card" key={card.id}>
-            <img
-              className="card-image"
-              src={getImageForCardName(card.name)}
-              alt="Illustration démarche"
-            />
-            <div className="card-header">
-              <h3>{card.name}</h3>
+      {!showSteps ? (
+        <div className="carousel-container">
+          {cards.map((card) => (
+            <div className="card" key={card.id}>
+              <img
+                className="card-image"
+                src={getImageForCardName(card.name)}
+                alt={t("imageAlt")}
+              />
+              <div className="card-header">
+                <h3>{card.name}</h3>
+              </div>
+              <div className="card-body">
+                <p>
+                  {getValidatedStepsCount(card.status)} {t("step")}
+                  {getValidatedStepsCount(card.status) > 1 ? "s" : ""}{" "}
+                  {t("validated")} 3
+                </p>
+                <button
+                  className="continue-button"
+                  onClick={() => getSteps(card.id, card.name)}
+                >
+                  {t("continue")}
+                </button>
+              </div>
             </div>
-            <div className="card-body">
-              <p>
-                {getValidatedStepsCount(card.status)} étape
-                {getValidatedStepsCount(card.status) > 1 ? "s" : ""} validée sur
-                3
-              </p>
-              <button className="continue-button">Continuer</button>
-            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="card steps-card">
+          <button
+            className="close-button"
+            onClick={closeSteps}
+            aria-label={t("close")}
+          >
+            &#x2715;
+          </button>
+          <div className="card-header">
+            <h3>{selectedProcessName}</h3>
           </div>
-        ))}
-      </div>
+          <div className="steps-list">
+            {steps.length > 0 ? (
+              steps.map((step) => (
+                <div key={step.id} className="step-item">
+                  <h4>{step.name}</h4>
+                  <p>{step.description}</p>
+                  <div className="status-row">
+                    <span
+                      className={`status-switch ${
+                        step.status === "VALIDATED" ? "on" : ""
+                      }`}
+                    ></span>
+                    <span className="status-label">
+                      {step.status === "VALIDATED"
+                        ? t("validatedLabel")
+                        : t("pendingLabel")}
+                    </span>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>{t("noSteps")}</p>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
