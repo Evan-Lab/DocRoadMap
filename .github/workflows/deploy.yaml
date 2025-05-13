@@ -24,6 +24,6 @@ jobs:
       - name: Check if deploy script exists
         run: test -f deploy/deploy.sh
 
-      - name: Deploy to VM (branch: ${{ github.ref_name }})
+      - name: Deploy to VM
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'bash -s' < deploy/deploy.sh
