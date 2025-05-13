@@ -54,7 +54,7 @@ describe("RoadmapCreation", () => {
       cb({ token: "abc123" })
     );
     mockedAxios.get
-      .mockResolvedValueOnce({ data: { id: 1 } }) // user
+      .mockResolvedValueOnce({ data: { id: 1 } })
       .mockResolvedValueOnce({
         data: [{ id: 10, name: "Passeport", collection_name: "Identité" }],
       }); // steps
