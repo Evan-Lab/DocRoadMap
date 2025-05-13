@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FaArrowLeft } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./login.css";
 
 const isDev = process.env.NODE_ENV !== "production";
@@ -16,6 +17,8 @@ const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<
 
 function Login() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -37,7 +40,6 @@ function Login() {
         }
 
         if (token) {
-          // send token to "content" script (so that it can be displayed in the console of the active tab in build mode)
           if (
             chrome &&
             chrome.tabs &&
@@ -58,15 +60,13 @@ function Login() {
         }
       })
       .catch(() => {
-        setError("Email ou mot de passe incorrect");
+        setError(t("error"));
         console.log("Not connected, token: ", localStorage.getItem("token"));
       });
   };
 
   const handlePasswordReset = () => {
-    setResetMessage(
-      "Si un compte est associé à cet email, un lien de réinitialisation a été envoyé."
-    );
+    setResetMessage(t("resetSuccess"));
     setTimeout(() => {
       setResetMessage("");
     }, 5000);
@@ -85,55 +85,55 @@ function Login() {
               <div className="DocRoadMap-Logo login">
                 <img src={docroadmapImg} alt="DocRoadMap" />
               </div>
-              <h1>Connexion</h1>
+              <h1>{t("Connexion")}</h1>
             </div>
             {error && <p className="error-message">{error}</p>}
             <div className="input-group">
-              <label>Email</label>
+              <label>{t("email")}</label>
               <input
                 type="email"
-                placeholder="Email"
+                placeholder={t("emailPlaceholder")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="input-group">
-              <label>Mot de passe</label>
+              <label>{t("password")}</label>
               <input
                 type="password"
-                placeholder="Mot de passe"
+                placeholder={t("passwordPlaceholder")}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <button className="login-button" onClick={handleLogin}>
-              Se connecter
+              {t("login")}
             </button>
             <p className="forgot-password" onClick={() => setIsResetMode(true)}>
-              Mot de passe oublié ?
+              {t("forgot")}
             </p>
             <p className="signup-text">
-              Pas encore de compte ? <a href="/register">Inscrivez-vous</a>
+              {t("noAccount")} <Link to="/register">{t("register")}</Link>
             </p>
           </>
         ) : (
           <>
-            <h2>Réinitialisation du mot de passe</h2>
+            <h2>{t("reset")}</h2>
             {resetMessage && <p className="success-message">{resetMessage}</p>}
             <div className="input-group">
-              <label>Email</label>
+              <label>{t("email")}</label>
               <input
                 type="email"
-                placeholder="Email"
+                placeholder={t("emailPlaceholder")}
                 value={resetEmail}
                 onChange={(e) => setResetEmail(e.target.value)}
               />
             </div>
             <button className="login-button" onClick={handlePasswordReset}>
-              Envoyer le lien
+              {t("sendReset")}
             </button>
             <p className="back-to-login" onClick={() => setIsResetMode(false)}>
-              Retour à la connexion
+              {t("back")}
             </p>
           </>
         )}

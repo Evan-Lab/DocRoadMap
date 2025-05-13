@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FaArrowLeft, FaEnvelope, FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./profile.css";
@@ -9,6 +10,8 @@ const EnvelopeIcon = FaEnvelope as unknown as React.FC<any>;
 
 function Profile() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -33,7 +36,7 @@ function Profile() {
       try {
         const token = await getToken();
         if (!token) {
-          throw new Error("Token non disponible. Veuillez vous connecter.");
+          throw new Error(t("tokenError"));
         }
 
         const response = await fetch("http://localhost:8082/users/me", {
@@ -45,32 +48,30 @@ function Profile() {
         });
 
         if (!response.ok) {
-          throw new Error("Échec de la récupération des données utilisateur");
+          throw new Error(t("fetchError"));
         }
 
         const data = await response.json();
         setUser({
-          firstName: data.firstName || "Non spécifié",
-          lastName: data.lastName || "Non spécifié",
-          email: data.email || "Non spécifié",
+          firstName: data.firstName || t("notSpecified"),
+          lastName: data.lastName || t("notSpecified"),
+          email: data.email || t("notSpecified"),
         });
-      } catch (error) {
-        setError(
-          "Une erreur s'est produite lors de la récupération des données."
-        );
-        console.error(error);
+      } catch (err) {
+        setError(t("genericError"));
+        console.error(err);
       }
     };
 
     fetchUserProfile();
-  }, []);
+  }, [t]);
 
   return (
     <div className="profile-container">
       <button className="back-button" onClick={() => navigate(-1)}>
         <ArrowLeftIcon />
       </button>
-      <h1 className="profile-title">Profil</h1>
+      <h1 className="profile-title">{t("profil")}</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <div className="profile-picture">
         <FaUser size={80} />
