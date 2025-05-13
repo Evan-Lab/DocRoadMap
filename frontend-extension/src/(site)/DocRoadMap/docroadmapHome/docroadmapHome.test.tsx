@@ -3,6 +3,10 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import DocroadmapHome from "./docroadmapHome";
 
+beforeAll(() => {
+  jest.spyOn(console, "log").mockImplementation(() => {});
+});
+
 const mockNavigate = jest.fn();
 
 jest.mock("react-i18next", () => ({
@@ -27,7 +31,7 @@ describe("DocroadmapHome component", () => {
     global.chrome = {
       storage: {
         local: {
-          remove: jest.fn((key, callback) => callback && callback()),
+          remove: jest.fn((_key, callback) => callback && callback()),
         },
       },
     } as any;

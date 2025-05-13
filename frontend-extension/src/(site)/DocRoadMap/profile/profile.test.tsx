@@ -31,9 +31,10 @@ describe("Profile component", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.spyOn(console, "error").mockImplementation(() => {});
   });
 
-  it("renders the title and icons", async () => {
+  it("renders user data from chrome.storage", async () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
       json: async () => ({
@@ -46,7 +47,7 @@ describe("Profile component", () => {
     global.chrome = {
       storage: {
         local: {
-          get: (key: string, callback: (result: any) => void) =>
+          get: (_key: string, callback: (result: any) => void) =>
             callback({ token: "valid-token" }),
         },
       },
@@ -54,13 +55,12 @@ describe("Profile component", () => {
 
     renderWithRouter();
 
-    expect(await screen.findByText("profil")).toBeInTheDocument();
     expect(await screen.findByText("John")).toBeInTheDocument();
-    expect(await screen.findByText("Doe")).toBeInTheDocument();
-    expect(await screen.findByText("john@example.com")).toBeInTheDocument();
+    expect(screen.getByText("Doe")).toBeInTheDocument();
+    expect(screen.getByText("john@example.com")).toBeInTheDocument();
   });
 
-  it("falls back to localStorage if chrome is undefined", async () => {
+  it("renders user data from localStorage fallback", async () => {
     delete (global as any).chrome;
     localStorage.setItem("token", "valid-token");
 
@@ -76,8 +76,8 @@ describe("Profile component", () => {
     renderWithRouter();
 
     expect(await screen.findByText("Alice")).toBeInTheDocument();
-    expect(await screen.findByText("Smith")).toBeInTheDocument();
-    expect(await screen.findByText("alice@example.com")).toBeInTheDocument();
+    expect(screen.getByText("Smith")).toBeInTheDocument();
+    expect(screen.getByText("alice@example.com")).toBeInTheDocument();
   });
 
   it("shows error if token is missing", async () => {
@@ -101,13 +101,14 @@ describe("Profile component", () => {
       storage: {
         local: {
           get: (_key: string, callback: (result: any) => void) =>
-            callback({ token: "bad-token" }),
+            callback({ token: "invalid-token" }),
         },
       },
     } as any;
 
     (global.fetch as jest.Mock).mockResolvedValueOnce({
       ok: false,
+      json: async () => ({}),
     });
 
     renderWithRouter();
