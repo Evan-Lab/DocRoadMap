@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { getToken } from "../../utils/utils";
 
 const basePath = "./assets/";
 
@@ -46,18 +47,6 @@ const RoadmapCreation: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [usedStepsIds, setUsedStepsIds] = useState<number[]>([]);
 
-  const getToken = (): Promise<string | null> => {
-    return new Promise((resolve) => {
-      if (typeof chrome !== "undefined" && chrome.storage?.local) {
-        chrome.storage.local.get("token", (result) => {
-          resolve(result.token ?? null);
-        });
-      } else {
-        resolve(localStorage.getItem("token"));
-      }
-    });
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       const token = await getToken();
@@ -66,7 +55,6 @@ const RoadmapCreation: React.FC = () => {
         setError("Token non disponible. Veuillez vous connecter.");
         return;
       }
-
       try {
         const userRes = await axios.get("http://localhost:8082/users/me", {
           headers: { Authorization: `Bearer ${token}` },
@@ -143,9 +131,7 @@ const RoadmapCreation: React.FC = () => {
           box-sizing: border-box;
           display: flex;
           flex-direction: column;
-          background: #f7f8fa;
         }
-
         .roadmap-header {
           flex: 0 0 auto;
           display: flex;
@@ -155,7 +141,6 @@ const RoadmapCreation: React.FC = () => {
           flex-direction: row;
           border-bottom: 1px solid #e0e0e0;
         }
-
         .roadmap-title {
           font-size: 1.1rem;
           font-weight: bold;
@@ -164,7 +149,6 @@ const RoadmapCreation: React.FC = () => {
           flex-direction: row;
           margin: 0;
         }
-
         .error-message {
           color: #e53e3e;
           background: #fff0f0;
@@ -174,7 +158,6 @@ const RoadmapCreation: React.FC = () => {
           margin-bottom: 0.5rem;
           font-size: 0.95rem;
         }
-
         .carousel-container {
           flex: 1 1 auto;
           overflow-y: auto;
@@ -184,21 +167,17 @@ const RoadmapCreation: React.FC = () => {
           gap: 1rem;
           padding-bottom: 0.5rem;
         }
-
         .carousel-container::-webkit-scrollbar {
           width: 6px;
         }
-
         .carousel-container::-webkit-scrollbar-thumb {
           background: #e0e0e0;
           border-radius: 3px;
         }
-
         .carousel-container {
           scrollbar-width: thin;
           scrollbar-color: #e0e0e0 #f7f8fa;
         }
-
         .card {
           background: #fff;
           border-radius: 10px;
@@ -211,22 +190,18 @@ const RoadmapCreation: React.FC = () => {
           position: relative;
           box-sizing: border-box;
         }
-
         .card:hover {
           box-shadow: 0 4px 16px rgba(44, 62, 80, 0.14);
         }
-
         .card-image {
           width: 100%;
           border-radius: 10px 10px 0 0;
         }
-
         .card-header {
           margin-bottom: 0.2rem;
           background: #007bff;
           padding: 0.5rem 0.75rem;
         }
-
         .card-header h3 {
           font-size: 1rem;
           font-weight: 600;
@@ -236,7 +211,6 @@ const RoadmapCreation: React.FC = () => {
           text-align: center;
           word-break: break-word;
         }
-
         .card-body {
           flex: 1 1 auto;
           padding: 0.5rem 0.75rem;
@@ -245,7 +219,6 @@ const RoadmapCreation: React.FC = () => {
           justify-content: center;
           align-items: center;
         }
-
         .card-body button {
           margin-top: 0.5rem;
           width: 90%;
@@ -257,7 +230,6 @@ const RoadmapCreation: React.FC = () => {
           transition: background 0.18s;
           padding: 0.5rem 0.75rem;
         }
-
         .card-body button:hover {
           background: #225ea8;
         }

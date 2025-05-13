@@ -135,7 +135,6 @@ const RoadmapView: React.FC = () => {
           box-sizing: border-box;
           display: flex;
           flex-direction: column;
-          background: #f7f8fa;
         }
         .roadmap-header {
           flex: 0 0 auto;
@@ -237,11 +236,11 @@ const RoadmapView: React.FC = () => {
           cursor: pointer;
           transition: background 0.18s;
           padding: 0.5rem 0.75rem;
-          }
+        }
         .continue-button:hover {
           background: #225ea8;
         }
-        /* Hide scrollbars for Chrome, Safari and Opera */
+        /* hide the scrollbars for Chrome, Safari and Opera */
         .carousel-container::-webkit-scrollbar {
           width: 6px;
         }
@@ -249,88 +248,105 @@ const RoadmapView: React.FC = () => {
           background: #e0e0e0;
           border-radius: 3px;
         }
-        /* Hide scrollbars for IE, Edge and Firefox */
+        /* hides scrollbars for internetexplorer, Edge and Firefox */
         .carousel-container {
           scrollbar-width: thin;
           scrollbar-color: #e0e0e0 #f7f8fa;
         }
-        
         .steps-card {
-        max-width: 500px;
-        border-radius: 16px;
-        box-shadow: 0 8px 32px rgba(44,62,80,0.13);
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        background: #fff;
-        min-height: 320px;
-      }
-      .steps-card .close-button {
-        position: absolute;
-        right: 18px;
-        background: transparent;
-        border: none;
-        font-size: 1.35rem;
-        color: #888;
-        cursor: pointer;
-        z-index: 2;
-        transition: color 0.15s;
-      }
-      .steps-card .close-button:hover {
-        color: #e53e3e;
-      }
-      .steps-card .card-header {
-        position: sticky;
-        top: 0;
-        background: #007bff;
-        padding: 1rem 2.5rem 1rem 1.2rem;
-        border-radius: 16px 16px 0 0;
-        z-index: 1;
-        display: flex;
-        align-items: center;
-        min-height: 56px;
-      }
-      .steps-card .card-header h3 {
-        color: #fff;
-        font-size: 1.15rem;
-        font-weight: 700;
-        margin: 0;
-        flex: 1;
-        text-align: left;
-      }
-      .steps-card .steps-list {
-        flex: 1 1 auto;
-        overflow-y: auto;
-        max-height: 340px;
-        padding: 1rem 1.2rem 1.2rem 1.2rem;
-        display: flex;
-        flex-direction: column;
-        gap: 1.1rem;
-      }
+          box-shadow: 0 8px 32px rgba(44,62,80,0.13);
+          position: relative;
+          border: 1px solid #e3e6ef;
+          overflow: hidden;
+        }
+        .steps-card .close-button {
+          position: absolute;
+          right: 18px;
+          top: 18px;
+          background: white;
+          border: none;
+          font-size: 1.35rem;
+          color: #888;
+          cursor: pointer;
+          z-index: 2;
+          transition: color 0.15s;
+          padding: 0;
+          line-height: 1;
+        }
+        .steps-card .close-button:hover {
+          color: #e53e3e;
+        }
+        .steps-card .card-header {
+          position: sticky;
+          background: #007bff;
+          padding: 1.1rem 2.5rem 1.1rem 1.3rem;   
+          display: flex;
+        }
+        .steps-card .card-header h3 {
+          color: #fff;
+          font-size: 1.15rem;
+          font-weight: 700;
+          margin: 0;
+          flex: 1;
+          text-align: left;
+          letter-spacing: 0.01em;
+        }
+        .steps-card .steps-list {
+          flex: 1 1 auto;
+          overflow-y: auto;
+          max-height: 340px;
+          padding: 1.2rem 1.3rem 1.3rem 1.3rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1.1rem;
+          background: #fff;
+          min-height: 180px;
+          scrollbar-width: thin;
+          scrollbar-color: #e0e0e0 #f7f8fa
+        }
+        .steps-card .steps-list::-webkit-scrollbar {
+          width: 7px;
+        }
+        .steps-card .steps-list::-webkit-scrollbar-thumb {
+          background: #e0e0e0;
+          border-radius: 3px;
+        }
+        .steps-card .steps-list > p {
+          color: #7a869a;
+          font-size: 1.06em;
+          text-align: center;
+          margin: auto 0;
+          padding: 2.5rem 0;
+          opacity: 0.85;
+          font-weight: 500;
+          letter-spacing: 0.01em;
+        }
       .steps-card .step-item {
-        background: #f7f8fa;
-        border-radius: 8px;
-        box-shadow: 0 1px 4px rgba(44,62,80,0.06);
-        padding: 0.8rem 1rem;
-        transition: box-shadow 0.18s, background 0.18s;
-        border-left: 4px solid #007bff;
-        display: flex;
-        flex-direction: column;
+        background: #F0F5FF;
+        border-radius: 6px;
+        color: #20498A;
+        font-size: 0.9em;
+        border-left: 3px solid #4A88C5;
+        transition: transform 0.2s ease, background 0.18s;
+        padding: 10px 12px;
+        margin: 6px 0;
+        box-shadow: none;
+        display: block;
+      }
+      .steps-card .step-item:hover {
+        transform: translateX(2px);
+        background: #E8F1FF;
       }
       .steps-card .step-item h4 {
-        margin: 0 0 0.2rem 0;
-        font-size: 1.03rem;
-        color: #225ea8;
+        color: #20498A;
+        font-size: 1em;
         font-weight: 600;
+        margin: 0 0 2px 0;
       }
       .steps-card .step-item p {
-        margin: 0.1rem 0 0 0;
-        color: #444;
-        font-size: 0.97rem;
-      }
-      .steps-card .step-item:not(:last-child) {
-        margin-bottom: 0.3rem;
+        color: #20498A;
+        font-size: 0.95em;
+        margin: 0;
       }
       .steps-card .steps-list::-webkit-scrollbar {
         width: 7px;
@@ -349,7 +365,6 @@ const RoadmapView: React.FC = () => {
         margin-top: 0.4rem;
         gap: 0.5rem;
       }
-
       .status-switch {
         width: 34px;
         height: 20px;
@@ -384,7 +399,6 @@ const RoadmapView: React.FC = () => {
         font-weight: 500;
         letter-spacing: 0.01em;
       }
-
     `}</style>
       <div className="roadmap-header">
         <h1 className="roadmap-title">Mes démarches en cours</h1>
