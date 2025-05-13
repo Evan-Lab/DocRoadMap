@@ -1,5 +1,7 @@
-import { render, screen, waitFor } from "@testing-library/react";
+jest.mock("react-i18next");
+
 import "@testing-library/jest-dom";
+import { render, screen, waitFor } from "@testing-library/react";
 import axios from "axios";
 import RoadmapView from "./roadmapView";
 
