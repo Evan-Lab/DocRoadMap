@@ -19,7 +19,7 @@ git reset --hard origin/main
 
 echo "Build and create Docker images..."
 docker compose down
-docker system prune -a -y
+docker system prune -a -f
 docker compose up -d --build
 
 # === END ===
