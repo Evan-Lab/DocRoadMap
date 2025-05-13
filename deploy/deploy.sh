@@ -13,6 +13,7 @@ echo "Project Repository : $APP_DIR"
 cd "$APP_DIR"
 
 echo "Get repository from GitHub..."
+git config --global --add safe.directory /home/ubuntu/DocRoadMap
 git fetch origin
 git reset --hard origin/main
 
