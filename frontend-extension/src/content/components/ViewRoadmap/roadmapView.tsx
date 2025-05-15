@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getToken } from "../../utils/utils";
+import getToken from "../../utils/utils";
 
 const isDev = process.env.NODE_ENV !== "production";
 const basePath = isDev ? "./assets/" : "./assets/";
@@ -51,7 +51,14 @@ const RoadmapView: React.FC = () => {
   const [cards, setCards] = useState<Card[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [showSteps, setShowSteps] = useState(false);
-  const [steps, setSteps] = useState<any[]>([]);
+  interface Step {
+    id: number;
+    name: string;
+    description: string;
+    status: string;
+  }
+
+  const [steps, setSteps] = useState<Step[]>([]);
   const [selectedProcessName, setSelectedProcessName] = useState<string>("");
   const [token, setToken] = useState<string | null>(null);
 

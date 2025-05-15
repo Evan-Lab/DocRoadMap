@@ -1,4 +1,4 @@
-export const getToken = (): Promise<string | null> => {
+const getToken = (): Promise<string | null> => {
   return new Promise((resolve) => {
     if (typeof chrome !== "undefined" && chrome.storage?.local) {
       chrome.storage.local.get("token", (result) => {
@@ -9,3 +9,4 @@ export const getToken = (): Promise<string | null> => {
     }
   });
 };
+export default getToken;

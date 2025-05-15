@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { getToken } from "../../utils/utils";
+import getToken from "../../utils/utils";
+import { useTranslation } from "react-i18next";
 
 interface Step {
   id: number;
@@ -31,6 +32,7 @@ const ProcessCalendar = () => {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -259,7 +261,7 @@ const ProcessCalendar = () => {
         }`}
       </style>
       <div className="calendar-header">
-        <h1 className="calendar-title">Calendrier</h1>
+        <h1 className="calendar-title">{t("calendar")}</h1>
       </div>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <div className="calendar-wrapper">
@@ -286,9 +288,12 @@ const ProcessCalendar = () => {
 
       {selectedDate && (
         <div className="events-list">
-          <h3>Événements du {selectedDate.toLocaleDateString("fr-FR")}</h3>
+          <h3>
+            {t("eventsOf")}
+            {selectedDate.toLocaleDateString("fr-FR")}
+          </h3>
           {getDailyEvents().length === 0 ? (
-            <p>Aucun événement ce jour</p>
+            <p>{t("noEvent")}</p>
           ) : (
             getDailyEvents().map((event) => (
               <div key={event.id} className="event-list-item">

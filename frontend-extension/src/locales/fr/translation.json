@@ -54,5 +54,8 @@
   "createThis": "Créer cette démarche",
   "createError": "Erreur lors de la création de la démarche.",
   "loadError": "Impossible de charger les démarches.",
-  "tokenUnavailable": "Token non disponible. Veuillez vous connecter."
+  "tokenUnavailable": "Token non disponible. Veuillez vous connecter.",
+  "calendar": "Calendrier",
+  "eventsOf": "Événements du ",
+  "noEvent": "Aucun événement prévu ce jour-là."
 }

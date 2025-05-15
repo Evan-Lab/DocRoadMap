@@ -54,5 +54,8 @@
   "createThis": "Create this process",
   "createError": "Error while creating the process.",
   "loadError": "Unable to load processes.",
-  "tokenUnavailable": "Token unavailable. Please log in."
+  "tokenUnavailable": "Token unavailable. Please log in.",
+  "calendar": "Calendar",
+  "eventsOf": "Events of the ",
+  "noEvent": "No events scheduled that day."
 }

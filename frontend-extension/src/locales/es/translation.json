@@ -54,5 +54,8 @@
   "createThis": "Crear este trámite",
   "createError": "Error al crear el trámite.",
   "loadError": "No se pudieron cargar los trámites.",
-  "tokenUnavailable": "Token no disponible. Por favor inicia sesión."
+  "tokenUnavailable": "Token no disponible. Por favor inicia sesión.",
+  "calendar": "Calendario",
+  "eventsOf": "Eventos del ",
+  "noEvent": "No hay eventos programados para ese día."
 }

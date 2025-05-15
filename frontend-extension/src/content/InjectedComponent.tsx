@@ -11,7 +11,7 @@ import Chatbot from "./components/Chatbot/chatbot";
 import RoadmapView from "./components/ViewRoadmap/roadmapView";
 import RoadmapCreation from "./components/roadmapCreation/roadmapCreation";
 import StepsCalendar from "./components/Calendar/calendar";
-import { getToken } from "./utils/utils";
+import getToken from "./utils/utils";
 
 const buttonData = [
   { icon: <FaUniversalAccess />, label: "Accessibilité" },

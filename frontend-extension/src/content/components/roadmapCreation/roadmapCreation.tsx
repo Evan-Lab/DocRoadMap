@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getToken } from "../../utils/utils";
+import getToken from "../../utils/utils";
 
 const basePath = "./assets/";
 
