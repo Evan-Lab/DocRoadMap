@@ -1,7 +1,6 @@
 name: Docker Deploy Backend and IA to VM
 
 on:
-  on:
   pull_request:
     branches:
       - not-to-be-merged/devops/test
