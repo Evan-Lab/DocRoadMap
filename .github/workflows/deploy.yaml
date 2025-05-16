@@ -1,13 +1,16 @@
 name: Docker Deploy Backend and IA to VM
 
 on:
-  push:
+  on:
+  pull_request:
     branches:
-      - feat/devops/auto-deploy
-      # - main
+      - not-to-be-merged/devops/test
+    types:
+      - closed
 
 jobs:
-  deploy:
+   if_merged:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
