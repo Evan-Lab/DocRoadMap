@@ -3,12 +3,12 @@ name: Docker Deploy Backend and IA to VM
 on:
   pull_request:
     branches:
-      - not-to-be-merged/devops/test
+      - main
     types:
       - closed
 
 jobs:
-   if_merged:
+   deploy:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
