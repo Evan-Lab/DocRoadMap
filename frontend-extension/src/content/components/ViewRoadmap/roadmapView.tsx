@@ -51,16 +51,21 @@ const RoadmapView: React.FC = () => {
   const [cards, setCards] = useState<Card[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [showSteps, setShowSteps] = useState(false);
+
   interface Step {
     id: number;
     name: string;
     description: string;
+    endedAt: string;
     status: string;
   }
 
   const [steps, setSteps] = useState<Step[]>([]);
   const [selectedProcessName, setSelectedProcessName] = useState<string>("");
   const [token, setToken] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<{ [key: number]: string }>(
+    {},
+  );
 
   useEffect(() => {
     const fetchUserProcesses = async () => {
@@ -88,6 +93,32 @@ const RoadmapView: React.FC = () => {
 
     fetchUserProcesses();
   }, [t]);
+
+  const updateEndedAt = async (stepId: number) => {
+    try {
+      const dateValue = selectedDate[stepId];
+      if (!dateValue) return;
+
+      const formattedDate = `${dateValue}:00.000Z`;
+
+      await axios.patch(
+        `http://localhost:8082/steps/${stepId}`,
+        { endedAt: formattedDate },
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+
+      setSteps(
+        steps.map((step) =>
+          step.id === stepId ? { ...step, endedAt: formattedDate } : step,
+        ),
+      );
+
+      alert(t("dateUpdatedAlert"));
+    } catch (error) {
+      console.error("Update failed:", error);
+      alert(t("updateError"));
+    }
+  };
 
   const getValidatedStepsCount = (status: string) => {
     switch (status) {
@@ -463,14 +494,56 @@ const RoadmapView: React.FC = () => {
                   <div key={step.id} className="step-item">
                     <h4>{step.name}</h4>
                     <p>{step.description}</p>
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "0.5rem",
+                        marginTop: "0.5rem",
+                      }}
+                    >
+                      <input
+                        type="datetime-local"
+                        value={
+                          selectedDate[step.id] ||
+                          (step.endedAt ? step.endedAt.slice(0, 16) : "")
+                        }
+                        onChange={(e) =>
+                          setSelectedDate({
+                            ...selectedDate,
+                            [step.id]: e.target.value,
+                          })
+                        }
+                        style={{
+                          padding: "0.3rem",
+                          border: "1px solid #ccc",
+                          borderRadius: "4px",
+                          fontSize: "0.85em",
+                        }}
+                      />
+                      <button
+                        onClick={() => updateEndedAt(step.id)}
+                        style={{
+                          padding: "0.3rem 0.75rem",
+                          background: "#4A88C5",
+                          color: "white",
+                          border: "none",
+                          borderRadius: "4px",
+                          cursor: "pointer",
+                          fontSize: "0.85em",
+                        }}
+                      >
+                        📅
+                      </button>
+                    </div>
+
                     <div className="status-row">
                       <span
                         className={`status-switch ${
-                          step.status === "VALIDATED" ? "on" : ""
+                          step.status === "COMPLETED" ? "on" : ""
                         }`}
                       ></span>
                       <span className="status-label">
-                        {step.status === "VALIDATED"
+                        {step.status === "COMPLETED"
                           ? t("validatedLabel")
                           : t("pendingLabel")}
                       </span>
@@ -478,7 +551,7 @@ const RoadmapView: React.FC = () => {
                   </div>
                 ))
             ) : (
-              <p>{t("noSteps")}</p>
+              <p>{t("roadmapFetchError")}</p>
             )}
           </div>
         </div>
