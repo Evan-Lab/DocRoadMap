@@ -24,7 +24,7 @@
   "error": "Une erreur s'est produite",
   "profile": "Profil",
   "tokenError": "Token non disponible. Veuillez vous connecter.",
-  "fetchError": "Échec de la récupération des données utilisateur.",
+  "fetchError": "Échec de la récupération des données utilisateur, vérifiez que vous n'avez pas de bloqueur de pubs activé.",
   "genericError": "Une erreur s'est produite lors de la récupération des données.",
   "notSpecified": "Non spécifié",
   "languageTitle": "Choisir la langue",
@@ -40,7 +40,7 @@
   "noServerResponse": "Pas de réponse du serveur.",
   "currentRoadmaps": "Mes démarches en cours",
   "missingToken": "Token manquant. Veuillez vous connecter.",
-  "roadmapFetchError": "Impossible de récupérer les roadmaps.",
+  "roadmapFetchError": "Erreur lors de la récupération des roadmaps.",
   "stepsFetchError": "Erreur lors de la récupération des étapes.",
   "step": "étape",
   "validated": "validée sur",
@@ -53,6 +53,9 @@
   "createRoadmap": "Créer une nouvelle démarche",
   "createThis": "Créer cette démarche",
   "createError": "Erreur lors de la création de la démarche.",
-  "loadError": "Impossible de charger les démarches.",
-  "tokenUnavailable": "Token non disponible. Veuillez vous connecter."
+  "loadError": "Impossible de charger les démarches, vérifiez que vous n'avez pas de bloqueur de pubs activé.",
+  "tokenUnavailable": "Token non disponible. Veuillez vous connecter.",
+  "calendar": "Calendrier",
+  "eventsOf": "Événements du ",
+  "noEvent": "Aucun événement prévu ce jour-là."
 }

@@ -22,7 +22,7 @@ describe("Login component", () => {
     render(
       <MemoryRouter>
         <Login />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
   it("renders login page correctly", () => {
@@ -30,7 +30,7 @@ describe("Login component", () => {
     expect(screen.getByText("Connexion")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("emailPlaceholder")).toBeInTheDocument();
     expect(
-      screen.getByPlaceholderText("passwordPlaceholder")
+      screen.getByPlaceholderText("passwordPlaceholder"),
     ).toBeInTheDocument();
     expect(screen.getByText("login")).toBeInTheDocument();
     expect(screen.getByText("forgot")).toBeInTheDocument();

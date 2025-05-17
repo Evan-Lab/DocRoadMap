@@ -27,7 +27,7 @@ describe("RegisterConfirmation component", () => {
     render(
       <MemoryRouter>
         <RegisterConfirmation />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
   beforeEach(() => {

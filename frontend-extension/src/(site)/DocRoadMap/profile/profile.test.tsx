@@ -26,7 +26,7 @@ describe("Profile component", () => {
     render(
       <MemoryRouter>
         <Profile />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
   beforeEach(() => {
@@ -92,7 +92,7 @@ describe("Profile component", () => {
     renderWithRouter();
 
     await waitFor(() =>
-      expect(screen.getByText("genericError")).toBeInTheDocument()
+      expect(screen.getByText("genericError")).toBeInTheDocument(),
     );
   });
 
@@ -114,7 +114,7 @@ describe("Profile component", () => {
     renderWithRouter();
 
     await waitFor(() =>
-      expect(screen.getByText("genericError")).toBeInTheDocument()
+      expect(screen.getByText("genericError")).toBeInTheDocument(),
     );
   });
 });

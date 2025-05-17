@@ -39,7 +39,7 @@ const Chatbot: React.FC = () => {
             messages: [{ role: "user", content: input }],
             stream: true,
           }),
-        }
+        },
       );
 
       if (!response.body) throw new Error(t("noServerResponse"));
@@ -72,8 +72,8 @@ const Chatbot: React.FC = () => {
               prev.map((msg, index) =>
                 index === prev.length - 1
                   ? { ...msg, text: currentBotMessage }
-                  : msg
-              )
+                  : msg,
+              ),
             );
           } catch (error) {
             console.error("Erreur de parsing JSON :", error);

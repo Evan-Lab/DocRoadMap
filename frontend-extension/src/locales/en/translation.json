@@ -24,7 +24,7 @@
   "error": "An error occurred",
   "profile": "Profile",
   "tokenError": "Token not available. Please log in.",
-  "fetchError": "Failed to fetch user data.",
+  "fetchError": "Failed to fetch user data, check if you have an ad blocker enabled.",
   "genericError": "An error occurred while retrieving data.",
   "notSpecified": "Not specified",
   "languageTitle": "Select Language",
@@ -53,6 +53,9 @@
   "createRoadmap": "Create a new process",
   "createThis": "Create this process",
   "createError": "Error while creating the process.",
-  "loadError": "Unable to load processes.",
-  "tokenUnavailable": "Token unavailable. Please log in."
+  "loadError": "Unable to load processes, check if you have an ad blocker enabled.",
+  "tokenUnavailable": "Token unavailable. Please log in.",
+  "calendar": "Calendar",
+  "eventsOf": "Events of the ",
+  "noEvent": "No events scheduled that day."
 }

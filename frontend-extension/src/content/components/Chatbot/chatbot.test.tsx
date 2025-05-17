@@ -59,7 +59,7 @@ describe("Chatbot component", () => {
     fireEvent.click(screen.getByRole("button"));
 
     await waitFor(() =>
-      expect(screen.getByText("apiError")).toBeInTheDocument()
+      expect(screen.getByText("apiError")).toBeInTheDocument(),
     );
   });
 });

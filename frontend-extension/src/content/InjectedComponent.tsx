@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  FaCalendar,
   FaEye,
   FaRegFileAlt,
   FaRoad,
@@ -9,23 +10,15 @@ import {
 import Chatbot from "./components/Chatbot/chatbot";
 import RoadmapView from "./components/ViewRoadmap/roadmapView";
 import RoadmapCreation from "./components/roadmapCreation/roadmapCreation";
-
-const getToken = (): Promise<string | null> =>
-  new Promise((resolve) => {
-    if (typeof chrome !== "undefined" && chrome.storage?.local) {
-      chrome.storage.local.get("token", (res) => {
-        resolve(res.token ?? null);
-      });
-    } else {
-      resolve(localStorage.getItem("token"));
-    }
-  });
+import StepsCalendar from "./components/Calendar/calendar";
+import getToken from "./utils/utils";
 
 const buttonData = [
   { icon: <FaUniversalAccess />, label: "Accessibilité" },
   { icon: <FaRoad />, label: "Générer Roadmap" },
   { icon: <FaEye />, label: "Voir Roadmap" },
   { icon: <FaRobot />, label: "Chatbot" },
+  { icon: <FaCalendar />, label: "Calendrier" },
 ];
 
 interface PanelProps {
@@ -38,19 +31,21 @@ const Panel: React.FC<PanelProps> = ({ activePanel }) => (
       position: "fixed",
       bottom: "90px",
       right: "80px",
-      width: "250px",
-      height: "400px",
+      width: "300px",
+      height: "450px",
       background: "#fff",
       border: "1px solid #1976d2",
       borderRadius: 8,
       boxShadow: "0 2px 16px rgba(0,0,0,0.2)",
       zIndex: 10000,
-      padding: 16,
+      padding: 8,
     }}
   >
+    {/* {activePanel === "Accessibilité" && < />} */}
     {activePanel === "Générer Roadmap" && <RoadmapCreation />}
     {activePanel === "Voir Roadmap" && <RoadmapView />}
     {activePanel === "Chatbot" && <Chatbot />}
+    {activePanel === "Calendrier" && <StepsCalendar />}
   </div>
 );
 
@@ -61,13 +56,13 @@ const DocRoadmapBar: React.FC = () => {
 
   useEffect(() => {
     getToken().then(setToken);
-    // here we add a listener to asynchrounously check wne the user is logged in or not (token is set or not)
-    // if token is set, we set the token state to the value of the token and we display the button at bottom right of screen
-    // if there is no token, we set the token state to null and nothong gets displayed at bottom right of  screen
+    // adding listener to asynchronously check when the user is logged in or not (token is set or not)
+    // if token is set : display the button at bottom right of screen
+    // if not : nothing gets displayed at bottom right of screen
     if (typeof chrome !== "undefined" && chrome.storage?.local) {
       const onChanged = (
         changes: { [key: string]: chrome.storage.StorageChange },
-        area: string
+        area: string,
       ) => {
         if (area === "local" && changes.token) {
           setToken(changes.token.newValue ?? null);
@@ -140,7 +135,7 @@ const DocRoadmapBar: React.FC = () => {
             flexDirection: "row",
             transition: "width 0.3s",
             overflow: "hidden",
-            width: open ? 260 : 0,
+            width: open ? 300 : 0,
           }}
         >
           {open &&

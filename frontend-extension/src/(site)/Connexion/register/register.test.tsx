@@ -23,7 +23,7 @@ describe("Register component", () => {
     render(
       <MemoryRouter>
         <Register />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
   it("renders all input fields and submit button", () => {
