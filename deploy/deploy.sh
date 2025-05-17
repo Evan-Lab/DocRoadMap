@@ -15,7 +15,7 @@ cd "$APP_DIR"
 echo "Get repository from GitHub..."
 git config --global --add safe.directory /home/ubuntu/DocRoadMap
 git fetch origin
-git reset --hard origin/feat/devops/auto-deploy
+git reset --hard origin/main
 
 echo "Build and create Docker images..."
 docker compose down
