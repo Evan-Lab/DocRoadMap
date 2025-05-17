@@ -10,6 +10,7 @@ import Login from "./(site)/Connexion/login/login";
 import Register from "./(site)/Connexion/register/register";
 import RegisterConfirmation from "./(site)/Connexion/registerConfirmation/registerConfirmation";
 
+import LanguageSelector from "./(site)/DocRoadMap//docroadmapHome/LanguageSelector";
 import DocroadmapHome from "./(site)/DocRoadMap/docroadmapHome/docroadmapHome";
 import Profile from "./(site)/DocRoadMap/profile/profile";
 
@@ -27,6 +28,7 @@ function App() {
           />
           <Route path="/roadmap" element={<DocroadmapHome />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/language" element={<LanguageSelector />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
