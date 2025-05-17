@@ -5,6 +5,8 @@ import "react-calendar/dist/Calendar.css";
 import getToken from "../../utils/utils";
 import { useTranslation } from "react-i18next";
 
+const baseURL = "http://localhost:8082/";
+
 interface Step {
   id: number;
   name: string;
@@ -42,14 +44,11 @@ const ProcessCalendar = () => {
         return;
       }
       try {
-        const response = await axios.get<UserData>(
-          "http://localhost:8082/users/me",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+        const response = await axios.get<UserData>(`${baseURL}users/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-        );
+        });
 
         const stepsWithEndDate = response.data.processes.flatMap((process) =>
           process.steps
@@ -199,10 +198,10 @@ const ProcessCalendar = () => {
             font-weight: bold;
         }
         .react-calendar__tile--active:hover {
-        ba  ckground: #D5E6FF;
+        background: #D5E6FF;
         }
         .react-calendar__month-view__days__day--neighboringMonth {
-        co  r: #BBDAF2;
+        color: #BBDAF2;
         }
         .event-item {
             font-size: 0.7em;
@@ -266,7 +265,7 @@ const ProcessCalendar = () => {
       {error && <p style={{ color: "red" }}>{error}</p>}
       <div className="calendar-wrapper">
         <Calendar
-          value={new Date()}
+          value={selectedDate ?? new Date()}
           tileContent={getTileContent}
           onChange={(value) => setSelectedDate(value as Date)}
           locale="fr-FR"
