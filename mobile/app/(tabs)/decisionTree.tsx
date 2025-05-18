@@ -5,6 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  Linking,
 } from "react-native";
 
 type TreeKey =
@@ -154,7 +155,22 @@ export default function DecisionTree() {
           } else if ("answer" in node) {
             return (
               <View key={index} style={styles.botBubble}>
-                <Text style={styles.botText}>{node.answer}</Text>
+                <Text style={styles.botText}>
+                  {node.answer.split(/(https?:\/\/[^\s]+)/g).map((part, i) =>
+                    part.match(/https?:\/\/[^\s]+/) ? (
+                      <Text
+                        key={i}
+                        style={styles.link}
+                        onPress={() => Linking.openURL(part)}
+                      >
+                        {part}
+                      </Text>
+                    ) : (
+                      <Text key={i}>{part}</Text>
+                    ),
+                  )}
+                </Text>
+
                 <TouchableOpacity
                   style={styles.restartButton}
                   onPress={restartChat}
@@ -224,5 +240,9 @@ const styles = StyleSheet.create({
   restartText: {
     color: "#007AFF",
     fontSize: 15,
+  },
+  link: {
+    color: "#007AFF",
+    textDecorationLine: "underline",
   },
 });
