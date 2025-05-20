@@ -82,6 +82,15 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="decisionTree"
+        options={{
+          title: "Tree",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? "key" : "key-outline"} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",

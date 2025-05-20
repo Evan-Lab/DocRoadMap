@@ -55,7 +55,7 @@ function RootLayoutNav() {
 
   useEffect(() => {
     if (user === null) {
-      router.replace("/connexion");
+      router.replace("/settings");
     }
   }, [user]);
 
