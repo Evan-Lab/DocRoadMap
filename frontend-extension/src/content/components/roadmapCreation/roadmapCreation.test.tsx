@@ -57,7 +57,7 @@ describe("RoadmapCreation", () => {
       .mockResolvedValueOnce({ data: { id: 1 } })
       .mockResolvedValueOnce({
         data: [{ id: 10, name: "Passeport", collection_name: "Identité" }],
-      }); // steps
+      });
 
     mockedAxios.post.mockResolvedValueOnce({});
 
@@ -67,10 +67,10 @@ describe("RoadmapCreation", () => {
 
     const button = screen.getByText("createThis");
     fireEvent.click(button);
-
     await waitFor(() =>
       expect(mockedAxios.post).toHaveBeenCalledWith(
-        "http://localhost:8082/process/create",
+        "http://51.91.161.226:8082/process/create",
+
         expect.objectContaining({ name: "Passeport" }),
         expect.any(Object),
       ),

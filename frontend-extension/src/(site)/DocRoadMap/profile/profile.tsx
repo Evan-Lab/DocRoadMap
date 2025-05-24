@@ -39,7 +39,7 @@ function Profile() {
           throw new Error(t("tokenError"));
         }
 
-        const response = await fetch("http://localhost:8082/users/me", {
+        const response = await fetch("http://51.91.161.226:8082/users/me", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
