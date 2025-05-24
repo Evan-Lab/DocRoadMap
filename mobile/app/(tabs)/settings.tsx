@@ -77,6 +77,13 @@ const Settings = () => {
       >
         <Text style={styles.buttonText}>{t("back_to_profile")}</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => router.replace("/calendar")}
+        style={[styles.button, { backgroundColor: theme.primary }]}
+      >
+        <Text style={styles.buttonText}>{"Calendrier des évènements"}</Text>
+      </TouchableOpacity>
     </View>
   );
 };

@@ -147,6 +147,17 @@ export default function TabLayout() {
           },
         }}
       />
+      <Tabs.Screen
+        name="calendar"
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          href: null,
+          headerShown: false,
+          tabBarStyle: {
+            display: "none",
+          },
+        }}
+      />
     </Tabs>
   );
 }
