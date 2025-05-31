@@ -5,7 +5,7 @@ set -e
 # === CONFIGURATION ===
 APP_DIR="/home/ubuntu/DocRoadMap"
 
-echo "==== START OF DEPLOYEMENT ===="
+echo "==== START OF DEPLOYMENT ===="
 date
 echo "Project Repository : $APP_DIR"
 
