@@ -1,50 +1,54 @@
-# Welcome To DocRoadMap Frontend Extension !
+# React + TypeScript + Vite
 
-This extension is made in React
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-To start you need to install the dependencies by running the following command:
+Currently, two official plugins are available:
 
-```bash
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-npm install
+## Expanding the ESLint configuration
 
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+
+```js
+export default tseslint.config({
+  extends: [
+    // Remove ...tseslint.configs.recommended and replace with this
+    ...tseslint.configs.recommendedTypeChecked,
+    // Alternatively, use this for stricter rules
+    ...tseslint.configs.strictTypeChecked,
+    // Optionally, add this for stylistic rules
+    ...tseslint.configs.stylisticTypeChecked,
+  ],
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+});
 ```
 
-To launch the extension you can run the following command:
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```bash
+```js
+// eslint.config.js
+import reactX from "eslint-plugin-react-x";
+import reactDom from "eslint-plugin-react-dom";
 
-npm run build
-
-```
-
----
-
-Now you can load the extension in your browser by following the steps below:
-
-```
-1. Open the Extension Management page by navigating to
-chrome://extensions.
-
-2. Enable Developer Mode by clicking the toggle switch next to Developer mode.
-
-3. Click the Load unpacked button and select the extension directory.
-
-4. Load the extension which is in the dist folder.
-```
-
-To build the dockerfile you can run the following command:
-
-```bash
-
-docker build -t react-app .
-
-```
-
-To run the dockerfile you can run the following command:
-
-```bash
-
-docker run -p 3001:3001 react-app
-
+export default tseslint.config({
+  plugins: {
+    // Add the react-x and react-dom plugins
+    "react-x": reactX,
+    "react-dom": reactDom,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended typescript rules
+    ...reactX.configs["recommended-typescript"].rules,
+    ...reactDom.configs.recommended.rules,
+  },
+});
 ```

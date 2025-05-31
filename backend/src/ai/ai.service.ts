@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Inject } from "@nestjs/common";
 import axios from "axios"
 import { SendQueryResponseDTO } from "./dto/send-query-response.dto";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -25,6 +25,9 @@ export class AiService {
 
         @InjectRepository(Step)
         private stepRepository: Repository<Step>,
+
+        @Inject('AI_URL')
+        private aiUrl: string,
     ) {}
 
     async sendQuery(prompt: string, collection_name: string, user_id: number): Promise<SendQueryResponseDTO> {

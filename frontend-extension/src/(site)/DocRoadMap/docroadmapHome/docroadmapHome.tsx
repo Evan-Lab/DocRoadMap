@@ -1,65 +1,59 @@
-import { FaAccessibleIcon, FaCog, FaEye, FaMap, FaRobot } from "react-icons/fa"
-import { useNavigate } from "react-router-dom"
-import "./docroadmapHome.css"
+import { useTranslation } from "react-i18next";
+import { FaGlobe, FaSignOutAlt, FaUser } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import "./docroadmapHome.css";
 
-const RobotIcon = FaRobot as unknown as React.FC<any>
-const MapIcon = FaMap as unknown as React.FC<any>
-const EyeIcon = FaEye as unknown as React.FC<any>
-const CogIcon = FaCog as unknown as React.FC<any>
+const UserIcon = FaUser as unknown as React.FC<any>;
+const GlobeIcon = FaGlobe as unknown as React.FC<any>;
+const SignOutIcon = FaSignOutAlt as unknown as React.FC<any>;
 
 const DocroadmapHome: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { t } = useTranslation();
 
-  const createRoadmap = () => {
-    navigate("/create-roadmap")
-  }
-  const viewRoadmaps = () => {
-    navigate("/roadmap-view")
-  }
-  const goToChatbot = () => {
-    navigate("/chatbot")
-  }
-  const goToSettings = () => {
-    navigate("/settings")
-  }
+  const goToProfile = () => {
+    navigate("/profile");
+  };
 
-  const accessibility = () => {
-    console.log("Work in progress")
-  }
+  const changeLanguage = () => {
+    navigate("/language");
+  };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    sessionStorage.clear();
+
+    if (typeof chrome !== "undefined" && chrome.storage?.local) {
+      chrome.storage.local.remove("token", () => {
+        console.log("Token supprimé de chrome.storage");
+      });
+    }
+    navigate("/");
+  };
 
   return (
     <div className="roadmap-container">
-      <div className="roadmap-inner">
+      <div className="settings-content">
+        <h1 className="roadmap-title">{t("settings")}</h1>
         <div className="roadmap-buttons">
-          <button onClick={accessibility}>
-            <FaAccessibleIcon className="button-icon" />
-            <span className="button-text">Accessibilité</span>
-            <span className="button-text">(Non fonctionnel)</span>
+          <button onClick={goToProfile}>
+            <UserIcon className="button-icon" />
+            <span className="button-text">{t("profile")}</span>
           </button>
 
-          <button onClick={createRoadmap}>
-            <MapIcon className="button-icon" />
-            <span className="button-text">Générer une Roadmap</span>
+          <button onClick={changeLanguage}>
+            <GlobeIcon className="button-icon" />
+            <span className="button-text">{t("language")}</span>
           </button>
 
-          <button onClick={viewRoadmaps}>
-            <EyeIcon className="button-icon" />
-            <span className="button-text">Voir mes Roadmaps</span>
-          </button>
-
-          <button onClick={goToChatbot}>
-            <RobotIcon className="button-icon" />
-            <span className="button-text">Donna Chatbot</span>
-          </button>
-
-          <button onClick={goToSettings}>
-            <CogIcon className="button-icon" />
-            <span className="button-text">Paramètres</span>
+          <button onClick={logout}>
+            <SignOutIcon className="button-icon" />
+            <span className="button-text">{t("logout")}</span>
           </button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DocroadmapHome
+export default DocroadmapHome;
