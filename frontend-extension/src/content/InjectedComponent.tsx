@@ -32,6 +32,7 @@ const Panel: React.FC<PanelProps> = ({ activePanel }) => (
       bottom: "90px",
       right: "80px",
       width: "300px",
+      maxWidth: "300px",
       height: "450px",
       background: "#fff",
       border: "1px solid #1976d2",
