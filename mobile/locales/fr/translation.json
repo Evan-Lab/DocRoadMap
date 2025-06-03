@@ -26,7 +26,7 @@
     "createAccount": "Création d'un compte"
   },
   "home": {
-    "generate_roadmap": "Générer une nouvelle roadmap",
+    "generate_roadmap": "Liste des démarches disponibles",
     "my_reminders": "Mes rappels",
     "error": "Erreur",
     "error_message": "Impossible de récupérer les cartes des démarches administratives. Veuillez réessayer"
