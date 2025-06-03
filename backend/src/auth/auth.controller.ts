@@ -6,7 +6,7 @@ import { AuthGuard } from './auth.guard';
 import { RegisterUserDto } from './dto/Request/register-user-request.dto';
 import { RegisterUserDtoResponse } from './dto/Response/register-user-response.dto';
 import { LoginUserDto } from './dto/Request/login-user-request.dto';
-import { Public } from 'src/decorators/public.decorators';
+import { Public } from '../decorators/public.decorators';
 import { LoginUserDtoResponse } from './dto/Response/login-user-response.dto';
 
 @Controller('auth')
