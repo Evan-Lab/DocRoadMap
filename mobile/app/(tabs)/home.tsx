@@ -22,6 +22,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import DecisionTreeInterface from "@/components/chat/DecisionTreeInterface";
 
 export default function HomePage() {
   const { t, i18n } = useTranslation();
@@ -216,7 +217,7 @@ export default function HomePage() {
         </SafeAreaView>
       </Modal>
 
-      <ChatInterface />
+      <DecisionTreeInterface />
     </SafeAreaView>
   );
 }

@@ -15,7 +15,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import tree from "../../locales/decision-tree/decisionTree.json";
-import { createProcessAndStepsFromDecisionTree } from "../../components/card/createProcessAndStepsFromDecisionTree";
+import { CreateFromTree } from "../../components/card/CreateFromTree";
 
 const decisionTree = tree as Record<string, any>;
 type HistoryEntry =
@@ -32,11 +32,19 @@ export default function DecisionTree() {
   );
   const [showSteps, setShowSteps] = useState(false);
   const [userInput, setUserInput] = useState("");
+  const [isValid, setIsValid] = useState(false);
   const scrollRef = useRef<ScrollView>(null);
 
   useEffect(() => {
     scrollRef.current?.scrollToEnd({ animated: true });
   }, [history, showSteps]);
+
+  const validDemancheList = [
+    "logement",
+    "déménagement",
+    "emploi",
+    "indépendance",
+  ];
 
   const getProcessAnswersKey = (key: string): string | null => {
     if (key === "dem_answers") return "dem_answers";
@@ -104,11 +112,16 @@ export default function DecisionTree() {
     setUserAnswers(newAnswers);
   };
 
+  const handleInputChange = (text: string) => {
+    setUserInput(text);
+    setIsValid(validDemancheList.includes(text.trim().toLowerCase()));
+  };
+
   const handleSendMessage = () => {
     if (userInput.trim()) {
       const inputText = userInput.trim();
 
-      createProcessAndStepsFromDecisionTree({
+      CreateFromTree({
         name: inputText,
         userAnswers,
         userId: 4,
@@ -218,11 +231,19 @@ export default function DecisionTree() {
         <TextInput
           style={styles.input}
           value={userInput}
-          onChangeText={setUserInput}
-          placeholder="Écrivez ici..."
+          onChangeText={handleInputChange}
+          placeholder="Écris le nom de la démarche exactement comme indiqué entre parenthèses (logement, déménagement, emploi, indépendance)"
+          multiline={true}
         />
-        <TouchableOpacity style={styles.sendButton} onPress={handleSendMessage}>
-          <Text style={styles.sendButtonText}>Envoyer</Text>
+        <TouchableOpacity
+          style={[
+            styles.sendButton,
+            { opacity: isValid && userInput ? 1 : 0.5 },
+          ]}
+          onPress={handleSendMessage}
+          disabled={!isValid || !userInput.trim()}
+        >
+          <Text style={styles.sendButtonText}>Crée ta démarche</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -242,6 +263,11 @@ const styles = ScaledSheet.create({
     borderRadius: moderateScale(30),
     alignSelf: "flex-start",
     maxWidth: "70%",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
   },
   botText: {
     fontSize: moderateScale(16),
@@ -254,6 +280,11 @@ const styles = ScaledSheet.create({
     marginHorizontal: wp(2),
     justifyContent: "center",
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
   },
   optionText: {
     fontSize: moderateScale(15),
@@ -274,6 +305,11 @@ const styles = ScaledSheet.create({
     borderRadius: moderateScale(30),
     alignSelf: "flex-end",
     maxWidth: "70%",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
   },
   userText: {
     fontSize: moderateScale(16),
@@ -302,7 +338,7 @@ const styles = ScaledSheet.create({
   },
   input: {
     flex: 1,
-    height: hp(6),
+    height: hp(8),
     borderWidth: 1,
     borderColor: "#ddd",
     borderRadius: moderateScale(30),

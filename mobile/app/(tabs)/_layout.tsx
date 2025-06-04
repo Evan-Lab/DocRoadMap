@@ -88,6 +88,11 @@ export default function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? "key" : "key-outline"} color={color} />
           ),
+          href: null,
+          headerShown: false,
+          tabBarStyle: {
+            display: "none",
+          },
         }}
       />
       <Tabs.Screen

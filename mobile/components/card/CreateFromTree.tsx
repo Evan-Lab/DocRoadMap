@@ -35,7 +35,7 @@ type DecisionTree = {
 const decisionTree = rawTree as unknown as DecisionTree;
 const [stepsId, setStepsId] = useState<number | null>(null);
 
-export const createProcessAndStepsFromDecisionTree = async ({
+export const CreateFromTree = async ({
   name,
   userAnswers,
   userId = 4,
