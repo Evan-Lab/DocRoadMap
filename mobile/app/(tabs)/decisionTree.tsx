@@ -4,8 +4,10 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  TextInput,
   StyleSheet,
   Linking,
+  SafeAreaView,
 } from "react-native";
 import { ScaledSheet, moderateScale } from "react-native-size-matters";
 import {
@@ -13,6 +15,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import tree from "../../locales/decision-tree/decisionTree.json";
+import { createProcessAndStepsFromDecisionTree } from "../../components/card/createProcessAndStepsFromDecisionTree";
 
 const decisionTree = tree as Record<string, any>;
 type HistoryEntry =
@@ -24,8 +27,11 @@ export default function DecisionTree() {
     { type: "question", key: "start" },
   ]);
   const [userAnswers, setUserAnswers] = useState<Record<string, string>>({});
-  const [steps, setSteps] = useState<{ step_title: string; answer: string }[]>([]);
+  const [steps, setSteps] = useState<{ step_title: string; answer: string }[]>(
+    [],
+  );
   const [showSteps, setShowSteps] = useState(false);
+  const [userInput, setUserInput] = useState("");
   const scrollRef = useRef<ScrollView>(null);
 
   useEffect(() => {
@@ -42,16 +48,17 @@ export default function DecisionTree() {
 
   const getStepsForProcess = (
     processAnswers: Record<string, any>,
-    userAnswers: Record<string, string>
+    userAnswers: Record<string, string>,
   ): { step_title: string; answer: string }[] => {
     const steps: { step_title: string; answer: string }[] = [];
     for (const step of Object.values(processAnswers)) {
       if (step.step_question) {
         const userValue = userAnswers[step.step_question];
-        const option = step.options.find(
-          (opt: any) => opt.label === userValue
-        );
-        if ((step.status === "mandatory" || step.status === "optional") && option?.answer) {
+        const option = step.options.find((opt: any) => opt.label === userValue);
+        if (
+          (step.status === "mandatory" || step.status === "optional") &&
+          option?.answer
+        ) {
           steps.push({ step_title: step.step_title, answer: option.answer });
         }
       } else {
@@ -65,7 +72,9 @@ export default function DecisionTree() {
   };
 
   const handleOptionPress = (nextKey: string, label: string) => {
-    const lastQuestionEntry = [...history].reverse().find((e) => e.type === "question") as
+    const lastQuestionEntry = [...history]
+      .reverse()
+      .find((e) => e.type === "question") as
       | { type: "question"; key: string }
       | undefined;
     const newAnswers = { ...userAnswers };
@@ -75,7 +84,10 @@ export default function DecisionTree() {
 
     const processAnswersKey = getProcessAnswersKey(nextKey);
     if (processAnswersKey && decisionTree[processAnswersKey]) {
-      const processAnswers = decisionTree[processAnswersKey] as Record<string, any>;
+      const processAnswers = decisionTree[processAnswersKey] as Record<
+        string,
+        any
+      >;
       const filteredSteps = getStepsForProcess(processAnswers, newAnswers);
       setSteps(filteredSteps);
       setUserAnswers(newAnswers);
@@ -90,6 +102,26 @@ export default function DecisionTree() {
       { type: "question", key: nextKey },
     ]);
     setUserAnswers(newAnswers);
+  };
+
+  const handleSendMessage = () => {
+    if (userInput.trim()) {
+      const inputText = userInput.trim();
+
+      createProcessAndStepsFromDecisionTree({
+        name: inputText,
+        userAnswers,
+        userId: 4,
+      });
+
+      setHistory((prev) => [
+        ...prev,
+        { type: "answer", label: inputText },
+        { type: "question", key: "start" },
+      ]);
+      setUserAnswers((prev) => ({ ...prev, start: inputText }));
+      setUserInput("");
+    }
   };
 
   const restartChat = () => {
@@ -109,7 +141,7 @@ export default function DecisionTree() {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.container} ref={scrollRef}>
         {history.map((entry, index) => {
           if (entry.type === "question") {
@@ -133,24 +165,35 @@ export default function DecisionTree() {
 
         {showSteps && (
           <View style={styles.botBubble}>
-            <Text style={[styles.botText, { fontWeight: "bold" }]}>Étapes à suivre :</Text>
+            <Text style={[styles.botText, { fontWeight: "bold" }]}>
+              Étapes à suivre :
+            </Text>
             {steps.map((step, idx) => (
               <View key={idx} style={{ marginTop: 8 }}>
-                <Text style={[styles.botText, { fontWeight: "bold" }]}>{step.step_title}</Text>
+                <Text style={[styles.botText, { fontWeight: "bold" }]}>
+                  {step.step_title}
+                </Text>
                 <Text style={styles.botText}>
                   {step.answer.split(/(https?:\/\/[^\s]+)/g).map((part, i) =>
                     part.match(/^https?:\/\//) ? (
-                      <Text key={i} style={styles.link} onPress={() => Linking.openURL(part)}>
+                      <Text
+                        key={i}
+                        style={styles.link}
+                        onPress={() => Linking.openURL(part)}
+                      >
                         {part}
                       </Text>
                     ) : (
                       <Text key={i}>{part}</Text>
-                    )
+                    ),
                   )}
                 </Text>
               </View>
             ))}
-            <TouchableOpacity style={styles.restartButton} onPress={restartChat}>
+            <TouchableOpacity
+              style={styles.restartButton}
+              onPress={restartChat}
+            >
               <Text style={styles.restartText}>🔁 Recommencer</Text>
             </TouchableOpacity>
           </View>
@@ -162,7 +205,7 @@ export default function DecisionTree() {
           {currentOptions.map(({ label, next }, idx) => (
             <TouchableOpacity
               key={idx}
-              style={styles.optionBubbleHorizontal}
+              style={[styles.optionBubbleHorizontal, { marginBottom: hp(0.5) }]}
               onPress={() => handleOptionPress(next, label)}
             >
               <Text style={styles.optionText}>{label}</Text>
@@ -170,7 +213,19 @@ export default function DecisionTree() {
           ))}
         </ScrollView>
       )}
-    </View>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          value={userInput}
+          onChangeText={setUserInput}
+          placeholder="Écrivez ici..."
+        />
+        <TouchableOpacity style={styles.sendButton} onPress={handleSendMessage}>
+          <Text style={styles.sendButtonText}>Envoyer</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -198,7 +253,7 @@ const styles = ScaledSheet.create({
     borderRadius: moderateScale(30),
     marginHorizontal: wp(2),
     justifyContent: "center",
-    alignItems: "center", 
+    alignItems: "center",
   },
   optionText: {
     fontSize: moderateScale(15),
@@ -208,11 +263,12 @@ const styles = ScaledSheet.create({
     padding: wp(4),
     flexDirection: "row",
     justifyContent: "flex-start",
-    flexWrap: "wrap", 
+    flexWrap: "wrap",
     overflow: "hidden",
+    marginBottom: hp(6),
   },
   userBubble: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#3498db",
     paddingVertical: hp(1.5),
     paddingHorizontal: wp(4),
     borderRadius: moderateScale(30),
@@ -235,5 +291,33 @@ const styles = ScaledSheet.create({
     color: "#007AFF",
     textDecorationLine: "underline",
     fontSize: moderateScale(15),
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: wp(4),
+    borderTopWidth: 1,
+    borderTopColor: "#ddd",
+    backgroundColor: "#fff",
+  },
+  input: {
+    flex: 1,
+    height: hp(6),
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: moderateScale(30),
+    paddingLeft: wp(3),
+    fontSize: moderateScale(16),
+  },
+  sendButton: {
+    marginLeft: wp(2),
+    backgroundColor: "#007AFF",
+    paddingVertical: hp(1),
+    paddingHorizontal: wp(4),
+    borderRadius: moderateScale(30),
+  },
+  sendButtonText: {
+    color: "#fff",
+    fontSize: moderateScale(16),
   },
 });
