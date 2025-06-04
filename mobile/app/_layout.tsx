@@ -11,6 +11,7 @@ import { View } from "react-native";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../locales/ii8n";
 import { useTranslation } from "react-i18next";
+import React from "react";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -55,7 +56,7 @@ function RootLayoutNav() {
 
   useEffect(() => {
     if (user === null) {
-      router.replace("/settings");
+      router.replace("/connexion");
     }
   }, [user]);
 

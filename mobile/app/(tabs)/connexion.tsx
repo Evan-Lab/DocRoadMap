@@ -73,7 +73,7 @@ export default function ConnectionPage() {
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
       <Image
-        source={require("@/assets/images/docroadmap_logo.png")}
+        source={require("@/assets/images/docroadmap_logo.jpg")}
         style={styles.logo}
         resizeMode="contain"
       />

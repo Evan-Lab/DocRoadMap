@@ -8,7 +8,8 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "android": {
-      "permissions": ["READ_CALENDAR", "WRITE_CALENDAR"]
+      "permissions": ["READ_CALENDAR", "WRITE_CALENDAR"],
+      "package": "com.asuki.mobile"
     },
     "splash": {
       "image": "./assets/images/splash.png",
@@ -16,16 +17,28 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.asuki.mobile",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
-    "plugins": ["expo-router", "expo-font"],
+    "plugins": ["expo-router", "expo-font", "expo-localization"],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "0d322527-07eb-403b-adf2-7d718504a8e3"
+      }
     }
   }
 }
