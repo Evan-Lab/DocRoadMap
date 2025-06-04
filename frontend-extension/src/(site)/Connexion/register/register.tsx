@@ -31,7 +31,7 @@ function Register() {
     }
 
     axios
-      .post("http://51.91.161.226:8082/auth/register", {
+      .post("http://localhost:8082/auth/register", {
         firstName,
         lastName,
         email,

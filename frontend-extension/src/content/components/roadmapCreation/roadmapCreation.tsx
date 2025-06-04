@@ -58,13 +58,13 @@ const RoadmapCreation: React.FC = () => {
         return;
       }
       try {
-        const userRes = await axios.get("http://51.91.161.226:8082/users/me", {
+        const userRes = await axios.get("http://localhost:8082/users/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser({ id: userRes.data.id });
 
         const stepsRes = await axios.get(
-          "http://51.91.161.226:8082/list-administrative-process",
+          "http://localhost:8082/list-administrative-process",
           {
             headers: { Authorization: `Bearer ${token}` },
           },
@@ -102,7 +102,7 @@ const RoadmapCreation: React.FC = () => {
       const stepsId = generateUniqueStepsId();
 
       await axios.post(
-        "http://51.91.161.226:8082/process/create",
+        "http://localhost:8082/process/create",
         {
           name: step.name,
           description: step.collection_name,
