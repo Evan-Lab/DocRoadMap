@@ -22,6 +22,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import DecisionTreeInterface from "@/components/chat/DecisionTreeInterface";
 import { router } from "expo-router";
 
 export default function HomePage() {
@@ -217,7 +218,7 @@ export default function HomePage() {
         </SafeAreaView>
       </Modal>
 
-      <ChatInterface />
+      <DecisionTreeInterface />
     </SafeAreaView>
   );
 }
