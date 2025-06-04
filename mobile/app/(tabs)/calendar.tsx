@@ -7,6 +7,8 @@ import {
   ScrollView,
   Platform,
   TouchableOpacity,
+  Modal,
+  TextInput,
 } from "react-native";
 import * as Calendar from "expo-calendar";
 import * as Notifications from "expo-notifications";
@@ -19,12 +21,21 @@ import {
 } from "react-native-responsive-screen";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { Picker } from "@react-native-picker/picker";
 
 const CalendarScreen = () => {
   const { t } = useTranslation();
   const [events, setEvents] = useState<Calendar.Event[]>([]);
   const [selectedDate, setSelectedDate] = useState("");
   const [calendarId, setCalendarId] = useState<string | null>(null);
+  const [notify, setNotify] = useState(false);
+  const [notificationDelay, setNotificationDelay] = useState(10);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [eventTime, setEventTime] = useState({ hour: 0, minute: 0 });
+  const [eventEndTime, setEventEndTime] = useState({ hour: 1, minute: 0 });
+  const [eventName, setEventName] = useState("");
+  const [eventDescription, setEventDescription] = useState("");
+  const [isNotificationSelected, setIsNotificationSelected] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -69,7 +80,9 @@ const CalendarScreen = () => {
   };
 
   const scheduleNotification = async (eventDate: Date) => {
-    const triggerDate = new Date(eventDate.getTime() - 10 * 60 * 1000);
+    const triggerDate = new Date(
+      eventDate.getTime() - notificationDelay * 60 * 1000,
+    );
     await Notifications.scheduleNotificationAsync({
       content: {
         title: "⏰ Rappel",
@@ -95,39 +108,67 @@ const CalendarScreen = () => {
   };
 
   const addEvent = async () => {
-    if (!calendarId || !selectedDate) return;
+    if (!calendarId || !selectedDate || !eventName) return;
 
     const startDate = new Date(selectedDate);
-    startDate.setHours(0, 43, 0);
+    startDate.setHours(eventTime.hour, eventTime.minute, 0);
     const endDate = new Date(selectedDate);
-    endDate.setHours(11, 0, 0);
+    endDate.setHours(
+      eventTime.hour + eventEndTime.hour,
+      eventTime.minute + eventEndTime.minute,
+      0,
+    );
 
     try {
       await Calendar.createEventAsync(calendarId, {
-        title: "💡 Rappel : tâche importante",
+        title: eventName,
         startDate,
         endDate,
         timeZone: "Europe/Paris",
         location: "Chez toi",
+        notes: eventDescription,
       });
 
-      await scheduleNotification(startDate);
+      if (notify) {
+        await scheduleNotification(startDate);
+      }
       await notifyEventAdded();
 
-      Alert.alert(
-        "Tu as ajouté un événement à ton calendrier. Vérifie sur ton vrai calendrier !",
-      );
+      Alert.alert("Tu as ajouté un événement à ton vrai calendrier !");
       handleDayPress({ dateString: selectedDate });
+      setModalVisible(false);
+      setEventName("");
+      setEventDescription("");
+      setEventTime({ hour: 0, minute: 0 });
+      setEventEndTime({ hour: 1, minute: 0 });
+      setNotify(false);
+      setIsNotificationSelected(false);
+      setNotificationDelay(10);
     } catch (error) {
       console.error(error);
-      Alert.alert("Erreur", "Impossible d’ajouter l’événement.");
+      Alert.alert("Erreur", "Impossible d'ajouter l'événement.");
     }
+  };
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setEventName("");
+    setEventDescription("");
+    setEventTime({ hour: 0, minute: 0 });
+    setEventEndTime({ hour: 1, minute: 0 });
+    setNotify(false);
+    setIsNotificationSelected(false);
+    setNotificationDelay(10);
   };
 
   return (
     <ScrollView>
       <TouchableOpacity
-        onPress={() => router.replace("/settings")}
+        onPress={() => router.replace("/home")}
         style={styles.closeButton}
       >
         <Ionicons name="close" size={24} color="black" />
@@ -138,11 +179,13 @@ const CalendarScreen = () => {
         markedDates={{ [selectedDate]: { selected: true } }}
       />
 
-      <Button
-        title="Ajouter un événement"
-        onPress={addEvent}
-        disabled={!selectedDate}
-      />
+      <View style={styles.buttonContainer}>
+        <Button
+          title="Ajouter un événement" //y a pas d'event d'afficher sur l'app si la notif est pour minuit
+          onPress={openModal}
+          disabled={!selectedDate}
+        />
+      </View>
 
       {events.length > 0 && (
         <View style={{ padding: 10 }}>
@@ -154,6 +197,172 @@ const CalendarScreen = () => {
           ))}
         </View>
       )}
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={closeModal}
+      >
+        <View style={styles.modalBackground}>
+          <View style={styles.modalContainer}>
+            <ScrollView>
+              <Text style={styles.modalTitle}>Nom de l'événement :</Text>
+              <TextInput
+                style={styles.input}
+                value={eventName}
+                onChangeText={setEventName}
+                placeholder="Nom de l'événement"
+              />
+
+              <Text style={styles.modalTitle}>
+                Description de l'événement :
+              </Text>
+              <TextInput
+                style={styles.input}
+                value={eventDescription}
+                onChangeText={setEventDescription}
+                placeholder="Description de l'événement"
+                multiline
+                numberOfLines={4}
+              />
+
+              <Text style={styles.modalTitle}>
+                Choisissez l'heure de début de l'événement :
+              </Text>
+              <View style={styles.pickerContainer}>
+                <Picker
+                  selectedValue={eventTime.hour}
+                  onValueChange={(itemValue) =>
+                    setEventTime({ ...eventTime, hour: itemValue })
+                  }
+                  style={styles.picker}
+                >
+                  {[...Array(24).keys()].map((value) => (
+                    <Picker.Item
+                      key={value}
+                      label={`${value}h`}
+                      value={value}
+                    />
+                  ))}
+                </Picker>
+                <Picker
+                  selectedValue={eventTime.minute}
+                  onValueChange={(itemValue) =>
+                    setEventTime({ ...eventTime, minute: itemValue })
+                  }
+                  style={styles.picker}
+                >
+                  {[...Array(60).keys()].map((value) => (
+                    <Picker.Item
+                      key={value}
+                      label={`${value} min`}
+                      value={value}
+                    />
+                  ))}
+                </Picker>
+              </View>
+
+              <Text style={styles.modalTitle}>
+                Choisissez l'heure de fin de l'événement :
+              </Text>
+              <View style={styles.pickerContainer}>
+                <Picker
+                  selectedValue={eventEndTime.hour}
+                  onValueChange={(itemValue) =>
+                    setEventEndTime({ ...eventEndTime, hour: itemValue })
+                  }
+                  style={styles.picker}
+                >
+                  {[...Array(24).keys()].map((value) => (
+                    <Picker.Item
+                      key={value}
+                      label={`${value}h`}
+                      value={value}
+                    />
+                  ))}
+                </Picker>
+                <Picker
+                  selectedValue={eventEndTime.minute}
+                  onValueChange={(itemValue) =>
+                    setEventEndTime({ ...eventEndTime, minute: itemValue })
+                  }
+                  style={styles.picker}
+                >
+                  {[...Array(60).keys()].map((value) => (
+                    <Picker.Item
+                      key={value}
+                      label={`${value} min`}
+                      value={value}
+                    />
+                  ))}
+                </Picker>
+              </View>
+
+              <Text style={styles.modalTitle}>
+                Souhaitez-vous recevoir une notification ?
+              </Text>
+              <View style={styles.buttonRow}>
+                {isNotificationSelected === false && (
+                  <>
+                    <View style={styles.buttonWrapper}>
+                      <Button
+                        title="Oui"
+                        onPress={() => {
+                          setNotify(true);
+                          setIsNotificationSelected(true);
+                        }}
+                      />
+                    </View>
+                    <View style={styles.buttonWrapper}>
+                      <Button
+                        title="Non"
+                        onPress={() => {
+                          setNotify(false);
+                          setIsNotificationSelected(true);
+                        }}
+                      />
+                    </View>
+                  </>
+                )}
+              </View>
+
+              {isNotificationSelected && notify && (
+                <>
+                  <Text style={styles.modalTitle}>
+                    Choisissez combien de minutes avant l'événement :
+                  </Text>
+                  <Picker
+                    selectedValue={notificationDelay}
+                    onValueChange={(itemValue) =>
+                      setNotificationDelay(itemValue)
+                    }
+                    style={styles.fullPicker}
+                  >
+                    {[5, 10, 15, 30, 60].map((value) => (
+                      <Picker.Item
+                        key={value}
+                        label={`${value} minutes`}
+                        value={value}
+                      />
+                    ))}
+                  </Picker>
+                </>
+              )}
+
+              {isNotificationSelected && (
+                <View style={styles.buttonWrapper}>
+                  <Button title="Ajouter" onPress={addEvent} />
+                </View>
+              )}
+
+              <View style={styles.buttonWrapper}>
+                <Button title="Annuler" onPress={closeModal} />
+              </View>
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };
@@ -171,6 +380,19 @@ const styles = ScaledSheet.create({
     marginLeft: moderateScale(10),
     marginTop: moderateScale(10),
   },
+  buttonContainer: {
+    marginVertical: moderateScale(15),
+    paddingHorizontal: moderateScale(20),
+  },
+  input: {
+    height: 40,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 5,
+    marginVertical: 10,
+    paddingHorizontal: 10,
+    width: "100%",
+  },
   button: {
     padding: moderateScale(12),
     borderRadius: moderateScale(8),
@@ -182,6 +404,48 @@ const styles = ScaledSheet.create({
     color: "#FFF",
     fontSize: moderateScale(16),
     fontWeight: "bold",
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContainer: {
+    width: wp("85%"),
+    maxHeight: hp("80%"),
+    backgroundColor: "#FFF",
+    padding: moderateScale(20),
+    borderRadius: moderateScale(10),
+  },
+  modalTitle: {
+    fontSize: moderateScale(16),
+    fontWeight: "600",
+    marginTop: moderateScale(15),
+    marginBottom: moderateScale(10),
+    color: "#333",
+  },
+  buttonWrapper: {
+    marginVertical: moderateScale(8),
+  },
+  buttonRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginVertical: moderateScale(10),
+  },
+  pickerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: moderateScale(10),
+  },
+  picker: {
+    flex: 1,
+    height: moderateScale(50),
+  },
+  fullPicker: {
+    width: "100%",
+    height: moderateScale(50),
+    marginBottom: moderateScale(15),
   },
 });
 
