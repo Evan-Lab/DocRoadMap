@@ -33,7 +33,7 @@ describe("RoadmapCreation", () => {
 
   it("renders the title", async () => {
     mockGet.mockImplementation((_key: string, cb: any) =>
-      cb({ token: "abc123" })
+      cb({ token: "abc123" }),
     );
     mockedAxios.get
       .mockResolvedValueOnce({ data: { id: 42 } })
@@ -51,7 +51,7 @@ describe("RoadmapCreation", () => {
 
   it("renders steps and calls handleCreateCard on click", async () => {
     mockGet.mockImplementation((_key: string, cb: any) =>
-      cb({ token: "abc123" })
+      cb({ token: "abc123" }),
     );
     mockedAxios.get
       .mockResolvedValueOnce({ data: { id: 1 } })
@@ -72,14 +72,14 @@ describe("RoadmapCreation", () => {
         "http://localhost:8082/process/create",
 
         expect.objectContaining({ name: "Passeport" }),
-        expect.any(Object)
-      )
+        expect.any(Object),
+      ),
     );
   });
 
   it("shows error if creation fails", async () => {
     mockGet.mockImplementation((_key: string, cb: any) =>
-      cb({ token: "abc123" })
+      cb({ token: "abc123" }),
     );
     mockedAxios.get
       .mockResolvedValueOnce({ data: { id: 1 } })
@@ -95,7 +95,7 @@ describe("RoadmapCreation", () => {
     fireEvent.click(createButton);
 
     await waitFor(() =>
-      expect(screen.getByText("createError")).toBeInTheDocument()
+      expect(screen.getByText("createError")).toBeInTheDocument(),
     );
   });
 });
