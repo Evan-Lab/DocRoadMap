@@ -28,7 +28,7 @@ function Login() {
 
   const handleLogin = () => {
     axios
-      .post("http://51.91.161.226:8082/auth/login", { email, password })
+      .post("http://localhost:8082/auth/login", { email, password })
       .then((response) => {
         const token = response.data.accessToken;
 

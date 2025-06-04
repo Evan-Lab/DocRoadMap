@@ -9,6 +9,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "build": "tsc -b && vite build",
+    "build:copy": "vite build && bash ./copy-to-windows.sh",
     "lint": "eslint .",
     "preview": "vite preview"
   },
