@@ -5,7 +5,7 @@ import "react-calendar/dist/Calendar.css";
 import { useTranslation } from "react-i18next";
 import getToken from "../../utils/utils";
 
-const baseURL = "http://51.91.161.226:8082/";
+const baseURL = "http://localhost:8082/";
 
 interface Step {
   id: number;
@@ -57,7 +57,7 @@ const ProcessCalendar = () => {
               id: step.id,
               date: new Date(step.endedAt!),
               title: step.name,
-            })),
+            }))
         );
 
         setEvents(stepsWithEndDate);
@@ -72,7 +72,7 @@ const ProcessCalendar = () => {
     if (view !== "month") return null;
 
     const hasEvents = events.some(
-      (event) => date.toDateString() === event.date.toDateString(),
+      (event) => date.toDateString() === event.date.toDateString()
     );
 
     return hasEvents ? (
@@ -86,7 +86,7 @@ const ProcessCalendar = () => {
     if (!selectedDate) return [];
     return events
       .filter(
-        (event) => event.date.toDateString() === selectedDate.toDateString(),
+        (event) => event.date.toDateString() === selectedDate.toDateString()
       )
       .sort((a, b) => a.id - b.id);
   };

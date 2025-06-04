@@ -64,7 +64,7 @@ const RoadmapView: React.FC = () => {
   const [selectedProcessName, setSelectedProcessName] = useState<string>("");
   const [token, setToken] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<{ [key: number]: string }>(
-    {},
+    {}
   );
 
   useEffect(() => {
@@ -77,7 +77,7 @@ const RoadmapView: React.FC = () => {
         return;
       }
       try {
-        const response = await axios.get("http://51.91.161.226:8082/users/me", {
+        const response = await axios.get("http://localhost:8082/users/me", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -102,15 +102,15 @@ const RoadmapView: React.FC = () => {
       const formattedDate = `${dateValue}:00.000Z`;
 
       await axios.patch(
-        `http://51.91.161.226:8082/steps/${stepId}`,
+        `http://localhost:8082/steps/${stepId}`,
         { endedAt: formattedDate },
-        { headers: { Authorization: `Bearer ${token}` } },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       setSteps(
         steps.map((step) =>
-          step.id === stepId ? { ...step, endedAt: formattedDate } : step,
-        ),
+          step.id === stepId ? { ...step, endedAt: formattedDate } : step
+        )
       );
 
       alert(t("dateUpdatedAlert"));
@@ -135,14 +135,11 @@ const RoadmapView: React.FC = () => {
 
   const getSteps = async (id: number, name: string) => {
     try {
-      const response = await axios.get(
-        `http://51.91.161.226:8082/process/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      const response = await axios.get(`http://localhost:8082/process/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
       setSteps(response.data.steps);
       setSelectedProcessName(name);
       setShowSteps(true);
