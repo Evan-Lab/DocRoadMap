@@ -69,7 +69,7 @@ describe("RoadmapCreation", () => {
     fireEvent.click(button);
     await waitFor(() =>
       expect(mockedAxios.post).toHaveBeenCalledWith(
-        "http://51.91.161.226:8082/process/create",
+        "http://localhost:8082/process/create",
 
         expect.objectContaining({ name: "Passeport" }),
         expect.any(Object),

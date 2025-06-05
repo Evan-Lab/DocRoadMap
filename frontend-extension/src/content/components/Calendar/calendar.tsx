@@ -5,7 +5,7 @@ import "react-calendar/dist/Calendar.css";
 import { useTranslation } from "react-i18next";
 import getToken from "../../utils/utils";
 
-const baseURL = "http://51.91.161.226:8082/";
+const baseURL = "http://localhost:8082/";
 
 interface Step {
   id: number;
