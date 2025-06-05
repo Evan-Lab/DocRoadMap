@@ -8,6 +8,8 @@ const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
 const UserIcon = FaUser as unknown as React.FC<any>;
 const EnvelopeIcon = FaEnvelope as unknown as React.FC<any>;
 
+const backendUrl = "http://localhost:8082";
+
 function Profile() {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -39,7 +41,7 @@ function Profile() {
           throw new Error(t("tokenError"));
         }
 
-        const response = await fetch("http://localhost:8082/users/me", {
+        const response = await fetch(`${backendUrl}/users/me`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
