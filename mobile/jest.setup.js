@@ -9,6 +9,15 @@ jest.mock("expo-font", () => ({
   loadAsync: jest.fn(() => Promise.resolve()),
 }));
 
+// Mock Expo Asset
+jest.mock("expo-asset", () => ({
+  Asset: {
+    fromModule: jest.fn(() => ({
+      localUri: "mocked-uri",
+      downloadAsync: jest.fn(() => Promise.resolve({ uri: "mocked-uri" })),
+    })),
+  },
+}));
 // Mock Expo Vector Icons
 jest.mock("@expo/vector-icons", () => {
   const { View } = require("react-native");
