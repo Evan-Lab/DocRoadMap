@@ -22,7 +22,7 @@ export default function DecisionTreeInterface() {
   const closeModal = () => setShowModal(false);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView>
       <TouchableOpacity style={styles.floatingButton} onPress={openModal}>
         <Image
           source={require("../../assets/images/chatbot.png")}
@@ -35,15 +35,13 @@ export default function DecisionTreeInterface() {
         visible={showModal}
         onRequestClose={closeModal}
       >
-        <SafeAreaView style={{ flex: 1 }}>
-          <View style={styles.header}>
-            <Text style={styles.headerText}>Donna Chatbot</Text>
-            <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
-              <Ionicons name="close" size={24} style={{ paddingRight: 10 }} />
-            </TouchableOpacity>
-          </View>
-          <DecisionTree />
-        </SafeAreaView>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Donna Chatbot</Text>
+          <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+            <Ionicons name="close" size={24} style={{ paddingRight: 10 }} />
+          </TouchableOpacity>
+        </View>
+        <DecisionTree />
       </Modal>
     </SafeAreaView>
   );
