@@ -20,11 +20,14 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import { Picker } from "@react-native-picker/picker";
 
 const CalendarScreen = () => {
   const { t } = useTranslation();
+  const router = useRouter();
+  const params = useLocalSearchParams();
+
   const [events, setEvents] = useState<Calendar.Event[]>([]);
   const [selectedDate, setSelectedDate] = useState("");
   const [calendarId, setCalendarId] = useState<string | null>(null);
@@ -36,7 +39,9 @@ const CalendarScreen = () => {
   const [eventName, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
   const [isNotificationSelected, setIsNotificationSelected] = useState(false);
-  const router = useRouter();
+
+  const [isPrefilled, setIsPrefilled] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   useEffect(() => {
     const setup = async () => {
@@ -66,6 +71,33 @@ const CalendarScreen = () => {
     };
     setup();
   }, []);
+
+  const [lastParamsHash, setLastParamsHash] = useState("");
+  useEffect(() => {
+    const paramsHash = JSON.stringify(params);
+
+    if (paramsHash !== lastParamsHash && paramsHash !== "{}") {
+      let isPrefilledMode = false;
+
+      if (params.prefillEventName) {
+        setEventName(String(params.prefillEventName));
+        isPrefilledMode = true;
+      }
+      if (params.prefillEventDescription) {
+        setEventDescription(String(params.prefillEventDescription));
+        isPrefilledMode = true;
+      }
+
+      setIsPrefilled(isPrefilledMode);
+
+      if (isPrefilledMode && !selectedDate) {
+        const today = new Date().toISOString().split("T")[0];
+        setSelectedDate(today);
+      }
+
+      setLastParamsHash(paramsHash);
+    }
+  }, [params, lastParamsHash, selectedDate, modalVisible]);
 
   const handleDayPress = async (day: any) => {
     setSelectedDate(day.dateString);
@@ -99,7 +131,7 @@ const CalendarScreen = () => {
     await Notifications.scheduleNotificationAsync({
       content: {
         title: "📅 Événement ajouté",
-        body: "Tu as ajouté un événement à ton calendrier. Vérifie sur ton vrai calendrier !",
+        body: "Tu as ajouté un événement à ton vrai calendrier !",
       },
       trigger: {
         seconds: 1,
@@ -107,8 +139,37 @@ const CalendarScreen = () => {
     });
   };
 
-  const addEvent = async () => {
-    if (!calendarId || !selectedDate || !eventName) return;
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    resetForm();
+  };
+
+  const resetForm = () => {
+    setEventName("");
+    setEventDescription("");
+    setEventTime({ hour: 0, minute: 0 });
+    setEventEndTime({ hour: 1, minute: 0 });
+    setNotify(false);
+    setIsNotificationSelected(false);
+    setNotificationDelay(10);
+    setIsPrefilled(false);
+    setLastParamsHash("");
+  };
+
+  const addEventWithReset = async () => {
+    if (!calendarId || !eventName) {
+      Alert.alert("Erreur", "Veuillez saisir un nom d'événement.");
+      return;
+    }
+
+    if (!selectedDate) {
+      Alert.alert("Erreur", "Veuillez sélectionner une date.");
+      return;
+    }
 
     const startDate = new Date(selectedDate);
     startDate.setHours(eventTime.hour, eventTime.minute, 0);
@@ -137,32 +198,15 @@ const CalendarScreen = () => {
       Alert.alert("Tu as ajouté un événement à ton vrai calendrier !");
       handleDayPress({ dateString: selectedDate });
       setModalVisible(false);
-      setEventName("");
-      setEventDescription("");
-      setEventTime({ hour: 0, minute: 0 });
-      setEventEndTime({ hour: 1, minute: 0 });
-      setNotify(false);
-      setIsNotificationSelected(false);
-      setNotificationDelay(10);
+      resetForm();
     } catch (error) {
       console.error(error);
       Alert.alert("Erreur", "Impossible d'ajouter l'événement.");
     }
   };
 
-  const openModal = () => {
-    setModalVisible(true);
-  };
-
-  const closeModal = () => {
-    setModalVisible(false);
-    setEventName("");
-    setEventDescription("");
-    setEventTime({ hour: 0, minute: 0 });
-    setEventEndTime({ hour: 1, minute: 0 });
-    setNotify(false);
-    setIsNotificationSelected(false);
-    setNotificationDelay(10);
+  const openDatePicker = () => {
+    setShowDatePicker(true);
   };
 
   return (
@@ -352,7 +396,7 @@ const CalendarScreen = () => {
 
               {isNotificationSelected && (
                 <View style={styles.buttonWrapper}>
-                  <Button title="Ajouter" onPress={addEvent} />
+                  <Button title="Ajouter" onPress={addEventWithReset} />
                 </View>
               )}
 
@@ -385,7 +429,7 @@ const styles = ScaledSheet.create({
     paddingHorizontal: moderateScale(20),
   },
   input: {
-    height: 40,
+    height: 60,
     borderColor: "#ccc",
     borderWidth: 1,
     borderRadius: 5,
