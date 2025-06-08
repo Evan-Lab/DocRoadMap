@@ -193,9 +193,11 @@ const CardDemarche: React.FC<CardDemarcheProps> = ({
             </Text>
 
             <View style={styles.timelineContainer}>
-              {steps.map((item, index) => (
-                <StepItem key={item.id} item={item} index={index} />
-              ))}
+              <ScrollView>
+                {steps.map((item, index) => (
+                  <StepItem key={item.id} item={item} index={index} />
+                ))}
+              </ScrollView>
             </View>
 
             <TouchableOpacity
