@@ -8,6 +8,9 @@ import {
   StyleSheet,
   Linking,
   SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
+  Alert,
 } from "react-native";
 import { ScaledSheet, moderateScale } from "react-native-size-matters";
 import {
@@ -127,6 +130,11 @@ export default function DecisionTree() {
         userId: 4,
       });
 
+      Alert.alert(
+        "✅ Démarche créée",
+        `La démarche "${inputText}" a bien été créée.`,
+      );
+
       setHistory((prev) => [
         ...prev,
         { type: "answer", label: inputText },
@@ -155,97 +163,108 @@ export default function DecisionTree() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={styles.container} ref={scrollRef}>
-        {history.map((entry, index) => {
-          if (entry.type === "question") {
-            const node = decisionTree[entry.key];
-            if ("question" in node) {
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={{ flex: 1 }}
+      >
+        <ScrollView contentContainerStyle={styles.container} ref={scrollRef}>
+          {history.map((entry, index) => {
+            if (entry.type === "question") {
+              const node = decisionTree[entry.key];
+              if ("question" in node) {
+                return (
+                  <View key={index} style={styles.botBubble}>
+                    <Text style={styles.botText}>{node.question}</Text>
+                  </View>
+                );
+              }
+            } else if (entry.type === "answer") {
               return (
-                <View key={index} style={styles.botBubble}>
-                  <Text style={styles.botText}>{node.question}</Text>
+                <View key={index} style={styles.userBubble}>
+                  <Text style={styles.userText}>{entry.label}</Text>
                 </View>
               );
             }
-          } else if (entry.type === "answer") {
-            return (
-              <View key={index} style={styles.userBubble}>
-                <Text style={styles.userText}>{entry.label}</Text>
-              </View>
-            );
-          }
-          return null;
-        })}
+            return null;
+          })}
 
-        {showSteps && (
-          <View style={styles.botBubble}>
-            <Text style={[styles.botText, { fontWeight: "bold" }]}>
-              Étapes à suivre :
-            </Text>
-            {steps.map((step, idx) => (
-              <View key={idx} style={{ marginTop: 8 }}>
-                <Text style={[styles.botText, { fontWeight: "bold" }]}>
-                  {step.step_title}
-                </Text>
-                <Text style={styles.botText}>
-                  {step.answer.split(/(https?:\/\/[^\s]+)/g).map((part, i) =>
-                    part.match(/^https?:\/\//) ? (
-                      <Text
-                        key={i}
-                        style={styles.link}
-                        onPress={() => Linking.openURL(part)}
-                      >
-                        {part}
-                      </Text>
-                    ) : (
-                      <Text key={i}>{part}</Text>
-                    ),
-                  )}
-                </Text>
-              </View>
-            ))}
-            <TouchableOpacity
-              style={styles.restartButton}
-              onPress={restartChat}
+          {showSteps && (
+            <View style={styles.botBubble}>
+              <Text style={[styles.botText, { fontWeight: "bold" }]}>
+                Étapes à suivre :
+              </Text>
+              {steps.map((step, idx) => (
+                <View key={idx} style={{ marginTop: 8 }}>
+                  <Text style={[styles.botText, { fontWeight: "bold" }]}>
+                    {step.step_title}
+                  </Text>
+                  <Text style={styles.botText}>
+                    {step.answer.split(/(https?:\/\/[^\s]+)/g).map((part, i) =>
+                      part.match(/^https?:\/\//) ? (
+                        <Text
+                          key={i}
+                          style={styles.link}
+                          onPress={() => Linking.openURL(part)}
+                        >
+                          {part}
+                        </Text>
+                      ) : (
+                        <Text key={i}>{part}</Text>
+                      ),
+                    )}
+                  </Text>
+                </View>
+              ))}
+              <TouchableOpacity
+                style={styles.restartButton}
+                onPress={restartChat}
+              >
+                <Text style={styles.restartText}>🔁 Recommencer</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </ScrollView>
+
+        <View style={styles.bottomBar}>
+          {currentOptions.length > 0 && (
+            <ScrollView
+              horizontal
+              contentContainerStyle={styles.optionsBar}
+              keyboardShouldPersistTaps="handled"
             >
-              <Text style={styles.restartText}>🔁 Recommencer</Text>
+              {currentOptions.map(({ label, next }, idx) => (
+                <TouchableOpacity
+                  key={idx}
+                  style={styles.optionBubbleHorizontal}
+                  onPress={() => handleOptionPress(next, label)}
+                >
+                  <Text style={styles.optionText}>{label}</Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          )}
+
+          <View style={styles.inputBar}>
+            <TextInput
+              style={styles.input}
+              value={userInput}
+              onChangeText={handleInputChange}
+              placeholder="Écris le nom de la démarche (logement, déménagement, emploi, indépendance)"
+              multiline
+            />
+            <TouchableOpacity
+              style={[
+                styles.sendButton,
+                { opacity: isValid && userInput ? 1 : 0.5 },
+              ]}
+              onPress={handleSendMessage}
+              disabled={!isValid || !userInput.trim()}
+            >
+              <Text style={styles.sendButtonText}>Créer</Text>
             </TouchableOpacity>
           </View>
-        )}
-      </ScrollView>
-
-      {!showSteps && currentOptions.length > 0 && (
-        <ScrollView horizontal contentContainerStyle={styles.optionsBar}>
-          {currentOptions.map(({ label, next }, idx) => (
-            <TouchableOpacity
-              key={idx}
-              style={[styles.optionBubbleHorizontal, { marginBottom: hp(0.5) }]}
-              onPress={() => handleOptionPress(next, label)}
-            >
-              <Text style={styles.optionText}>{label}</Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-      )}
-
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          value={userInput}
-          onChangeText={handleInputChange}
-          placeholder="Écris le nom de la démarche exactement comme indiqué entre parenthèses (logement, déménagement, emploi, indépendance)"
-          multiline={true}
-        />
-        <TouchableOpacity
-          style={[
-            styles.sendButton,
-            { opacity: isValid && userInput ? 1 : 0.5 },
-          ]}
-          onPress={handleSendMessage}
-          disabled={!isValid || !userInput.trim()}
-        >
-          <Text style={styles.sendButtonText}>Crée ta démarche</Text>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
@@ -254,7 +273,7 @@ const styles = ScaledSheet.create({
   container: {
     padding: wp(4),
     gap: 10,
-    paddingBottom: hp(10),
+    paddingBottom: hp(2),
   },
   botBubble: {
     backgroundColor: "#FFFFFF",
@@ -271,32 +290,6 @@ const styles = ScaledSheet.create({
   },
   botText: {
     fontSize: moderateScale(16),
-  },
-  optionBubbleHorizontal: {
-    backgroundColor: "#FFFFFF",
-    paddingVertical: hp(1),
-    paddingHorizontal: wp(4),
-    borderRadius: moderateScale(30),
-    marginHorizontal: wp(2),
-    justifyContent: "center",
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 3,
-  },
-  optionText: {
-    fontSize: moderateScale(15),
-    textAlign: "center",
-  },
-  optionsBar: {
-    padding: wp(4),
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    flexWrap: "wrap",
-    overflow: "hidden",
-    marginBottom: hp(6),
   },
   userBubble: {
     backgroundColor: "#3498db",
@@ -315,6 +308,11 @@ const styles = ScaledSheet.create({
     fontSize: moderateScale(16),
     color: "#000",
   },
+  link: {
+    color: "#007AFF",
+    textDecorationLine: "underline",
+    fontSize: moderateScale(15),
+  },
   restartButton: {
     marginTop: hp(2),
     alignSelf: "center",
@@ -323,33 +321,55 @@ const styles = ScaledSheet.create({
     color: "#007AFF",
     fontSize: moderateScale(15),
   },
-  link: {
-    color: "#007AFF",
-    textDecorationLine: "underline",
-    fontSize: moderateScale(15),
-  },
-  inputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: wp(4),
+  bottomBar: {
     borderTopWidth: 1,
     borderTopColor: "#ddd",
     backgroundColor: "#fff",
+    paddingVertical: hp(1),
+  },
+  optionsBar: {
+    paddingHorizontal: wp(2),
+    paddingBottom: hp(1),
+    flexDirection: "row",
+  },
+  optionBubbleHorizontal: {
+    backgroundColor: "#FFFFFF",
+    paddingVertical: hp(1),
+    paddingHorizontal: wp(4),
+    borderRadius: moderateScale(30),
+    marginHorizontal: wp(1.5),
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  optionText: {
+    fontSize: moderateScale(15),
+    textAlign: "center",
+  },
+  inputBar: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: wp(4),
+    paddingTop: hp(1),
   },
   input: {
     flex: 1,
-    height: hp(8),
     borderWidth: 1,
     borderColor: "#ddd",
     borderRadius: moderateScale(30),
-    paddingLeft: wp(3),
+    paddingHorizontal: wp(3),
     fontSize: moderateScale(16),
+    height: hp(30),
+    marginRight: wp(2),
   },
   sendButton: {
-    marginLeft: wp(2),
-    backgroundColor: "#007AFF",
-    paddingVertical: hp(1),
-    paddingHorizontal: wp(4),
+    backgroundColor: "#3498db",
+    paddingVertical: hp(1.2),
+    paddingHorizontal: wp(5),
     borderRadius: moderateScale(30),
   },
   sendButtonText: {
