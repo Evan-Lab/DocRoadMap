@@ -1,46 +1,51 @@
-import axios from "axios"
-import { useState } from "react"
-import { FaArrowLeft } from "react-icons/fa"
-import { useNavigate } from "react-router-dom"
-import "./register.css"
+import axios from "axios";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { FaArrowLeft } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import "./register.css";
 
-const isDev = process.env.NODE_ENV !== "production"
+const isDev = process.env.NODE_ENV !== "production";
+
+const backendUrl = "http://localhost:8082";
 
 const docroadmapImg = isDev
   ? "/assets/docroadmap.png"
-  : "../images/docroadmap.png"
+  : "../assets/docroadmap.png";
 
-const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>
+const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
 
 function Register() {
-  const navigate = useNavigate()
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [error, setError] = useState("")
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleRegister = () => {
     if (password !== confirmPassword) {
-      setError("Les mots de passe ne correspondent pas")
-      return
+      setError("passwordMismatch");
+      return;
     }
 
     axios
-      .post("http://localhost:8082/auth/register", {
+      .post(`${backendUrl}/auth/register`, {
         firstName,
         lastName,
         email,
         password,
       })
       .then(() => {
-        navigate("/account-confirmation")
+        navigate("/account-confirmation");
       })
       .catch(() => {
-        setError("Une erreur s'est produite lors de l'inscription")
-      })
-  }
+        setError("error");
+      });
+  };
 
   return (
     <div className="register-page">
@@ -52,63 +57,63 @@ function Register() {
           <div className="DocRoadMap-Logo register">
             <img src={docroadmapImg} alt="DocRoadMap" />
           </div>
-          <h1>Inscription</h1>
+          <h1>{t("register")}</h1>
         </div>
-        {error && <p className="error-message">{error}</p>}
+        {error && <p className="error-message">{t(error)}</p>}
         <div className="input-group">
-          <label>Prénom</label>
+          <label>{t("firstName")}</label>
           <input
             type="text"
-            placeholder="Prénom"
+            placeholder={t("firstName")}
             value={firstName}
-            onChange={e => setFirstName(e.target.value)}
+            onChange={(e) => setFirstName(e.target.value)}
           />
         </div>
         <div className="input-group">
-          <label>Nom de famille</label>
+          <label>{t("lastName")}</label>
           <input
             type="text"
-            placeholder="Nom"
+            placeholder={t("lastName")}
             value={lastName}
-            onChange={e => setLastName(e.target.value)}
+            onChange={(e) => setLastName(e.target.value)}
           />
         </div>
         <div className="input-group">
-          <label>Adresse e-mail</label>
+          <label>{t("email")}</label>
           <input
             type="email"
-            placeholder="Email"
+            placeholder={t("email")}
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="input-group">
-          <label>Mot de passe</label>
+          <label>{t("password")}</label>
           <input
             type="password"
-            placeholder="Mot de passe"
+            placeholder={t("password")}
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div className="input-group">
-          <label>Confirmation du mot de passe</label>
+          <label>{t("confirmPassword")}</label>
           <input
             type="password"
-            placeholder="Mot de passe"
+            placeholder={t("password")}
             value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
         <button className="register-button" onClick={handleRegister}>
-          S'inscrire
+          {t("submit")}
         </button>
         <p className="login-text">
-          Vous avez déjà un compte ? <a href="/login">Connectez-vous</a>
+          {t("hasAccount")} <Link to="/login">{t("login")}</Link>
         </p>
       </div>
     </div>
-  )
+  );
 }
 
-export default Register
+export default Register;
