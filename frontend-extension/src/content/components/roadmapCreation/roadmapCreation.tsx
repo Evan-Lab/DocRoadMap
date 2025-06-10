@@ -69,7 +69,7 @@ const RoadmapCreation: React.FC = () => {
           `${backendUrl}/list-administrative-process`,
           {
             headers: { Authorization: `Bearer ${token}` },
-          }
+          },
         );
 
         const enrichedSteps = stepsRes.data.map((step: any) => ({
@@ -118,7 +118,7 @@ const RoadmapCreation: React.FC = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
     } catch (error) {
       console.error("Erreur lors de la création :", error);

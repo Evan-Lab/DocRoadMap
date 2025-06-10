@@ -65,7 +65,7 @@ const RoadmapView: React.FC = () => {
   const [selectedProcessName, setSelectedProcessName] = useState<string>("");
   const [token, setToken] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<{ [key: number]: string }>(
-    {}
+    {},
   );
 
   useEffect(() => {
@@ -105,13 +105,13 @@ const RoadmapView: React.FC = () => {
       await axios.patch(
         `${backendUrl}/steps/${stepId}`,
         { endedAt: formattedDate },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
 
       setSteps(
         steps.map((step) =>
-          step.id === stepId ? { ...step, endedAt: formattedDate } : step
-        )
+          step.id === stepId ? { ...step, endedAt: formattedDate } : step,
+        ),
       );
 
       alert(t("dateUpdatedAlert"));

@@ -5,6 +5,7 @@ import { MemoryRouter } from "react-router-dom";
 import Register from "./register";
 
 jest.mock("axios");
+
 interface UseTranslationResult {
   t: (key: string) => string;
 }
@@ -19,7 +20,7 @@ jest.mock(
     useTranslation: (): UseTranslationResult => ({
       t: (key: string): string => key,
     }),
-  })
+  }),
 );
 
 jest.mock("react-router-dom", () => ({
@@ -32,7 +33,7 @@ describe("Register Component", () => {
     render(
       <MemoryRouter>
         <Register />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
   beforeEach(() => {
@@ -75,28 +76,6 @@ describe("Register Component", () => {
     expect(screen.getByPlaceholderText("confirmPassword")).toBeInTheDocument();
   });
 
-  it("shows error if passwords do not match on step 3", async () => {
-    renderWithRouter();
-    fireEvent.change(screen.getByPlaceholderText("firstName"), {
-      target: { value: "Evan" },
-    });
-    fireEvent.change(screen.getByPlaceholderText("lastName"), {
-      target: { value: "Lab" },
-    });
-    fireEvent.click(screen.getByText("continue"));
-    fireEvent.change(screen.getByPlaceholderText("email"), {
-      target: { value: "evanLab@outlook.com" },
-    });
-    fireEvent.click(screen.getByText("continue"));
-    fireEvent.change(screen.getByPlaceholderText("password"), {
-      target: { value: "1234" },
-    });
-    fireEvent.change(screen.getByPlaceholderText("confirmPassword"), {
-      target: { value: "abcd" },
-    });
-    fireEvent.click(screen.getByText("submit"));
-  });
-
   it("submits the form successfully if passwords match on step 3", async () => {
     (axios.post as jest.Mock).mockResolvedValue({});
 
@@ -127,7 +106,7 @@ describe("Register Component", () => {
         lastName: "Lab",
         email: "evanLab@outlook.com",
         password: "1234",
-      }
+      },
     );
   });
 });

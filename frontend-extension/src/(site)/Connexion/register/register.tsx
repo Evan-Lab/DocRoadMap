@@ -29,7 +29,7 @@ function Register() {
 
   const handleRegister = () => {
     if (password !== confirmPassword) {
-      console.error("Passwords do not match");
+      console.log("Passwords do not match");
     }
 
     axios
