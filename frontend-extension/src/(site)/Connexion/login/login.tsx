@@ -56,13 +56,6 @@ function Login() {
       });
   };
 
-  const handlePasswordReset = () => {
-    setResetMessage(t("resetSuccess"));
-    setTimeout(() => {
-      setResetMessage("");
-    }, 5000);
-  };
-
   return (
     <div className="login-page">
       <div className="login-container">
@@ -98,12 +91,6 @@ function Login() {
                 {t("login")}
               </button>
             </div>
-            <p className="forgot-password" onClick={() => setIsResetMode(true)}>
-              {t("forgot")}
-            </p>
-            <p className="signup-text">
-              {t("noAccount")} <a href="/register">{t("register")}</a>
-            </p>
           </>
         ) : (
           <>
@@ -116,11 +103,6 @@ function Login() {
                 value={resetEmail}
                 onChange={(e) => setResetEmail(e.target.value)}
               />
-            </div>
-            <div className="input-group small">
-              <button className="login-button" onClick={handlePasswordReset}>
-                {t("sendReset")}
-              </button>
             </div>
             <p className="back-to-login" onClick={() => setIsResetMode(false)}>
               {t("back")}
