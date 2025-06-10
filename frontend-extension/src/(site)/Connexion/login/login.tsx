@@ -23,7 +23,6 @@ function Login() {
   const [error, setError] = useState("");
   const [isResetMode, setIsResetMode] = useState(false);
   const [resetEmail, setResetEmail] = useState("");
-  const [resetMessage, setResetMessage] = useState("");
 
   const handleLogin = () => {
     axios
@@ -95,7 +94,6 @@ function Login() {
         ) : (
           <>
             <h2>{t("reset")}</h2>
-            {resetMessage && <p className="success-message">{resetMessage}</p>}
             <div className="input-group small">
               <input
                 type="email"

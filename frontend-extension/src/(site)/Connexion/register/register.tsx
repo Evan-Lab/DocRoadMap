@@ -22,7 +22,6 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
 
   const nextStep = () => setStep((prev) => prev + 1);
   const prevStep = () =>
@@ -30,8 +29,7 @@ function Register() {
 
   const handleRegister = () => {
     if (password !== confirmPassword) {
-      setError("passwordMismatch");
-      return;
+      console.error("Passwords do not match");
     }
 
     axios
@@ -45,7 +43,6 @@ function Register() {
         navigate("/account-confirmation");
       })
       .catch(() => {
-        setError("error");
         console.error("Registration failed");
       });
   };
