@@ -2,29 +2,31 @@ import axios from "axios";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaArrowLeft } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./register.css";
 
 const isDev = process.env.NODE_ENV !== "production";
-
 const backendUrl = "http://localhost:8082";
-
 const docroadmapImg = isDev
   ? "/assets/docroadmap.png"
   : "../assets/docroadmap.png";
-
 const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<any>;
 
 function Register() {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
+  const [step, setStep] = useState(1);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+
+  const nextStep = () => setStep((prev) => prev + 1);
+  const prevStep = () =>
+    step === 1 ? navigate(-1) : setStep((prev) => prev - 1);
 
   const handleRegister = () => {
     if (password !== confirmPassword) {
@@ -50,66 +52,90 @@ function Register() {
   return (
     <div className="register-page">
       <div className="register-container">
-        <button className="back-button" onClick={() => navigate(-1)}>
-          <ArrowLeftIcon />
+        <button className="back-button" onClick={prevStep}>
+          <ArrowLeftIcon style={{ width: "20px", height: "20px" }} />
         </button>
+
         <div className="register-header">
-          <div className="DocRoadMap-Logo register">
-            <img src={docroadmapImg} alt="DocRoadMap" />
-          </div>
-          <h1>{t("register")}</h1>
+          <img src={docroadmapImg} alt="DocRoadMap" />
         </div>
+
         {error && <p className="error-message">{t(error)}</p>}
-        <div className="input-group">
-          <label>{t("firstName")}</label>
-          <input
-            type="text"
-            placeholder={t("firstName")}
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-        </div>
-        <div className="input-group">
-          <label>{t("lastName")}</label>
-          <input
-            type="text"
-            placeholder={t("lastName")}
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        </div>
-        <div className="input-group">
-          <label>{t("email")}</label>
-          <input
-            type="email"
-            placeholder={t("email")}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="input-group">
-          <label>{t("password")}</label>
-          <input
-            type="password"
-            placeholder={t("password")}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div className="input-group">
-          <label>{t("confirmPassword")}</label>
-          <input
-            type="password"
-            placeholder={t("password")}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </div>
-        <button className="register-button" onClick={handleRegister}>
-          {t("submit")}
-        </button>
+
+        {step === 1 && (
+          <>
+            <div className="input-group small">
+              <input
+                type="text"
+                placeholder={t("firstName")}
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </div>
+            <div className="input-group small">
+              <input
+                type="text"
+                placeholder={t("lastName")}
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </div>
+
+            <div className="register-button-wrapper">
+              <button className="register-button" onClick={nextStep}>
+                {t("continue") || "Continuer"}
+              </button>
+            </div>
+          </>
+        )}
+
+        {step === 2 && (
+          <>
+            <div className="input-group small">
+              <input
+                type="email"
+                placeholder={t("email")}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="register-button-wrapper">
+              <button className="register-button" onClick={nextStep}>
+                {t("continue") || "Continuer"}
+              </button>
+            </div>
+          </>
+        )}
+
+        {step === 3 && (
+          <>
+            <div className="input-group small">
+              <input
+                type="password"
+                placeholder={t("password")}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="input-group small">
+              <input
+                type="password"
+                placeholder={t("confirmPassword")}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
+
+            <div className="register-button-wrapper">
+              <button className="register-button" onClick={handleRegister}>
+                {t("submit") || "S'inscrire"}
+              </button>
+            </div>
+          </>
+        )}
+
         <p className="login-text">
-          {t("hasAccount")} <Link to="/login">{t("login")}</Link>
+          {t("hasAccount")} <a href="/login">{t("login")}</a>
         </p>
       </div>
     </div>
