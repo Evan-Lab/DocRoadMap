@@ -6,7 +6,7 @@ import getToken from "../../utils/utils";
 
 const basePath = "./assets/";
 
-const backendUrl = "http://localhost:8082";
+const backendUrl = "https://www.docroadmap.fr";
 
 const normalize = (str: string): string =>
   str
@@ -69,7 +69,7 @@ const RoadmapCreation: React.FC = () => {
           `${backendUrl}/list-administrative-process`,
           {
             headers: { Authorization: `Bearer ${token}` },
-          },
+          }
         );
 
         const enrichedSteps = stepsRes.data.map((step: any) => ({
@@ -118,7 +118,7 @@ const RoadmapCreation: React.FC = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        },
+        }
       );
     } catch (error) {
       console.error("Erreur lors de la création :", error);

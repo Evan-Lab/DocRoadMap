@@ -2,17 +2,14 @@ import axios from "axios";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaArrowLeft } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./login.css";
 
 const isDev = process.env.NODE_ENV !== "production";
-
-const backendUrl = "http://localhost:8082";
-
+const backendUrl = "https://www.docroadmap.fr";
 const docroadmapImg = isDev
   ? "/assets/docroadmap.png"
   : "../assets/docroadmap.png";
-
 const ArrowLeftIcon = FaArrowLeft as unknown as React.FC<
   React.SVGProps<SVGSVGElement>
 >;
@@ -33,21 +30,14 @@ function Login() {
       .post(`${backendUrl}/auth/login`, { email, password })
       .then((response) => {
         const token = response.data.accessToken;
-
         localStorage.setItem("token", token);
         if (typeof chrome !== "undefined" && chrome.storage) {
           chrome.storage.local.set({ token }, () => {
             console.log("Token saved in chrome.storage :", token);
           });
         }
-
         if (token) {
-          if (
-            chrome &&
-            chrome.tabs &&
-            chrome.tabs.query &&
-            chrome.tabs.sendMessage
-          ) {
+          if (chrome?.tabs?.query && chrome?.tabs?.sendMessage) {
             chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
               if (tabs[0]?.id) {
                 chrome.tabs.sendMessage(tabs[0].id, {
@@ -57,13 +47,12 @@ function Login() {
               }
             });
           }
-          console.log("Connected, token: ", token);
           navigate("/roadmap");
         }
       })
       .catch(() => {
         setError(t("error"));
-        console.log("Not connected, token: ", localStorage.getItem("token"));
+        console.error("Login failed.");
       });
   };
 
@@ -81,17 +70,14 @@ function Login() {
           <ArrowLeftIcon />
         </button>
 
+        <div className="login-header">
+          <img src={docroadmapImg} alt="DocRoadMap" />
+        </div>
+
         {!isResetMode ? (
           <>
-            <div className="login-header">
-              <div className="DocRoadMap-Logo login">
-                <img src={docroadmapImg} alt="DocRoadMap" />
-              </div>
-              <h1>{t("Connexion")}</h1>
-            </div>
             {error && <p className="error-message">{error}</p>}
-            <div className="input-group">
-              <label>{t("email")}</label>
+            <div className="input-group small">
               <input
                 type="email"
                 placeholder={t("emailPlaceholder")}
@@ -99,8 +85,7 @@ function Login() {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className="input-group">
-              <label>{t("password")}</label>
+            <div className="input-group small">
               <input
                 type="password"
                 placeholder={t("passwordPlaceholder")}
@@ -108,22 +93,23 @@ function Login() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <button className="login-button" onClick={handleLogin}>
-              {t("login")}
-            </button>
+            <div className="input-group small">
+              <button className="login-button" onClick={handleLogin}>
+                {t("login")}
+              </button>
+            </div>
             <p className="forgot-password" onClick={() => setIsResetMode(true)}>
               {t("forgot")}
             </p>
             <p className="signup-text">
-              {t("noAccount")} <Link to="/register">{t("register")}</Link>
+              {t("noAccount")} <a href="/register">{t("register")}</a>
             </p>
           </>
         ) : (
           <>
             <h2>{t("reset")}</h2>
             {resetMessage && <p className="success-message">{resetMessage}</p>}
-            <div className="input-group">
-              <label>{t("email")}</label>
+            <div className="input-group small">
               <input
                 type="email"
                 placeholder={t("emailPlaceholder")}
@@ -131,9 +117,11 @@ function Login() {
                 onChange={(e) => setResetEmail(e.target.value)}
               />
             </div>
-            <button className="login-button" onClick={handlePasswordReset}>
-              {t("sendReset")}
-            </button>
+            <div className="input-group small">
+              <button className="login-button" onClick={handlePasswordReset}>
+                {t("sendReset")}
+              </button>
+            </div>
             <p className="back-to-login" onClick={() => setIsResetMode(false)}>
               {t("back")}
             </p>

@@ -6,7 +6,7 @@ import RoadmapCreation from "./roadmapCreation";
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-const backendUrl = "http://localhost:8082";
+const backendUrl = "https://www.docroadmap.fr";
 
 jest.mock("react-i18next", () => ({
   useTranslation: () => ({
@@ -35,7 +35,7 @@ describe("RoadmapCreation", () => {
 
   it("renders the title", async () => {
     mockGet.mockImplementation((_key: string, cb: any) =>
-      cb({ token: "abc123" }),
+      cb({ token: "abc123" })
     );
     mockedAxios.get
       .mockResolvedValueOnce({ data: { id: 42 } })
@@ -53,7 +53,7 @@ describe("RoadmapCreation", () => {
 
   it("renders steps and calls handleCreateCard on click", async () => {
     mockGet.mockImplementation((_key: string, cb: any) =>
-      cb({ token: "abc123" }),
+      cb({ token: "abc123" })
     );
     mockedAxios.get
       .mockResolvedValueOnce({ data: { id: 1 } })
@@ -74,14 +74,14 @@ describe("RoadmapCreation", () => {
         `${backendUrl}/process/create`,
 
         expect.objectContaining({ name: "Passeport" }),
-        expect.any(Object),
-      ),
+        expect.any(Object)
+      )
     );
   });
 
   it("shows error if creation fails", async () => {
     mockGet.mockImplementation((_key: string, cb: any) =>
-      cb({ token: "abc123" }),
+      cb({ token: "abc123" })
     );
     mockedAxios.get
       .mockResolvedValueOnce({ data: { id: 1 } })
@@ -97,7 +97,7 @@ describe("RoadmapCreation", () => {
     fireEvent.click(createButton);
 
     await waitFor(() =>
-      expect(screen.getByText("createError")).toBeInTheDocument(),
+      expect(screen.getByText("createError")).toBeInTheDocument()
     );
   });
 });

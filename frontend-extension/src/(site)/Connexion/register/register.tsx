@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "./register.css";
 
 const isDev = process.env.NODE_ENV !== "production";
-const backendUrl = "http://localhost:8082";
+const backendUrl = "https://www.docroadmap.fr";
 const docroadmapImg = isDev
   ? "/assets/docroadmap.png"
   : "../assets/docroadmap.png";
@@ -46,6 +46,7 @@ function Register() {
       })
       .catch(() => {
         setError("error");
+        console.error("Registration failed");
       });
   };
 
@@ -59,8 +60,6 @@ function Register() {
         <div className="register-header">
           <img src={docroadmapImg} alt="DocRoadMap" />
         </div>
-
-        {error && <p className="error-message">{t(error)}</p>}
 
         {step === 1 && (
           <>
@@ -133,10 +132,6 @@ function Register() {
             </div>
           </>
         )}
-
-        <p className="login-text">
-          {t("hasAccount")} <a href="/login">{t("login")}</a>
-        </p>
       </div>
     </div>
   );
