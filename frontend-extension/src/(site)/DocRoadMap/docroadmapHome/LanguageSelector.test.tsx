@@ -28,7 +28,7 @@ describe("LanguageSelector component", () => {
     render(
       <MemoryRouter>
         <LanguageSelector />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
   beforeEach(() => {
