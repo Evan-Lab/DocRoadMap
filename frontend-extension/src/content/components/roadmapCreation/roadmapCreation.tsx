@@ -7,7 +7,7 @@ import DecisionTreeChat from "./decisionTree";
 
 const basePath = "./assets/";
 
-// const backendUrl = "https://www.docroadmap.fr";
+const backendUrl = "https://www.docroadmap.fr";
 
 const normalize = (str: string): string =>
   str
@@ -62,16 +62,16 @@ const RoadmapCreation: React.FC = () => {
         return;
       }
       try {
-        const userRes = await axios.get("http://localhost:8082/users/me", {
+        const userRes = await axios.get(`${backendUrl}/users/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser({ id: userRes.data.id });
 
         const stepsRes = await axios.get(
-          "http://localhost:8082/list-administrative-process",
+          `${backendUrl}/list-administrative-process`,
           {
             headers: { Authorization: `Bearer ${token}` },
-          },
+          }
         );
 
         const enrichedSteps = stepsRes.data.map((step: any) => ({

@@ -1,8 +1,10 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import DecisionTreeChat from "./decisionTree";
 // import rawData from "./decisionTree.json";
 import axios from "axios";
 import getToken from "../../utils/utils";
+
+const backendUrl = "https://www.docroadmap.fr";
 
 jest.mock("axios");
 jest.mock("../../utils/utils");
@@ -39,10 +41,10 @@ describe("DecisionTreeChat", () => {
     render(<DecisionTreeChat />);
     expect(screen.getByText("What do you want to do?")).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /Demarche/i }),
+      screen.getByRole("button", { name: /Demarche/i })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /Logement/i }),
+      screen.getByRole("button", { name: /Logement/i })
     ).toBeInTheDocument();
   });
 
@@ -64,30 +66,31 @@ describe("DecisionTreeChat", () => {
     await waitFor(() => {
       expect(getToken).toHaveBeenCalled();
       expect(axios.get).toHaveBeenCalledWith(
-        "http://localhost:8082/users/me",
+        `${backendUrl}/users/me`,
+
         expect.objectContaining({
           headers: expect.objectContaining({
             Authorization: "Bearer mock-token",
           }),
-        }),
+        })
       );
       expect(axios.post).toHaveBeenCalledWith(
-        "http://localhost:8082/process/create",
+        `${backendUrl}/process/create`,
         expect.any(Object),
         expect.objectContaining({
           headers: expect.objectContaining({
             Authorization: "Bearer mock-token",
           }),
-        }),
+        })
       );
       expect(axios.post).toHaveBeenCalledWith(
-        "http://localhost:8082/steps/create",
+        `${backendUrl}/steps/create`,
         expect.any(Object),
         expect.objectContaining({
           headers: expect.objectContaining({
             Authorization: "Bearer mock-token",
           }),
-        }),
+        })
       );
     });
   });
@@ -99,7 +102,7 @@ describe("DecisionTreeChat", () => {
 
     fireEvent.click(screen.getByRole("button", { name: /Recommencer/i }));
     expect(
-      await screen.findByText("What do you want to do?"),
+      await screen.findByText("What do you want to do?")
     ).toBeInTheDocument();
   });
 

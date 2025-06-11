@@ -1,7 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
-import rawData from "./decisionTree.json";
 import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
 import getToken from "../../utils/utils";
+import rawData from "./decisionTree.json";
+
+const backendUrl = "https://www.docroadmap.fr";
 
 type DecisionTreeData = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -98,7 +100,7 @@ function getProcessAnswersKey(processKey: string): string | null {
 // Helper: get all steps to display for a process, based on user answers
 function getStepsForProcess(
   processAnswers: Record<string, StepNode>,
-  userAnswers: Record<string, string>,
+  userAnswers: Record<string, string>
 ): { step_title: string; answer: string }[] {
   const steps: { step_title: string; answer: string }[] = [];
   for (const step of Object.values(processAnswers)) {
@@ -130,7 +132,7 @@ const DecisionTreeChat: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
   const [userAnswers, setUserAnswers] = useState<Record<string, string>>({});
   const [showSteps, setShowSteps] = useState(false);
   const [steps, setSteps] = useState<{ step_title: string; answer: string }[]>(
-    [],
+    []
   );
   const chatRef = useRef<HTMLDivElement | null>(null);
   const [user, setUser] = useState<{ id: string } | null>(null);
@@ -151,7 +153,7 @@ const DecisionTreeChat: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
         return;
       }
       try {
-        const userRes = await axios.get("http://localhost:8082/users/me", {
+        const userRes = await axios.get(`${backendUrl}/users/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUser({ id: userRes.data.id });
@@ -173,7 +175,7 @@ const DecisionTreeChat: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
         await Promise.all(
           steps.map((step) =>
             axios.post(
-              "http://localhost:8082/steps/create",
+              `${backendUrl}/steps/create`,
               {
                 name: step.step_title,
                 description: step.answer,
@@ -184,9 +186,9 @@ const DecisionTreeChat: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
                   "Content-Type": "application/json",
                   Authorization: `Bearer ${token}`,
                 },
-              },
-            ),
-          ),
+              }
+            )
+          )
         );
         console.log("All steps created successfully");
       } catch (error) {
@@ -198,7 +200,7 @@ const DecisionTreeChat: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
     if (!user?.id || !token) return;
     try {
       const response = await axios.post(
-        "http://localhost:8082/process/create",
+        `${backendUrl}/process/create`,
         {
           name: userAnswers.start,
           description: "description",
@@ -210,7 +212,7 @@ const DecisionTreeChat: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        },
+        }
       );
       const lastProcessId = response.data.id;
       await handleCreateSteps(lastProcessId);
@@ -319,7 +321,7 @@ const DecisionTreeChat: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
                       </a>
                     ) : (
                       <span key={i}>{part}</span>
-                    ),
+                    )
                   )}
                 </li>
               ))}
