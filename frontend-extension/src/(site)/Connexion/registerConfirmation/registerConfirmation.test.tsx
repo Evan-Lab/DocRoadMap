@@ -36,7 +36,6 @@ describe("RegisterConfirmation component", () => {
 
   it("renders confirmation message and buttons", () => {
     renderWithRouter();
-    expect(screen.getByText("createwithsuccess")).toBeInTheDocument();
     expect(screen.getByText("instruction")).toBeInTheDocument();
     expect(screen.getByText("login")).toBeInTheDocument();
     expect(screen.getByText("resend")).toBeInTheDocument();

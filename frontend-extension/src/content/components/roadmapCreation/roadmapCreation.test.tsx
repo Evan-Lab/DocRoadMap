@@ -6,7 +6,7 @@ import RoadmapCreation from "./roadmapCreation";
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-const backendUrl = "http://localhost:8082";
+const backendUrl = "https://www.docroadmap.fr";
 
 jest.mock("react-i18next", () => ({
   useTranslation: () => ({
