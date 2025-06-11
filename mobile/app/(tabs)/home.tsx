@@ -22,6 +22,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import DecisionTreeInterface from "@/components/chat/DecisionTreeInterface";
+import { router } from "expo-router";
 
 export default function HomePage() {
   const { t, i18n } = useTranslation();
@@ -95,7 +97,7 @@ export default function HomePage() {
   };
 
   const handleReminders = () => {
-    console.log("My reminders pressed");
+    router.push("/calendar");
   };
 
   const handleRefresh = async () => {
@@ -216,7 +218,7 @@ export default function HomePage() {
         </SafeAreaView>
       </Modal>
 
-      <ChatInterface />
+      <DecisionTreeInterface />
     </SafeAreaView>
   );
 }

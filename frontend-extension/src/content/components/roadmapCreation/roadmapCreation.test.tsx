@@ -6,6 +6,8 @@ import RoadmapCreation from "./roadmapCreation";
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
+const backendUrl = "http://localhost:8082";
+
 jest.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: (key: string) => key,
@@ -69,7 +71,7 @@ describe("RoadmapCreation", () => {
     fireEvent.click(button);
     await waitFor(() =>
       expect(mockedAxios.post).toHaveBeenCalledWith(
-        "http://51.91.161.226:8082/process/create",
+        `${backendUrl}/process/create`,
 
         expect.objectContaining({ name: "Passeport" }),
         expect.any(Object),

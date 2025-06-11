@@ -7,6 +7,8 @@ import "./login.css";
 
 const isDev = process.env.NODE_ENV !== "production";
 
+const backendUrl = "http://localhost:8082";
+
 const docroadmapImg = isDev
   ? "/assets/docroadmap.png"
   : "../assets/docroadmap.png";
@@ -28,7 +30,7 @@ function Login() {
 
   const handleLogin = () => {
     axios
-      .post("http://localhost:8082/auth/login", { email, password })
+      .post(`${backendUrl}/auth/login`, { email, password })
       .then((response) => {
         const token = response.data.accessToken;
 
