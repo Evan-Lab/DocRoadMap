@@ -102,7 +102,7 @@ const RoadmapView: React.FC = () => {
       const formattedDate = `${dateValue}:00.000Z`;
 
       await axios.patch(
-        `http://localhost:8082/steps/${stepId}`,
+        `http://localhost:8082/steps/${stepId}`, //51.91.161.226:8082
         { endedAt: formattedDate },
         { headers: { Authorization: `Bearer ${token}` } },
       );

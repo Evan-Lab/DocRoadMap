@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import rawData from "./decisionTree.json";
+import axios from "axios";
+import getToken from "../../utils/utils";
 
 type DecisionTreeData = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -131,12 +133,98 @@ const DecisionTreeChat: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
     [],
   );
   const chatRef = useRef<HTMLDivElement | null>(null);
+  const [user, setUser] = useState<{ id: string } | null>(null);
+  const [hasCreatedProcess, setHasCreatedProcess] = useState(false);
+
+  // const [error, setError] = useState<string | null>(null);
+  //const [lastProcessId, setLastProcessId] = useState<string | null>(null);
 
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
+
+    const fetchData = async () => {
+      const token = await getToken();
+      if (!token) {
+        // setError("Token unavailable");
+        return;
+      }
+      try {
+        const userRes = await axios.get("http://localhost:8082/users/me", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUser({ id: userRes.data.id });
+      } catch (err) {
+        console.error(err);
+        // setError("Failed to fetch user");
+      }
+    };
+    fetchData();
   }, [history, showSteps]);
+
+  const handleCreateProcessAndSteps = React.useCallback(async () => {
+    const handleCreateSteps = async (lastProcessId: string) => {
+      const token = await getToken();
+      if (!user?.id || !token) return;
+
+      try {
+        // Send all requests in parallel
+        await Promise.all(
+          steps.map((step) =>
+            axios.post(
+              "http://localhost:8082/steps/create",
+              {
+                name: step.step_title,
+                description: step.answer,
+                processId: lastProcessId,
+              },
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+              },
+            ),
+          ),
+        );
+        console.log("All steps created successfully");
+      } catch (error) {
+        console.error("Error creating steps:", error);
+      }
+    };
+
+    const token = await getToken();
+    if (!user?.id || !token) return;
+    try {
+      const response = await axios.post(
+        "http://localhost:8082/process/create",
+        {
+          name: userAnswers.start,
+          description: "description",
+          status: "PENDING",
+          userId: user.id,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const lastProcessId = response.data.id;
+      await handleCreateSteps(lastProcessId);
+    } catch (error) {
+      console.error("Erreur lors de la création :", error);
+    }
+  }, [user, userAnswers.start, steps]);
+
+  useEffect(() => {
+    if (showSteps && !hasCreatedProcess && steps.length > 0) {
+      handleCreateProcessAndSteps();
+      setHasCreatedProcess(true);
+    }
+  }, [showSteps, hasCreatedProcess, steps, handleCreateProcessAndSteps]);
 
   const handleUserSelectsOption = (nextKey: string, label: string) => {
     // save answer to the current question in history
@@ -177,6 +265,7 @@ const DecisionTreeChat: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
     setUserAnswers({});
     setShowSteps(false);
     setSteps([]);
+    setHasCreatedProcess(false);
   };
 
   // get current options
@@ -191,10 +280,15 @@ const DecisionTreeChat: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
     currentOptions = (decisionTreeData[lastHistoryEntry.key] as QuestionNode)
       .options;
   }
+
   // const displayHistoryInConsole = () => {
   //   console.log("Chat History:", history);
   //   console.log("User Answers:", userAnswers);
   //   console.log("Steps:", steps);
+  //   // console.log("Steps:", steps.map((step) => ({
+  //   //   title: step.step_title,
+  //   //   answer: step.answer,
+  //   // })));
   // };
 
   return (
@@ -230,7 +324,12 @@ const DecisionTreeChat: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
                 </li>
               ))}
             </ul>
-            {/* <button style={styles.restartBtn} onClick={displayHistoryInConsole}>
+            {/* <button
+              style={styles.restartBtn}
+              onClick={() => {
+                // displayHistoryInConsole();
+              }}
+            >
               display history
             </button> */}
             <button style={styles.restartBtn} onClick={handleRestartChat}>
@@ -251,10 +350,9 @@ const DecisionTreeChat: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
 
 const styles: { [key: string]: React.CSSProperties } = {
   outer: {
-    bottom: "90px",
-    right: "80px",
-    width: "300px",
-    height: "400px",
+    width: "100%",
+    height: "100%",
+    boxSizing: "border-box",
     background: "#fff",
     borderRadius: 12,
     boxShadow: "0 2px 16px rgba(44,62,80,0.10)",
