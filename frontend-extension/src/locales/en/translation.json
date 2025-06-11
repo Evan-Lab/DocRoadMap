@@ -57,5 +57,6 @@
   "tokenUnavailable": "Token unavailable. Please log in.",
   "calendar": "Calendar",
   "eventsOf": "Events of the ",
-  "noEvent": "No events scheduled that day."
+  "noEvent": "No events scheduled that day.",
+  "instruction": "Please confirm your account to continue, a confirmation email has been sent."
 }

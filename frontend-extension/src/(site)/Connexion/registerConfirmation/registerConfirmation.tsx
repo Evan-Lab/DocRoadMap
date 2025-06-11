@@ -27,7 +27,6 @@ function RegisterConfirmation() {
           <div className="DocRoadMap-Logo confirmation">
             <img src={docroadmapImg} alt="DocRoadMap" />
           </div>
-          <h1>{t("createwithsuccess")}</h1>
         </div>
         <p>{t("instruction")}</p>
         <div className="button-group">

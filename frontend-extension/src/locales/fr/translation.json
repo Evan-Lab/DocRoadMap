@@ -57,5 +57,6 @@
   "tokenUnavailable": "Token non disponible. Veuillez vous connecter.",
   "calendar": "Calendrier",
   "eventsOf": "Événements du ",
-  "noEvent": "Aucun événement prévu ce jour-là."
+  "noEvent": "Aucun événement prévu ce jour-là.",
+  "instruction": "Veuillez confirmer votre compte pour continuer, un email de confirmation vous a été envoyé."
 }
