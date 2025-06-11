@@ -7,7 +7,7 @@ import DecisionTreeChat from "./decisionTree";
 
 const basePath = "./assets/";
 
-const backendUrl = "https://www.docroadmap.fr";
+// const backendUrl = "https://www.docroadmap.fr";
 
 const normalize = (str: string): string =>
   str
