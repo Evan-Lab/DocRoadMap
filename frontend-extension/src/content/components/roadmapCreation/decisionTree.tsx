@@ -100,7 +100,7 @@ function getProcessAnswersKey(processKey: string): string | null {
 // Helper: get all steps to display for a process, based on user answers
 function getStepsForProcess(
   processAnswers: Record<string, StepNode>,
-  userAnswers: Record<string, string>
+  userAnswers: Record<string, string>,
 ): { step_title: string; answer: string }[] {
   const steps: { step_title: string; answer: string }[] = [];
   for (const step of Object.values(processAnswers)) {
@@ -132,7 +132,7 @@ const DecisionTreeChat: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
   const [userAnswers, setUserAnswers] = useState<Record<string, string>>({});
   const [showSteps, setShowSteps] = useState(false);
   const [steps, setSteps] = useState<{ step_title: string; answer: string }[]>(
-    []
+    [],
   );
   const chatRef = useRef<HTMLDivElement | null>(null);
   const [user, setUser] = useState<{ id: string } | null>(null);
@@ -186,9 +186,9 @@ const DecisionTreeChat: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
                   "Content-Type": "application/json",
                   Authorization: `Bearer ${token}`,
                 },
-              }
-            )
-          )
+              },
+            ),
+          ),
         );
         console.log("All steps created successfully");
       } catch (error) {
@@ -212,7 +212,7 @@ const DecisionTreeChat: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       const lastProcessId = response.data.id;
       await handleCreateSteps(lastProcessId);
@@ -321,7 +321,7 @@ const DecisionTreeChat: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
                       </a>
                     ) : (
                       <span key={i}>{part}</span>
-                    )
+                    ),
                   )}
                 </li>
               ))}

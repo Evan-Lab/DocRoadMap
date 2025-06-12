@@ -37,23 +37,33 @@ describe("DecisionTreeChat", () => {
     });
   });
 
-  it("renders the initial question", () => {
+  it("renders the initial question", async () => {
     render(<DecisionTreeChat />);
-    expect(screen.getByText("What do you want to do?")).toBeInTheDocument();
+
+    await waitFor(() =>
+      expect(screen.getByText("What do you want to do?")).toBeInTheDocument(),
+    );
+
     expect(
-      screen.getByRole("button", { name: /Demarche/i })
+      screen.getByRole("button", { name: /Demarche/i }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /Logement/i })
+      screen.getByRole("button", { name: /Logement/i }),
     ).toBeInTheDocument();
   });
 
   it("shows user answer and steps after selecting an option", async () => {
     render(<DecisionTreeChat />);
+
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: /Demarche/i }),
+      ).toBeInTheDocument(),
+    );
+
     fireEvent.click(screen.getByRole("button", { name: /Demarche/i }));
 
     expect(await screen.findByText("Demarche")).toBeInTheDocument();
-
     expect(await screen.findByText(/Étapes à suivre/)).toBeInTheDocument();
     expect(screen.getByText("Step 1")).toBeInTheDocument();
     expect(screen.getByText("Do step 1")).toBeInTheDocument();
@@ -61,19 +71,26 @@ describe("DecisionTreeChat", () => {
 
   it("calls API to fetch user and create process/steps", async () => {
     render(<DecisionTreeChat />);
+
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: /Demarche/i }),
+      ).toBeInTheDocument(),
+    );
+
     fireEvent.click(screen.getByRole("button", { name: /Demarche/i }));
 
     await waitFor(() => {
       expect(getToken).toHaveBeenCalled();
       expect(axios.get).toHaveBeenCalledWith(
         `${backendUrl}/users/me`,
-
         expect.objectContaining({
           headers: expect.objectContaining({
             Authorization: "Bearer mock-token",
           }),
-        })
+        }),
       );
+
       expect(axios.post).toHaveBeenCalledWith(
         `${backendUrl}/process/create`,
         expect.any(Object),
@@ -81,8 +98,9 @@ describe("DecisionTreeChat", () => {
           headers: expect.objectContaining({
             Authorization: "Bearer mock-token",
           }),
-        })
+        }),
       );
+
       expect(axios.post).toHaveBeenCalledWith(
         `${backendUrl}/steps/create`,
         expect.any(Object),
@@ -90,25 +108,38 @@ describe("DecisionTreeChat", () => {
           headers: expect.objectContaining({
             Authorization: "Bearer mock-token",
           }),
-        })
+        }),
       );
     });
   });
 
   it("restarts the chat when the restart button is clicked", async () => {
     render(<DecisionTreeChat />);
+
+    await waitFor(() =>
+      expect(
+        screen.getByRole("button", { name: /Demarche/i }),
+      ).toBeInTheDocument(),
+    );
+
     fireEvent.click(screen.getByRole("button", { name: /Demarche/i }));
+
     expect(await screen.findByText(/Étapes à suivre/)).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: /Recommencer/i }));
     expect(
-      await screen.findByText("What do you want to do?")
+      await screen.findByText("What do you want to do?"),
     ).toBeInTheDocument();
   });
 
-  it("renders and handles the close button if provided", () => {
+  it("renders and handles the close button if provided", async () => {
     const onClose = jest.fn();
     render(<DecisionTreeChat onClose={onClose} />);
+
+    await waitFor(() =>
+      expect(screen.getByLabelText("Fermer")).toBeInTheDocument(),
+    );
+
     fireEvent.click(screen.getByLabelText("Fermer"));
     expect(onClose).toHaveBeenCalled();
   });
