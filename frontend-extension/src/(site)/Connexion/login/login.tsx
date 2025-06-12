@@ -58,7 +58,7 @@ function Login() {
   return (
     <div className="login-page">
       <div className="login-container">
-        <button className="back-button" onClick={() => navigate(-1)}>
+        <button className="back-button" onClick={() => navigate("/")}>
           <ArrowLeftIcon />
         </button>
 
