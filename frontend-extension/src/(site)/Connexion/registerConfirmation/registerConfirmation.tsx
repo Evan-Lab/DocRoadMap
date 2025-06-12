@@ -16,10 +16,6 @@ function RegisterConfirmation() {
     navigate("/login");
   };
 
-  const handleResendEmail = () => {
-    alert(t("resent"));
-  };
-
   return (
     <div className="confirmation-page">
       <div className="confirmation-container">
@@ -32,9 +28,6 @@ function RegisterConfirmation() {
         <div className="button-group">
           <button className="login-button" onClick={handleLoginRedirect}>
             {t("login")}
-          </button>
-          <button className="resend-button" onClick={handleResendEmail}>
-            {t("resend")}
           </button>
         </div>
       </div>
