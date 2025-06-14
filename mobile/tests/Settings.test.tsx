@@ -17,7 +17,6 @@ describe("Settings Component", () => {
   const replaceMock = jest.fn();
 
   beforeEach(() => {
-
     replaceMock.mockClear();
 
     (useRouter as jest.Mock).mockReturnValue({ replace: replaceMock });
